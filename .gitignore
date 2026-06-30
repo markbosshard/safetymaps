@@ -1,0 +1,12 @@
+# Delivered archive (source of index.html + PROJECT.md)
+files.zip
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
