@@ -598,16 +598,24 @@ function withinReportRange(lat,lng){
 // Best-effort "is this water?" via MapTiler reverse geocoding. On land near a city the nearest named
 // feature is close; over a bay/ocean it's far away (or there's nothing). Biased to NOT block — it only
 // rejects the clear cases, and errors never block (the manual review step is the real backstop).
+// Land mask (Natural Earth 10m, lazily fetched once) tells land from water with no per-click network.
+// A point is land if it — or a ring of points ~2km around it — sits inside a land polygon and not in a
+// lake. The ~2km tolerance keeps narrow coastal strips (e.g. Cancún's hotel zone) from reading as water.
+let LANDMASK=null,landmaskReq=null;
+function loadLandmask(){ if(LANDMASK)return Promise.resolve(LANDMASK);
+  if(!landmaskReq) landmaskReq=fetch('landmask.json').then(r=>r.json()).then(j=>LANDMASK=j).catch(()=>LANDMASK={land:[],lakes:[]});
+  return landmaskReq; }
+function ptInPoly(x,y,poly){ if(!ptInRing(x,y,poly[0]))return false; for(let h=1;h<poly.length;h++)if(ptInRing(x,y,poly[h]))return false; return true; }
+function ptInPolys(x,y,polys){ for(const p of polys)if(ptInPoly(x,y,p))return true; return false; }
+function nearLand(lat,lng,m,km){ if(ptInPolys(lng,lat,m.land))return true;
+  const dLat=km/111,dLon=km/(111*Math.cos(lat*Math.PI/180));
+  for(let a=0;a<12;a++){const t=a*Math.PI/6; if(ptInPolys(lng+dLon*Math.sin(t),lat+dLat*Math.cos(t),m.land))return true;}
+  return false; }
 async function isWater(lat,lng){
-  if(!MAPTILER_KEY)return false;
-  try{
-    const r=await fetch(`https://api.maptiler.com/geocoding/${lng},${lat}.json?key=${MAPTILER_KEY}&limit=1&language=en`);
-    if(!r.ok)return false; const j=await r.json();
-    const f=j&&j.features&&j.features[0];
-    if(!f)return true;                                   // nothing here at all -> open water
-    const km=Math.sqrt((f.center[0]-lng)**2+(f.center[1]-lat)**2)*111;
-    return km>2.2;                                        // nearest named thing is far -> almost certainly water
-  }catch(e){return false;}
+  const m=await loadLandmask();
+  if(!m.land||!m.land.length)return false;          // mask unavailable -> don't block
+  if(ptInPolys(lng,lat,m.lakes))return true;        // inside a lake / large lagoon
+  return !nearLand(lat,lng,m,2);                     // not on or near land -> water
 }
 // Click anywhere on a focused city (incl. the periphery / outside a single bubble) to report there.
 // District clicks are handled by the per-layer handler; here we only catch clicks outside any district.
