@@ -81,6 +81,7 @@
  .stag{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--ui);font-weight:800;border:1px solid var(--ui);border-radius:10px;padding:0 6px;line-height:15px;flex:none}
  .sres.note{cursor:default;color:var(--muted);font-size:12.5px}
  .sres.note:hover{background:none}
+ #searchToggle{display:none}
  .pinwrap{background:transparent;border:none}
  .reppin{background:transparent;border:none;overflow:visible}
  .reppin::after{content:"";position:absolute;left:12px;top:34px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:rgba(71,85,105,.5);animation:reppulse 1.4s ease-out infinite;pointer-events:none}
@@ -128,7 +129,17 @@
  .mmsg{font-size:12px;margin-top:10px;line-height:1.4;min-height:1px}
  .mmsg.ok{color:#9fe6c0}.mmsg.err{color:#ffb4b4}
  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2500;background:#16223a;border:1px solid var(--ui);color:#eaf2ff;padding:12px 16px;border-radius:10px;font-size:13px;max-width:340px;text-align:center;line-height:1.45;box-shadow:0 10px 30px #0008}
- @media(max-width:680px){#search{margin-left:0;width:100%}#search input{flex:1;width:auto}#legend,#sources{max-width:46vw;min-width:0}.fbbtn span{display:none}.fbbtn{padding:0}.fbbtn{width:36px}}
+ @media(max-width:680px){
+   header{gap:8px}
+   header .sub{display:none}
+   header h1{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+   #searchToggle{display:flex;margin-left:auto}
+   #search{display:none;margin-left:0;position:static}
+   #search.open{display:flex;order:10;width:100%;position:relative}
+   #search input{flex:1;width:auto}
+   #legend,#sources{max-width:46vw;min-width:0}
+   .fbbtn span{display:none}.fbbtn{padding:0;width:36px}
+ }
 </style></head>
 <body><div id="app">
  <header>
@@ -140,6 +151,7 @@
      <button id="searchBtn" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
      <div id="searchResults" class="hidden" role="listbox"></div>
    </div>
+   <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
    <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span>Feedback &amp; Contact</span></button>
    <div id="ctrl">
      <div><span class="cap">City</span><select id="city"></select></div>
@@ -499,7 +511,7 @@ document.getElementById('legendCollapse').onclick=()=>setLegend(false);
 legendOpenBtn.onclick=()=>setLegend(true);
 document.getElementById('sourcesCollapse').onclick=()=>setSources(false);
 sourcesOpenBtn.onclick=()=>setSources(true);
-setCtrl(true); setLegend(true); setSources(false);
+setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.querySelector('.mback').onclick=closeModal;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
@@ -518,10 +530,39 @@ function showReportPoint(lat,lng){ clearReportPoint();
     html:'<svg width="24" height="34" viewBox="0 0 24 34"><path d="M12 0C5.4 0 0 5.2 0 11.6 0 20 12 34 12 34s12-14 12-22.4C24 5.2 18.6 0 12 0z" fill="#475569" stroke="#fff" stroke-width="2"/><circle cx="12" cy="11.5" r="4" fill="#fff"/></svg>'})}).addTo(map); }
 function clearReportPoint(){ if(reportPin){map.removeLayer(reportPin);reportPin=null;} }
 map.on('popupclose',clearReportPoint);
+// How far outside a city a point report is still allowed: pad the city bbox by half its longest
+// span (min ~2.5km, so tiny bubbles still get a little periphery). Beyond that — or once the spot is
+// clearly inside ANOTHER city's footprint — we decline, so you can't drop a pin three cities away.
+function withinReportRange(lat,lng){
+  const C=CITIES[cityKey],[W,S,E,N]=C.bbox;
+  const pad=Math.max(Math.max(Math.abs(E-W),Math.abs(N-S))*0.5,0.025);
+  if(lng<W-pad||lng>E+pad||lat<S-pad||lat>N+pad)return false;
+  const k=cityAt(lng,lat); if(k&&k!==cityKey)return false;
+  return true;
+}
+// Best-effort "is this water?" via MapTiler reverse geocoding. On land near a city the nearest named
+// feature is close; over a bay/ocean it's far away (or there's nothing). Biased to NOT block — it only
+// rejects the clear cases, and errors never block (the manual review step is the real backstop).
+async function isWater(lat,lng){
+  if(!MAPTILER_KEY)return false;
+  try{
+    const r=await fetch(`https://api.maptiler.com/geocoding/${lng},${lat}.json?key=${MAPTILER_KEY}&limit=1&language=en`);
+    if(!r.ok)return false; const j=await r.json();
+    const f=j&&j.features&&j.features[0];
+    if(!f)return true;                                   // nothing here at all -> open water
+    const km=Math.sqrt((f.center[0]-lng)**2+(f.center[1]-lat)**2)*111;
+    return km>2.2;                                        // nearest named thing is far -> almost certainly water
+  }catch(e){return false;}
+}
 // Click anywhere on a focused city (incl. the periphery / outside a single bubble) to report there.
 // District clicks are handled by the per-layer handler; here we only catch clicks outside any district.
-map.on('click',e=>{ if(overviewOn)return; if(!CITIES[cityKey]||!CITIES[cityKey].districts)return;
-  if(!districtAt(e.latlng.lng,e.latlng.lat)) openPointReport(e.latlng); });
+map.on('click',async e=>{ if(overviewOn)return; const C=CITIES[cityKey]; if(!C||!C.districts)return;
+  const ll=e.latlng; if(districtAt(ll.lng,ll.lat))return;
+  if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.'); return; }
+  showReportPoint(ll.lat,ll.lng);                                  // instant feedback while we check
+  if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.'); return; }
+  if(!reportPin)return;                                            // popup/pin was cleared meanwhile
+  openPointReport(ll); });
 // Geocoder: autocomplete dropdown of districts + MapTiler places. Nothing zooms until a row is picked.
 const searchInput=document.getElementById('searchInput');
 const searchResults=document.getElementById('searchResults');
@@ -557,7 +598,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
   sresActive=(i+btns.length)%btns.length;btns.forEach(b=>b.classList.remove('active'));
   btns[sresActive].classList.add('active');btns[sresActive].scrollIntoView({block:'nearest'});}
 function selectResult(it){
-  if(!it)return; hideResults(); searchInput.value=it.name; searchInput.blur();
+  if(!it)return; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
   dropPin(it.lat,it.lon); map.flyTo([it.lat,it.lon],14);
   if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
   const d=districtAt(it.lon,it.lat);
@@ -596,7 +637,14 @@ searchResults.addEventListener('click',e=>{const b=e.target.closest('.sres[data-
 searchInput.addEventListener('focus',()=>{if(searchInput.value.trim().length>=2&&sresItems.length)searchResults.classList.remove('hidden');});
 document.getElementById('searchBtn').addEventListener('click',()=>{const q=searchInput.value.trim();
   if(q.length<2){searchInput.focus();return;} clearTimeout(searchTimer); onType(); searchInput.focus();});
-document.addEventListener('click',e=>{if(!e.target.closest('#search'))hideResults();});
+document.addEventListener('click',e=>{if(!e.target.closest('#search')&&!e.target.closest('#searchToggle'))hideResults();});
+// Mobile: search starts collapsed to an icon (next to the email icon); tap it to reveal the input row.
+function collapseSearch(){const s=document.getElementById('search');if(!s.classList.contains('open'))return;
+  s.classList.remove('open');const st=document.getElementById('searchToggle');if(st){st.classList.remove('on');st.setAttribute('aria-expanded','false');}}
+const searchToggle=document.getElementById('searchToggle');
+searchToggle.addEventListener('click',()=>{const s=document.getElementById('search');
+  if(s.classList.contains('open')){collapseSearch();hideResults();}
+  else{s.classList.add('open');searchToggle.classList.add('on');searchToggle.setAttribute('aria-expanded','true');setTimeout(()=>searchInput.focus(),0);}});
 function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
   buildCity(keyFromUrl()); }
