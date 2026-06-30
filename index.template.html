@@ -521,6 +521,7 @@ function renderSources(){
   const S=C.sources;
   if(Array.isArray(S)){ if(S.length)h+=srcList(S); }
   else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis); }
+  if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">More resources</div>'+srcList(C.resources);
   h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
   h+='<div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;

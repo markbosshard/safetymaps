@@ -13,6 +13,7 @@
     "tourism": "node scripts/add_tourism_cities.js",
     "landmask": "node scripts/build_landmask.js",
     "clipland": "node scripts/clip_to_land.js",
+    "resources": "node scripts/add_resources.js",
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
