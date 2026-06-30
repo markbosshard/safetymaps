@@ -1,5 +1,5 @@
 {
-  "name": "latam-city-safety-map",
+  "name": "safetymaps",
   "version": "0.1.0",
   "private": true,
   "description": "Interactive single-file Leaflet map rating neighbourhood/city safety across Latin America. See PROJECT.md.",
