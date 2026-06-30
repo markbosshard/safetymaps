@@ -76,6 +76,7 @@
  @keyframes reppulse{0%{transform:scale(.5);opacity:.85}100%{transform:scale(3.2);opacity:0}}
  .rhere{font-size:11px;color:#9aa6bb;margin-top:7px;line-height:1.35}
  .rhere b{color:#cbd5e6}
+ .rthanks{font-size:12.5px;color:#1f7a4d;font-weight:650;line-height:1.4;padding:1px 2px}
  .hidden{display:none!important}
  #hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:1200;display:none;background:#3a2326;border:1px solid #6b3b3b;color:#ffd9d9;font-size:12px;padding:8px 12px;border-radius:8px;max-width:340px;text-align:center;line-height:1.4}
  .vbtn.flag:hover{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
@@ -210,8 +211,10 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').re
 // No live scoring — submissions are stored and applied via a MANUAL release every few days.
 const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://REPLACE-WITH-PROD-API';
 const THANKS='Many thanks for becoming a part of our SafetyMaps Community! We update our maps every few days to reflect on feedback.';
+const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
-let popupCtx=null;
+let popupCtx=null,reportPopup=null;
+function popupThanks(){ if(reportPopup) reportPopup.setContent('<div class="rthanks">✓ Thanks! '+APPLIED+'</div>'); }
 function actionRow(){
   return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
 }
@@ -225,7 +228,7 @@ async function reportSafe(btn){
   if(!popupCtx)return; btn.disabled=true;
   const m=document.getElementById('popmsg'); if(m){m.style.color='#6b7688';m.textContent='…';}
   let res; try{res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});}catch(e){res={ok:false,error:'offline'};}
-  if(res.ok){ if(m){m.style.color='#2e7d52';m.textContent='✓ Thanks!';} toast(res.message||THANKS); }
+  if(res.ok){ popupThanks(); toast(res.message||THANKS); }
   else { if(m){m.style.color='#9b2f2f';m.textContent=res.error==='offline'?'Couldn’t reach server':'Try later';} btn.disabled=false; }
 }
 // reusable modal + toast
@@ -262,7 +265,7 @@ function openIssueSheet(){
     if(reason)payload.reason=reason; if(email)payload.email=email;
     let res; try{res=await postReport(payload);}catch(e){res={ok:false,error:'offline'};}
     const msg=document.getElementById('issueMsg');
-    if(res.ok){ closeModal(); map.closePopup(); toast(res.message||THANKS); }
+    if(res.ok){ closeModal(); popupThanks(); toast(res.message||THANKS); }
     else { msg.className='mmsg err'; msg.textContent=res.message||(res.error==='offline'?'Couldn’t reach server — try later.':'Please try again.'); submit.disabled=false; }
   };
 }
@@ -297,7 +300,7 @@ function popupContent(d){
 function openDistrict(d,ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
   popupCtx={areaName:d.name,cluster_id:d.cluster_id||null,lat:p.lat,lng:p.lng};
-  L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
+  reportPopup=L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
   showReportPoint(p.lat,p.lng);
   const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
     hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
