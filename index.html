@@ -70,6 +70,11 @@
  #search button:hover{border-color:#3a4660;color:#fff}#search button svg{width:16px;height:16px}
  #search .smsg{position:absolute;top:100%;left:2px;font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;text-shadow:0 1px 2px #000}
  .pinwrap{background:transparent;border:none}
+ .reppin{background:transparent;border:none;overflow:visible}
+ .reppin::after{content:"";position:absolute;left:12px;top:34px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:rgba(139,92,246,.5);animation:reppulse 1.4s ease-out infinite;pointer-events:none}
+ @keyframes reppulse{0%{transform:scale(.5);opacity:.85}100%{transform:scale(3.2);opacity:0}}
+ .rhere{font-size:11px;color:#9aa6bb;margin-top:7px;line-height:1.35}
+ .rhere b{color:#cbd5e6}
  .hidden{display:none!important}
  #hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:1200;display:none;background:#3a2326;border:1px solid #6b3b3b;color:#ffd9d9;font-size:12px;padding:8px 12px;border-radius:8px;max-width:340px;text-align:center;line-height:1.4}
  .vbtn.flag:hover{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
@@ -207,7 +212,7 @@ const THANKS='Many thanks for becoming a part of our SafetyMaps Community! We up
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
 let popupCtx=null;
 function actionRow(){
-  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue</button><span class="vtally" id="popmsg"></span></div>';
+  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
 }
 async function postReport(payload){
   const body=Object.assign({city:cityKey,token:smToken()},payload);
@@ -234,7 +239,7 @@ function openIssueSheet(){
   const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(w.label)+'</button>').join('');
   setModal(
     '<h3>What happened here?</h3>'+
-    '<p class="msub">'+esc(popupCtx.areaName)+' · this map records <b>incidents and conditions</b>, never who lives somewhere.</p>'+
+    '<p class="msub">📍 You’re reporting <b>the exact spot you tapped</b> in '+esc(popupCtx.areaName)+'. This map records <b>incidents and conditions</b>, never who lives somewhere.</p>'+
     '<div class="optlist" id="catList">'+cats+'</div>'+
     '<div class="mfield"><label>When (optional)</label><div class="chips" id="whenChips">'+whens+'</div></div>'+
     '<div class="mfield"><label>First-hand? (optional)</label><div class="chips" id="fhChips"><button type="button" class="chip" data-fh="1">Happened to me</button><button type="button" class="chip" data-fh="0">Heard about it</button></div></div>'+
@@ -286,12 +291,13 @@ function popupContent(d){
   if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
   else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
   else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`;
-  return head+actionRow();
+  return head+'<div class="rhere">📍 Your report marks <b>this exact spot</b>, not the whole district.</div>'+actionRow();
 }
 function openDistrict(d,ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
   popupCtx={areaName:d.name,cluster_id:d.cluster_id||null,lat:p.lat,lng:p.lng};
   L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
+  showReportPoint(p.lat,p.lng);
   const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
     hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
 }
@@ -398,6 +404,13 @@ function districtAt(lon,lat){for(const d of CITIES[cityKey].districts)if(ptInGeo
 function dropPin(lat,lon){ if(searchPin)map.removeLayer(searchPin);
   searchPin=L.marker([lat,lon],{icon:L.divIcon({className:'pinwrap',iconSize:[28,38],iconAnchor:[14,38],
     html:'<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.8 0 1 5.8 1 13c0 9.2 13 25 13 25s13-15.8 13-25C27 5.8 21.2 0 14 0z" fill="#3f7cc0" stroke="#fff" stroke-width="2"/><circle cx="14" cy="13" r="4.5" fill="#fff"/></svg>'})}).addTo(map); }
+let reportPin=null;
+function showReportPoint(lat,lng){ clearReportPoint();
+  reportPin=L.marker([lat,lng],{interactive:false,keyboard:false,zIndexOffset:1000,
+    icon:L.divIcon({className:'reppin',iconSize:[24,34],iconAnchor:[12,34],
+    html:'<svg width="24" height="34" viewBox="0 0 24 34"><path d="M12 0C5.4 0 0 5.2 0 11.6 0 20 12 34 12 34s12-14 12-22.4C24 5.2 18.6 0 12 0z" fill="#8b5cf6" stroke="#fff" stroke-width="2"/><circle cx="12" cy="11.5" r="4" fill="#fff"/></svg>'})}).addTo(map); }
+function clearReportPoint(){ if(reportPin){map.removeLayer(reportPin);reportPin=null;} }
+map.on('popupclose',clearReportPoint);
 const searchInput=document.getElementById('searchInput'),searchMsg=document.getElementById('searchMsg');
 function setMsg(t){searchMsg.textContent=t||'';}
 async function geocode(q){
