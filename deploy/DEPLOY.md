@@ -57,7 +57,7 @@ node --version   # must print v22.x or newer
 ## 2. Create the service user + code dir
 ```bash
 useradd --system --home /opt/safetymap --shell /usr/sbin/nologin safetymap
-git clone https://github.com/USER/REPO.git /opt/safetymap
+git clone https://github.com/markbosshard/safetymaps.git /opt/safetymap
 cd /opt/safetymap
 npm ci --omit=dev          # installs express + h3-js (both runtime deps)
 chown -R safetymap:safetymap /opt/safetymap
