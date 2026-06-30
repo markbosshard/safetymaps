@@ -57,6 +57,7 @@
  .snote{font-size:11px;color:#c4d0e0;line-height:1.45;margin-bottom:9px}
  .slist{margin:0 0 9px;padding-left:16px;font-size:11.5px;line-height:1.5}
  .slist a{color:#86b4e6}
+ .scat{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#7f8ca3;font-weight:700;margin:11px 0 3px}
  .sfoot{font-size:10px;color:var(--muted);border-top:1px solid var(--line);padding-top:7px;line-height:1.4}
  .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;color:#0c1320}
  .launch{position:absolute;z-index:1001;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;border-radius:10px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;gap:7px;box-shadow:0 2px 10px #0006;font-size:12px;font-weight:600;padding:10px 13px}
@@ -366,11 +367,24 @@ function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=
   if(k&&k!==cityKey){ buildCity(k,{fit:false}); } else { refreshLabels(); } }
 map.on('zoomend',updateView); map.on('moveend',updateView);
 buildOverview();
+const GENERAL=[
+  {text:'U.S. State Dept — Travel Advisories',url:'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html'},
+  {text:'U.S. OSAC — country reports',url:'https://www.osac.gov/'},
+  {text:'UK FCDO — Foreign Travel Advice',url:'https://www.gov.uk/foreign-travel-advice'},
+  {text:'Numbeo — Crime indices',url:'https://www.numbeo.com/crime/'}
+];
+function srcList(items){return '<ul class="slist">'+items.map(s=>s.url?`<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${esc(s.text)}</a></li>`:`<li>${esc(s.text)}</li>`).join('')+'</ul>';}
 function renderSources(){
   const C=CITIES[cityKey];
-  let h=`<div class="ltitle">${C.name}</div><div class="snote">${C.note}</div><ul class="slist">`;
-  h+=C.sources.map(s=>s.url?`<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.text}</a></li>`:`<li>${s.text}</li>`).join('');
-  h+='</ul><div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
+  let h=`<div class="ltitle">${esc(C.name)}</div><div class="snote">${esc(C.note)}</div>`;
+  const S=C.sources;
+  if(Array.isArray(S)){ if(S.length)h+=srcList(S); }
+  else if(S){
+    if(S.boundary&&S.boundary.length)h+='<div class="scat">Boundary geometry</div>'+srcList(S.boundary);
+    if(S.basis&&S.basis.length)h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis);
+  }
+  h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
+  h+='<div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
 const citySel=document.getElementById('city');
