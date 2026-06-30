@@ -33,6 +33,15 @@
  #ctrl.open{opacity:1;transform:none;visibility:visible}
  #ctrl .cap{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);display:block;margin-bottom:4px}
  #ctrl select{width:100%;background:#0b1322;color:#e8eef6;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12.5px}
+ .combo{position:relative}
+ #cityInput{width:100%;background:#0b1322;color:#e8eef6;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12.5px;outline:none}
+ #cityInput:focus{border-color:rgba(255,255,255,.45)}
+ #cityInput::placeholder{color:#5f6c82}
+ #cityList{position:absolute;top:100%;left:0;right:0;margin-top:4px;z-index:1400;background:rgba(16,26,46,.99);border:1px solid var(--line);border-radius:9px;max-height:262px;overflow:auto;box-shadow:0 14px 34px #000a}
+ #cityList.hidden{display:none}
+ #cityList::-webkit-scrollbar{width:8px}#cityList::-webkit-scrollbar-thumb{background:#2a3551;border-radius:8px}
+ .citygrp{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;padding:7px 11px 3px}
+ #cityList .sres{padding:7px 11px}
  #ctrl .grp{border-top:1px solid var(--line);padding-top:9px}
  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px}
  input[type=range]{width:96px;accent-color:var(--ui)}
@@ -155,7 +164,11 @@
    <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
    <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span>Feedback &amp; Contact</span></button>
    <div id="ctrl">
-     <div><span class="cap">City</span><select id="city"></select></div>
+     <div><span class="cap">City</span>
+       <div class="combo" id="cityCombo">
+         <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city"/>
+         <div id="cityList" class="hidden" role="listbox"></div>
+       </div></div>
      <div class="grp"><span class="cap">Underlay</span>
        <select id="base">
          <option value="osm" selected>Street map (OSM)</option>
@@ -207,7 +220,24 @@ const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='
 function dashSlug(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 const SLUG={},FROMSLUG={};
 Object.keys(CITIES).forEach(k=>{const s=dashSlug(CITIES[k].name);SLUG[k]=s;FROMSLUG[s]=k;FROMSLUG[k.toLowerCase()]=k;FROMSLUG[s.replace(/-/g,'')]=k;if(CITIES[k].slug)FROMSLUG[String(CITIES[k].slug).toLowerCase()]=k;});
-Object.assign(FROMSLUG,{cdmx:'mexico-city',mexico:'mexico-city',riodejaneiro:'rio-de-janeiro',ba:'buenos-aires',sp:'sao-paulo'});
+Object.assign(FROMSLUG,{cdmx:'mexico-city',mexico:'mexico-city',riodejaneiro:'rio-de-janeiro',ba:'buenos-aires',sp:'sao-paulo',cuzco:'cusco',saopaulo:'sao-paulo'});
+// Accent-insensitive, slightly typo-tolerant matching of a query against our predefined cities.
+function cityNorm(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+function lev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function cityMatch(q,limit){
+  const nq=cityNorm(q); if(nq.length<2)return [];
+  const out=[];
+  for(const k of Object.keys(CITIES)){
+    const nn=cityNorm(CITIES[k].name);
+    let rank;
+    if(nn===nq)rank=0; else if(nn.startsWith(nq))rank=1; else if(nn.includes(nq))rank=2;
+    else if(nq.length>=4 && lev(nq,nn)<=1)rank=3; else continue;
+    out.push({key:k,name:CITIES[k].name,rank});
+  }
+  out.sort((a,b)=>a.rank-b.rank || a.name.localeCompare(b.name,'en'));
+  return out.slice(0,limit||8);
+}
 // Pretty path routing: /sao-paulo, /mexico-city … with legacy #saopaulo and ?city= still accepted.
 function keyFromUrl(){
   let seg=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'');
@@ -413,7 +443,7 @@ function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.remov
 function setHeader(key){const C=CITIES[key];
   document.getElementById('h1').textContent=C.name+' — Latam Crime Map';
   document.getElementById('sub').textContent=C.model==='city'?'City-level overall rating · neighbourhoods not yet mapped':(C.districts.length+' areas · tap a district for its rating');
-  document.getElementById('city').value=key;}
+  currentCityName=C.name; const ci=document.getElementById('cityInput'); if(ci)ci.value=C.name;}
 function buildCity(key,opts){
   opts=opts||{}; clearCity(); cityKey=key; const C=CITIES[key];
   persist('sm_lastcity',key);
@@ -463,7 +493,8 @@ function buildOverview(){overviewGroup.clearLayers();
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
   if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
     document.getElementById('h1').textContent='Latam Crime Map';
-    document.getElementById('sub').textContent='Select a city, or click the map'; }
+    document.getElementById('sub').textContent='Select a city, or click the map';
+    currentCityName=''; const ci=document.getElementById('cityInput'); if(ci)ci.value=''; }
   else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); } }
 function cityAt(lon,lat){ let best=null,bestD=Infinity;
   for(const k of Object.keys(CITIES)){const b=CITIES[k].bbox,pad=0.15;
@@ -494,11 +525,33 @@ function renderSources(){
   h+='<div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
-const citySel=document.getElementById('city');
-function addOpts(label,keys){const og=document.createElement('optgroup');og.label=label;keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=CITIES[k].name;og.appendChild(o);});citySel.appendChild(og);}
-addOpts('Detailed maps',DET);
-addOpts('City-level (overall)',CITYLEVEL);
-citySel.onchange=e=>{buildCity(e.target.value);};
+// Typable City combobox (replaces the native <select>): focus shows all cities grouped; typing filters
+// with the same accent-insensitive, slightly typo-tolerant matcher as the search field.
+const cityInput=document.getElementById('cityInput'),cityListEl=document.getElementById('cityList');
+let currentCityName='',cityItems=[],cityActive=-1;
+const CITY_ORDER=[...DET.map(k=>({k,grp:'Detailed maps'})),...CITYLEVEL.map(k=>({k,grp:'City-level (overall)'}))];
+function hideCityList(){cityListEl.classList.add('hidden');cityListEl.innerHTML='';cityItems=[];cityActive=-1;}
+function renderCityList(q){
+  cityItems=[];let h='',curGrp='';
+  const entries = q ? cityMatch(q,40).map(c=>({key:c.key,name:c.name,grp:(CITIES[c.key].tier_level||'city')==='detailed'?'Detailed maps':'City-level (overall)'}))
+                    : CITY_ORDER.map(o=>({key:o.k,name:CITIES[o.k].name,grp:o.grp}));
+  if(!entries.length){cityListEl.innerHTML='<div class="sres note">No matching city</div>';cityListEl.classList.remove('hidden');return;}
+  entries.forEach(e=>{ if(!q && e.grp!==curGrp){curGrp=e.grp;h+=`<div class="citygrp">${esc(e.grp)}</div>`;}
+    cityItems.push(e); h+=`<button type="button" class="sres" data-i="${cityItems.length-1}"><span class="sname">${esc(e.name)}</span></button>`; });
+  cityListEl.innerHTML=h;cityListEl.classList.remove('hidden');cityActive=-1;
+}
+function setCityActive(i){const b=cityListEl.querySelectorAll('.sres[data-i]');if(!b.length)return;cityActive=(i+b.length)%b.length;b.forEach(x=>x.classList.remove('active'));b[cityActive].classList.add('active');b[cityActive].scrollIntoView({block:'nearest'});}
+function pickCity(e){ if(!e)return; hideCityList(); cityInput.value=e.name; cityInput.blur(); buildCity(e.key); }
+cityInput.addEventListener('focus',()=>{cityInput.select();renderCityList('');});
+cityInput.addEventListener('input',()=>renderCityList(cityInput.value.trim()));
+cityInput.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();cityListEl.classList.contains('hidden')?renderCityList(cityInput.value.trim()):setCityActive(cityActive+1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();setCityActive(cityActive-1);}
+  else if(e.key==='Enter'){e.preventDefault(); if(cityActive>=0&&cityItems[cityActive])pickCity(cityItems[cityActive]); else if(cityItems.length)pickCity(cityItems[0]);}
+  else if(e.key==='Escape'){hideCityList();cityInput.blur();}});
+cityListEl.addEventListener('click',e=>{const b=e.target.closest('.sres[data-i]');if(b)pickCity(cityItems[+b.dataset.i]);});
+cityInput.addEventListener('blur',()=>{setTimeout(()=>{cityInput.value=currentCityName||'';},170);});
+document.addEventListener('click',e=>{if(!e.target.closest('#cityCombo'))hideCityList();});
 document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();persist('sm_basemap',curKey);};
 document.getElementById('op').oninput=e=>{opacity=1-e.target.value/100;restyle();persist('sm_opacity',opacity);};
 document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();persist('sm_borders',showBorders);};
@@ -591,7 +644,7 @@ async function geocodeList(q){
 }
 function renderResults(items,note){
   sresItems=items;sresActive=-1;let h='';
-  items.forEach((it,i)=>{const tag=it.type==='district'?'<span class="stag">Area</span>':'';
+  items.forEach((it,i)=>{const tag=it.type==='district'?'<span class="stag">Area</span>':it.type==='city'?'<span class="stag">City</span>':'';
     h+=`<button type="button" class="sres" data-i="${i}"><span class="sname">${esc(it.name)}${tag}</span>${it.sub?`<span class="ssub">${esc(it.sub)}</span>`:''}</button>`;});
   if(!items.length)h=`<div class="sres note">${esc(note||'No matches found')}</div>`;
   searchResults.innerHTML=h;searchResults.classList.remove('hidden');
@@ -601,6 +654,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
   btns[sresActive].classList.add('active');btns[sresActive].scrollIntoView({block:'nearest'});}
 function selectResult(it){
   if(!it)return; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
+  if(it.type==='city'){ buildCity(it.key); return; }
   dropPin(it.lat,it.lon); map.flyTo([it.lat,it.lon],14);
   if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
   const d=districtAt(it.lon,it.lat);
@@ -612,14 +666,16 @@ function selectResult(it){
   showReportPoint(it.lat,it.lon);
 }
 async function runSuggest(q){
-  const seq=++searchSeq, locals=districtSuggest(q);
-  if(locals.length)renderResults(locals);
+  const seq=++searchSeq;
+  const cities=cityMatch(q,3).map(c=>({type:'city',name:c.name,sub:'City · open the map',key:c.key}));
+  const locals=districtSuggest(q);
+  if(cities.length||locals.length)renderResults([...cities,...locals]);
   let places; try{places=await geocodeList(q);}catch(e){places=undefined;}
   if(seq!==searchSeq)return;
-  if(places===undefined&&!locals.length){renderResults([],'Search needs the live site');return;}
-  const items=[...locals];
-  for(const p of (places||[])){if(items.length>=5)break;
-    if(items.some(x=>x.name.toLowerCase()===p.name.toLowerCase()||(Math.abs(x.lat-p.lat)<0.005&&Math.abs(x.lon-p.lon)<0.005)))continue;
+  if(places===undefined&&!cities.length&&!locals.length){renderResults([],'Search needs the live site');return;}
+  const items=[...cities,...locals];
+  for(const p of (places||[])){if(items.length>=6)break;
+    if(items.some(x=>x.name.toLowerCase()===p.name.toLowerCase()||(x.lat!=null&&Math.abs(x.lat-p.lat)<0.005&&Math.abs(x.lon-p.lon)<0.005)))continue;
     items.push(p);}
   renderResults(items);
 }
