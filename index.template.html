@@ -23,6 +23,8 @@
    --bar:#0F6E56;--bar-text:#FFFFFF;--accent:#C15A37;--accent-hover:#A94B2C;--accent-text:#FFFFFF;
    --ui:#1aa37c;--ui-hover:#16916d;--needle:#475569}
  *{box-sizing:border-box}
+ :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+ header :focus-visible,.hbtn:focus-visible,#search>button:focus-visible{outline-color:#fff}
  html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--ink);color:#e8eef6}
  #app{position:fixed;inset:0;display:flex;flex-direction:column}
  header{padding:10px 16px;background:var(--bar);color:var(--bar-text);border-bottom:1px solid rgba(0,0,0,.18);display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:relative;z-index:1200}
@@ -170,7 +172,7 @@
    <h1 id="h1">Latam Crime Map</h1>
    <span class="sub" id="sub"></span>
    <div id="search">
-     <input id="searchInput" type="text" placeholder="Search address or district…" autocomplete="off" enterkeyhint="search"/>
+     <input id="searchInput" type="text" placeholder="Search address or district…" autocomplete="off" enterkeyhint="search" aria-label="Search address, district or city" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list"/>
      <button id="searchBtn" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
      <div id="searchResults" class="hidden" role="listbox"></div>
    </div>
@@ -179,7 +181,7 @@
    <div id="ctrl">
      <div><span class="cap">City</span>
        <div class="combo" id="cityCombo">
-         <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city"/>
+         <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
          <div id="cityList" class="hidden" role="listbox"></div>
        </div></div>
      <div class="grp"><span class="cap">Underlay</span>
@@ -190,9 +192,9 @@
          <option value="cartoLight">Light / minimal</option>
        </select></div>
      <div class="grp">
-       <div class="row"><span>Transparency</span><input type="range" id="op" min="0" max="100" value="55"></div>
-       <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked><span class="slider"></span></label></div>
-       <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked><span class="slider"></span></label></div>
+       <div class="row"><span>Transparency</span><input type="range" id="op" min="0" max="100" value="55" aria-label="District fill transparency"></div>
+       <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
+       <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
    </div>
  </header>
@@ -220,7 +222,7 @@
  </div>
  <button class="launch" id="sourcesOpen" title="Show sources" aria-label="Show sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><span>Sources</span></button>
 
- <div id="modal" class="hidden"><div class="mback"></div><div class="mcard" id="mcard"></div></div>
+ <div id="modal" class="hidden" role="dialog" aria-modal="true"><div class="mback"></div><div class="mcard" id="mcard"></div></div>
  <div id="toast" class="hidden"></div>
 </div>
 <script>
@@ -372,8 +374,13 @@ async function reportSafe(btn){
   else { if(m){m.style.color='#9b2f2f';m.textContent=submitErr(res);} btn.disabled=false; }
 }
 // reusable modal + toast
-function setModal(html){document.getElementById('mcard').innerHTML=html;document.getElementById('modal').classList.remove('hidden');}
-function closeModal(){document.getElementById('modal').classList.add('hidden');document.getElementById('mcard').innerHTML='';}
+const MODAL_FOCUSABLE='button,[href],input,textarea,select,[tabindex]:not([tabindex="-1"])';
+let _lastFocus=null;
+function setModal(html){const m=document.getElementById('modal');_lastFocus=document.activeElement;
+  document.getElementById('mcard').innerHTML=html;m.classList.remove('hidden');
+  const f=m.querySelector(MODAL_FOCUSABLE);if(f)setTimeout(()=>{try{f.focus();}catch(e){}},0);}
+function closeModal(){const m=document.getElementById('modal');m.classList.add('hidden');document.getElementById('mcard').innerHTML='';
+  if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
@@ -557,15 +564,15 @@ function renderSources(){
 const cityInput=document.getElementById('cityInput'),cityListEl=document.getElementById('cityList');
 let currentCityName='',cityItems=[],cityActive=-1;
 const CITY_ORDER=[...DET.map(k=>({k,grp:'Detailed maps'})),...CITYLEVEL.map(k=>({k,grp:'City-level (overall)'}))];
-function hideCityList(){cityListEl.classList.add('hidden');cityListEl.innerHTML='';cityItems=[];cityActive=-1;}
+function hideCityList(){cityListEl.classList.add('hidden');cityListEl.innerHTML='';cityItems=[];cityActive=-1;cityInput.setAttribute('aria-expanded','false');}
 function renderCityList(q){
   cityItems=[];let h='',curGrp='';
   const entries = q ? cityMatch(q,40).map(c=>({key:c.key,name:c.name,grp:(CITIES[c.key].tier_level||'city')==='detailed'?'Detailed maps':'City-level (overall)'}))
                     : CITY_ORDER.map(o=>({key:o.k,name:CITIES[o.k].name,grp:o.grp}));
   if(!entries.length){cityListEl.innerHTML='<div class="sres note">No matching city</div>';cityListEl.classList.remove('hidden');return;}
   entries.forEach(e=>{ if(!q && e.grp!==curGrp){curGrp=e.grp;h+=`<div class="citygrp">${esc(e.grp)}</div>`;}
-    cityItems.push(e); h+=`<button type="button" class="sres" data-i="${cityItems.length-1}"><span class="sname">${esc(e.name)}</span></button>`; });
-  cityListEl.innerHTML=h;cityListEl.classList.remove('hidden');cityActive=-1;
+    cityItems.push(e); h+=`<button type="button" role="option" class="sres" data-i="${cityItems.length-1}"><span class="sname">${esc(e.name)}</span></button>`; });
+  cityListEl.innerHTML=h;cityListEl.classList.remove('hidden');cityActive=-1;cityInput.setAttribute('aria-expanded','true');
 }
 function setCityActive(i){const b=cityListEl.querySelectorAll('.sres[data-i]');if(!b.length)return;cityActive=(i+b.length)%b.length;b.forEach(x=>x.classList.remove('active'));b[cityActive].classList.add('active');b[cityActive].scrollIntoView({block:'nearest'});}
 function pickCity(e){ if(!e)return; hideCityList(); cityInput.value=e.name; cityInput.blur(); buildCity(e.key); }
@@ -597,6 +604,12 @@ setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.querySelector('.mback').onclick=closeModal;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+// Keep keyboard focus inside an open modal (Tab wraps).
+document.getElementById('modal').addEventListener('keydown',e=>{ if(e.key!=='Tab')return;
+  const f=[...document.getElementById('mcard').querySelectorAll(MODAL_FOCUSABLE)].filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(!f.length)return; const a=f[0],z=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+  else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();} });
 function ptInRing(x,y,r){let o=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const xi=r[i][0],yi=r[i][1],xj=r[j][0],yj=r[j][1];
   if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))o=!o;}return o;}
 function ptInGeom(x,y,g){const ps=g.type==='MultiPolygon'?g.coordinates:[g.coordinates];
@@ -657,7 +670,7 @@ map.on('click',async e=>{ if(overviewOn)return; const C=CITIES[cityKey]; if(!C||
 const searchInput=document.getElementById('searchInput');
 const searchResults=document.getElementById('searchResults');
 let searchSeq=0,searchTimer=null,sresItems=[],sresActive=-1;
-function hideResults(){searchResults.classList.add('hidden');searchResults.innerHTML='';sresItems=[];sresActive=-1;}
+function hideResults(){searchResults.classList.add('hidden');searchResults.innerHTML='';sresItems=[];sresActive=-1;searchInput.setAttribute('aria-expanded','false');}
 function rankName(name,ql){const n=name.toLowerCase();return n===ql?0:n.startsWith(ql)?1:2;}
 function districtSuggest(q){
   const ql=q.toLowerCase(),C=CITIES[cityKey];
@@ -680,9 +693,9 @@ async function geocodeList(q){
 function renderResults(items,note){
   sresItems=items;sresActive=-1;let h='';
   items.forEach((it,i)=>{const tag=it.type==='district'?'<span class="stag">Area</span>':it.type==='city'?'<span class="stag">City</span>':'';
-    h+=`<button type="button" class="sres" data-i="${i}"><span class="sname">${esc(it.name)}${tag}</span>${it.sub?`<span class="ssub">${esc(it.sub)}</span>`:''}</button>`;});
+    h+=`<button type="button" role="option" class="sres" data-i="${i}"><span class="sname">${esc(it.name)}${tag}</span>${it.sub?`<span class="ssub">${esc(it.sub)}</span>`:''}</button>`;});
   if(!items.length)h=`<div class="sres note">${esc(note||'No matches found')}</div>`;
-  searchResults.innerHTML=h;searchResults.classList.remove('hidden');
+  searchResults.innerHTML=h;searchResults.classList.remove('hidden');searchInput.setAttribute('aria-expanded','true');
 }
 function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]');if(!btns.length)return;
   sresActive=(i+btns.length)%btns.length;btns.forEach(b=>b.classList.remove('active'));
