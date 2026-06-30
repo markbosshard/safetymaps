@@ -8,10 +8,14 @@
     "extract": "node scripts/extract_data.js",
     "template": "node scripts/make_template.js",
     "serve": "node serve.js 8000",
+    "clusters": "node scripts/build_clusters.js",
+    "backend": "node backend/server.js",
+    "review": "node scripts/review.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "express": "^4.22.2",
     "h3-js": "^4.4.0"
   }
 }
