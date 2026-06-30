@@ -2,20 +2,20 @@
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="darkreader-lock"/><meta name="color-scheme" content="dark"/>
-<title>Latam Crime Map</title>
-<meta name="description" content="Neighbourhood and city safety across Latin America — 69 cities on a green-to-red scale, with crowd-sourced safety reports."/>
-<link rel="canonical" href="https://latamcrimemap.com/"/>
+<title>__PAGE_TITLE__</title>
+<meta name="description" content="__OG_DESC__"/>
+<link rel="canonical" href="__OG_URL__"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Latam Crime Map"/>
-<meta property="og:title" content="Latam Crime Map"/>
-<meta property="og:description" content="Neighbourhood and city safety across Latin America — 69 cities, with crowd-sourced reports."/>
-<meta property="og:url" content="https://latamcrimemap.com/"/>
-<meta property="og:image" content="https://latamcrimemap.com/og-image.png"/>
+<meta property="og:title" content="__OG_TITLE__"/>
+<meta property="og:description" content="__OG_DESC__"/>
+<meta property="og:url" content="__OG_URL__"/>
+<meta property="og:image" content="__OG_IMAGE__"/>
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Latam Crime Map"/>
-<meta name="twitter:description" content="Neighbourhood and city safety across Latin America — 69 cities, with crowd-sourced reports."/>
-<meta name="twitter:image" content="https://latamcrimemap.com/og-image.png"/>
+<meta name="twitter:title" content="__OG_TITLE__"/>
+<meta name="twitter:description" content="__OG_DESC__"/>
+<meta name="twitter:image" content="__OG_IMAGE__"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
@@ -261,7 +261,7 @@ function cityMatch(q,limit){
 // Pretty path routing: /sao-paulo, /mexico-city … with legacy #saopaulo and ?city= still accepted.
 function keyFromUrl(){
   let seg=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'');
-  if(seg==='index.html'||seg==='404.html')seg='';
+  seg=seg.replace(/\.html$/i,''); if(seg==='index'||seg==='404')seg='';
   let raw=(seg||location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase();
   if(CITIES[FROMSLUG[raw]])return FROMSLUG[raw];
   let s=raw.replace(/[^a-z0-9]/g,'');
@@ -778,7 +778,7 @@ searchToggle.addEventListener('click',()=>{const s=document.getElementById('sear
 // Like keyFromUrl but returns null when no city is named (the bare "/" home) instead of defaulting.
 function explicitCity(){
   let seg=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'');
-  if(seg==='index.html'||seg==='404.html')seg='';
+  seg=seg.replace(/\.html$/i,''); if(seg==='index'||seg==='404')seg='';
   let raw=(seg||location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase();
   if(!raw)return null;
   if(CITIES[FROMSLUG[raw]])return FROMSLUG[raw];

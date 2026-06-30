@@ -35,20 +35,44 @@ function bundle() {
 
   const buildDate = (process.env.BUILD_DATE || new Date().toISOString().slice(0, 10)); // YYYY-MM-DD
 
-  const out = template
+  const base = template
     .replace('/*__CITIES__*/{}', JSON.stringify(cities))
     .replace('/*__CMAP__*/[]', JSON.stringify(cmap))
     .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories))
     .replace('__MAPTILER_KEY__', mtKey)
     .replace(/__BUILD_DATE__/g, buildDate);
 
-  fs.writeFileSync(path.join(root, 'index.html'), out);
-  // 404.html = a copy of the app, so GitHub Pages serves it for pretty paths (/sao-paulo, …);
-  // the in-app router reads location.pathname and renders the right city.
-  fs.writeFileSync(path.join(root, '404.html'), out);
+  // Fill the OpenGraph/Twitter meta. The default (home/overview + any non-listed path via 404.html)
+  // uses the generic LatAm image; the top cities below get their OWN image so a shared /sao-paulo link
+  // previews São Paulo's map.
+  const SITE = 'https://latamcrimemap.com';
+  const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const fillMeta = (html, m) => html
+    .replace(/__PAGE_TITLE__/g, attr(m.title)).replace(/__OG_TITLE__/g, attr(m.title))
+    .replace(/__OG_DESC__/g, attr(m.desc)).replace(/__OG_URL__/g, m.url).replace(/__OG_IMAGE__/g, m.image);
+
+  const genericDesc = 'Neighbourhood and city safety across Latin America — 69 cities on a green-to-red scale, with crowd-sourced reports.';
+  const generic = fillMeta(base, { title: 'Latam Crime Map', desc: genericDesc, url: SITE + '/', image: SITE + '/og-image.png' });
+  fs.writeFileSync(path.join(root, 'index.html'), generic);
+  // 404.html = SPA fallback for pretty paths; the in-app router reads location.pathname.
+  fs.writeFileSync(path.join(root, '404.html'), generic);
+
+  // Per-city share pages (GitHub Pages serves /sao-paulo from sao-paulo.html).
+  const SHARE = require('./scripts/share_cities');
+  let pages = 0;
+  for (const key of SHARE) {
+    const C = cities[key]; if (!C) { console.warn('  share: missing city', key); continue; }
+    const html = fillMeta(base, {
+      title: `${C.name} — Latam Crime Map`,
+      desc: `${C.name}: neighbourhood safety on a green-to-red scale, with crowd-sourced reports — Latam Crime Map.`,
+      url: `${SITE}/${key}`, image: `${SITE}/share/${key}.png`,
+    });
+    fs.writeFileSync(path.join(root, key + '.html'), html);
+    pages++;
+  }
 
   const keys = Object.keys(cities);
-  console.log(`Built index.html (+404.html): ${out.length} bytes  (${keys.length} cities, ${cmap.length} cmap stops)`);
+  console.log(`Built index.html (+404.html, +${pages} city pages): ${generic.length} bytes  (${keys.length} cities, ${cmap.length} cmap stops)`);
 }
 
 function fetchStage() {
