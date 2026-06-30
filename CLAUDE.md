@@ -7,6 +7,13 @@ This is the **Latin America — City Safety Map**: a single-file Leaflet web app
 It documents the data schema, the scoring methodology and honesty rules, the build pipeline,
 the frontend features, and the follow-up task backlog.
 
+**For the crowd-input feature, [CROWDSOURCING.md](CROWDSOURCING.md) is authoritative and supersedes
+PROJECT.md.** It replaces the old symmetric up/down voting (Task B / the "Felt-safe / Felt-sketchy"
+terms in PROJECT.md §7, §10) with an asymmetric, bias-resistant "collect events, not feelings" design:
+one-tap **▲ Felt-safe**, but negatives go through **⚑ Report an issue** (named category + optional
+free text passed through a server-side **LLM bias gate**). Read its §0 before touching anything here —
+the whole design exists to avoid the SketchFactor/"Ghetto Tracker" racial-profiling failure mode.
+
 ## Quick facts
 - `index.html` — the entire app; all city data is embedded as a `CITIES` JS object. No build step
   is needed to *run* it (deploys as a static file).
