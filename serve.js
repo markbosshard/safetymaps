@@ -20,7 +20,17 @@ http.createServer((req, res) => {
   const filePath = path.join(root, path.normalize(urlPath));
   if (!filePath.startsWith(root)) { res.writeHead(403); return res.end('Forbidden'); }
   fs.readFile(filePath, (err, data) => {
-    if (err) { res.writeHead(404); return res.end('Not found'); }
+    if (err) {
+      // SPA fallback: an extension-less path (e.g. /sao-paulo) is a pretty route → serve index.html.
+      if (!path.extname(filePath)) {
+        return fs.readFile(path.join(root, 'index.html'), (e2, d2) => {
+          if (e2) { res.writeHead(404); return res.end('Not found'); }
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(d2);
+        });
+      }
+      res.writeHead(404); return res.end('Not found');
+    }
     res.writeHead(200, { 'Content-Type': TYPES[path.extname(filePath)] || 'application/octet-stream' });
     res.end(data);
   });

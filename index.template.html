@@ -175,10 +175,19 @@ const CMAP = /*__CMAP__*/[];
 const CAT = /*__CATEGORIES__*/{};
 const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires','lima','arequipa','guadalajara','monterrey','toluca','puebla','queretaro','aguascalientes','sanluispotosi','cuernavaca','belohorizonte','recife','salvador','fortaleza','curitiba','campinas','goiania','belem','maceio','vitoria','havana','santodomingo','panamacity','guatemalacity','sansalvador','asuncion','bucaramanga'];
 const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='city').sort((a,b)=>CITIES[a].name.localeCompare(CITIES[b].name,'en'));
+function dashSlug(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 const SLUG={},FROMSLUG={};
-Object.keys(CITIES).forEach(k=>{const s=CITIES[k].slug||k;SLUG[k]=s;FROMSLUG[s]=k;});
+Object.keys(CITIES).forEach(k=>{const s=dashSlug(CITIES[k].name);SLUG[k]=s;FROMSLUG[s]=k;FROMSLUG[k.toLowerCase()]=k;FROMSLUG[s.replace(/-/g,'')]=k;if(CITIES[k].slug)FROMSLUG[String(CITIES[k].slug).toLowerCase()]=k;});
 Object.assign(FROMSLUG,{cdmx:'mexico-city',mexico:'mexico-city',riodejaneiro:'rio-de-janeiro',ba:'buenos-aires',sp:'sao-paulo'});
-function keyFromUrl(){let s=(location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase().replace(/[^a-z]/g,'');return CITIES[FROMSLUG[s]]?FROMSLUG[s]:(CITIES[s]?s:'sao-paulo');}
+// Pretty path routing: /sao-paulo, /mexico-city … with legacy #saopaulo and ?city= still accepted.
+function keyFromUrl(){
+  let seg=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'');
+  if(seg==='index.html'||seg==='404.html')seg='';
+  let raw=(seg||location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase();
+  if(CITIES[FROMSLUG[raw]])return FROMSLUG[raw];
+  let s=raw.replace(/[^a-z0-9]/g,'');
+  return CITIES[FROMSLUG[s]]?FROMSLUG[s]:(CITIES[raw]?raw:'sao-paulo');
+}
 let cityKey='sao-paulo';
 function hx(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
 function lerp(a,b,t){return a+(b-a)*t}
@@ -216,7 +225,7 @@ function styleFor(d){const v=d.score;
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 // --- Crowd reports (CROWDSOURCING.md). Asymmetric: ▲ Felt-safe = one tap; ⚑ issue = a category sheet.
 // No live scoring — submissions are stored and applied via a MANUAL release every few days.
-const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://REPLACE-WITH-PROD-API';
+const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://api.latam-safety-map.com';
 const THANKS='Many thanks for becoming a part of our SafetyMaps Community! We update our maps every few days to reflect on feedback.';
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
@@ -352,7 +361,7 @@ function buildCity(key,opts){
   });
   const grp=L.featureGroup(layers); if(opts.fit!==false) map.fitBounds(grp.getBounds().pad(C.model==='city'?0.5:0.03));
   setHeader(key);
-  try{history.replaceState(null,'','#'+(SLUG[key]||key));}catch(e){}
+  try{if(!opts.fromPop)history.replaceState(null,'','/'+(SLUG[key]||key));}catch(e){}
   renderSources(); refreshLabels();
 }
 function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));if(typeof overviewGroup!=='undefined')overviewGroup.eachLayer(m=>m.setStyle({fillOpacity:opacity}));}
@@ -484,6 +493,7 @@ function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
   buildCity(keyFromUrl()); }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
+window.addEventListener('popstate',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k,{fromPop:true});});
 window.addEventListener('hashchange',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k);});
 </script>
 <!-- GoatCounter analytics -->

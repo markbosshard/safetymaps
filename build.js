@@ -36,9 +36,12 @@ function bundle() {
     .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories));
 
   fs.writeFileSync(path.join(root, 'index.html'), out);
+  // 404.html = a copy of the app, so GitHub Pages serves it for pretty paths (/sao-paulo, …);
+  // the in-app router reads location.pathname and renders the right city.
+  fs.writeFileSync(path.join(root, '404.html'), out);
 
   const keys = Object.keys(cities);
-  console.log(`Built index.html: ${out.length} bytes  (${keys.length} cities, ${cmap.length} cmap stops)`);
+  console.log(`Built index.html (+404.html): ${out.length} bytes  (${keys.length} cities, ${cmap.length} cmap stops)`);
 }
 
 function fetchStage() {
