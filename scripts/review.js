@@ -91,4 +91,12 @@ for (const f of feedback) {
 }
 console.log(`\nTotals: ${feedback.length} feedback item(s).`);
 
+// ---- notify emails (reporters who opted in to be told when the map updates) ----
+const emails = db.prepare(
+  `SELECT DISTINCT email FROM report WHERE released=0 AND email IS NOT NULL AND email<>'' ${where} ORDER BY email`
+).all(...params).map(r => r.email);
+console.log('\n=== NOTIFY EMAILS (opted in via a report) ===');
+if (!emails.length) console.log('  (none)');
+else { emails.forEach(e => console.log('  ' + e)); console.log(`\n  ${emails.length} address(es) to email after this release.`); }
+
 console.log('\nNext: edit cities.json for approved changes → `npm run build` → redeploy → `npm run review -- --release`.');

@@ -22,6 +22,7 @@ db.exec(`
     reason      TEXT,                       -- raw free text — review-only, never served publicly
     reason_class TEXT DEFAULT 'none',       -- reserved for a future gate; 'none' for now
     weight      REAL DEFAULT 0,             -- provisional weight (§5), finalised at manual review
+    email       TEXT,                       -- optional: notify this reporter when the map updates (PII, never served)
     lat         REAL,
     lng         REAL,
     token       TEXT NOT NULL,              -- anonymous browser UUID
@@ -46,13 +47,16 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_feedback_pending ON feedback(released);
 `);
 
+// Migration for DBs created before the `email` column existed (idempotent).
+try { db.exec('ALTER TABLE report ADD COLUMN email TEXT'); } catch (e) { /* column already exists */ }
+
 // Upsert: newest report from a token replaces its older one for the same area (§5 de-dupe).
 const upsertReport = db.prepare(`
-  INSERT INTO report (city, cluster_id, kind, category, first_hand, when_bucket, reason, weight, lat, lng, token, ip_hash, created_at)
-  VALUES (@city, @cluster_id, @kind, @category, @first_hand, @when_bucket, @reason, @weight, @lat, @lng, @token, @ip_hash, @created_at)
+  INSERT INTO report (city, cluster_id, kind, category, first_hand, when_bucket, reason, weight, email, lat, lng, token, ip_hash, created_at)
+  VALUES (@city, @cluster_id, @kind, @category, @first_hand, @when_bucket, @reason, @weight, @email, @lat, @lng, @token, @ip_hash, @created_at)
   ON CONFLICT (city, cluster_id, token) DO UPDATE SET
     kind=@kind, category=@category, first_hand=@first_hand, when_bucket=@when_bucket,
-    reason=@reason, weight=@weight, lat=@lat, lng=@lng, ip_hash=@ip_hash, created_at=@created_at, released=0
+    reason=@reason, weight=@weight, email=@email, lat=@lat, lng=@lng, ip_hash=@ip_hash, created_at=@created_at, released=0
 `);
 
 const insertFeedback = db.prepare(`

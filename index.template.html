@@ -14,7 +14,8 @@
  .hbtn{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:8px;width:36px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0;transition:.12s}
  .hbtn:hover,.hbtn.on{border-color:#3a4660;color:#fff;background:#16223a}
  .hbtn svg{width:18px;height:18px}
- .vote{margin-top:8px;display:flex;align-items:center;gap:6px}
+ .vote{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+ .leaflet-popup-content{margin:10px 12px;max-width:240px}
  .vbtn{-webkit-appearance:none;appearance:none;cursor:pointer;font-size:11px;font-weight:650;border-radius:7px;padding:3px 9px;border:1px solid #c9cfdb;background:#f3f5f9;color:#3a4660;transition:.12s}
  .vbtn.up:hover,.vbtn.up.mine{border-color:#2e7d52;color:#16653c;background:#dcf3e6}
  .vbtn.down:hover,.vbtn.down.mine{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
@@ -238,6 +239,7 @@ function openIssueSheet(){
     '<div class="mfield"><label>When (optional)</label><div class="chips" id="whenChips">'+whens+'</div></div>'+
     '<div class="mfield"><label>First-hand? (optional)</label><div class="chips" id="fhChips"><button type="button" class="chip" data-fh="1">Happened to me</button><button type="button" class="chip" data-fh="0">Heard about it</button></div></div>'+
     '<div class="mfield"><label>What happened, in your words (optional)</label><textarea id="reasonTxt" maxlength="1000" placeholder="e.g. phone snatched near the metro at night"></textarea></div>'+
+    '<div class="mfield"><label>Email (optional — we’ll email you when the map updates)</label><input type="email" id="issueEmail" placeholder="you@example.com"></div>'+
     '<div class="mrow"><button class="mbtn" onclick="closeModal()">Cancel</button><button class="mbtn primary" id="issueSubmit" disabled>Submit report</button></div>'+
     '<div class="mmsg" id="issueMsg"></div>'
   );
@@ -248,9 +250,10 @@ function openIssueSheet(){
   submit.onclick=async()=>{
     if(!cat)return; submit.disabled=true;
     const reason=document.getElementById('reasonTxt').value.trim();
+    const email=document.getElementById('issueEmail').value.trim();
     const payload={kind:'issue',category:cat,lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id};
     if(when)payload.when_bucket=when; if(fh!==null)payload.first_hand=(fh==='1');
-    if(reason)payload.reason=reason;
+    if(reason)payload.reason=reason; if(email)payload.email=email;
     let res; try{res=await postReport(payload);}catch(e){res={ok:false,error:'offline'};}
     const msg=document.getElementById('issueMsg');
     if(res.ok){ closeModal(); map.closePopup(); toast(res.message||THANKS); }
@@ -288,14 +291,18 @@ function popupContent(d){
 function openDistrict(d,ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
   popupCtx={areaName:d.name,cluster_id:d.cluster_id||null,lat:p.lat,lng:p.lng};
-  L.popup().setLatLng(ll).setContent(popupContent(d)).openOn(map);
+  L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
   const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
     hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
 }
 function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.removeLayer(l._tip);}); layers=[]; hovered=null;
   if(searchPin){map.removeLayer(searchPin);searchPin=null;} }
-function buildCity(key){
-  clearCity(); cityKey=key; const C=CITIES[key];
+function setHeader(key){const C=CITIES[key];
+  document.getElementById('h1').textContent=C.name+' — Safety Map';
+  document.getElementById('sub').textContent=C.model==='city'?'City-level overall rating · neighbourhoods not yet mapped':(C.districts.length+' areas · tap a district for its rating');
+  document.getElementById('city').value=key;}
+function buildCity(key,opts){
+  opts=opts||{}; clearCity(); cityKey=key; const C=CITIES[key];
   C.districts.forEach(d=>{
     const lyr=L.geoJSON({type:'Feature',geometry:d.geom},{style:styleFor(d)}).addTo(map);
     lyr._d=d; d._lyr=lyr; layers.push(lyr);
@@ -306,10 +313,8 @@ function buildCity(key){
     lyr.on('mouseout',()=>{ if(hovered===lyr){ lyr.setStyle(styleFor(lyr._d)); hovered=null; } });
     lyr.on('click',e=>openDistrict(d,e.latlng));
   });
-  const grp=L.featureGroup(layers); map.fitBounds(grp.getBounds().pad(C.model==='city'?0.5:0.03));
-  document.getElementById('h1').textContent=C.name+' — Safety Map';
-  document.getElementById('sub').textContent = C.model==='city' ? 'City-level overall rating · neighbourhoods not yet mapped' : (C.districts.length+' areas · tap a district for its rating');
-  document.getElementById('city').value=key;
+  const grp=L.featureGroup(layers); if(opts.fit!==false) map.fitBounds(grp.getBounds().pad(C.model==='city'?0.5:0.03));
+  setHeader(key);
   try{history.replaceState(null,'','#'+(SLUG[key]||key));}catch(e){}
   renderSources(); refreshLabels();
 }
@@ -321,7 +326,40 @@ function applyLabelColor(){const dark=DARKBASE[curKey];document.querySelectorAll
 function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length<=50; const z=map.getZoom();
   layers.forEach(l=>{const on=showLabels&&(small||z>=13); on?l._tip.addTo(map):map.removeLayer(l._tip);});
   if(showLabels)applyLabelColor();}
-map.on('zoomend',refreshLabels);
+// --- Overview (Task A): all cities as markers when zoomed out; lazy-focus a city when you zoom into it ---
+const OVERVIEW_Z=8;
+const overviewGroup=L.layerGroup();
+let overviewOn=false;
+function centerOf(key){const C=CITIES[key];
+  if((C.tier_level||'city')!=='detailed'){const d=C.districts[0];return [d.label[1],d.label[0]];}
+  let sx=0,sy=0,n=0;C.districts.forEach(d=>{if(d.label){sx+=d.label[0];sy+=d.label[1];n++;}});
+  return n?[sy/n,sx/n]:[(C.bbox[1]+C.bbox[3])/2,(C.bbox[0]+C.bbox[2])/2];}
+function overallScore(key){const C=CITIES[key];
+  if((C.tier_level||'city')!=='detailed')return C.districts[0].score;
+  let s=0,n=0;C.districts.forEach(d=>{if(d.score!=null){s+=d.score;n++;}});return n?s/n:null;}
+function buildOverview(){overviewGroup.clearLayers();
+  Object.keys(CITIES).forEach(key=>{const ll=centerOf(key);const sc=overallScore(key);
+    const m=L.circleMarker(ll,{radius:7,weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:.92});
+    m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-7]});
+    m.on('click',()=>{setOverview(false);map.flyTo(ll,CITIES[key].tier_level==='detailed'?11:10);buildCity(key,{fit:false});});
+    m.addTo(overviewGroup);});}
+function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
+  if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
+    document.getElementById('h1').textContent='Latin America — Safety Map';
+    document.getElementById('sub').textContent='All cities · tap a marker or zoom in'; }
+  else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); } }
+function cityAt(lon,lat){ let best=null,bestArea=Infinity;
+  for(const k of Object.keys(CITIES)){const b=CITIES[k].bbox,pad=0.15;
+    const w=Math.min(b[0],b[2])-pad,e=Math.max(b[0],b[2])+pad,s=Math.min(b[1],b[3])-pad,n=Math.max(b[1],b[3])+pad;
+    if(lon>=w&&lon<=e&&lat>=s&&lat<=n){const a=(e-w)*(n-s);if(a<bestArea){bestArea=a;best=k;}}}
+  return best;}
+function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=map.getZoom();
+  if(z<=OVERVIEW_Z){ setOverview(true); return; }
+  if(overviewOn) setOverview(false);
+  const c=map.getCenter(), k=cityAt(c.lng,c.lat);
+  if(k&&k!==cityKey){ buildCity(k,{fit:false}); } else { refreshLabels(); } }
+map.on('zoomend',updateView); map.on('moveend',updateView);
+buildOverview();
 function renderSources(){
   const C=CITIES[cityKey];
   let h=`<div class="ltitle">${C.name}</div><div class="snote">${C.note}</div><ul class="slist">`;
@@ -348,7 +386,7 @@ document.getElementById('legendCollapse').onclick=()=>setLegend(false);
 legendOpenBtn.onclick=()=>setLegend(true);
 document.getElementById('sourcesCollapse').onclick=()=>setSources(false);
 sourcesOpenBtn.onclick=()=>setSources(true);
-setCtrl(false); setLegend(false); setSources(false);
+setCtrl(true); setLegend(true); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.querySelector('.mback').onclick=closeModal;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
@@ -385,7 +423,10 @@ async function doSearch(){
 }
 searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doSearch();}});
 document.getElementById('searchBtn').addEventListener('click',doSearch);
-buildCity(keyFromUrl());
+function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
+  if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
+  buildCity(keyFromUrl()); }
+if(document.readyState==='complete') init(); else window.addEventListener('load',init);
 window.addEventListener('hashchange',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k);});
 </script>
 <!-- GoatCounter analytics -->

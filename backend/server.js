@@ -136,6 +136,7 @@ app.post('/report', async (req, res) => {
     when_bucket: when_bucket || null,
     reason: (typeof reason === 'string' && reason.trim()) ? reason.trim().slice(0, 1000) : null,
     weight: computeWeight({ kind, category, first_hand, when_bucket }),
+    email: (typeof b.email === 'string' && b.email.includes('@')) ? b.email.trim().slice(0, 200) : null,
     lat: typeof b.lat === 'number' ? b.lat : null,
     lng: typeof b.lng === 'number' ? b.lng : null,
     token: token.slice(0, 64), ip_hash: iph,
