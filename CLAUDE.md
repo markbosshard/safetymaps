@@ -21,10 +21,28 @@ the whole design exists to avoid the SketchFactor/"Ghetto Tracker" racial-profil
 - `build.py` — regenerates `index.html` from `cities.json` + `cmap.json`.
 
 ## Run locally
+Python isn't installed here; the pipeline is **Node**.
 ```
-python -m http.server 8000
-# open http://localhost:8000/index.html  (per-city routes: #saopaulo, #mexicocity, …)
+npm install
+npm run serve      # static map at http://localhost:8000/index.html  (routes: #saopaulo, …)
+npm run backend    # crowd API at http://localhost:8787  (Express + node:sqlite)
+npm run build      # regenerate index.html from index.template.html + cities.json + cmap.json + categories.json
+npm run clusters   # re-annotate cities.json with cluster_ids (Task C)
 ```
+
+## Crowd input & the manual-release cycle
+Crowd submissions (▲ Felt-safe / ⚑ Report an issue) and the **Feedback** form post to the backend and
+are **stored, not auto-applied**. The public map changes only when we release manually every few days:
+```
+npm run review                 # digest of pending reports + feedback, grouped by city/cluster
+# → review for bias, edit scores in cities.json for approved changes
+npm run build                  # rebuild index.html
+# → redeploy index.html (GitHub Pages)
+npm run review -- --release    # mark that batch applied
+```
+There is **no LLM gate and no admin web UI** (by design): the human review step is the bias filter.
+Deploy config: set `IP_SALT`, `ALLOWED_ORIGIN`, optional `TURNSTILE_SECRET` (see `backend/.env.example`),
+and replace the `REPLACE-WITH-PROD-API` URL in `index.template.html` with the deployed backend origin.
 
 ## Honesty rule (do not break)
 Ratings are editorial travel-safety synthesis (except São Paulo's continuous model). **Never fabricate

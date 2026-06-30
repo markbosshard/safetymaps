@@ -24,14 +24,16 @@ function bundle() {
   const template = read('index.template.html');
   const cities = JSON.parse(read('cities.json'));
   const cmap = JSON.parse(read('cmap.json'));
+  const categories = JSON.parse(read('categories.json'));
 
-  if (!template.includes('/*__CITIES__*/{}') || !template.includes('/*__CMAP__*/[]')) {
-    throw new Error('index.template.html is missing the /*__CITIES__*/ or /*__CMAP__*/ placeholder');
+  for (const ph of ['/*__CITIES__*/{}', '/*__CMAP__*/[]', '/*__CATEGORIES__*/{}']) {
+    if (!template.includes(ph)) throw new Error('index.template.html is missing placeholder ' + ph);
   }
 
   const out = template
     .replace('/*__CITIES__*/{}', JSON.stringify(cities))
-    .replace('/*__CMAP__*/[]', JSON.stringify(cmap));
+    .replace('/*__CMAP__*/[]', JSON.stringify(cmap))
+    .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories));
 
   fs.writeFileSync(path.join(root, 'index.html'), out);
 
