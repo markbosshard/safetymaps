@@ -346,18 +346,30 @@ function submitReportEmail(){
 function actionRow(){
   return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
 }
-async function postReport(payload){
-  const body=Object.assign({city:cityKey,token:smToken()},payload);
-  const r=await fetch(API+'/report',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+function buildBody(payload){return Object.assign({city:cityKey,token:smToken()},payload);}
+async function postBody(body){
+  let r; try{ r=await fetch(API+'/report',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}); }
+  catch(e){ return {ok:false,offline:true}; }              // no network at all
   let j={};try{j=await r.json();}catch(e){}
-  return Object.assign({status:r.status,ok:r.ok&&j.ok!==false},j);
+  return {ok:r.ok&&j.ok!==false,status:r.status,rate:r.status===429,server:r.status>=500,message:j.message};
 }
+async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; return res; }
+function submitErr(res){ return res.offline?'You’re offline — your report is saved and will send when you reconnect.'
+  : res.rate?'You’re sending a lot right now — please wait a minute and try again.'
+  : res.server?'Our server hiccuped — please try again shortly.'
+  : (res.message||'Couldn’t send — please try again.'); }
+// Offline queue: failed-while-offline reports are kept and re-sent on the next load/success.
+function loadQueue(){try{return JSON.parse(lsGet('sm_queue')||'[]');}catch(e){return [];}}
+function saveQueue(q){persist('sm_queue',JSON.stringify(q));}
+function queueBody(body){const q=loadQueue();q.push(body);saveQueue(q.slice(-50));}
+async function flushQueue(){const q=loadQueue();if(!q.length)return;const keep=[];for(const b of q){const res=await postBody(b);if(!res.ok&&(res.offline||res.server))keep.push(b);}saveQueue(keep);}
 async function reportSafe(btn){
   if(!popupCtx)return; btn.disabled=true;
   const m=document.getElementById('popmsg'); if(m){m.style.color='#6b7688';m.textContent='…';}
-  let res; try{res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});}catch(e){res={ok:false,error:'offline'};}
+  const res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});
   if(res.ok){ popupThanks(true); toast(res.message||THANKS); }
-  else { if(m){m.style.color='#9b2f2f';m.textContent=res.error==='offline'?'Couldn’t reach server':'Try later';} btn.disabled=false; }
+  else if(res.offline){ queueBody(res.body); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
+  else { if(m){m.style.color='#9b2f2f';m.textContent=submitErr(res);} btn.disabled=false; }
 }
 // reusable modal + toast
 function setModal(html){document.getElementById('mcard').innerHTML=html;document.getElementById('modal').classList.remove('hidden');}
@@ -398,9 +410,10 @@ function openIssueSheet(){
     const payload={kind:'issue',category:cat,lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id};
     if(when)payload.when_bucket=when; if(fh!==null)payload.first_hand=(fh==='1');
     if(reason)payload.reason=reason; if(email)payload.email=email;
-    let res; try{res=await postReport(payload);}catch(e){res={ok:false,error:'offline'};}
+    const res=await postReport(payload);
     if(res.ok){ closeModal(); popupThanks(false); toast(res.message||THANKS); }
-    else { msg.className='mmsg err'; msg.textContent=res.message||(res.error==='offline'?'Couldn’t reach server — try later.':'Please try again.'); submit.disabled=false; }
+    else if(res.offline){ queueBody(res.body); closeModal(); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
+    else { msg.className='mmsg err'; msg.textContent=submitErr(res); submit.disabled=false; }
   };
 }
 function openFeedback(){
@@ -419,9 +432,9 @@ function openFeedback(){
     const msg=document.getElementById('fbMsg');
     if(!text){msg.className='mmsg err';msg.textContent='Please enter a message.';return;}
     submit.disabled=true;
-    let res; try{const r=await fetch(API+'/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,email,token:smToken()})});res=await r.json();res.ok=(res.ok!==false)&&r.ok;}catch(e){res={ok:false};}
-    if(res&&res.ok){ closeModal(); toast((res&&res.message)||THANKS); }
-    else { msg.className='mmsg err'; msg.textContent='Couldn’t send — try later.'; submit.disabled=false; }
+    let res; try{const r=await fetch(API+'/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,email,token:smToken()})});let j={};try{j=await r.json();}catch(e){}res={ok:r.ok&&j.ok!==false,rate:r.status===429,server:r.status>=500,message:j.message};}catch(e){res={ok:false,offline:true};}
+    if(res.ok){ closeModal(); toast(res.message||THANKS); }
+    else { msg.className='mmsg err'; msg.textContent=res.offline?'You’re offline — please try again when you reconnect.':submitErr(res); submit.disabled=false; }
   };
 }
 const RHERE='<div class="rhere">📍 <i>Exact location matters</i> — not just the district. Future maps will be more detailed.</div>';
@@ -697,7 +710,8 @@ async function runSuggest(q){
   if(places===undefined&&!cities.length&&!locals.length){renderResults([],'Search needs the live site');return;}
   const items=[...cities,...locals];
   for(const p of (places||[])){if(items.length>=6)break;
-    if(items.some(x=>x.name.toLowerCase()===p.name.toLowerCase()||(x.lat!=null&&Math.abs(x.lat-p.lat)<0.005&&Math.abs(x.lon-p.lon)<0.005)))continue;
+    const pn=cityNorm(p.name);
+    if(items.some(x=>{const xn=cityNorm(x.name);return xn===pn||(xn&&pn&&(xn.startsWith(pn)||pn.startsWith(xn)))||(x.lat!=null&&Math.abs(x.lat-p.lat)<0.01&&Math.abs(x.lon-p.lon)<0.01);}))continue;
     items.push(p);}
   renderResults(items);
 }
@@ -769,6 +783,7 @@ function focusCity(key){
 function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
   restoreSettings();
+  flushQueue();                                   // re-send any reports queued while offline
   const loads=(parseInt(lsGet('sm_loadcount')||'0',10)||0)+1; persist('sm_loadcount',loads);
   const k=explicitCity();
   if(k){ focusCity(k); }
