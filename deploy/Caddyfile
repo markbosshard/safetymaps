@@ -1,0 +1,17 @@
+# SafetyMap backend reverse proxy with automatic HTTPS (Let's Encrypt).
+# Install: put this at /etc/caddy/Caddyfile, then `sudo systemctl reload caddy`.
+# DNS: point an A/AAAA record for api.yourdomain.com at the box BEFORE reloading
+#      (Caddy needs to reach the domain to issue the certificate).
+#
+# HTTPS is mandatory: the map is served over HTTPS (GitHub Pages), and browsers block
+# an HTTPS page from calling an HTTP backend (mixed content). Caddy handles TLS for you.
+
+{
+	# Email for the Let's Encrypt account / expiry notices.
+	email you@yourdomain.com
+}
+
+api.yourdomain.com {
+	encode gzip
+	reverse_proxy 127.0.0.1:8787
+}

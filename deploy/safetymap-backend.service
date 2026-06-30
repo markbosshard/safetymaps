@@ -1,0 +1,37 @@
+# SafetyMap crowd backend — systemd service.
+# Install: sudo cp deploy/safetymap-backend.service /etc/systemd/system/
+#          sudo systemctl daemon-reload && sudo systemctl enable --now safetymap-backend
+# Requires Node 22+ (for node:sqlite). Check the node path with: which node
+
+[Unit]
+Description=SafetyMap crowd backend (Express + node:sqlite)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=safetymap
+Group=safetymap
+WorkingDirectory=/opt/safetymap
+# --experimental-sqlite is required on Node 22.x and harmless on Node 24+.
+ExecStart=/usr/bin/node --experimental-sqlite backend/server.js
+EnvironmentFile=/etc/safetymap/backend.env
+Environment=NODE_ENV=production
+Restart=on-failure
+RestartSec=3
+
+# Persistent data dir: systemd creates /var/lib/safetymap (owned by the service user).
+# Point DB_PATH=/var/lib/safetymap/safetymap.db in the EnvironmentFile.
+StateDirectory=safetymap
+
+# Hardening — code in /opt/safetymap stays read-only; only the state dir is writable.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+# SafetyMap DB backup — daily at 03:30. Install:
+#   sudo cp deploy/safetymap-backup.cron /etc/cron.d/safetymap-backup
+# (file must be owned by root; runs as the safetymap user)
+SHELL=/bin/bash
+30 3 * * * safetymap /opt/safetymap/deploy/backup-safetymap.sh >> /var/backups/safetymap/backup.log 2>&1

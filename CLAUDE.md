@@ -44,6 +44,10 @@ There is **no LLM gate and no admin web UI** (by design): the human review step 
 Deploy config: set `IP_SALT`, `ALLOWED_ORIGIN`, optional `TURNSTILE_SECRET` (see `backend/.env.example`),
 and replace the `REPLACE-WITH-PROD-API` URL in `index.template.html` with the deployed backend origin.
 
+**Backend deployment:** map → GitHub Pages (static); backend → one small process on a VPS.
+See [deploy/DEPLOY.md](deploy/DEPLOY.md) for the full walkthrough (systemd unit, Caddy auto-HTTPS,
+env, backups). HTTPS is mandatory (the HTTPS map can't call an HTTP backend).
+
 ## Honesty rule (do not break)
 Ratings are editorial travel-safety synthesis (except São Paulo's continuous model). **Never fabricate
 per-neighbourhood ratings for a city you don't actually know** — city-level overall is honest; inventing
