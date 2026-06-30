@@ -279,3 +279,37 @@ Zona Hotelera vs downtown SMs; Tulum: pueblo / beach road / Aldea Zama; Zipolite
 - Analytics: GoatCounter script already embedded.
 - Backend (voting / data feeds): Hetzner box — FastAPI/Express + SQLite/Postgres, CORS to the Pages origin,
   or Supabase free tier to skip server ops.
+
+---
+
+## 13. Maintenance — what to refresh regularly
+
+A few things drift over time and need a periodic pass.
+
+### Ratings & their sources
+The editorial ratings are a synthesis of the advisories, crime indices and open datasets listed in
+**[§11 Appendix — exact data sources](#11-appendix--exact-data-sources)**. Those sources move — travel
+advisories get re-issued, Numbeo/crime indices shift, local datasets update — so **re-check them
+periodically and refresh the scores in `cities.json`**, then rebuild. Every `npm run build` stamps the
+Sources-panel footer with the build date ("Ratings refreshed …"), so the site always shows how current it is.
+Crowd submissions fold into the same loop via the manual release cycle (`npm run review` → edit
+`cities.json` → rebuild → redeploy; see CROWDSOURCING.md / CLAUDE.md).
+
+### Social media previews
+The preview shown when a link is shared (OpenGraph/Twitter) is baked into static `<meta>` tags + images —
+crawlers don't run JS — so it must be **regenerated whenever its inputs change**: branding/wording, the set
+of cities, or the top-20 share list (`scripts/share_cities.js`).
+
+```
+npm run shareimg     # per-city cards   -> share/<slug>.png   (the 20 cities in scripts/share_cities.js)
+npm run ogimage      # generic LatAm card -> og-image.png      (home/overview + every non-top-20 path)
+npm run build        # bakes <slug>.html with that city's og:image/title; index.html/404.html keep generic
+git add -A && git commit && git push    # GitHub Pages auto-deploys
+```
+What's what:
+- `share/<slug>.png` — a branded card rendered from each city's real district choropleth (top 20 only).
+- `<slug>.html` — a full app copy whose `<head>` points og:image at that city's card; Pages serves it for `/<slug>`.
+- `og-image.png` — the generic "Latam Crime Map" card; the fallback for the home page and any non-top-20 city.
+
+> Social platforms cache OG data. After changing an image or description, run the URL through the Facebook
+> Sharing Debugger / Twitter Card Validator once to force a re-scrape; fresh shares pick it up automatically.

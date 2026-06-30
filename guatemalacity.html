@@ -34,6 +34,8 @@
  .vote{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
  .leaflet-popup-content{margin:10px 12px;max-width:240px}
  .vbtn{-webkit-appearance:none;appearance:none;cursor:pointer;font-size:11px;font-weight:650;border-radius:7px;padding:3px 9px;border:1px solid #c9cfdb;background:#f3f5f9;color:#3a4660;transition:.12s}
+ .vbtn.up{border-color:#c3dccb;color:#2f6b46;background:#edf6f0}
+ .vbtn.flag{border-color:#ddc4c4;color:#8a4444;background:#f8efef}
  .vbtn.up:hover,.vbtn.up.mine{border-color:#2e7d52;color:#16653c;background:#dcf3e6}
  .vbtn.down:hover,.vbtn.down.mine{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
  .vtally{font-size:11px;color:#6b7688;font-weight:700;margin-left:2px}
@@ -597,7 +599,7 @@ function renderCityList(q){
   cityListEl.innerHTML=h;cityListEl.classList.remove('hidden');cityActive=-1;cityInput.setAttribute('aria-expanded','true');
 }
 function setCityActive(i){const b=cityListEl.querySelectorAll('.sres[data-i]');if(!b.length)return;cityActive=(i+b.length)%b.length;b.forEach(x=>x.classList.remove('active'));b[cityActive].classList.add('active');b[cityActive].scrollIntoView({block:'nearest'});}
-function pickCity(e){ if(!e)return; hideCityList(); cityInput.value=e.name; cityInput.blur(); buildCity(e.key); }
+function pickCity(e){ if(!e)return; hideCityList(); cityInput.value=e.name; cityInput.blur(); focusCity(e.key); }
 cityInput.addEventListener('focus',()=>{cityInput.select();renderCityList('');});
 cityInput.addEventListener('input',()=>renderCityList(cityInput.value.trim()));
 cityInput.addEventListener('keydown',e=>{
@@ -725,7 +727,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
   btns[sresActive].classList.add('active');btns[sresActive].scrollIntoView({block:'nearest'});}
 function selectResult(it){
   if(!it)return; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
-  if(it.type==='city'){ buildCity(it.key); return; }
+  if(it.type==='city'){ focusCity(it.key); return; }
   dropPin(it.lat,it.lon); map.flyTo([it.lat,it.lon],14);
   if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
   const d=districtAt(it.lon,it.lat);
@@ -811,10 +813,13 @@ function restoreSettings(){
 }
 // Focus a city on load: center+zoom first (fitBounds can land a big metro at <=OVERVIEW_Z and bounce
 // straight back to the overview), then build without re-fitting. Mirrors the marker-click path.
-function focusCity(key){
+// Focus a city without fitBounds: a big metro can fit at <=OVERVIEW_Z and bounce straight back to the
+// overview (updateView). Centre + fixed city zoom avoids that. Use for ALL city selection (load, dropdown,
+// search, back/forward) — only the overview marker click can flyTo + buildCity safely on its own.
+function focusCity(key,opts){
   setOverview(false);
   map.setView(centerOf(key), CITIES[key].tier_level==='detailed'?11:10, {animate:false});
-  buildCity(key,{fit:false});
+  buildCity(key,Object.assign({fit:false},opts||{}));
 }
 function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
@@ -828,8 +833,8 @@ function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(loads<=3) showWelcome();
 }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
-window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k,{fromPop:true});});
-window.addEventListener('hashchange',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k);});
+window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) focusCity(k,{fromPop:true});});
+window.addEventListener('hashchange',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) focusCity(k);});
 </script>
 <!-- GoatCounter analytics -->
 <script data-goatcounter="https://citysafety-proj.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="window.gcCount&&gcCount()"></script>
