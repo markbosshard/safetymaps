@@ -163,7 +163,7 @@
          <option value="cartoLight">Light / minimal</option>
        </select></div>
      <div class="grp">
-       <div class="row"><span>Risk fill</span><input type="range" id="op" min="0" max="100" value="72"></div>
+       <div class="row"><span>Risk fill</span><input type="range" id="op" min="0" max="100" value="45"></div>
        <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked><span class="slider"></span></label></div>
      </div>
@@ -269,7 +269,7 @@ function onTileErr(){
 function bindTiles(){Object.values(bases).forEach(l=>{l.off('tileerror',onTileErr).off('tileload',onTileOk);l.on('tileerror',onTileErr);l.on('tileload',onTileOk);});}
 bindTiles();
 hint.innerHTML='Base tiles aren’t loading here. <b>Open the site in a normal browser</b> — they load and align correctly there.';
-let opacity=0.72, showBorders=true, showLabels=true, hovered=null, searchPin=null;
+let opacity=0.45, showBorders=true, showLabels=true, hovered=null, searchPin=null;
 let layers=[];
 function styleFor(d){const v=d.score;
   return {color:showBorders?'#0d1426':color(v),weight:showBorders?0.7:0.3,opacity:showBorders?0.85:0.3,fillColor:color(v),fillOpacity:opacity};}
@@ -396,10 +396,7 @@ function openDistrict(d,ll){
 // Report a point ANYWHERE you tap — even outside a painted area (city peripheries, or cities with
 // just a single bubble). The backend buckets it from lat/lng (H3 for city-level, nearest district else).
 function pointPopupContent(){
-  const C=CITIES[cityKey];
-  const sub=C.model==='city'?'city-level · outside the mapped circle is fine':'a point you picked';
-  const head=`<b>${esc(C.name)}</b><br><small style="color:#56627a">📍 ${sub}</small>`;
-  return head+RHERE+actionRow();
+  return `<b>${esc(CITIES[cityKey].name)}</b>`+RHERE+actionRow();
 }
 function openPointReport(ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
