@@ -25,6 +25,12 @@ npm run build      # regenerate index.html from the data layer + template
 ```
 `npm run serve` is just static file hosting; only the backend (`:8787`) is a real server.
 
+### Map provider (MapTiler)
+Basemap tiles and search geocoding use **MapTiler**. Put your key in a gitignored `maptiler.key`
+file at the repo root (or set `MAPTILER_KEY` in the env); `npm run build` injects it into `index.html`.
+The key is origin-restricted in MapTiler, so it's safe to ship in the page. With no key, the app
+falls back to OpenStreetMap tiles + Nominatim geocoding (fine for local dev, not for production traffic).
+
 ## Repo layout
 - `index.html` — the deployed app (generated). `index.template.html` — markup/CSS/JS template.
 - `cities.json` / `cmap.json` / `categories.json` — editable data layer, bundled in by `build.js`.

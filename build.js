@@ -25,6 +25,9 @@ function bundle() {
   const cities = JSON.parse(read('cities.json'));
   const cmap = JSON.parse(read('cmap.json'));
   const categories = JSON.parse(read('categories.json'));
+  // MapTiler key: env var wins, else the gitignored maptiler.key file, else empty (app falls back to OSM/Nominatim).
+  const mtKey = (process.env.MAPTILER_KEY ||
+    (fs.existsSync(path.join(root, 'maptiler.key')) ? read('maptiler.key') : '')).trim();
 
   for (const ph of ['/*__CITIES__*/{}', '/*__CMAP__*/[]', '/*__CATEGORIES__*/{}']) {
     if (!template.includes(ph)) throw new Error('index.template.html is missing placeholder ' + ph);
@@ -33,7 +36,8 @@ function bundle() {
   const out = template
     .replace('/*__CITIES__*/{}', JSON.stringify(cities))
     .replace('/*__CMAP__*/[]', JSON.stringify(cmap))
-    .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories));
+    .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories))
+    .replace('__MAPTILER_KEY__', mtKey);
 
   fs.writeFileSync(path.join(root, 'index.html'), out);
   // 404.html = a copy of the app, so GitHub Pages serves it for pretty paths (/sao-paulo, …);

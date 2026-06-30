@@ -173,6 +173,7 @@
 const CITIES = /*__CITIES__*/{};
 const CMAP = /*__CMAP__*/[];
 const CAT = /*__CATEGORIES__*/{};
+const MAPTILER_KEY='__MAPTILER_KEY__';  // injected by build.js from maptiler.key / $MAPTILER_KEY (empty → OSM/Nominatim fallback)
 const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires','lima','arequipa','guadalajara','monterrey','toluca','puebla','queretaro','aguascalientes','sanluispotosi','cuernavaca','belohorizonte','recife','salvador','fortaleza','curitiba','campinas','goiania','belem','maceio','vitoria','havana','santodomingo','panamacity','guatemalacity','sansalvador','asuncion','bucaramanga'];
 const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='city').sort((a,b)=>CITIES[a].name.localeCompare(CITIES[b].name,'en'));
 function dashSlug(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
@@ -207,7 +208,11 @@ sw1.style.background=color(1.6);sw2.style.background=color(3.7);sw3.style.backgr
 const map=L.map('map',{zoomControl:false,attributionControl:true,minZoom:3}).setView([-23.6,-46.6],11);
 L.control.zoom({position:'topright'}).addTo(map);
 function mk(u,o){return L.tileLayer(u,Object.assign({maxZoom:19},o))}
-const bases={
+const bases = MAPTILER_KEY ? (function(){
+  const A='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+  const mt=(id,ext)=>mk(`https://api.maptiler.com/maps/${id}/{z}/{x}/{y}.${ext||'png'}?key=${MAPTILER_KEY}`,{attribution:A,tileSize:512,zoomOffset:-1,maxZoom:20});
+  return {osm:mt('streets-v2'),sat:mt('satellite','jpg'),cartoLight:mt('dataviz-light'),cartoDark:mt('dataviz-dark')};
+})() : {
  osm:mk('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',attribution:'&copy; OpenStreetMap'}),
  sat:mk('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri'}),
  cartoLight:mk('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{subdomains:'abcd',attribution:'&copy; OSM &copy; CARTO'}),
@@ -468,6 +473,13 @@ const searchInput=document.getElementById('searchInput'),searchMsg=document.getE
 function setMsg(t){searchMsg.textContent=t||'';}
 async function geocode(q){
   const C=CITIES[cityKey],[W,S,E,N]=C.bbox;
+  if(MAPTILER_KEY){
+    const cx=((W+E)/2).toFixed(5),cy=((S+N)/2).toFixed(5);
+    const url=`https://api.maptiler.com/geocoding/${encodeURIComponent(q)}.json?key=${MAPTILER_KEY}&limit=1&language=en&country=${C.country}&bbox=${W},${S},${E},${N}&proximity=${cx},${cy}`;
+    const r=await fetch(url);const j=await r.json();
+    if(j&&j.features&&j.features.length){const f=j.features[0];return {lat:f.center[1],lon:f.center[0],name:f.place_name};}
+    return null;
+  }
   const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=en&countrycodes=${C.country}&viewbox=${W},${N},${E},${S}&bounded=1&q=`+encodeURIComponent(q);
   const r=await fetch(url);const j=await r.json();
   return (j&&j.length)?{lat:+j[0].lat,lon:+j[0].lon,name:j[0].display_name}:null;

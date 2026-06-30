@@ -4,6 +4,9 @@ files.zip
 # Node
 node_modules/
 
+# MapTiler API key (injected into index.html at build time; never commit the source key)
+maptiler.key
+
 # Backend runtime data (local SQLite DB + WAL/SHM sidecars)
 backend/*.db*
 
