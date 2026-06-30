@@ -119,7 +119,30 @@ const S = {
   },
 };
 
-// Uniform sources for the 48 city-level entries (single overall rating, indicative circle).
+// Mexican metros upgraded to municipal choropleths (Task F) — shared boundary/basis.
+const MX = {
+  boundary: [
+    { text: 'geoBoundaries — MEX ADM2 municipios', url: 'https://www.geoboundaries.org' },
+    { text: 'Authority: INEGI — Marco Geoestadístico', url: 'https://www.inegi.org.mx/' },
+  ],
+  basis: [
+    { text: 'OSAC — Mexico', url: 'https://www.osac.gov/Country/Mexico' },
+    { text: 'Tiers: editorial travel-safety synthesis (advisories + traveller guidance)' },
+  ],
+};
+for (const k of ['toluca', 'aguascalientes', 'sanluispotosi', 'cuernavaca', 'queretaro', 'puebla']) S[k] = JSON.parse(JSON.stringify(MX));
+S['arequipa'] = {
+  boundary: [
+    { text: 'peru-geojson — juaneladio (INEI distritos)', url: 'https://github.com/juaneladio/peru-geojson' },
+    { text: 'Authority: INEI — Perú', url: 'https://www.inei.gob.pe/' },
+  ],
+  basis: [
+    { text: 'OSAC — Peru', url: 'https://www.osac.gov/Country/Peru' },
+    { text: 'Tiers: editorial travel-safety synthesis (advisories + traveller guidance)' },
+  ],
+};
+
+// Uniform sources for the city-level entries (single overall rating, indicative circle).
 const cityLevel = () => ({
   boundary: [
     { text: 'City centre: geonamescache (most-populous namesake)', url: 'https://github.com/yaph/geonamescache' },
@@ -134,7 +157,6 @@ const cityLevel = () => ({
 const corrected = {
   belem: { text: 'Coordinate corrected to Belém, Pará (verified)', url: 'https://www.geodatos.net/en/coordinates/brazil/belem' },
   campinas: { text: 'Coordinate corrected to Campinas, São Paulo (most-populous namesake)' },
-  puebla: { text: 'Coordinate corrected to Puebla, Puebla (most-populous namesake)' },
 };
 
 let set = 0;
