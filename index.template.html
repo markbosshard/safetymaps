@@ -173,7 +173,7 @@
 const CITIES = /*__CITIES__*/{};
 const CMAP = /*__CMAP__*/[];
 const CAT = /*__CATEGORIES__*/{};
-const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires','lima','arequipa','guadalajara','monterrey','toluca','puebla','queretaro','aguascalientes','sanluispotosi','cuernavaca'];
+const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires','lima','arequipa','guadalajara','monterrey','toluca','puebla','queretaro','aguascalientes','sanluispotosi','cuernavaca','belohorizonte','recife','salvador','fortaleza','curitiba','campinas','goiania','belem','maceio','vitoria','havana','santodomingo','panamacity','guatemalacity','sansalvador','asuncion','bucaramanga'];
 const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='city').sort((a,b)=>CITIES[a].name.localeCompare(CITIES[b].name,'en'));
 const SLUG={},FROMSLUG={};
 Object.keys(CITIES).forEach(k=>{const s=CITIES[k].slug||k;SLUG[k]=s;FROMSLUG[s]=k;});
