@@ -27,7 +27,7 @@ const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET || '';   // empty => skip 
 const MAX_REPORTS_PER_IP_DAY = parseInt(process.env.MAX_REPORTS_PER_IP_DAY || '60', 10);
 const MAX_FEEDBACK_PER_IP_DAY = parseInt(process.env.MAX_FEEDBACK_PER_IP_DAY || '10', 10);
 
-const THANKS = 'Many thanks for becoming a part of our SafetyMaps Community! ' +
+const THANKS = 'Many thanks for becoming a part of the Latam Crime Map community! ' +
   'We update our maps every few days to reflect on feedback.';
 const REJECT_PEOPLE = 'This map rates incidents and conditions, not who lives somewhere. ' +
   'Tell us what happened — e.g. a theft, a threat, bad lighting.';
@@ -94,7 +94,7 @@ app.use(express.json({ limit: '16kb' }));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
   res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
@@ -180,6 +180,26 @@ app.get('/reports', (req, res) => {
     };
   }
   res.json(out);
+});
+
+// A reporter can list and withdraw THEIR OWN pending reports (token-scoped; no PII, never raw reason).
+app.get('/my-reports', (req, res) => {
+  const token = req.query.token;
+  if (!token || typeof token !== 'string') return res.status(400).json({ ok: false, error: 'missing token' });
+  const reports = dbm.myReports.all(token.slice(0, 64)).map(r => ({
+    id: r.id, city: r.city, kind: r.kind, category: r.category, when_bucket: r.when_bucket, created_at: r.created_at,
+    city_name: (CITIES[r.city] && CITIES[r.city].name) || r.city,
+    category_label: (r.category && CAT_BY_KEY[r.category]) ? CAT_BY_KEY[r.category].label : null,
+  }));
+  res.json({ ok: true, reports });
+});
+app.delete('/report/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const token = (req.body && req.body.token) || req.query.token;
+  if (!id || !token || typeof token !== 'string') return res.status(400).json({ ok: false, error: 'missing id/token' });
+  const info = dbm.deleteMyReport.run(id, token.slice(0, 64));
+  if (!info.changes) return res.status(404).json({ ok: false, error: 'not found' });
+  res.json({ ok: true });
 });
 
 app.listen(PORT, () => {

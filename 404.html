@@ -152,6 +152,10 @@
  .mbtn.primary:disabled{opacity:.5;cursor:not-allowed}
  .mmsg{font-size:12px;margin-top:10px;line-height:1.4;min-height:1px}
  .mmsg.ok{color:#9fe6c0}.mmsg.err{color:#ffb4b4}
+ .mrlink{background:none;border:none;color:#86b4e6;font-size:12px;cursor:pointer;padding:0;font-family:inherit}
+ .mrlink:hover{color:#a9cdf2}
+ .myr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+ .myr:first-child{border-top:none}
  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2500;background:#16223a;border:1px solid var(--ui);color:#eaf2ff;padding:12px 16px;border-radius:10px;font-size:13px;max-width:340px;text-align:center;line-height:1.45;box-shadow:0 10px 30px #0008}
  #toast.err{background:#3a2326;border-color:#b14a4a;color:#ffd9d9}
  @media(max-width:680px){
@@ -196,6 +200,7 @@
        <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
+     <div class="grp"><button id="myReportsBtn" class="mrlink">My reports ›</button></div>
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
@@ -423,6 +428,23 @@ function openIssueSheet(){
     else { msg.className='mmsg err'; msg.textContent=submitErr(res); submit.disabled=false; }
   };
 }
+async function openMyReports(){
+  setModal('<h3>My reports</h3><p class="msub">Reports you’ve submitted from this browser that are awaiting our review. You can withdraw any of them.</p><div id="myrList" style="font-size:13px;color:#cdd6e4">Loading…</div><div class="mrow"><button class="mbtn" onclick="closeModal()">Close</button></div>');
+  let data; try{const r=await fetch(API+'/my-reports?token='+encodeURIComponent(smToken()));data=await r.json();}catch(e){data=null;}
+  const el=document.getElementById('myrList'); if(!el)return;
+  if(!data||!data.ok){ el.textContent='Couldn’t load your reports — please try again later.'; return; }
+  if(!data.reports.length){ el.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; return; }
+  el.innerHTML=data.reports.map(rp=>{
+    const what=rp.kind==='safe'?'▲ Felt-safe':'⚑ '+esc(rp.category_label||'Issue');
+    const d=(rp.created_at||'').slice(0,10);
+    return '<div class="myr" data-id="'+rp.id+'"><div><b>'+esc(rp.city_name)+'</b> · '+what+' <span style="color:#8896ad">· '+d+'</span></div><button class="mbtn" style="flex:none;width:auto;padding:5px 10px" onclick="withdrawReport('+rp.id+',this)">Withdraw</button></div>';
+  }).join('');
+}
+async function withdrawReport(id,btn){ btn.disabled=true; btn.textContent='…';
+  let ok=false; try{const r=await fetch(API+'/report/'+id,{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({token:smToken()})});const j=await r.json().catch(()=>({}));ok=r.ok&&j.ok;}catch(e){}
+  if(ok){ const row=btn.closest('.myr'); if(row)row.remove(); const list=document.getElementById('myrList'); if(list&&!list.querySelector('.myr'))list.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; }
+  else { btn.disabled=false; btn.textContent='Retry'; }
+}
 function openFeedback(){
   setModal(
     '<h3>Feedback &amp; Contact</h3>'+
@@ -602,6 +624,7 @@ document.getElementById('sourcesCollapse').onclick=()=>setSources(false);
 sourcesOpenBtn.onclick=()=>setSources(true);
 setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
+document.getElementById('myReportsBtn').onclick=openMyReports;
 document.querySelector('.mback').onclick=closeModal;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 // Keep keyboard focus inside an open modal (Tab wraps).

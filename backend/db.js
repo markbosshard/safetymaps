@@ -82,9 +82,18 @@ const topCategories = db.prepare(`
   GROUP BY category ORDER BY n DESC LIMIT 2
 `);
 
+// A reporter's OWN pending reports (token-scoped). No PII, no raw `reason` — just enough to recognise
+// and withdraw a pin.
+const myReports = db.prepare(`
+  SELECT id, city, cluster_id, kind, category, when_bucket, created_at
+  FROM report WHERE token=? AND released=0 ORDER BY created_at DESC LIMIT 100
+`);
+const deleteMyReport = db.prepare(`DELETE FROM report WHERE id=? AND token=? AND released=0`);
+
 module.exports = {
   db, DB_PATH,
   upsertReport, insertFeedback,
   countReportsByIp, countFeedbackByIp,
   aggByCity, topCategories,
+  myReports, deleteMyReport,
 };
