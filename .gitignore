@@ -1,6 +1,13 @@
 # Delivered archive (source of index.html + PROJECT.md)
 files.zip
 
+# Node
+node_modules/
+
+# Backend runtime data (local SQLite DB)
+backend/*.db
+backend/*.db-journal
+
 # Python
 __pycache__/
 *.pyc

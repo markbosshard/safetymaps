@@ -10,5 +10,8 @@
     "serve": "node serve.js 8000",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "h3-js": "^4.4.0"
+  }
 }
