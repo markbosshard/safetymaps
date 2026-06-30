@@ -159,7 +159,7 @@
 const CITIES = /*__CITIES__*/{};
 const CMAP = /*__CMAP__*/[];
 const CAT = /*__CATEGORIES__*/{};
-const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires'];
+const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires','lima'];
 const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='city').sort((a,b)=>CITIES[a].name.localeCompare(CITIES[b].name,'en'));
 const SLUG={},FROMSLUG={};
 Object.keys(CITIES).forEach(k=>{const s=CITIES[k].slug||k;SLUG[k]=s;FROMSLUG[s]=k;});
@@ -371,7 +371,7 @@ const citySel=document.getElementById('city');
 function addOpts(label,keys){const og=document.createElement('optgroup');og.label=label;keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=CITIES[k].name;og.appendChild(o);});citySel.appendChild(og);}
 addOpts('Detailed maps',DET);
 addOpts('City-level (overall)',CITYLEVEL);
-citySel.onchange=e=>{buildCity(e.target.value);setCtrl(false);};
+citySel.onchange=e=>{buildCity(e.target.value);};
 document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();};
 document.getElementById('op').oninput=e=>{opacity=e.target.value/100;restyle();};
 document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();};
