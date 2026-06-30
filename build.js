@@ -33,11 +33,14 @@ function bundle() {
     if (!template.includes(ph)) throw new Error('index.template.html is missing placeholder ' + ph);
   }
 
+  const buildDate = (process.env.BUILD_DATE || new Date().toISOString().slice(0, 10)); // YYYY-MM-DD
+
   const out = template
     .replace('/*__CITIES__*/{}', JSON.stringify(cities))
     .replace('/*__CMAP__*/[]', JSON.stringify(cmap))
     .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories))
-    .replace('__MAPTILER_KEY__', mtKey);
+    .replace('__MAPTILER_KEY__', mtKey)
+    .replace(/__BUILD_DATE__/g, buildDate);
 
   fs.writeFileSync(path.join(root, 'index.html'), out);
   // 404.html = a copy of the app, so GitHub Pages serves it for pretty paths (/sao-paulo, …);

@@ -3,6 +3,19 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="darkreader-lock"/><meta name="color-scheme" content="dark"/>
 <title>Latam Crime Map</title>
+<meta name="description" content="Neighbourhood and city safety across Latin America — 69 cities on a green-to-red scale, with crowd-sourced safety reports."/>
+<link rel="canonical" href="https://latamcrimemap.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Latam Crime Map"/>
+<meta property="og:title" content="Latam Crime Map"/>
+<meta property="og:description" content="Neighbourhood and city safety across Latin America — 69 cities, with crowd-sourced reports."/>
+<meta property="og:url" content="https://latamcrimemap.com/"/>
+<meta property="og:image" content="https://latamcrimemap.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Latam Crime Map"/>
+<meta name="twitter:description" content="Neighbourhood and city safety across Latin America — 69 cities, with crowd-sourced reports."/>
+<meta name="twitter:image" content="https://latamcrimemap.com/og-image.png"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
@@ -523,7 +536,7 @@ function renderSources(){
   else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis); }
   if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">More resources</div>'+srcList(C.resources);
   h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
-  h+='<div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
+  h+='<div class="sfoot"><b>Ratings refreshed __BUILD_DATE__.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
 // Typable City combobox (replaces the native <select>): focus shows all cities grouped; typing filters

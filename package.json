@@ -14,6 +14,7 @@
     "landmask": "node scripts/build_landmask.js",
     "clipland": "node scripts/clip_to_land.js",
     "resources": "node scripts/add_resources.js",
+    "ogimage": "node scripts/make_og_image.js",
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "mapshaper": "^0.7.33",
-    "polygon-clipping": "^0.15.7"
+    "polygon-clipping": "^0.15.7",
+    "sharp": "^0.35.2"
   }
 }
