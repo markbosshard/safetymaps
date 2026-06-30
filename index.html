@@ -367,6 +367,9 @@ function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length
 const OVERVIEW_Z=8;
 const overviewGroup=L.layerGroup();
 let overviewOn=false;
+// Bigger dots the further you zoom out (base was 7): ~2x at country/state view, ~1.5x near city zoom.
+function overviewRadius(){const z=map.getZoom();return z<=6?14:(z===7?12:11);}
+function sizeOverview(){const r=overviewRadius();overviewGroup.eachLayer(m=>m.setRadius(r));}
 function centerOf(key){const C=CITIES[key];
   if((C.tier_level||'city')!=='detailed'){const d=C.districts[0];return [d.label[1],d.label[0]];}
   let sx=0,sy=0,n=0;C.districts.forEach(d=>{if(d.label){sx+=d.label[0];sy+=d.label[1];n++;}});
@@ -376,8 +379,8 @@ function overallScore(key){const C=CITIES[key];
   let s=0,n=0;C.districts.forEach(d=>{if(d.score!=null){s+=d.score;n++;}});return n?s/n:null;}
 function buildOverview(){overviewGroup.clearLayers();
   Object.keys(CITIES).forEach(key=>{const ll=centerOf(key);const sc=overallScore(key);
-    const m=L.circleMarker(ll,{radius:7,weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity});
-    m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-7]});
+    const m=L.circleMarker(ll,{radius:overviewRadius(),weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity});
+    m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-13]});
     m.on('click',()=>{setOverview(false);map.flyTo(ll,CITIES[key].tier_level==='detailed'?11:10);buildCity(key,{fit:false});});
     m.addTo(overviewGroup);});}
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
@@ -391,7 +394,7 @@ function cityAt(lon,lat){ let best=null,bestD=Infinity;
     if(lon>=w&&lon<=e&&lat>=s&&lat<=n){const c=centerOf(k),d=(c[1]-lon)**2+(c[0]-lat)**2;if(d<bestD){bestD=d;best=k;}}}
   return best;}
 function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=map.getZoom();
-  if(z<=OVERVIEW_Z){ setOverview(true); return; }
+  if(z<=OVERVIEW_Z){ setOverview(true); sizeOverview(); return; }
   if(overviewOn) setOverview(false);
   const c=map.getCenter(), k=cityAt(c.lng,c.lat);
   if(k&&k!==cityKey){ buildCity(k,{fit:false}); } else { refreshLabels(); } }
