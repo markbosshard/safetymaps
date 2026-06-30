@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="darkreader-lock"/><meta name="color-scheme" content="dark"/>
+<title>Latin America — City Safety Maps</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+ :root{--ink:#0d1426;--panel:#101a2e;--line:#26324a;--muted:#8896ad}
+ *{box-sizing:border-box}
+ html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--ink);color:#e8eef6}
+ #app{position:fixed;inset:0;display:flex;flex-direction:column}
+ header{padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:relative;z-index:1200}
+ .hbtn{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:8px;width:36px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0;transition:.12s}
+ .hbtn:hover,.hbtn.on{border-color:#3a4660;color:#fff;background:#16223a}
+ .hbtn svg{width:18px;height:18px}
+ .vote{margin-top:8px;display:flex;align-items:center;gap:6px}
+ .vbtn{-webkit-appearance:none;appearance:none;cursor:pointer;font-size:11px;font-weight:650;border-radius:7px;padding:3px 9px;border:1px solid #c9cfdb;background:#f3f5f9;color:#3a4660;transition:.12s}
+ .vbtn.up:hover,.vbtn.up.mine{border-color:#2e7d52;color:#16653c;background:#dcf3e6}
+ .vbtn.down:hover,.vbtn.down.mine{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
+ .vtally{font-size:11px;color:#6b7688;font-weight:700;margin-left:2px}
+ header h1{font-size:15px;font-weight:650;margin:0}
+ header .sub{font-size:12px;color:var(--muted)}
+ #map{flex:1;background:#0d1426}
+ .leaflet-tooltip.dlabel{background:transparent;border:none;box-shadow:none;color:#0c1320;font-size:10px;font-weight:700;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff;padding:0}
+ .leaflet-tooltip.dlabel.dark{color:#fff;text-shadow:0 0 2px #000,0 0 3px #000,0 0 4px #000}
+ .panel{position:absolute;z-index:1000;background:rgba(16,26,46,.93);border:1px solid var(--line);border-radius:10px;padding:12px 13px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+ #ctrl{position:absolute;top:100%;left:12px;margin-top:7px;z-index:1100;display:flex;flex-direction:column;gap:9px;min-width:204px;background:rgba(16,26,46,.97);border:1px solid var(--line);border-radius:10px;padding:12px 13px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 12px 30px #0008;transform-origin:top left;transition:opacity .14s ease,transform .14s ease}
+ #ctrl:not(.open){opacity:0;transform:scaleY(.93) translateY(-8px);pointer-events:none;visibility:hidden}
+ #ctrl.open{opacity:1;transform:none;visibility:visible}
+ #ctrl .cap{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);display:block;margin-bottom:4px}
+ #ctrl select{width:100%;background:#0b1322;color:#e8eef6;border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12.5px}
+ #ctrl .grp{border-top:1px solid var(--line);padding-top:9px}
+ .row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px}
+ input[type=range]{width:96px;accent-color:#7aa7d6}
+ .switch{position:relative;width:38px;height:20px;flex:none}.switch input{display:none}
+ .slider{position:absolute;inset:0;background:#2a3551;border-radius:20px;transition:.15s;cursor:pointer}
+ .slider:before{content:"";position:absolute;height:14px;width:14px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s}
+ .switch input:checked + .slider{background:#3f7cc0}.switch input:checked + .slider:before{transform:translateX(18px)}
+ .phead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+ #legend .phead,#sources .phead{margin-bottom:9px}
+ .ptitle{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600}
+ .pbtn{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:7px;width:28px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex:none}
+ .pbtn:hover{border-color:#3a4660;color:#fff}.pbtn svg{width:15px;height:15px}
+ #legend{right:12px;bottom:18px;min-width:208px;max-width:240px;max-height:70vh;overflow:auto}
+ #legend .ltitle{font-size:11px;font-weight:600;margin-bottom:9px}
+ .cbrow{display:flex;gap:8px;height:140px}
+ .cbar{width:16px;border-radius:4px;border:1px solid rgba(255,255,255,.25)}
+ .ticks{display:flex;flex-direction:column;justify-content:space-between;font-size:10.5px;color:var(--muted)}
+ .tiers{margin-top:10px;border-top:1px solid var(--line);padding-top:9px;display:flex;flex-direction:column;gap:5px}
+ .tier{display:flex;align-items:center;gap:8px;font-size:11.5px}
+ .tier .sw{width:13px;height:13px;border-radius:3px;border:1px solid rgba(255,255,255,.25);flex:none}
+ .tier small{color:var(--muted)}
+ #sources{left:12px;bottom:18px;min-width:230px;max-width:300px;max-height:70vh;overflow:auto}
+ #sources .ltitle{font-size:11px;font-weight:600;margin-bottom:8px}
+ .snote{font-size:11px;color:#c4d0e0;line-height:1.45;margin-bottom:9px}
+ .slist{margin:0 0 9px;padding-left:16px;font-size:11.5px;line-height:1.5}
+ .slist a{color:#86b4e6}
+ .sfoot{font-size:10px;color:var(--muted);border-top:1px solid var(--line);padding-top:7px;line-height:1.4}
+ .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;color:#0c1320}
+ .launch{position:absolute;z-index:1001;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;border-radius:10px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;gap:7px;box-shadow:0 2px 10px #0006;font-size:12px;font-weight:600;padding:10px 13px}
+ .launch:hover{border-color:#3a4660}.launch svg{width:16px;height:16px;flex:none}
+ #legendOpen{right:12px;bottom:18px}#sourcesOpen{left:12px;bottom:18px}
+ #ctrlOpen{display:none}
+ #search{margin-left:auto;display:flex;align-items:center;gap:6px;position:relative}
+ #search input{background:#0b1322;border:1px solid var(--line);color:#e8eef6;border-radius:8px;padding:7px 10px;font-size:13px;width:200px;outline:none}
+ #search input::placeholder{color:#5f6c82}#search input:focus{border-color:#3f7cc0}
+ #search button{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+ #search button:hover{border-color:#3a4660;color:#fff}#search button svg{width:16px;height:16px}
+ #search .smsg{position:absolute;top:100%;left:2px;font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;text-shadow:0 1px 2px #000}
+ .pinwrap{background:transparent;border:none}
+ .hidden{display:none!important}
+ #hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:1200;display:none;background:#3a2326;border:1px solid #6b3b3b;color:#ffd9d9;font-size:12px;padding:8px 12px;border-radius:8px;max-width:340px;text-align:center;line-height:1.4}
+ @media(max-width:680px){#search{margin-left:0;width:100%}#search input{flex:1;width:auto}#legend,#sources{max-width:46vw;min-width:0}}
+</style></head>
+<body><div id="app">
+ <header>
+   <button id="menuBtn" class="hbtn" aria-label="Map controls" aria-expanded="false" title="Map controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+   <h1 id="h1">City Safety Map</h1>
+   <span class="sub" id="sub"></span>
+   <div id="search">
+     <input id="searchInput" type="text" placeholder="Search address or district…" autocomplete="off" enterkeyhint="search"/>
+     <button id="searchBtn" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+     <span class="smsg" id="searchMsg"></span>
+   </div>
+   <div id="ctrl">
+     <div><span class="cap">City</span><select id="city"></select></div>
+     <div class="grp"><span class="cap">Underlay</span>
+       <select id="base">
+         <option value="osm" selected>Street map (OSM)</option>
+         <option value="sat">Aerial / satellite</option>
+         <option value="cartoDark">Dark</option>
+         <option value="cartoLight">Light / minimal</option>
+       </select></div>
+     <div class="grp">
+       <div class="row"><span>Risk fill</span><input type="range" id="op" min="0" max="100" value="72"></div>
+       <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked><span class="slider"></span></label></div>
+       <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked><span class="slider"></span></label></div>
+     </div>
+   </div>
+ </header>
+ <div id="map"></div><div id="hint"></div>
+
+ <div id="legend" class="panel">
+   <div class="phead"><span class="ptitle">Legend</span>
+     <button class="pbtn" id="legendCollapse" title="Collapse" aria-label="Collapse legend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></button></div>
+   <div class="ltitle">Security risk (1 = safe &rarr; 10 = high)</div>
+   <div class="cbrow"><div class="cbar" id="lg-bar"></div>
+     <div class="ticks"><span>10</span><span>8</span><span>6</span><span>4</span><span>2</span><span>1</span></div></div>
+   <div class="tiers">
+     <div class="tier"><span class="sw" id="sw1"></span>Safe <small>&nbsp;1&ndash;2.5</small></div>
+     <div class="tier"><span class="sw" id="sw2"></span>Moderate <small>&nbsp;2.5&ndash;5</small></div>
+     <div class="tier"><span class="sw" id="sw3"></span>Caution <small>&nbsp;5&ndash;7.5</small></div>
+     <div class="tier"><span class="sw" id="sw4"></span>Avoid <small>&nbsp;7.5&ndash;10</small></div>
+   </div>
+ </div>
+ <button class="launch hidden" id="legendOpen" title="Show legend" aria-label="Show legend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 12h10M4 17h10"/></svg><span>Legend</span></button>
+
+ <div id="sources" class="panel hidden">
+   <div class="phead"><span class="ptitle">Sources &amp; method</span>
+     <button class="pbtn" id="sourcesCollapse" title="Collapse" aria-label="Collapse sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></button></div>
+   <div id="sourcesBody"></div>
+ </div>
+ <button class="launch" id="sourcesOpen" title="Show sources" aria-label="Show sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><span>Sources</span></button>
+</div>
+<script>
+const CITIES = /*__CITIES__*/{};
+const CMAP = /*__CMAP__*/[];
+const DET=['sao-paulo','mexico-city','bogota','rio-de-janeiro','medellin','santiago','buenos-aires'];
+const CITYLEVEL=Object.keys(CITIES).filter(k=>(CITIES[k].tier_level||'city')==='city').sort((a,b)=>CITIES[a].name.localeCompare(CITIES[b].name,'en'));
+const SLUG={},FROMSLUG={};
+Object.keys(CITIES).forEach(k=>{const s=CITIES[k].slug||k;SLUG[k]=s;FROMSLUG[s]=k;});
+Object.assign(FROMSLUG,{cdmx:'mexico-city',mexico:'mexico-city',riodejaneiro:'rio-de-janeiro',ba:'buenos-aires',sp:'sao-paulo'});
+function keyFromUrl(){let s=(location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase().replace(/[^a-z]/g,'');return CITIES[FROMSLUG[s]]?FROMSLUG[s]:(CITIES[s]?s:'sao-paulo');}
+let cityKey='sao-paulo';
+function hx(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function lerp(a,b,t){return a+(b-a)*t}
+function color(s){
+  if(s==null) return '#5b6472';
+  let t=Math.max(0,Math.min(1,(s-1)/9));
+  for(let i=1;i<CMAP.length;i++){ if(t<=CMAP[i][0]){
+    const [t0,c0]=CMAP[i-1],[t1,c1]=CMAP[i],u=(t-t0)/((t1-t0)||1),a=hx(c0),b=hx(c1);
+    return `rgb(${Math.round(lerp(a[0],b[0],u))},${Math.round(lerp(a[1],b[1],u))},${Math.round(lerp(a[2],b[2],u))})`;}}
+  return CMAP[CMAP.length-1][1];
+}
+function tierName(s){ if(s==null)return['Not assessed','#5b6472'];
+  if(s<2.5)return['Safe',color(s)]; if(s<5)return['Moderate',color(s)];
+  if(s<7.5)return['Caution',color(s)]; return['Avoid',color(s)];}
+document.getElementById('lg-bar').style.background='linear-gradient(to top,'+CMAP.map(s=>s[1]+' '+(s[0]*100).toFixed(1)+'%').join(',')+')';
+sw1.style.background=color(1.6);sw2.style.background=color(3.7);sw3.style.background=color(6.2);sw4.style.background=color(8.7);
+const map=L.map('map',{zoomControl:false,attributionControl:true,minZoom:3}).setView([-23.6,-46.6],11);
+L.control.zoom({position:'topright'}).addTo(map);
+function mk(u,o){return L.tileLayer(u,Object.assign({maxZoom:19},o))}
+const bases={
+ osm:mk('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',attribution:'&copy; OpenStreetMap'}),
+ sat:mk('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri'}),
+ cartoLight:mk('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{subdomains:'abcd',attribution:'&copy; OSM &copy; CARTO'}),
+ cartoDark:mk('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{subdomains:'abcd',attribution:'&copy; OSM &copy; CARTO'})
+};
+const DARKBASE={osm:false,sat:true,cartoLight:false,cartoDark:true};
+let curKey='osm', curBase=bases.osm.addTo(map);
+let tileErr=0,tileOk=false;
+Object.values(bases).forEach(l=>{l.on('tileerror',()=>{if(++tileErr>=3&&!tileOk)hint.style.display='block'});l.on('tileload',()=>{tileOk=true;hint.style.display='none'})});
+hint.innerHTML='Base tiles blocked in this preview. <b>Open this file in a browser</b> and the street/aerial layers load and align exactly.';
+let opacity=0.72, showBorders=true, showLabels=true, hovered=null, searchPin=null;
+let layers=[];
+function styleFor(d){const v=d.score;
+  return {color:showBorders?'#0d1426':color(v),weight:showBorders?0.7:0.3,opacity:showBorders?0.85:0.3,fillColor:color(v),fillOpacity:opacity};}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+const VOTES={};  // in-memory only — PREP STUB. Real backend (anon token + Hetzner/Supabase) is a Claude Code task.
+function voteRow(name){const a=esc(name);
+  return `<div class="vote"><button class="vbtn up" data-area="${a}" data-dir="1" onclick="castVote(this)">▲ Felt-safe</button><button class="vbtn down" data-area="${a}" data-dir="-1" onclick="castVote(this)">▼ Felt-sketchy</button><span class="vtally"></span></div>`;}
+function castVote(btn){
+  const area=btn.dataset.area, dir=+btn.dataset.dir, k=cityKey+'|'+area;
+  const v=VOTES[k]||(VOTES[k]={up:0,down:0,mine:0});
+  if(dir===1){ if(v.mine===1){v.up--;v.mine=0;} else {if(v.mine===-1)v.down--; v.up++; v.mine=1;} }
+  else { if(v.mine===-1){v.down--;v.mine=0;} else {if(v.mine===1)v.up--; v.down++; v.mine=-1;} }
+  const wrap=btn.closest('.vote');
+  wrap.querySelectorAll('.vbtn').forEach(b=>b.classList.remove('mine'));
+  if(v.mine===1)wrap.querySelector('.up').classList.add('mine');
+  if(v.mine===-1)wrap.querySelector('.down').classList.add('mine');
+  const net=v.up-v.down; wrap.querySelector('.vtally').textContent=(v.up||v.down)?((net>0?'+':'')+net):'';
+}
+function popupContent(d){
+  const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
+  if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
+  else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
+  else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`;
+  return head+voteRow(d.name);
+}
+function openDistrict(d,ll){
+  L.popup().setLatLng(ll).setContent(popupContent(d)).openOn(map);
+  const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
+    hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
+}
+function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.removeLayer(l._tip);}); layers=[]; hovered=null;
+  if(searchPin){map.removeLayer(searchPin);searchPin=null;} }
+function buildCity(key){
+  clearCity(); cityKey=key; const C=CITIES[key];
+  C.districts.forEach(d=>{
+    const lyr=L.geoJSON({type:'Feature',geometry:d.geom},{style:styleFor(d)}).addTo(map);
+    lyr._d=d; d._lyr=lyr; layers.push(lyr);
+    const t=L.tooltip({permanent:true,direction:'center',className:'dlabel',opacity:1}).setContent(d.name).setLatLng([d.label[1],d.label[0]]);
+    lyr._tip=t;
+    lyr.on('mouseover',()=>{ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
+      hovered=lyr; lyr.setStyle({weight:2.2,color:'#fff',opacity:1}); lyr.bringToFront(); });
+    lyr.on('mouseout',()=>{ if(hovered===lyr){ lyr.setStyle(styleFor(lyr._d)); hovered=null; } });
+    lyr.on('click',e=>openDistrict(d,e.latlng));
+  });
+  const grp=L.featureGroup(layers); map.fitBounds(grp.getBounds().pad(C.model==='city'?0.5:0.03));
+  document.getElementById('h1').textContent=C.name+' — Safety Map';
+  document.getElementById('sub').textContent = C.model==='city' ? 'City-level overall rating · neighbourhoods not yet mapped' : (C.districts.length+' areas · tap a district for its rating');
+  document.getElementById('city').value=key;
+  try{history.replaceState(null,'','#'+(SLUG[key]||key));}catch(e){}
+  renderSources(); refreshLabels();
+}
+function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));}
+function clearHover(){ if(hovered){ hovered.setStyle(styleFor(hovered._d)); hovered=null; } }
+map.getContainer().addEventListener('pointerleave', clearHover);
+map.on('mouseout', clearHover);
+function applyLabelColor(){const dark=DARKBASE[curKey];document.querySelectorAll('.leaflet-tooltip.dlabel').forEach(el=>el.classList.toggle('dark',dark));}
+function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length<=50; const z=map.getZoom();
+  layers.forEach(l=>{const on=showLabels&&(small||z>=13); on?l._tip.addTo(map):map.removeLayer(l._tip);});
+  if(showLabels)applyLabelColor();}
+map.on('zoomend',refreshLabels);
+function renderSources(){
+  const C=CITIES[cityKey];
+  let h=`<div class="ltitle">${C.name}</div><div class="snote">${C.note}</div><ul class="slist">`;
+  h+=C.sources.map(s=>s.url?`<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.text}</a></li>`:`<li>${s.text}</li>`).join('');
+  h+='</ul><div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
+  document.getElementById('sourcesBody').innerHTML=h;
+}
+const citySel=document.getElementById('city');
+function addOpts(label,keys){const og=document.createElement('optgroup');og.label=label;keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=CITIES[k].name;og.appendChild(o);});citySel.appendChild(og);}
+addOpts('Detailed maps',DET);
+addOpts('City-level (overall)',CITYLEVEL);
+citySel.onchange=e=>{buildCity(e.target.value);setCtrl(false);};
+document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();};
+document.getElementById('op').oninput=e=>{opacity=e.target.value/100;restyle();};
+document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();};
+document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();};
+const ctrlEl=document.getElementById('ctrl'),legendEl=document.getElementById('legend'),sourcesEl=document.getElementById('sources');
+const menuBtn=document.getElementById('menuBtn'),legendOpenBtn=document.getElementById('legendOpen'),sourcesOpenBtn=document.getElementById('sourcesOpen');
+function setCtrl(o){ctrlEl.classList.toggle('open',o);menuBtn.classList.toggle('on',o);menuBtn.setAttribute('aria-expanded',o);}
+function setLegend(o){legendEl.classList.toggle('hidden',!o);legendOpenBtn.classList.toggle('hidden',o);}
+function setSources(o){sourcesEl.classList.toggle('hidden',!o);sourcesOpenBtn.classList.toggle('hidden',o);}
+menuBtn.onclick=()=>setCtrl(!ctrlEl.classList.contains('open'));
+document.getElementById('legendCollapse').onclick=()=>setLegend(false);
+legendOpenBtn.onclick=()=>setLegend(true);
+document.getElementById('sourcesCollapse').onclick=()=>setSources(false);
+sourcesOpenBtn.onclick=()=>setSources(true);
+setCtrl(false); setLegend(false); setSources(false);
+function ptInRing(x,y,r){let o=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const xi=r[i][0],yi=r[i][1],xj=r[j][0],yj=r[j][1];
+  if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))o=!o;}return o;}
+function ptInGeom(x,y,g){const ps=g.type==='MultiPolygon'?g.coordinates:[g.coordinates];
+  for(const p of ps){if(ptInRing(x,y,p[0])){let hole=false;for(let h=1;h<p.length;h++)if(ptInRing(x,y,p[h])){hole=true;break;}if(!hole)return true;}}return false;}
+function districtAt(lon,lat){for(const d of CITIES[cityKey].districts)if(ptInGeom(lon,lat,d.geom))return d;return null;}
+function dropPin(lat,lon){ if(searchPin)map.removeLayer(searchPin);
+  searchPin=L.marker([lat,lon],{icon:L.divIcon({className:'pinwrap',iconSize:[28,38],iconAnchor:[14,38],
+    html:'<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.8 0 1 5.8 1 13c0 9.2 13 25 13 25s13-15.8 13-25C27 5.8 21.2 0 14 0z" fill="#3f7cc0" stroke="#fff" stroke-width="2"/><circle cx="14" cy="13" r="4.5" fill="#fff"/></svg>'})}).addTo(map); }
+const searchInput=document.getElementById('searchInput'),searchMsg=document.getElementById('searchMsg');
+function setMsg(t){searchMsg.textContent=t||'';}
+async function geocode(q){
+  const C=CITIES[cityKey],[W,S,E,N]=C.bbox;
+  const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=en&countrycodes=${C.country}&viewbox=${W},${N},${E},${S}&bounded=1&q=`+encodeURIComponent(q);
+  const r=await fetch(url);const j=await r.json();
+  return (j&&j.length)?{lat:+j[0].lat,lon:+j[0].lon,name:j[0].display_name}:null;
+}
+async function doSearch(){
+  const q=searchInput.value.trim(); if(!q)return; setMsg('');
+  const ql=q.toLowerCase(), L_=CITIES[cityKey].districts;
+  const dn=L_.find(d=>d.name.toLowerCase()===ql)||L_.find(d=>d.name.toLowerCase().startsWith(ql))||L_.find(d=>d.name.toLowerCase().includes(ql));
+  if(dn){const lat=dn.label[1],lon=dn.label[0];dropPin(lat,lon);map.flyTo([lat,lon],14);openDistrict(dn,[lat,lon]);return;}
+  setMsg('Searching…');
+  try{
+    const res=await geocode(q);
+    if(!res){setMsg('No match found');return;}
+    setMsg(''); dropPin(res.lat,res.lon); map.flyTo([res.lat,res.lon],14);
+    const d=districtAt(res.lon,res.lat);
+    if(d)openDistrict(d,[res.lat,res.lon]);
+    else L.popup().setLatLng([res.lat,res.lon]).setContent(`<b>${res.name.split(',').slice(0,2).join(', ')}</b><br><span style="color:#8896ad">outside the mapped areas</span>`).openOn(map);
+  }catch(e){setMsg('Search needs the live site (blocked here)');}
+}
+searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doSearch();}});
+document.getElementById('searchBtn').addEventListener('click',doSearch);
+buildCity(keyFromUrl());
+window.addEventListener('hashchange',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k);});
+</script>
+<!-- GoatCounter analytics -->
+<script data-goatcounter="https://citysafety-proj.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body></html>

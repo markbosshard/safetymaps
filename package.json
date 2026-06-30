@@ -1,0 +1,14 @@
+{
+  "name": "latam-city-safety-map",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive single-file Leaflet map rating neighbourhood/city safety across Latin America. See PROJECT.md.",
+  "scripts": {
+    "build": "node build.js",
+    "extract": "node scripts/extract_data.js",
+    "template": "node scripts/make_template.js",
+    "serve": "node serve.js 8000",
+    "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
+  },
+  "license": "UNLICENSED"
+}
