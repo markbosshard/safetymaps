@@ -271,7 +271,7 @@ function openFeedback(){
     '<h3>Send feedback</h3>'+
     '<p class="msub">Anything about the map — a correction, a city to add, a bug.</p>'+
     '<div class="mfield"><label>Your message</label><textarea id="fbText" maxlength="4000" placeholder="What’s on your mind?"></textarea></div>'+
-    '<div class="mfield"><label>Email (optional, for a reply)</label><input type="email" id="fbEmail" placeholder="you@example.com"></div>'+
+    '<div class="mfield"><label>Email (optional) — for a reply regarding implementation changes</label><input type="email" id="fbEmail" placeholder="you@example.com"></div>'+
     '<div class="mrow"><button class="mbtn" onclick="closeModal()">Cancel</button><button class="mbtn primary" id="fbSubmit">Send</button></div>'+
     '<div class="mmsg" id="fbMsg"></div>'
   );
@@ -297,7 +297,7 @@ function popupContent(d){
 function openDistrict(d,ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
   popupCtx={areaName:d.name,cluster_id:d.cluster_id||null,lat:p.lat,lng:p.lng};
-  L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
+  L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
   showReportPoint(p.lat,p.lng);
   const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
     hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
@@ -379,10 +379,7 @@ function renderSources(){
   let h=`<div class="ltitle">${esc(C.name)}</div><div class="snote">${esc(C.note)}</div>`;
   const S=C.sources;
   if(Array.isArray(S)){ if(S.length)h+=srcList(S); }
-  else if(S){
-    if(S.boundary&&S.boundary.length)h+='<div class="scat">Boundary geometry</div>'+srcList(S.boundary);
-    if(S.basis&&S.basis.length)h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis);
-  }
+  else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis); }
   h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
   h+='<div class="sfoot">Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;

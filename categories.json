@@ -1,18 +1,19 @@
 {
-  "_comment": "Issue categories for the 'Report an issue' sheet (CROWDSOURCING.md §2). Shared by backend validation and the frontend sheet. There is intentionally NO people/demographic category — see §0/§1.",
+  "_comment": "Issue categories for the 'Report an issue' sheet (CROWDSOURCING.md §2). Shared by backend validation and the frontend sheet. Array order = display order (least severe first). There is intentionally NO people/demographic category — see §0/§1.",
   "categories": [
-    { "key": "robbery",    "label": "Robbed / mugged",                       "type": "incident",     "base_weight": 1.0 },
-    { "key": "theft_grab", "label": "Phone or bag snatched / pickpocketed",  "type": "incident",     "base_weight": 0.9 },
-    { "key": "vehicle",    "label": "Car broken into / vehicle theft",       "type": "incident",     "base_weight": 0.8 },
-    { "key": "threat",     "label": "Threatened, followed, or harassed",     "type": "incident",     "base_weight": 0.8 },
-    { "key": "witnessed",  "label": "Witnessed a crime here",                "type": "incident_2nd", "base_weight": 0.5 },
-    { "key": "environment","label": "Poorly lit / deserted / no exit",       "type": "environment",  "base_weight": 0.3 }
+    { "key": "environment", "label": "Poorly lit / deserted / no exit",       "type": "environment",  "base_weight": 0.3 },
+    { "key": "witnessed",   "label": "Witnessed a crime here",                 "type": "incident_2nd", "base_weight": 0.5 },
+    { "key": "theft_grab",  "label": "Phone or bag snatched / pickpocketed",   "type": "incident",     "base_weight": 0.9 },
+    { "key": "robbery",     "label": "Robbed / mugged (by force or threat)",   "type": "incident",     "base_weight": 1.0 },
+    { "key": "followed",    "label": "Followed or harassed",                   "type": "incident",     "base_weight": 0.7 },
+    { "key": "threat",      "label": "Threatened",                             "type": "incident",     "base_weight": 0.8 },
+    { "key": "vehicle",     "label": "Car broken into / vehicle theft",        "type": "incident",     "base_weight": 0.8 }
   ],
   "when_buckets": [
-    { "key": "today", "label": "Today",      "recency": 1.0 },
-    { "key": "week",  "label": "This week",  "recency": 0.8 },
-    { "key": "month", "label": "This month", "recency": 0.6 },
-    { "key": "older", "label": "Older",      "recency": 0.3 }
+    { "key": "today", "label": "Today",         "recency": 1.0 },
+    { "key": "d30",   "label": "Last 30 days",  "recency": 0.8 },
+    { "key": "y1",    "label": "Last 12 months","recency": 0.5 },
+    { "key": "older", "label": "Older",         "recency": 0.3 }
   ],
   "first_hand_factor": { "true": 1.0, "false": 0.5 }
 }
