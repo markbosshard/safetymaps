@@ -131,10 +131,10 @@ durability, also copy `/var/backups/safetymap` to object storage, or use Litestr
 Submissions are **stored, not auto-applied**. Every few days:
 ```bash
 cd /opt/safetymap
-sudo -u safetymap DB_PATH=/var/lib/safetymap/safetymap.db node scripts/review.js
+sudo -u safetymap DB_PATH=/var/lib/safetymap/safetymap.db node --experimental-sqlite scripts/review.js
 #  → review reports/feedback for bias, edit scores in cities.json, then on your dev machine:
 #     npm run build  → redeploy index.html (Pages)
-sudo -u safetymap DB_PATH=/var/lib/safetymap/safetymap.db node scripts/review.js -- --release
+sudo -u safetymap DB_PATH=/var/lib/safetymap/safetymap.db node --experimental-sqlite scripts/review.js -- --release
 ```
 
 ## Updating the backend later
