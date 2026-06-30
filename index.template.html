@@ -77,6 +77,13 @@
  .rhere{font-size:11px;color:#9aa6bb;margin-top:7px;line-height:1.35}
  .rhere b{color:#cbd5e6}
  .rthanks{font-size:12.5px;color:#1f7a4d;font-weight:650;line-height:1.4;padding:1px 2px}
+ .remail{margin-top:8px;border-top:1px solid #d7dce5;padding-top:7px}
+ .remailhint{font-size:10.5px;color:#6b7688;margin-bottom:4px}
+ .remailrow{display:flex;gap:5px}
+ .remailrow input{flex:1;min-width:0;font-size:12px;padding:5px 7px;border:1px solid #c9cfdb;border-radius:6px;background:#fff;color:#222}
+ .remailrow button{font-size:11px;font-weight:650;padding:5px 9px;border:1px solid #3f7cc0;background:#3f7cc0;color:#fff;border-radius:6px;cursor:pointer;white-space:nowrap}
+ .remailrow button:disabled{opacity:.5;cursor:default}
+ .remailok{font-size:11.5px;color:#1f7a4d;font-weight:600}
  .hidden{display:none!important}
  #hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:1200;display:none;background:#3a2326;border:1px solid #6b3b3b;color:#ffd9d9;font-size:12px;padding:8px 12px;border-radius:8px;max-width:340px;text-align:center;line-height:1.4}
  .vbtn.flag:hover{border-color:#b14a4a;color:#9b2f2f;background:#f7dede}
@@ -214,7 +221,21 @@ const THANKS='Many thanks for becoming a part of our SafetyMaps Community! We up
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
 let popupCtx=null,reportPopup=null;
-function popupThanks(){ if(reportPopup) reportPopup.setContent('<div class="rthanks">✓ Thanks! '+APPLIED+'</div>'); }
+function popupThanks(showEmail){ if(!reportPopup)return;
+  let html='<div class="rthanks">✓ Thanks! '+APPLIED+'</div>';
+  if(showEmail) html+='<div class="remail" id="remailRow"><div class="remailhint">Want an email when the map updates? (optional)</div>'
+    +'<div class="remailrow"><input type="email" id="rEmail" placeholder="you@example.com"><button id="rEmailBtn" onclick="submitReportEmail()">Notify me</button></div></div>';
+  reportPopup.setContent(html);
+}
+function submitReportEmail(){
+  const inp=document.getElementById('rEmail'); if(!inp||!popupCtx)return;
+  const email=inp.value.trim();
+  if(!email||!email.includes('@')){ inp.style.borderColor='#b14a4a'; inp.focus(); return; }
+  const btn=document.getElementById('rEmailBtn'); if(btn)btn.disabled=true;
+  postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id,email})
+    .then(()=>{ const r=document.getElementById('remailRow'); if(r)r.innerHTML='<span class="remailok">✓ We’ll email you when the map updates.</span>'; })
+    .catch(()=>{ if(btn)btn.disabled=false; });
+}
 function actionRow(){
   return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
 }
@@ -228,7 +249,7 @@ async function reportSafe(btn){
   if(!popupCtx)return; btn.disabled=true;
   const m=document.getElementById('popmsg'); if(m){m.style.color='#6b7688';m.textContent='…';}
   let res; try{res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});}catch(e){res={ok:false,error:'offline'};}
-  if(res.ok){ popupThanks(); toast(res.message||THANKS); }
+  if(res.ok){ popupThanks(true); toast(res.message||THANKS); }
   else { if(m){m.style.color='#9b2f2f';m.textContent=res.error==='offline'?'Couldn’t reach server':'Try later';} btn.disabled=false; }
 }
 // reusable modal + toast
@@ -247,25 +268,31 @@ function openIssueSheet(){
     '<div class="optlist" id="catList">'+cats+'</div>'+
     '<div class="mfield"><label>When (optional)</label><div class="chips" id="whenChips">'+whens+'</div></div>'+
     '<div class="mfield"><label>First-hand? (optional)</label><div class="chips" id="fhChips"><button type="button" class="chip" data-fh="1">Happened to me</button><button type="button" class="chip" data-fh="0">Heard about it</button></div></div>'+
-    '<div class="mfield"><label>What happened, in your words (optional)</label><textarea id="reasonTxt" maxlength="1000" placeholder="e.g. phone snatched near the metro at night"></textarea></div>'+
+    '<div class="mfield"><label id="reasonLabel">What happened, in your words (optional)</label><textarea id="reasonTxt" maxlength="1000" placeholder="e.g. phone snatched near the metro at night"></textarea></div>'+
     '<div class="mfield"><label>Email (optional — we’ll email you when the map updates)</label><input type="email" id="issueEmail" placeholder="you@example.com"></div>'+
     '<div class="mrow"><button class="mbtn" onclick="closeModal()">Cancel</button><button class="mbtn primary" id="issueSubmit" disabled>Submit report</button></div>'+
     '<div class="mmsg" id="issueMsg"></div>'
   );
   const submit=document.getElementById('issueSubmit');
-  document.getElementById('catList').addEventListener('change',e=>{cat=e.target.value;document.querySelectorAll('#catList .opt').forEach(o=>o.classList.toggle('sel',o.querySelector('input').checked));submit.disabled=!cat;});
+  document.getElementById('catList').addEventListener('change',e=>{cat=e.target.value;document.querySelectorAll('#catList .opt').forEach(o=>o.classList.toggle('sel',o.querySelector('input').checked));submit.disabled=!cat;
+    const other=cat==='other';
+    document.getElementById('reasonLabel').textContent=other?'Please describe (required)':'What happened, in your words (optional)';
+    document.getElementById('reasonTxt').placeholder=other?'Please describe what happened':'e.g. phone snatched near the metro at night';
+  });
   chipGroup('whenChips','when',v=>when=v);
   chipGroup('fhChips','fh',v=>fh=v);
   submit.onclick=async()=>{
-    if(!cat)return; submit.disabled=true;
+    if(!cat)return;
     const reason=document.getElementById('reasonTxt').value.trim();
+    const msg=document.getElementById('issueMsg');
+    if(cat==='other'&&!reason){ msg.className='mmsg err'; msg.textContent='Please describe what happened.'; document.getElementById('reasonTxt').focus(); return; }
+    submit.disabled=true;
     const email=document.getElementById('issueEmail').value.trim();
     const payload={kind:'issue',category:cat,lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id};
     if(when)payload.when_bucket=when; if(fh!==null)payload.first_hand=(fh==='1');
     if(reason)payload.reason=reason; if(email)payload.email=email;
     let res; try{res=await postReport(payload);}catch(e){res={ok:false,error:'offline'};}
-    const msg=document.getElementById('issueMsg');
-    if(res.ok){ closeModal(); popupThanks(); toast(res.message||THANKS); }
+    if(res.ok){ closeModal(); popupThanks(false); toast(res.message||THANKS); }
     else { msg.className='mmsg err'; msg.textContent=res.message||(res.error==='offline'?'Couldn’t reach server — try later.':'Please try again.'); submit.disabled=false; }
   };
 }

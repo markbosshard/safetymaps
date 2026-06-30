@@ -7,7 +7,8 @@
     { "key": "robbery",     "label": "Robbed / mugged (by force or threat)",   "type": "incident",     "base_weight": 1.0 },
     { "key": "followed",    "label": "Followed or harassed",                   "type": "incident",     "base_weight": 0.7 },
     { "key": "threat",      "label": "Threatened",                             "type": "incident",     "base_weight": 0.8 },
-    { "key": "vehicle",     "label": "Car broken into / vehicle theft",        "type": "incident",     "base_weight": 0.8 }
+    { "key": "vehicle",     "label": "Car broken into / vehicle theft",        "type": "incident",     "base_weight": 0.8 },
+    { "key": "other",       "label": "Other",                                  "type": "incident",     "base_weight": 0.5 }
   ],
   "when_buckets": [
     { "key": "today", "label": "Today",         "recency": 1.0 },
