@@ -208,21 +208,33 @@ sw1.style.background=color(1.6);sw2.style.background=color(3.7);sw3.style.backgr
 const map=L.map('map',{zoomControl:false,attributionControl:true,minZoom:3}).setView([-23.6,-46.6],11);
 L.control.zoom({position:'topright'}).addTo(map);
 function mk(u,o){return L.tileLayer(u,Object.assign({maxZoom:19},o))}
-const bases = MAPTILER_KEY ? (function(){
-  const A='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
-  const mt=(id,ext)=>mk(`https://api.maptiler.com/maps/${id}/{z}/{x}/{y}.${ext||'png'}?key=${MAPTILER_KEY}`,{attribution:A,tileSize:512,zoomOffset:-1,maxZoom:20});
-  return {osm:mt('streets-v2'),sat:mt('satellite','jpg'),cartoLight:mt('dataviz-light'),cartoDark:mt('dataviz-dark')};
-})() : {
+function freeBases(){return {
  osm:mk('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',attribution:'&copy; OpenStreetMap'}),
  sat:mk('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri'}),
  cartoLight:mk('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{subdomains:'abcd',attribution:'&copy; OSM &copy; CARTO'}),
  cartoDark:mk('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{subdomains:'abcd',attribution:'&copy; OSM &copy; CARTO'})
-};
+};}
+function maptilerBases(){
+  const A='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+  const mt=(id,ext)=>mk(`https://api.maptiler.com/maps/${id}/{z}/{x}/{y}.${ext||'png'}?key=${MAPTILER_KEY}`,{attribution:A,tileSize:512,zoomOffset:-1,maxZoom:20});
+  return {osm:mt('streets-v2'),sat:mt('satellite','jpg'),cartoLight:mt('dataviz-light'),cartoDark:mt('dataviz-dark')};
+}
+let bases = MAPTILER_KEY ? maptilerBases() : freeBases();
 const DARKBASE={osm:false,sat:true,cartoLight:false,cartoDark:true};
 let curKey='osm', curBase=bases.osm.addTo(map);
-let tileErr=0,tileOk=false;
-Object.values(bases).forEach(l=>{l.on('tileerror',()=>{if(++tileErr>=3&&!tileOk)hint.style.display='block'});l.on('tileload',()=>{tileOk=true;hint.style.display='none'})});
-hint.innerHTML='Base tiles blocked in this preview. <b>Open this file in a browser</b> and the street/aerial layers load and align exactly.';
+let tileErr=0,tileOk=false,fellBack=false;
+function onTileOk(){tileOk=true;hint.style.display='none';}
+function onTileErr(){
+  if(++tileErr<3||tileOk)return;
+  if(MAPTILER_KEY&&!fellBack){ // MapTiler not serving here (e.g. this origin isn't on the key) → free tiles so the map never goes grey
+    fellBack=true; tileErr=0;
+    try{map.removeLayer(curBase);}catch(e){}
+    bases=freeBases(); bindTiles(); curBase=bases[curKey].addTo(map); curBase.bringToBack(); applyLabelColor();
+  } else { hint.style.display='block'; }
+}
+function bindTiles(){Object.values(bases).forEach(l=>{l.off('tileerror',onTileErr).off('tileload',onTileOk);l.on('tileerror',onTileErr);l.on('tileload',onTileOk);});}
+bindTiles();
+hint.innerHTML='Base tiles aren’t loading here. <b>Open the site in a normal browser</b> — they load and align correctly there.';
 let opacity=0.72, showBorders=true, showLabels=true, hovered=null, searchPin=null;
 let layers=[];
 function styleFor(d){const v=d.score;
