@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="darkreader-lock"/><meta name="color-scheme" content="dark"/>
-<title>Latin America — City Safety Maps</title>
+<title>Latam Crime Map</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
@@ -145,7 +145,7 @@
 <body><div id="app">
  <header>
    <button id="menuBtn" class="hbtn" aria-label="Map controls" aria-expanded="false" title="Map controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-   <h1 id="h1">City Safety Map</h1>
+   <h1 id="h1">Latam Crime Map</h1>
    <span class="sub" id="sub"></span>
    <div id="search">
      <input id="searchInput" type="text" placeholder="Search address or district…" autocomplete="off" enterkeyhint="search"/>
@@ -164,7 +164,7 @@
          <option value="cartoLight">Light / minimal</option>
        </select></div>
      <div class="grp">
-       <div class="row"><span>Risk fill</span><input type="range" id="op" min="0" max="100" value="45"></div>
+       <div class="row"><span>Transparency</span><input type="range" id="op" min="0" max="100" value="55"></div>
        <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked><span class="slider"></span></label></div>
      </div>
@@ -278,9 +278,12 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').re
 // --- Crowd reports (CROWDSOURCING.md). Asymmetric: ▲ Felt-safe = one tap; ⚑ issue = a category sheet.
 // No live scoring — submissions are stored and applied via a MANUAL release every few days.
 const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://api.latamcrimemap.com';
-const THANKS='Many thanks for becoming a part of our SafetyMaps Community! We update our maps every few days to reflect on feedback.';
+const THANKS='Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.';
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
+// Persist UI preferences so a returning traveller keeps their city, transparency, basemap and toggles.
+function persist(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 let popupCtx=null,reportPopup=null;
 function popupThanks(showEmail){ if(!reportPopup)return;
   let html='<div class="rthanks">✓ Thanks! '+APPLIED+'</div>';
@@ -408,11 +411,12 @@ function openPointReport(ll){
 function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.removeLayer(l._tip);}); layers=[]; hovered=null;
   if(searchPin){map.removeLayer(searchPin);searchPin=null;} }
 function setHeader(key){const C=CITIES[key];
-  document.getElementById('h1').textContent=C.name+' — Safety Map';
+  document.getElementById('h1').textContent=C.name+' — Latam Crime Map';
   document.getElementById('sub').textContent=C.model==='city'?'City-level overall rating · neighbourhoods not yet mapped':(C.districts.length+' areas · tap a district for its rating');
   document.getElementById('city').value=key;}
 function buildCity(key,opts){
   opts=opts||{}; clearCity(); cityKey=key; const C=CITIES[key];
+  persist('sm_lastcity',key);
   C.districts.forEach(d=>{
     const lyr=L.geoJSON({type:'Feature',geometry:d.geom},{style:styleFor(d)}).addTo(map);
     lyr._d=d; d._lyr=lyr; layers.push(lyr);
@@ -458,8 +462,8 @@ function buildOverview(){overviewGroup.clearLayers();
     m.addTo(overviewGroup);});}
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
   if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
-    document.getElementById('h1').textContent='Latin America — Safety Map';
-    document.getElementById('sub').textContent='All cities · tap a marker or zoom in'; }
+    document.getElementById('h1').textContent='Latam Crime Map';
+    document.getElementById('sub').textContent='Select a city, or click the map'; }
   else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); } }
 function cityAt(lon,lat){ let best=null,bestD=Infinity;
   for(const k of Object.keys(CITIES)){const b=CITIES[k].bbox,pad=0.15;
@@ -495,10 +499,10 @@ function addOpts(label,keys){const og=document.createElement('optgroup');og.labe
 addOpts('Detailed maps',DET);
 addOpts('City-level (overall)',CITYLEVEL);
 citySel.onchange=e=>{buildCity(e.target.value);};
-document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();};
-document.getElementById('op').oninput=e=>{opacity=e.target.value/100;restyle();};
-document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();};
-document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();};
+document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();persist('sm_basemap',curKey);};
+document.getElementById('op').oninput=e=>{opacity=1-e.target.value/100;restyle();persist('sm_opacity',opacity);};
+document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();persist('sm_borders',showBorders);};
+document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();persist('sm_labels',showLabels);};
 const ctrlEl=document.getElementById('ctrl'),legendEl=document.getElementById('legend'),sourcesEl=document.getElementById('sources');
 const menuBtn=document.getElementById('menuBtn'),legendOpenBtn=document.getElementById('legendOpen'),sourcesOpenBtn=document.getElementById('sourcesOpen');
 function setCtrl(o){ctrlEl.classList.toggle('open',o);menuBtn.classList.toggle('on',o);menuBtn.setAttribute('aria-expanded',o);}
@@ -660,20 +664,40 @@ function showOverviewHome(){
   map.fitBounds([[mnLa,mnLo],[mxLa,mxLo]],{padding:[30,30]});
   setOverview(true); sizeOverview();
 }
-// One-time onboarding overlay on the home page (dismiss with OK, backdrop, or Esc). Shows once per browser.
+// Onboarding overlay (dismiss with OK, backdrop, or Esc). Shown on the first 3 page loads, then retired.
 function showWelcome(){
-  try{if(localStorage.getItem('sm_welcome'))return; localStorage.setItem('sm_welcome','1');}catch(e){}
   setModal(
-    '<h3>Latin America — Safety Map</h3>'+
+    '<h3>Latam Crime Map</h3>'+
     '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>. Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter. Thank you!<br><br>'+
     '<span style="color:#8896ad">Smaller cities aren’t mapped in detail yet — they’re on the way.</span></p>'+
     '<div class="mrow"><button class="mbtn primary" onclick="closeModal()">OK</button></div>'
   );
 }
+// Re-apply saved transparency / basemap / toggles before the first paint.
+function restoreSettings(){
+  const o=lsGet('sm_opacity'); if(o!=null&&!isNaN(+o)){opacity=Math.min(1,Math.max(0,+o));const op=document.getElementById('op');if(op)op.value=Math.round((1-opacity)*100);}
+  const b=lsGet('sm_basemap'); if(b&&bases[b]&&b!==curKey){try{map.removeLayer(curBase);}catch(e){}curKey=b;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();const bs=document.getElementById('base');if(bs)bs.value=b;}
+  const lb=lsGet('sm_labels'); if(lb!=null){showLabels=(lb==='true');document.getElementById('lbl').checked=showLabels;}
+  const bo=lsGet('sm_borders'); if(bo!=null){showBorders=(bo==='true');document.getElementById('bord').checked=showBorders;}
+  restyle();
+}
+// Focus a city on load: center+zoom first (fitBounds can land a big metro at <=OVERVIEW_Z and bounce
+// straight back to the overview), then build without re-fitting. Mirrors the marker-click path.
+function focusCity(key){
+  setOverview(false);
+  map.setView(centerOf(key), CITIES[key].tier_level==='detailed'?11:10, {animate:false});
+  buildCity(key,{fit:false});
+}
 function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
+  restoreSettings();
+  const loads=(parseInt(lsGet('sm_loadcount')||'0',10)||0)+1; persist('sm_loadcount',loads);
   const k=explicitCity();
-  if(k){ buildCity(k); } else { showOverviewHome(); showWelcome(); } }
+  if(k){ focusCity(k); }
+  else { const last=lsGet('sm_lastcity');
+    if(loads>=2 && last && CITIES[last]){ focusCity(last); } else { showOverviewHome(); } }
+  if(loads<=3) showWelcome();
+}
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
 window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k,{fromPop:true});});
 window.addEventListener('hashchange',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k);});

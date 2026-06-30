@@ -1,4 +1,4 @@
-# SafetyMaps
+# Latam Crime Map
 
 Interactive map rating neighbourhood/city safety on a green→red scale, with bias-resistant
 crowd input. Currently covers **55 Latin American cities** (34 with district/municipal detail,
