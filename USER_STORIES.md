@@ -25,23 +25,24 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
 - **Report withdrawal** (US-15) — token-scoped `GET /my-reports` + `DELETE /report/:id`; a "My reports"
   modal to withdraw your own pending pins.
 - **Uptime monitoring** (US-18) — GitHub Actions healthcheck every ~15 min; failure emails the owner.
+- **Tourist-core zones** (US-8) — Cancún, Playa del Carmen, Los Cabos, Puerto Vallarta now show a safer
+  beachfront resort core vs the rest of the city, derived from clusters of OSM coastal hotels (honest
+  label: approximate, not an official boundary). Punta Cana skipped (OSM under-mapped there).
 
 ---
 
 ## Backlog
 
-### Deferred this pass — need more care than an unattended run allows
+**Dropped:** US-17 (overview clustering) — owner decided cities should stay individual markers; the
+continent view reads fine as is.
 
-- **US-17 — Overview marker clustering.** Leaflet.markercluster doesn't reliably cluster `circleMarker`s
-  (it wedged rendering); needs the overview markers reworked into `L.marker` + divIcon dots first, then
-  clustering is a drop-in. Medium effort, low risk once converted.
+### Open
+
 - **US-12 — Spanish & Portuguese UI (i18n).** Large and quality-sensitive (you wanted native-speaker
   review). Approach: a `STRINGS` dict (`en`/`es`/`pt`) + `t(id)` everywhere + a switcher + `navigator.language`
   auto-detect + `sm_lang`; `categories.json` gains `label_es`/`label_pt`. English fallback so it's never
-  half-broken. Best done as its own reviewed pass.
-- **US-8 — Tourist-zone polygons (zona hotelera).** Honesty rule: a rated sub-city polygon needs a *real*
-  boundary (OSM `Zona Hotelera` suburb / official), not hand-drawn coordinates. Source the outline first
-  (Overpass), then add Cancún / Playa del Carmen / Los Cabos / Punta Cana / Puerto Vallarta resort cores.
+  half-broken. (An exhaustive string inventory — 136 strings, 45 static / 91 dynamic — is already done and
+  parked, ready to execute.)
 - **US-9 — Upgrade city-level circles to districts.** Low value for the remaining entries: with no
   per-district signal every district inherits one rating → uniform colour, no better than a clean circle.
   Revisit per city when there's data to differentiate. `scripts/add_metros.js` (geoBoundaries ADM2) is the template.
