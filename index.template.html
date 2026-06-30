@@ -129,6 +129,7 @@
  .mmsg{font-size:12px;margin-top:10px;line-height:1.4;min-height:1px}
  .mmsg.ok{color:#9fe6c0}.mmsg.err{color:#ffb4b4}
  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2500;background:#16223a;border:1px solid var(--ui);color:#eaf2ff;padding:12px 16px;border-radius:10px;font-size:13px;max-width:340px;text-align:center;line-height:1.45;box-shadow:0 10px 30px #0008}
+ #toast.err{background:#3a2326;border-color:#b14a4a;color:#ffd9d9}
  @media(max-width:680px){
    header{gap:8px}
    header .sub{display:none}
@@ -223,7 +224,7 @@ let cityKey='sao-paulo';
 window.goatcounter=window.goatcounter||{}; window.goatcounter.no_onload=true;
 let gcLast=null;
 function gcCount(){ if(!(window.goatcounter&&window.goatcounter.count))return; const p=location.pathname||'/'; if(p===gcLast)return; gcLast=p;
-  try{window.goatcounter.count({path:p,title:(CITIES[cityKey]&&CITIES[cityKey].name)||document.title});}catch(e){} }
+  try{window.goatcounter.count({path:p,title:(typeof overviewOn!=='undefined'&&overviewOn)?'Latin America':((CITIES[cityKey]&&CITIES[cityKey].name)||document.title)});}catch(e){} }
 function hx(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
 function lerp(a,b,t){return a+(b-a)*t}
 function color(s){
@@ -315,7 +316,7 @@ async function reportSafe(btn){
 // reusable modal + toast
 function setModal(html){document.getElementById('mcard').innerHTML=html;document.getElementById('modal').classList.remove('hidden');}
 function closeModal(){document.getElementById('modal').classList.add('hidden');document.getElementById('mcard').innerHTML='';}
-function toast(msg,ms){const t=document.getElementById('toast');t.textContent=msg;t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
+function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
   if(!popupCtx)return;
@@ -555,9 +556,9 @@ async function isWater(lat,lng){
 // District clicks are handled by the per-layer handler; here we only catch clicks outside any district.
 map.on('click',async e=>{ if(overviewOn)return; const C=CITIES[cityKey]; if(!C||!C.districts)return;
   const ll=e.latlng; if(districtAt(ll.lng,ll.lat))return;
-  if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.'); return; }
+  if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
   showReportPoint(ll.lat,ll.lng);                                  // instant feedback while we check
-  if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.'); return; }
+  if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.',5000,true); return; }
   if(!reportPin)return;                                            // popup/pin was cleared meanwhile
   openPointReport(ll); });
 // Geocoder: autocomplete dropdown of districts + MapTiler places. Nothing zooms until a row is picked.
@@ -642,12 +643,40 @@ const searchToggle=document.getElementById('searchToggle');
 searchToggle.addEventListener('click',()=>{const s=document.getElementById('search');
   if(s.classList.contains('open')){collapseSearch();hideResults();}
   else{s.classList.add('open');searchToggle.classList.add('on');searchToggle.setAttribute('aria-expanded','true');setTimeout(()=>searchInput.focus(),0);}});
+// Like keyFromUrl but returns null when no city is named (the bare "/" home) instead of defaulting.
+function explicitCity(){
+  let seg=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'');
+  if(seg==='index.html'||seg==='404.html')seg='';
+  let raw=(seg||location.hash.replace(/^#\/?/,'')||new URLSearchParams(location.search).get('city')||'').toLowerCase();
+  if(!raw)return null;
+  if(CITIES[FROMSLUG[raw]])return FROMSLUG[raw];
+  let s=raw.replace(/[^a-z0-9]/g,'');
+  return CITIES[FROMSLUG[s]]?FROMSLUG[s]:(CITIES[raw]?raw:null);
+}
+// Home = the whole continent: fit all city markers and show the overview (no single city focused).
+function showOverviewHome(){
+  let mnLa=90,mxLa=-90,mnLo=180,mxLo=-180;
+  Object.keys(CITIES).forEach(k=>{const c=centerOf(k);if(c[0]<mnLa)mnLa=c[0];if(c[0]>mxLa)mxLa=c[0];if(c[1]<mnLo)mnLo=c[1];if(c[1]>mxLo)mxLo=c[1];});
+  map.fitBounds([[mnLa,mnLo],[mxLa,mxLo]],{padding:[30,30]});
+  setOverview(true); sizeOverview();
+}
+// One-time onboarding overlay on the home page (dismiss with OK, backdrop, or Esc). Shows once per browser.
+function showWelcome(){
+  try{if(localStorage.getItem('sm_welcome'))return; localStorage.setItem('sm_welcome','1');}catch(e){}
+  setModal(
+    '<h3>Latin America — Safety Map</h3>'+
+    '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>. Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter. Thank you!<br><br>'+
+    '<span style="color:#8896ad">Smaller cities aren’t mapped in detail yet — they’re on the way.</span></p>'+
+    '<div class="mrow"><button class="mbtn primary" onclick="closeModal()">OK</button></div>'
+  );
+}
 function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   if(!map.getSize().x && tries<20){ return setTimeout(()=>init(tries+1),60); }
-  buildCity(keyFromUrl()); }
+  const k=explicitCity();
+  if(k){ buildCity(k); } else { showOverviewHome(); showWelcome(); } }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
-window.addEventListener('popstate',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k,{fromPop:true});});
-window.addEventListener('hashchange',()=>{const k=keyFromUrl(); if(k!==cityKey) buildCity(k);});
+window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k,{fromPop:true});});
+window.addEventListener('hashchange',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) buildCity(k);});
 </script>
 <!-- GoatCounter analytics -->
 <script data-goatcounter="https://citysafety-proj.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="window.gcCount&&gcCount()"></script>
