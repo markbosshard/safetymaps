@@ -52,7 +52,8 @@ continent view reads fine as is.
 - **US-7 — Published crime data.** Replace editorial scores with official data (Mexico SESNSP, Brazil
   SSP-SP/ISP-RJ, Chile CEAD, Colombia Policía Nacional…). A multi-country data project — each source has its
   own format/units; needs careful, reviewed per-country work to stay within the honesty rule. Headline future task.
-- **US-6 — Surface per-city analytics.** A "most-viewed cities" view from GoatCounter's Paths report. Low
-  priority; the data is still new/sparse.
-- **US-10 — Release-automation polish.** Optional helper (digest email, or a one-command "apply approved
-  deltas") on top of the working manual `npm run review` loop.
+- **US-6 — A whole admin backend.** *Needs to be specified.* Grows out of the original "surface per-city
+  analytics" idea (most-viewed cities from GoatCounter) into a proper operator console: review/triage of
+  incoming reports + feedback, the manual-release workflow, score editing, and analytics — all in one place
+  instead of the current CLI (`npm run review`) + hand-edited `cities.json`. Scope, auth, and hosting are
+  open; we're not building it yet. Sits with US-7 in the later/bigger area.
