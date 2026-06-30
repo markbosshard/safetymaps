@@ -15,6 +15,7 @@
     "clipland": "node scripts/clip_to_land.js",
     "resources": "node scripts/add_resources.js",
     "ogimage": "node scripts/make_og_image.js",
+    "shareimg": "node scripts/make_share_images.js",
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
