@@ -355,7 +355,7 @@ function buildCity(key,opts){
   try{history.replaceState(null,'','#'+(SLUG[key]||key));}catch(e){}
   renderSources(); refreshLabels();
 }
-function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));}
+function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));if(typeof overviewGroup!=='undefined')overviewGroup.eachLayer(m=>m.setStyle({fillOpacity:opacity}));}
 function clearHover(){ if(hovered){ hovered.setStyle(styleFor(hovered._d)); hovered=null; } }
 map.getContainer().addEventListener('pointerleave', clearHover);
 map.on('mouseout', clearHover);
@@ -376,7 +376,7 @@ function overallScore(key){const C=CITIES[key];
   let s=0,n=0;C.districts.forEach(d=>{if(d.score!=null){s+=d.score;n++;}});return n?s/n:null;}
 function buildOverview(){overviewGroup.clearLayers();
   Object.keys(CITIES).forEach(key=>{const ll=centerOf(key);const sc=overallScore(key);
-    const m=L.circleMarker(ll,{radius:7,weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:.92});
+    const m=L.circleMarker(ll,{radius:7,weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity});
     m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-7]});
     m.on('click',()=>{setOverview(false);map.flyTo(ll,CITIES[key].tier_level==='detailed'?11:10);buildCity(key,{fit:false});});
     m.addTo(overviewGroup);});}
