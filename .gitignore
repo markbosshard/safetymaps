@@ -4,9 +4,8 @@ files.zip
 # Node
 node_modules/
 
-# Backend runtime data (local SQLite DB)
-backend/*.db
-backend/*.db-journal
+# Backend runtime data (local SQLite DB + WAL/SHM sidecars)
+backend/*.db*
 
 # Python
 __pycache__/
