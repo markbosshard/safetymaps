@@ -48,6 +48,17 @@ function ipHash(req) {
 }
 function dayStartIso() { return new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z'; }
 
+// Low-sensitivity request context (no raw IP, no PII): coarse device class, browser language tag, and the
+// referrer's host only. Helps understand who/where reports come from (and which languages to prioritise).
+function reqContext(req) {
+  const ua = String(req.headers['user-agent'] || '');
+  const device = /Mobi|Android|iPhone|iPod/i.test(ua) ? 'mobile' : (/iPad|Tablet/i.test(ua) ? 'tablet' : (ua ? 'desktop' : null));
+  const lang = (String(req.headers['accept-language'] || '').split(',')[0].split('-')[0].trim().toLowerCase() || null) || null;
+  let referer = null;
+  try { const r = req.headers.referer || req.headers.referrer; if (r) referer = new URL(r).host; } catch (e) {}
+  return { device, lang: lang ? lang.slice(0, 8) : null, referer: referer ? referer.slice(0, 120) : null };
+}
+
 async function turnstileOk(req, token) {
   if (!TURNSTILE_SECRET) return true;             // disabled in dev
   if (!token) return false;
@@ -141,6 +152,7 @@ app.post('/report', async (req, res) => {
     lng: typeof b.lng === 'number' ? b.lng : null,
     token: token.slice(0, 64), ip_hash: iph,
     created_at: new Date().toISOString(),
+    ...reqContext(req),
   };
   dbm.upsertReport.run(row);
 
@@ -162,6 +174,7 @@ app.post('/feedback', async (req, res) => {
     text: text.slice(0, 4000), email: email || null,
     token: typeof b.token === 'string' ? b.token.slice(0, 64) : null,
     ip_hash: iph, created_at: new Date().toISOString(),
+    ...reqContext(req),
   });
   res.json({ ok: true, message: THANKS });
 });

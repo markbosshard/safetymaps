@@ -47,21 +47,27 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_feedback_pending ON feedback(released);
 `);
 
-// Migration for DBs created before the `email` column existed (idempotent).
-try { db.exec('ALTER TABLE report ADD COLUMN email TEXT'); } catch (e) { /* column already exists */ }
+// Idempotent migrations for DBs created before a column existed. `device`/`lang`/`referer` are derived
+// from request headers (UA class, Accept-Language tag, referrer host) — context, no extra PII, no raw IP.
+try { db.exec('ALTER TABLE report ADD COLUMN email TEXT'); } catch (e) { /* exists */ }
+for (const col of ['device', 'lang', 'referer']) {
+  try { db.exec(`ALTER TABLE report ADD COLUMN ${col} TEXT`); } catch (e) {}
+  try { db.exec(`ALTER TABLE feedback ADD COLUMN ${col} TEXT`); } catch (e) {}
+}
 
 // Upsert: newest report from a token replaces its older one for the same area (§5 de-dupe).
 const upsertReport = db.prepare(`
-  INSERT INTO report (city, cluster_id, kind, category, first_hand, when_bucket, reason, weight, email, lat, lng, token, ip_hash, created_at)
-  VALUES (@city, @cluster_id, @kind, @category, @first_hand, @when_bucket, @reason, @weight, @email, @lat, @lng, @token, @ip_hash, @created_at)
+  INSERT INTO report (city, cluster_id, kind, category, first_hand, when_bucket, reason, weight, email, lat, lng, token, ip_hash, created_at, device, lang, referer)
+  VALUES (@city, @cluster_id, @kind, @category, @first_hand, @when_bucket, @reason, @weight, @email, @lat, @lng, @token, @ip_hash, @created_at, @device, @lang, @referer)
   ON CONFLICT (city, cluster_id, token) DO UPDATE SET
     kind=@kind, category=@category, first_hand=@first_hand, when_bucket=@when_bucket,
-    reason=@reason, weight=@weight, email=@email, lat=@lat, lng=@lng, ip_hash=@ip_hash, created_at=@created_at, released=0
+    reason=@reason, weight=@weight, email=@email, lat=@lat, lng=@lng, ip_hash=@ip_hash, created_at=@created_at,
+    device=@device, lang=@lang, referer=@referer, released=0
 `);
 
 const insertFeedback = db.prepare(`
-  INSERT INTO feedback (text, email, token, ip_hash, created_at)
-  VALUES (@text, @email, @token, @ip_hash, @created_at)
+  INSERT INTO feedback (text, email, token, ip_hash, created_at, device, lang, referer)
+  VALUES (@text, @email, @token, @ip_hash, @created_at, @device, @lang, @referer)
 `);
 
 // Rate-limit counters (per ip_hash / token within the caller-provided day window).
