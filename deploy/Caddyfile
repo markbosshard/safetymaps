@@ -8,10 +8,10 @@
 
 {
 	# Email for the Let's Encrypt account / expiry notices.
-	email you@latam-safety-map.com
+	email you@latamcrimemap.com
 }
 
-api.latam-safety-map.com {
+api.latamcrimemap.com {
 	encode gzip
 	reverse_proxy 127.0.0.1:8787
 }

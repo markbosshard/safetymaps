@@ -16,12 +16,12 @@ All files referenced here live in this `deploy/` folder.
 
 ## Map hosting (GitHub Pages, apex domain + pretty paths)
 The map is the static `index.html` (+ generated `404.html`). Two domains are involved:
-**`latam-safety-map.com`** → the map (GitHub Pages), **`api.latam-safety-map.com`** → the backend (this box).
+**`latamcrimemap.com`** → the map (GitHub Pages), **`api.latamcrimemap.com`** → the backend (this box).
 
 1. **Repo → Settings → Pages:** Source = *Deploy from a branch*, branch `main`, folder `/ (root)`.
-2. **Custom domain:** the repo already contains a root `CNAME` file with `latam-safety-map.com`.
+2. **Custom domain:** the repo already contains a root `CNAME` file with `latamcrimemap.com`.
 3. **DNS at your registrar:**
-   - Apex `latam-safety-map.com` → GitHub Pages **A** records `185.199.108.153`, `185.199.109.153`,
+   - Apex `latamcrimemap.com` → GitHub Pages **A** records `185.199.108.153`, `185.199.109.153`,
      `185.199.110.153`, `185.199.111.153` (and AAAA `2606:50c0:8000::153` … `8003::153` if you want IPv6).
    - `api` → an **A** record to *this box's* IP (for the backend; separate from Pages).
 4. Tick **Enforce HTTPS** once GitHub provisions the cert.
@@ -34,7 +34,7 @@ The map is the static `index.html` (+ generated `404.html`). Two domains are inv
 ## 0. Prerequisites
 - A VPS (Ubuntu 22.04/24.04 assumed below) with a public IP.
 - A domain you control. Create a DNS **A record** (and AAAA if you have IPv6) for
-  `api.latam-safety-map.com` → the box IP. Do this early so TLS can be issued.
+  `api.latamcrimemap.com` → the box IP. Do this early so TLS can be issued.
 - **Node 22 or newer** (needed for the built-in `node:sqlite`). Node 20 will NOT work.
 
 ---
@@ -93,8 +93,8 @@ SQLite DB lives at `/var/lib/safetymap/safetymap.db` (set via `DB_PATH`).
 nano /opt/safetymap/deploy/Caddyfile
 cp /opt/safetymap/deploy/Caddyfile /etc/caddy/Caddyfile
 systemctl reload caddy
-# DNS for api.latam-safety-map.com must already point here; Caddy then issues the cert automatically.
-curl -s https://api.latam-safety-map.com/health  # -> {"ok":true,...}
+# DNS for api.latamcrimemap.com must already point here; Caddy then issues the cert automatically.
+curl -s https://api.latamcrimemap.com/health  # -> {"ok":true,...}
 ```
 
 ## 6. Firewall (recommended)
@@ -106,10 +106,10 @@ ufw enable
 ```
 
 ## 7. Map ↔ backend wiring (already set)
-The map already calls **`https://api.latam-safety-map.com`** in production (set in
+The map already calls **`https://api.latamcrimemap.com`** in production (set in
 `index.template.html`, baked into `index.html` by `npm run build`). So you only need to make sure:
-- `api.latam-safety-map.com` DNS points at this box and `/health` works over HTTPS (steps 0/5), and
-- `ALLOWED_ORIGIN=https://latam-safety-map.com` in `/etc/safetymap/backend.env`, then
+- `api.latamcrimemap.com` DNS points at this box and `/health` works over HTTPS (steps 0/5), and
+- `ALLOWED_ORIGIN=https://latamcrimemap.com` in `/etc/safetymap/backend.env`, then
   `systemctl restart safetymap-backend`.
 
 If you ever move the API to a different host, edit the `API=` line in `index.template.html`, run
@@ -150,7 +150,7 @@ journalctl -u caddy -f                      # TLS / proxy logs
 ```
 - `node:sqlite` errors → Node is < 22, or the `--experimental-sqlite` flag is missing.
 - CORS errors in the browser → `ALLOWED_ORIGIN` doesn't match the Pages origin exactly.
-- Cert not issued → DNS for `api.latam-safety-map.com` isn't pointing at the box yet.
+- Cert not issued → DNS for `api.latamcrimemap.com` isn't pointing at the box yet.
 
 ## Scaling note
 This is single-node SQLite (WAL) — fine until you have real, sustained traffic. If you ever
