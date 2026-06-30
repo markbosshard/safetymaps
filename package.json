@@ -9,6 +9,7 @@
     "template": "node scripts/make_template.js",
     "serve": "node serve.js 8000",
     "clusters": "node scripts/build_clusters.js",
+    "bubbles": "node scripts/scale_bubbles.js",
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
