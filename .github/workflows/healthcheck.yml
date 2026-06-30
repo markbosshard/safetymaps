@@ -1,0 +1,21 @@
+name: API healthcheck
+
+# Pings the crowd backend every ~15 min. If it's down (or not returning ok), the job fails and
+# GitHub emails the repo owner (default notification for a failed scheduled workflow). This covers
+# box/network outages that systemd's Restart= can't (systemd only restarts a crashed process).
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GET https://api.latamcrimemap.com/health
+        run: |
+          set -e
+          body=$(curl -fsS --max-time 20 https://api.latamcrimemap.com/health)
+          echo "Response: $body"
+          echo "$body" | grep -q '"ok":true' || { echo "::error::backend health check did not return ok:true"; exit 1; }
+          echo "Backend healthy."
