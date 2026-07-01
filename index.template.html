@@ -243,7 +243,7 @@
          <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
          <div id="cityList" class="hidden" role="listbox"></div>
        </div></div>
-     <button id="moreBtn" class="morebtn" aria-expanded="false" aria-controls="moreWrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-i18n="more_settings">More settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+     <button id="moreBtn" class="morebtn" aria-expanded="false" aria-controls="moreWrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-i18n="more_settings">Settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
      <div id="moreWrap" class="hidden">
      <div class="grp"><span class="cap" data-i18n="underlay">Underlay</span>
        <select id="base">
@@ -253,7 +253,7 @@
          <option value="cartoLight" data-i18n="base_light">Light / minimal</option>
        </select></div>
      <div class="grp">
-       <div class="row"><span data-i18n="transparency">Transparency</span><input type="range" id="op" min="0" max="100" value="55" aria-label="District fill transparency"></div>
+       <div class="row"><span data-i18n="opacity">Opacity</span><input type="range" id="op" min="0" max="100" value="45" aria-label="District fill opacity"></div>
        <div class="row" style="margin-top:7px"><span data-i18n="district_names">District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span data-i18n="borders">Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
@@ -394,9 +394,9 @@ const THANKS='Many thanks for becoming a part of the Latam Crime Map community! 
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 // --- i18n (US-12) — English is the source & fallback; es/pt are drafts. Unknown keys fall back to English. ---
 const STRINGS={ es:{
-  fb_contact:'Comentarios y contacto', city:'Ciudad', more_settings:'Más ajustes', underlay:'Mapa base',
+  fb_contact:'Comentarios y contacto', city:'Ciudad', more_settings:'Ajustes', underlay:'Mapa base',
   base_osm:'Callejero (OSM)', base_sat:'Satélite', base_dark:'Oscuro', base_light:'Claro / mínimo',
-  transparency:'Transparencia', district_names:'Nombres de distritos', borders:'Bordes',
+  opacity:'Opacidad', district_names:'Nombres de distritos', borders:'Bordes',
   my_spots:'📍 Mis lugares valorados ›', legend:'Leyenda', sources:'Fuentes', sources_method:'Fuentes y método',
   risk_scale:'Riesgo de seguridad (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Precaución', tier_avoid:'Evitar',
@@ -411,6 +411,7 @@ const STRINGS={ es:{
   src_basis:'Base de la clasificación de seguridad', src_more:'Más recursos', src_general:'Referencias generales (todas las ciudades)',
   src_foot:'<b>Valoraciones actualizadas __BUILD_DATE__.</b> Las valoraciones son una síntesis editorial de seguridad para viajeros (São Paulo: un modelo continuo muestreado), no una métrica única de criminalidad. Los polígonos son datos abiertos oficiales donde se muestran; las entradas a nivel de ciudad usan un círculo indicativo, no un límite. Las condiciones varían por cuadra y hora del día; esto no es una garantía de seguridad.',
   sub_overview:'Elige una ciudad o toca el mapa', areas_tap:'zonas · toca un distrito para ver su valoración',
+  sub_cta:'Ayuda a mejorar el mapa: toca un punto y valóralo como seguro o peligroso. ¡Gracias!',
   city_overall:'Valoración general de la ciudad · barrios aún no mapeados',
   btn_safe:'✓ Me sentí seguro/a', btn_issue:'⚑ Reportar un problema',
   rhere:'La ubicación exacta importa al reportar', rhere2:' — no solo el distrito. Pronto habrá mapas más detallados.',
@@ -418,9 +419,9 @@ const STRINGS={ es:{
   welcome_body:'Acércate o elige una gran ciudad como <b>Ciudad de México</b> o <b>São Paulo</b>.<br><br>Tu opinión honesta —solo <b>toca el mapa</b> donde ocurrió algo— hace este mapa más inteligente, y pronto habrá más ciudades con detalle.<br><br>¡Gracias!',
   ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', reset_title:'Restablecer ajustes', reset_confirm:'¿Restablecer todos los ajustes y preferencias?\nTus lugares valorados seguirán guardados.', locate_title:'Mostrar mi ubicación'
 }, pt:{
-  fb_contact:'Comentários e contato', city:'Cidade', more_settings:'Mais ajustes', underlay:'Mapa base',
+  fb_contact:'Comentários e contato', city:'Cidade', more_settings:'Ajustes', underlay:'Mapa base',
   base_osm:'Mapa de ruas (OSM)', base_sat:'Satélite', base_dark:'Escuro', base_light:'Claro / mínimo',
-  transparency:'Transparência', district_names:'Nomes dos distritos', borders:'Limites',
+  opacity:'Opacidade', district_names:'Nomes dos distritos', borders:'Limites',
   my_spots:'📍 Meus locais avaliados ›', legend:'Legenda', sources:'Fontes', sources_method:'Fontes e método',
   risk_scale:'Risco de segurança (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Cuidado', tier_avoid:'Evitar',
@@ -435,6 +436,7 @@ const STRINGS={ es:{
   src_basis:'Base da classificação de segurança', src_more:'Mais recursos', src_general:'Referências gerais (todas as cidades)',
   src_foot:'<b>Avaliações atualizadas em __BUILD_DATE__.</b> As avaliações são uma síntese editorial de segurança para viajantes (São Paulo: um modelo contínuo amostrado), não uma métrica única de criminalidade. Os polígonos são dados abertos oficiais onde mostrados; entradas a nível de cidade usam um círculo indicativo, não um limite. As condições variam por quarteirão e horário; isto não é garantia de segurança.',
   sub_overview:'Escolha uma cidade ou toque no mapa', areas_tap:'áreas · toque num distrito para ver a avaliação',
+  sub_cta:'Ajude a melhorar o mapa: toque num ponto e avalie-o como seguro ou perigoso. Obrigado!',
   city_overall:'Avaliação geral da cidade · bairros ainda não mapeados',
   btn_safe:'✓ Senti-me seguro/a', btn_issue:'⚑ Relatar um problema',
   rhere:'A localização exata importa ao relatar', rhere2:' — não apenas o distrito. Em breve mapas mais detalhados.',
@@ -669,7 +671,7 @@ function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.remov
   if(searchPin){map.removeLayer(searchPin);searchPin=null;} if(typeof updateSearchClear==='function')updateSearchClear(); }
 function setHeader(key){const C=CITIES[key];
   document.getElementById('h1').textContent=C.name+' — Latam Crime Map';
-  document.getElementById('sub').textContent=C.model==='city'?t('city_overall','City-level overall rating · neighbourhoods not yet mapped'):(C.districts.length+' '+t('areas_tap','areas · tap a district for its rating'));
+  document.getElementById('sub').textContent=t('sub_cta','Help improve the map — tap a spot and rate it safe or unsafe. Thanks!');
   currentCityName=C.name; const ci=document.getElementById('cityInput'); if(ci)ci.value=C.name;}
 function buildCity(key,opts){
   opts=opts||{}; clearCity(); cityKey=key; const C=CITIES[key];
@@ -788,7 +790,7 @@ cityListEl.addEventListener('click',e=>{const b=e.target.closest('.sres[data-i]'
 cityInput.addEventListener('blur',()=>{setTimeout(()=>{cityInput.value=currentCityName||'';},170);});
 document.addEventListener('click',e=>{if(!e.target.closest('#cityCombo'))hideCityList();});
 document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();persist('sm_basemap',curKey);jr.setBase=1;};
-document.getElementById('op').oninput=e=>{opacity=1-e.target.value/100;restyle();persist('sm_opacity',opacity);jr.setTransp=1;};
+document.getElementById('op').oninput=e=>{opacity=e.target.value/100;restyle();persist('sm_opacity',opacity);jr.setTransp=1;};
 document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();persist('sm_borders',showBorders);jr.setBorders=1;};
 document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();persist('sm_labels',showLabels);jr.setLabels=1;};
 const ctrlEl=document.getElementById('ctrl'),legendEl=document.getElementById('legend'),sourcesEl=document.getElementById('sources');
@@ -1090,7 +1092,7 @@ function showWelcome(){
 }
 // Re-apply saved transparency / basemap / toggles before the first paint.
 function restoreSettings(){
-  const o=lsGet('sm_opacity'); if(o!=null&&!isNaN(+o)){opacity=Math.min(1,Math.max(0,+o));const op=document.getElementById('op');if(op)op.value=Math.round((1-opacity)*100);}
+  const o=lsGet('sm_opacity'); if(o!=null&&!isNaN(+o)){opacity=Math.min(1,Math.max(0,+o));const op=document.getElementById('op');if(op)op.value=Math.round(opacity*100);}
   const b=lsGet('sm_basemap'); if(b&&bases[b]&&b!==curKey){try{map.removeLayer(curBase);}catch(e){}curKey=b;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();const bs=document.getElementById('base');if(bs)bs.value=b;}
   const lb=lsGet('sm_labels'); if(lb!=null){showLabels=(lb==='true');document.getElementById('lbl').checked=showLabels;}
   const bo=lsGet('sm_borders'); if(bo!=null){showBorders=(bo==='true');document.getElementById('bord').checked=showBorders;}
