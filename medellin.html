@@ -871,9 +871,14 @@ document.getElementById('locateBtn').onclick=()=>{
   btn.classList.add('on');
   navigator.geolocation.getCurrentPosition(pos=>{
     btn.classList.remove('on');
-    const c=pos.coords; showLocDot(c.latitude,c.longitude,c.accuracy);
-    map.setView([c.latitude,c.longitude], 13, {animate:true});
-    const k=cityAt(c.longitude,c.latitude); if(k&&k!==cityKey) focusCity(k);
+    const c=pos.coords;
+    // We're zooming away to the user's location — drop any tapped report needle + close its popup first,
+    // otherwise its keepInView/autoPan drags the map back and it never lands on the new location.
+    try{map.closePopup();}catch(e){} clearReportPoint();
+    const k=cityAt(c.longitude,c.latitude);
+    if(k&&k!==cityKey){ setOverview(false); buildCity(k,{fit:false}); }   // load the destination city's layers, without moving
+    showLocDot(c.latitude,c.longitude,c.accuracy);
+    map.setView([c.latitude,c.longitude], 13, {animate:true});           // final view = the user's location
   }, err=>{
     btn.classList.remove('on');
     toast(err&&err.code===1?'Location permission denied — you can enable it in your browser settings.':'Couldn’t get your location. Please try again.',5000,true);
