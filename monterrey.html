@@ -71,7 +71,7 @@
  .ptitle{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600}
  .pbtn{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:7px;width:28px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex:none}
  .pbtn:hover{border-color:#3a4660;color:#fff}.pbtn svg{width:15px;height:15px}
- #legend{right:12px;bottom:72px;min-width:208px;max-width:240px;max-height:70vh;overflow:auto}
+ #legend{right:64px;bottom:18px;min-width:208px;max-width:240px;max-height:70vh;overflow:auto}
  #legend .ltitle{font-size:11px;font-weight:600;margin-bottom:9px}
  .cbrow{display:flex;gap:8px;height:140px}
  .cbar{width:16px;border-radius:4px;border:1px solid rgba(255,255,255,.25)}
@@ -90,22 +90,22 @@
  .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;color:#0c1320}
  .launch{position:absolute;z-index:1001;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;border-radius:10px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;gap:7px;box-shadow:0 2px 10px #0006;font-size:12px;font-weight:600;padding:10px 13px}
  .launch:hover{border-color:#3a4660}.launch svg{width:16px;height:16px;flex:none}
- #legendOpen{right:12px;bottom:72px}#sourcesOpen{left:12px;bottom:18px}
+ #legendOpen{right:64px;bottom:18px}#sourcesOpen{left:12px;bottom:18px}
  /* US-21 menu reset button */
- .ctrlhead{display:flex;justify-content:flex-start;align-items:center;margin:-2px 0 -1px}
+ .mrrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
  .rstbtn{-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted);border-radius:7px;width:30px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:.12s}
  .rstbtn:hover{color:#fff;border-color:var(--ui);background:rgba(255,255,255,.13)}
  .rstbtn svg{width:15px;height:15px}
  /* US-22 locate-me button + pulsing blue dot */
- #locateBtn{position:absolute;right:12px;bottom:18px;z-index:1001;width:42px;height:42px;border-radius:50%;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px #0006;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.12s}
- #locateBtn:hover{color:#fff;border-color:var(--ui)}
- #locateBtn.on{color:#4c9be8;border-color:#4c9be8}
+ #locateBtn{position:absolute;right:12px;bottom:18px;z-index:1001;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:none;color:#5f6368;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3),0 0 0 1px rgba(0,0,0,.05);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transition:.12s}
+ #locateBtn:hover{color:#1a73e8;background:#fff}
+ #locateBtn.on{color:#1a73e8}
  #locateBtn.on svg{animation:locspin 1s linear infinite}
  @keyframes locspin{to{transform:rotate(360deg)}}
  .locdot{display:block;width:16px;height:16px;border-radius:50%;background:#4c9be8;border:2px solid #fff;box-shadow:0 0 0 0 rgba(76,155,232,.5);animation:locpulse 2.6s ease-out infinite}
  @keyframes locpulse{0%{box-shadow:0 0 0 0 rgba(76,155,232,.5)}70%{box-shadow:0 0 0 15px rgba(76,155,232,0)}100%{box-shadow:0 0 0 0 rgba(76,155,232,0)}}
  /* US-20 contribute call-to-action pill */
- #cta{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:1150;display:flex;align-items:center;gap:9px;background:rgba(15,110,86,.96);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:8px 10px 8px 15px;font-size:12.5px;font-weight:600;box-shadow:0 6px 20px #0007;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92%}
+ #cta{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:1150;display:flex;align-items:center;gap:9px;background:rgba(15,110,86,.96);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:8px 10px 8px 15px;font-size:12.5px;font-weight:600;box-shadow:0 6px 20px #0007;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92%}
  #cta b{font-weight:800;white-space:nowrap}
  #cta button{background:rgba(255,255,255,.18);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
  #cta button:hover{background:rgba(255,255,255,.32)}
@@ -205,7 +205,6 @@
    <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
    <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span>Feedback &amp; Contact</span></button>
    <div id="ctrl">
-     <div class="ctrlhead"><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
      <div><span class="cap">City</span>
        <div class="combo" id="cityCombo">
          <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
@@ -223,12 +222,12 @@
        <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
-     <div class="grp"><button id="myReportsBtn" class="mrlink">My reports ›</button></div>
+     <div class="grp mrrow"><button id="myReportsBtn" class="mrlink">My reports ›</button><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
  <div id="cta" class="hidden"><span>👆 Tap any area to rate it — <b>▲ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
- <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3.2M12 18.8V22M2 12h3.2M18.8 12H22"/></svg></button>
+ <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6.8"/><path d="M12 1.4V4.2M12 19.8v2.8M1.4 12H4.2M19.8 12h2.8"/></svg></button>
 
  <div id="legend" class="panel">
    <div class="phead"><span class="ptitle">Legend</span>
