@@ -24,6 +24,10 @@ const PERU = 'https://raw.githubusercontent.com/juaneladio/peru-geojson/master/p
 // The historic urban core is one "Quito" parroquia; the surrounding parroquias (Calderón, Cumbayá, Tumbaco,
 // Conocoto…) are real, populous communities — far better than one circle. A box trims the far rural NW parishes.
 const QUITO = 'https://raw.githubusercontent.com/flandrade/quito-crime-map/master/data/parroquias_quito.geojson';
+// Wave-3 municipal open-data (ArcGIS query endpoints → GeoJSON in WGS84 via outSR=4326).
+const GYE  = 'https://geoportalcat.guayaquil.gob.ec/arcgis/rest/services/Geoportal_Actualizado/GEOPORTAL_ACTUALIZADO/MapServer/9/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
+const CALI = 'https://services7.arcgis.com/fHfQ8qeNWagUQB9e/arcgis/rest/services/Comunas_Cal/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
+const CTG  = 'https://services.arcgis.com/deQSb0Gn7gDPf3uV/arcgis/rest/services/UnidadesComunerasResponsables_Cartagena/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
 
 // key | source | metro box [W,S,E,N] | (optional) name property override
 const JOBS = [
@@ -41,8 +45,18 @@ const JOBS = [
   { key: 'san-juan',          src: { kind: 'gb', iso3: 'PRI', level: 'ADM3' }, box: [-66.18, 18.36, -66.00, 18.48] },
   // --- Peru INEI distritos (same source as Lima/Arequipa) ---
   { key: 'cusco',             src: { kind: 'url', url: PERU, prov: 'CUSCO', provKey: 'NOMBPROV', nameKey: 'NOMBDIST' }, box: [-72.05, -13.63, -71.84, -13.46] },
-  // --- Ecuador (wave 2): Quito parroquias (DMQ). Guayaquil deferred — no clean parroquias-urbanas source yet. ---
+  // --- Ecuador (wave 2): Quito parroquias (DMQ). ---
   { key: 'quito',             src: { kind: 'url', url: QUITO, nameKey: 'parroquia' }, box: [-78.58, -0.42, -78.34, -0.02] },
+  // --- Wave 3 — bespoke municipal open-data (ArcGIS). ---
+  // Guayaquil: parroquias urbanas (Municipio de Guayaquil). Tarqui is two polygons in the source → merged by name.
+  { key: 'guayaquil', src: { kind: 'url', url: GYE, nameKey: 'Nam' }, box: [-80.10, -2.36, -79.75, -2.00], simplify: 0.0004,
+    label: 'parroquias', cite: { text: 'Parroquias urbanas — Municipio de Guayaquil geoportal', url: 'https://geoportalcat.guayaquil.gob.ec/' } },
+  // Cali: the 22 comunas (IDESC / Alcaldía de Cali).
+  { key: 'cali', src: { kind: 'url', url: CALI, nameKey: 'nombre' }, box: [-76.66, 3.30, -76.40, 3.55], simplify: 0.0004,
+    label: 'comunas', cite: { text: 'Comunas de Cali (IDESC — Alcaldía de Cali)', url: 'https://idesc.cali.gov.co/' } },
+  // Cartagena: Unidades Comuneras de Gobierno (numbered UCGs + Boquilla/Zona Expansión). Labels kept raw (UCG n).
+  { key: 'cartagena', src: { kind: 'url', url: CTG, nameKey: 'COD_UGC', raw: true }, box: [-75.60, 10.27, -75.36, 10.53], simplify: 0.0004,
+    label: 'unidades comuneras', cite: { text: 'Unidades Comuneras de Gobierno — Cartagena (open data)', url: 'https://geoportal-cartagena.hub.arcgis.com/' } },
 ];
 
 const centroid = (g) => { let sx = 0, sy = 0, n = 0; const ps = g.type === 'Polygon' ? [g.coordinates] : g.coordinates; for (const p of ps) for (const q of p[0]) { sx += q[0]; sy += q[1]; n++; } return [sx / n, sy / n]; };
@@ -51,6 +65,24 @@ const inBox = (c, b) => c[0] >= b[0] && c[0] <= b[2] && c[1] >= b[1] && c[1] <= 
 // feature that overlaps the box by a ring vertex instead of its centroid.
 const touchesBox = (g, b) => { const ps = g.type === 'Polygon' ? [g.coordinates] : g.coordinates; for (const p of ps) for (const r of p) for (const v of r) if (inBox(v, b)) return true; return false; };
 const matches = (g, b, mode) => mode === 'intersect' ? touchesBox(g, b) : inBox(centroid(g), b);
+// Combine polygons that share a name (e.g. a discontiguous parroquia split across features) into one geometry.
+const toPolys = (g) => g.type === 'Polygon' ? [g.coordinates] : g.coordinates;
+const mergeGeoms = (geoms) => { const polys = []; for (const g of geoms) for (const p of toPolys(g)) polys.push(p); return polys.length === 1 ? { type: 'Polygon', coordinates: polys[0] } : { type: 'MultiPolygon', coordinates: polys }; };
+// Douglas-Peucker ring simplification (tol in degrees ≈ 0.0004 → ~44 m). Full-res municipal ArcGIS
+// boundaries carry tens of thousands of points; at city-district zoom this trims ~80% with no visible change.
+function dpRing(pts, tol) {
+  if (pts.length <= 4) return pts;
+  const segD = (p, a, b) => { let x = a[0], y = a[1], dx = b[0] - x, dy = b[1] - y; if (dx || dy) { const t = ((p[0] - x) * dx + (p[1] - y) * dy) / (dx * dx + dy * dy); if (t > 1) { x = b[0]; y = b[1]; } else if (t > 0) { x += dx * t; y += dy * t; } } return (p[0] - x) ** 2 + (p[1] - y) ** 2; };
+  const t2 = tol * tol, keep = new Array(pts.length).fill(false); keep[0] = keep[pts.length - 1] = true;
+  const st = [[0, pts.length - 1]];
+  while (st.length) { const [s, e] = st.pop(); let md = 0, idx = -1; for (let i = s + 1; i < e; i++) { const d = segD(pts[i], pts[s], pts[e]); if (d > md) { md = d; idx = i; } } if (md > t2 && idx > -1) { keep[idx] = true; st.push([s, idx]); st.push([idx, e]); } }
+  const out = []; for (let i = 0; i < pts.length; i++) if (keep[i]) out.push(pts[i]); return out.length >= 4 ? out : pts;
+}
+function simplifyGeom(g, tol) {
+  const doPoly = (poly) => poly.map((ring) => dpRing(ring, tol)).filter((r) => r.length >= 4);
+  if (g.type === 'Polygon') return { type: 'Polygon', coordinates: doPoly(g.coordinates) };
+  return { type: 'MultiPolygon', coordinates: g.coordinates.map(doPoly).filter((p) => p.length) };
+}
 const WATER = /^(Lago|Laguna|Lake|Embalse|Represa|Reservoir|Bah[ií]a)\b/i;
 
 const gbCache = {};
@@ -100,15 +132,20 @@ async function loadUrl(url) {
 
     if (feats.length < 2) { console.log(`${job.key}: ${feats.length} unit(s) in box — SKIPPED (widen box?)`); continue; }
 
-    const districts = feats.map((f) => {
-      const geom = roundGeom(f.geometry);
-      return { name: titleCase(String(f.properties[nameKey] || '').trim()), score: overall, geom, label: labelPoint(geom) };
+    const nm = (v) => { const s = String(v || '').trim(); return job.src.raw ? s : titleCase(s); };
+    // Merge features sharing a name (e.g. Guayaquil's Tarqui, split into two polygons) into one MultiPolygon.
+    const byName = {};
+    for (const f of feats) { const name = nm(f.properties[nameKey]); if (!name) continue; (byName[name] = byName[name] || []).push(roundGeom(f.geometry)); }
+    const districts = Object.entries(byName).map(([name, geoms]) => {
+      let geom = geoms.length === 1 ? geoms[0] : mergeGeoms(geoms);
+      if (job.simplify) geom = roundGeom(simplifyGeom(geom, job.simplify));
+      return { name, score: overall, geom, label: labelPoint(geom) };
     }).sort((a, b) => a.name.localeCompare(b.name, 'es'));
 
-    const levelLabel = job.src.kind === 'url' ? 'distritos' : (job.src.level === 'ADM3' ? 'distritos' : 'municipios');
-    const boundaryCite = job.src.kind === 'url'
+    const levelLabel = job.label || (job.src.kind === 'url' ? 'distritos' : (job.src.level === 'ADM3' ? 'distritos' : 'municipios'));
+    const boundaryCite = job.cite || (job.src.kind === 'url'
       ? { text: 'INEI distritos (Peru) via juaneladio/peru-geojson', url: 'https://github.com/juaneladio/peru-geojson' }
-      : { text: `geoBoundaries ${job.src.iso3} ${job.src.level}`, url: 'https://www.geoboundaries.org' };
+      : { text: `geoBoundaries ${job.src.iso3} ${job.src.level}`, url: 'https://www.geoboundaries.org' });
 
     cities[job.key] = Object.assign({}, C, {
       model: 'tier', tier_level: 'detailed', districts, bbox: bboxOf(districts),
