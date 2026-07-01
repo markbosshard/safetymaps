@@ -44,6 +44,12 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   UCGs), Brasília (31 Regiões Administrativas), all inheriting the overall rating. Sources: municipal
   ArcGIS / IPE.DF GeoServer open data (verified live) + Douglas-Peucker simplification (~44 m) so full-res
   boundaries don't bloat the bundle (Cali 27k→660 verts).
+- **27 missing 1M+ metros added** (69 → 96 cities) — Caracas/Maracaibo/Valencia/Barquisimeto (VE), Porto
+  Alegre, Santos, Sorocaba, Natal, São Luís, João Pessoa, Teresina, Ribeirão Preto, Joinville, Londrina,
+  Cuiabá, Aracaju (BR), Valparaíso/Concepción (CL), Barranquilla/Cúcuta (CO), Santa Cruz (BO), Trujillo (PE),
+  Culiacán (MX), San Pedro Sula (HN), Managua (NI), Santiago de los Caballeros (DO), Port-au-Prince (HT).
+  Honest city-level circles with editorial overall ratings (`scripts/add_missing_metros.js` → bubbles →
+  clipland → clusters); no invented neighbourhood detail. Adds Nicaragua & Haiti to the country set.
 - **First-party usage analytics** (feeds US-6) — privacy-preserving event stream keyed by the anonymous
   browser token: `session`/`view`/`end` beacons → `event` table, with a rich per-session `meta` summary
   (pans, zooms, favourite zoom level, active dwell, districts opened, report left?, search/locate used,
@@ -123,9 +129,12 @@ continent view reads fine as is.
 
 ---
 
-## 🌎 1M+ metros still missing
+## 🌎 1M+ metros — ✅ NOW ADDED (was: still missing)
 
-**The glaring ones (2M+ metros we don't have):**
+*All of the below (and ~20 more 1M–2M metros) were added as city-level circles — see the Delivered entry
+"27 missing 1M+ metros added". Kept here as the record of the gap that was closed.*
+
+**The glaring ones (2M+ metros we didn't have — now added):**
 - 🇻🇪 **Caracas** (~2.9M) — *the capital; we oddly have Maracay but not Caracas*
 - 🇧🇷 **Porto Alegre** (~4.1M) — RS capital, one of Brazil's biggest
 - 🇻🇪 **Maracaibo** (~2.2M) · **Valencia** (~2.0M)

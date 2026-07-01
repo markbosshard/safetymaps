@@ -51,7 +51,7 @@ function bundle() {
     .replace(/__PAGE_TITLE__/g, attr(m.title)).replace(/__OG_TITLE__/g, attr(m.title))
     .replace(/__OG_DESC__/g, attr(m.desc)).replace(/__OG_URL__/g, m.url).replace(/__OG_IMAGE__/g, m.image);
 
-  const genericDesc = 'Neighbourhood and city safety across Latin America — 69 cities on a green-to-red scale, synthesized from multiple safety sources.';
+  const genericDesc = `Neighbourhood and city safety across Latin America — ${Object.keys(cities).length} cities on a green-to-red scale, synthesized from multiple safety sources.`;
   const generic = fillMeta(base, { title: 'Latam Crime Map', desc: genericDesc, url: SITE + '/', image: SITE + '/og-image.png' });
   fs.writeFileSync(path.join(root, 'index.html'), generic);
   // 404.html = SPA fallback for pretty paths; the in-app router reads location.pathname.

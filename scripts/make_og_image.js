@@ -18,7 +18,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   <text x="104" y="285" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="40" font-weight="500" fill="#cfeee4">Neighbourhood &amp; city safety across Latin America</text>
   ${dots}
   <text x="430" y="482" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#eaf6f1">safe &#8594; high risk</text>
-  <text x="100" y="566" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="30" font-weight="500" fill="#9fd6c6">69 cities · synthesized from multiple sources · latamcrimemap.com</text>
+  <text x="100" y="566" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="30" font-weight="500" fill="#9fd6c6">96 cities · synthesized from multiple sources · latamcrimemap.com</text>
 </svg>`;
 
 sharp(Buffer.from(svg)).png().toFile(path.join(__dirname, '..', 'og-image.png'))
