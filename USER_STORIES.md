@@ -60,11 +60,15 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-12 — Spanish & Portuguese UI (i18n).** Large and quality-sensitive (you wanted native-speaker
-  review). Approach: a `STRINGS` dict (`en`/`es`/`pt`) + `t(id)` everywhere + a switcher + `navigator.language`
-  auto-detect + `sm_lang`; `categories.json` gains `label_es`/`label_pt`. English fallback so it's never
-  half-broken. (An exhaustive string inventory — 136 strings, 45 static / 91 dynamic — is already done and
-  parked, ready to execute.) The new `lang` collection field will show the real es/pt split to prioritise.
+- **US-12 — Spanish & Portuguese UI (i18n) — FOUNDATION SHIPPED; remainder + native review open.**
+  Delivered: a `STRINGS` (en/es/pt) dict + `t()` with English fallback + `applyStatic()` (data-i18n /
+  -ph / -title / -html) + a language switcher (More settings) + `navigator.language` auto-detect + `sm_lang`
+  persistence; `categories.json` gained `label_es`/`label_pt`. Translated (draft es/pt): all menu/legend/
+  sources chrome, the report buttons, the contribute CTA, the city/overview subtitles, issue categories &
+  when-buckets, and the welcome modal. **Still English (fall back cleanly, add next):** toasts, the issue
+  sheet's secondary labels (when/first-hand/submit/email hint), the feedback modal, the My-Rated-Spots modal,
+  and the RHERE exact-location hint. **Native-speaker review of the es/pt drafts is still required** before
+  calling it done. The `lang` analytics field will show the real es/pt split to prioritise.
 - **US-9 (waves 5+) — District the remaining single-municipio cities.** Done: waves 1–2 (8 cities + Quito),
   waves 3–4 (Guayaquil, Cali, Cartagena, Brasília). Remaining, each needing a bespoke per-country source:
   **Brazil** — Manaus & Florianópolis via OSM Overpass (needs relation ring-assembly — verified sources exist,

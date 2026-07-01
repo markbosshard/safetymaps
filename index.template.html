@@ -210,61 +210,63 @@
    <h1 id="h1">Latam Crime Map</h1>
    <span class="sub" id="sub"></span>
    <div id="search">
-     <input id="searchInput" type="text" placeholder="Search within current map view" autocomplete="off" enterkeyhint="search" aria-label="Search address, district or city" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list"/>
+     <input id="searchInput" type="text" data-i18n-ph="search_ph" placeholder="Search within current map view" autocomplete="off" enterkeyhint="search" aria-label="Search address, district or city" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list"/>
      <button id="searchBtn" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
      <div id="searchResults" class="hidden" role="listbox"></div>
    </div>
    <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
-   <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span>Feedback &amp; Contact</span></button>
+   <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span data-i18n="fb_contact">Feedback &amp; Contact</span></button>
    <div id="ctrl">
-     <div><span class="cap">City</span>
+     <div><span class="cap" data-i18n="city">City</span>
        <div class="combo" id="cityCombo">
          <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
          <div id="cityList" class="hidden" role="listbox"></div>
        </div></div>
-     <button id="moreBtn" class="morebtn" aria-expanded="false" aria-controls="moreWrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>More settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+     <button id="moreBtn" class="morebtn" aria-expanded="false" aria-controls="moreWrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-i18n="more_settings">More settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
      <div id="moreWrap" class="hidden">
-     <div class="grp"><span class="cap">Underlay</span>
+     <div class="grp"><span class="cap" data-i18n="underlay">Underlay</span>
        <select id="base">
-         <option value="osm" selected>Street map (OSM)</option>
-         <option value="sat">Aerial / satellite</option>
-         <option value="cartoDark">Dark</option>
-         <option value="cartoLight">Light / minimal</option>
+         <option value="osm" selected data-i18n="base_osm">Street map (OSM)</option>
+         <option value="sat" data-i18n="base_sat">Aerial / satellite</option>
+         <option value="cartoDark" data-i18n="base_dark">Dark</option>
+         <option value="cartoLight" data-i18n="base_light">Light / minimal</option>
        </select></div>
      <div class="grp">
-       <div class="row"><span>Transparency</span><input type="range" id="op" min="0" max="100" value="55" aria-label="District fill transparency"></div>
-       <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
-       <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
+       <div class="row"><span data-i18n="transparency">Transparency</span><input type="range" id="op" min="0" max="100" value="55" aria-label="District fill transparency"></div>
+       <div class="row" style="margin-top:7px"><span data-i18n="district_names">District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
+       <div class="row" style="margin-top:7px"><span data-i18n="borders">Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
+     <div class="grp"><span class="cap" data-i18n="lang_label">Language</span>
+       <select id="langSel"><option value="en">English</option><option value="es">Español</option><option value="pt">Português</option></select></div>
      </div>
-     <div class="grp mrrow"><button id="myReportsBtn" class="mrlink">📍 My Rated Spots ›</button><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
+     <div class="grp mrrow"><button id="myReportsBtn" class="mrlink" data-i18n="my_spots">📍 My Rated Spots ›</button><button id="resetBtn" class="rstbtn" data-i18n-title="reset_title" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
- <div id="cta" class="hidden"><span>👆 Tap any point on the map to rate it — <b>✓ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
- <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6.8"/><path d="M12 1.4V4.2M12 19.8v2.8M1.4 12H4.2M19.8 12h2.8"/></svg></button>
+ <div id="cta" class="hidden"><span data-i18n-html="cta_full">👆 Tap any point on the map to rate it — <b>✓ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
+ <button id="locateBtn" class="hidden" data-i18n-title="locate_title" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6.8"/><path d="M12 1.4V4.2M12 19.8v2.8M1.4 12H4.2M19.8 12h2.8"/></svg></button>
 
  <div id="legend" class="panel">
-   <div class="phead"><span class="ptitle">Legend</span>
+   <div class="phead"><span class="ptitle" data-i18n="legend">Legend</span>
      <button class="pbtn" id="legendCollapse" title="Collapse" aria-label="Collapse legend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></button></div>
-   <div class="ltitle">Security risk (1 = safe &rarr; 10 = high)</div>
+   <div class="ltitle" data-i18n="risk_scale">Security risk (1 = safe &rarr; 10 = high)</div>
    <div class="cbrow"><div class="cbar" id="lg-bar"></div>
      <div class="ticks"><span>10</span><span>8</span><span>6</span><span>4</span><span>2</span><span>1</span></div></div>
    <div class="tiers">
-     <div class="tier"><span class="sw" id="sw1"></span>Safe <small>&nbsp;1&ndash;2.5</small></div>
-     <div class="tier"><span class="sw" id="sw2"></span>Moderate <small>&nbsp;2.5&ndash;5</small></div>
-     <div class="tier"><span class="sw" id="sw3"></span>Caution <small>&nbsp;5&ndash;7.5</small></div>
-     <div class="tier"><span class="sw" id="sw4"></span>Avoid <small>&nbsp;7.5&ndash;10</small></div>
+     <div class="tier"><span class="sw" id="sw1"></span><span data-i18n="tier_safe">Safe</span> <small>&nbsp;1&ndash;2.5</small></div>
+     <div class="tier"><span class="sw" id="sw2"></span><span data-i18n="tier_moderate">Moderate</span> <small>&nbsp;2.5&ndash;5</small></div>
+     <div class="tier"><span class="sw" id="sw3"></span><span data-i18n="tier_caution">Caution</span> <small>&nbsp;5&ndash;7.5</small></div>
+     <div class="tier"><span class="sw" id="sw4"></span><span data-i18n="tier_avoid">Avoid</span> <small>&nbsp;7.5&ndash;10</small></div>
    </div>
  </div>
- <button class="launch hidden" id="legendOpen" title="Show legend" aria-label="Show legend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 12h10M4 17h10"/></svg><span>Legend</span></button>
+ <button class="launch hidden" id="legendOpen" title="Show legend" aria-label="Show legend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 12h10M4 17h10"/></svg><span data-i18n="legend">Legend</span></button>
 
  <div id="sources" class="panel hidden">
-   <div class="phead"><span class="ptitle">Sources &amp; method</span>
+   <div class="phead"><span class="ptitle" data-i18n="sources_method">Sources &amp; method</span>
      <button class="pbtn" id="sourcesCollapse" title="Collapse" aria-label="Collapse sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></button></div>
    <div id="sourcesBody"></div>
  </div>
- <button class="launch" id="sourcesOpen" title="Show sources" aria-label="Show sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><span>Sources</span></button>
+ <button class="launch" id="sourcesOpen" title="Show sources" aria-label="Show sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><span data-i18n="sources">Sources</span></button>
 
  <div id="modal" class="hidden" role="dialog" aria-modal="true"><div class="mback"></div><div class="mcard" id="mcard"></div></div>
  <div id="toast" class="hidden"></div>
@@ -369,6 +371,52 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').re
 const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://api.latamcrimemap.com';
 const THANKS='Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.';
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
+// --- i18n (US-12) — English is the source & fallback; es/pt are drafts. Unknown keys fall back to English. ---
+const STRINGS={ es:{
+  fb_contact:'Comentarios y contacto', city:'Ciudad', more_settings:'Más ajustes', underlay:'Mapa base',
+  base_osm:'Callejero (OSM)', base_sat:'Satélite', base_dark:'Oscuro', base_light:'Claro / mínimo',
+  transparency:'Transparencia', district_names:'Nombres de distritos', borders:'Bordes',
+  my_spots:'📍 Mis lugares valorados ›', legend:'Leyenda', sources:'Fuentes', sources_method:'Fuentes y método',
+  risk_scale:'Riesgo de seguridad (1 = seguro → 10 = alto)',
+  tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Precaución', tier_avoid:'Evitar',
+  search_ph:'Buscar en la vista actual del mapa', lang_label:'Idioma',
+  sub_overview:'Elige una ciudad o toca el mapa', areas_tap:'zonas · toca un distrito para ver su valoración',
+  city_overall:'Valoración general de la ciudad · barrios aún no mapeados',
+  btn_safe:'✓ Me sentí seguro/a', btn_issue:'⚑ Reportar un problema',
+  rhere:'La ubicación exacta importa al reportar', rhere2:' — no solo el distrito. Pronto habrá mapas más detallados.',
+  cta_full:'👆 Toca cualquier punto del mapa para valorarlo — <b>✓ seguro</b> o <b>⚑ problema</b>',
+  welcome_body:'Acércate o elige una gran ciudad como <b>Ciudad de México</b> o <b>São Paulo</b>.<br><br>Tu opinión honesta —solo <b>toca el mapa</b> donde ocurrió algo— hace este mapa más inteligente, y pronto habrá más ciudades con detalle.<br><br>¡Gracias!',
+  ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', reset_title:'Restablecer ajustes', locate_title:'Mostrar mi ubicación'
+}, pt:{
+  fb_contact:'Comentários e contato', city:'Cidade', more_settings:'Mais ajustes', underlay:'Mapa base',
+  base_osm:'Mapa de ruas (OSM)', base_sat:'Satélite', base_dark:'Escuro', base_light:'Claro / mínimo',
+  transparency:'Transparência', district_names:'Nomes dos distritos', borders:'Limites',
+  my_spots:'📍 Meus locais avaliados ›', legend:'Legenda', sources:'Fontes', sources_method:'Fontes e método',
+  risk_scale:'Risco de segurança (1 = seguro → 10 = alto)',
+  tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Cuidado', tier_avoid:'Evitar',
+  search_ph:'Buscar na vista atual do mapa', lang_label:'Idioma',
+  sub_overview:'Escolha uma cidade ou toque no mapa', areas_tap:'áreas · toque num distrito para ver a avaliação',
+  city_overall:'Avaliação geral da cidade · bairros ainda não mapeados',
+  btn_safe:'✓ Senti-me seguro/a', btn_issue:'⚑ Relatar um problema',
+  rhere:'A localização exata importa ao relatar', rhere2:' — não apenas o distrito. Em breve mapas mais detalhados.',
+  cta_full:'👆 Toque em qualquer ponto do mapa para avaliá-lo — <b>✓ seguro</b> ou <b>⚑ problema</b>',
+  welcome_body:'Aproxime o zoom ou escolha uma grande cidade como <b>Cidade do México</b> ou <b>São Paulo</b>.<br><br>Seu feedback honesto —basta <b>tocar no mapa</b> onde algo aconteceu— torna este mapa mais inteligente, e em breve haverá mais cidades com detalhe.<br><br>Obrigado!',
+  ok:'OK', close:'Fechar', thanks_title:'Obrigado! 🙏', reset_title:'Redefinir ajustes', locate_title:'Mostrar minha localização'
+} };
+let LANG=(function(){ try{ const s=localStorage.getItem('sm_lang'); if(s&&/^(en|es|pt)$/.test(s))return s; const n=(navigator.language||'en').slice(0,2).toLowerCase(); return (n==='es'||n==='pt')?n:'en'; }catch(e){ return 'en'; } })();
+function t(key,dflt){ const d=STRINGS[LANG]&&STRINGS[LANG][key]; return d!=null?d:(dflt!=null?dflt:key); }
+// Localised label for a categories.json entry (category or when-bucket): label_es/label_pt else English label.
+function catLabel(o){ if(!o)return ''; if(LANG==='es'&&o.label_es)return o.label_es; if(LANG==='pt'&&o.label_pt)return o.label_pt; return o.label; }
+const _orig={};
+function applyStatic(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const id=el.getAttribute('data-i18n'); if(_orig[id]===undefined)_orig[id]=el.textContent; const tr=(LANG!=='en'&&STRINGS[LANG]&&STRINGS[LANG][id]); el.textContent=tr||_orig[id]; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ const id=el.getAttribute('data-i18n-ph'); const k='ph:'+id; if(_orig[k]===undefined)_orig[k]=el.getAttribute('placeholder')||''; const tr=(LANG!=='en'&&STRINGS[LANG]&&STRINGS[LANG][id]); el.setAttribute('placeholder',tr||_orig[k]); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el=>{ const id=el.getAttribute('data-i18n-title'); const k='ti:'+id; if(_orig[k]===undefined)_orig[k]=el.getAttribute('title')||''; const tr=(LANG!=='en'&&STRINGS[LANG]&&STRINGS[LANG][id]); el.setAttribute('title',tr||_orig[k]); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{ const id=el.getAttribute('data-i18n-html'); const k='h:'+id; if(_orig[k]===undefined)_orig[k]=el.innerHTML; const tr=(LANG!=='en'&&STRINGS[LANG]&&STRINGS[LANG][id]); el.innerHTML=tr||_orig[k]; });
+  try{document.documentElement.lang=LANG;}catch(e){}
+}
+function setLang(l){ if(!/^(en|es|pt)$/.test(l))return; LANG=l; try{localStorage.setItem('sm_lang',l);}catch(e){} applyStatic();
+  try{ if(overviewOn){ const s=document.getElementById('sub'); if(s)s.textContent=t('sub_overview','Select a city, or click the map'); } else if(cityKey&&CITIES[cityKey]){setHeader(cityKey);} renderSources(); updateContribUi(); }catch(e){} }
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
 // --- First-party, privacy-preserving usage analytics ---------------------------------------------------
 // Anonymous only: the sm_token (a random UUID, no identity) links one browser's journey — which cities it
@@ -428,7 +476,7 @@ function submitReportEmail(){
     .catch(()=>{ if(btn)btn.disabled=false; });
 }
 function actionRow(){
-  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">✓ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
+  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">'+t('btn_safe','✓ Felt-safe here')+'</button><button class="vbtn flag" onclick="openIssueSheet()">'+t('btn_issue','⚑ Report an issue here')+'</button><span class="vtally" id="popmsg"></span></div>';
 }
 function buildBody(payload){return Object.assign({city:cityKey,token:smToken()},payload);}
 async function postBody(body){
@@ -470,12 +518,12 @@ function closeModal(){const m=document.getElementById('modal');const wasOpen=!m.
   if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
 // Post-rating thank-you: a modal that stays up until the user closes it (a big, easy Close button).
-function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>Thank you! 🙏</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
+function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>'+t('thanks_title','Thank you! 🙏')+'</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
   if(!popupCtx)return; if(typeof jr==='object')jr.issueOpened++;
   let cat=null,when=null,fh=null;
-  const cats=CAT.categories.map(c=>'<label class="opt"><input type="radio" name="cat" value="'+c.key+'"><span>'+esc(c.label)+'</span></label>').join('');
+  const cats=CAT.categories.map(c=>'<label class="opt"><input type="radio" name="cat" value="'+c.key+'"><span>'+esc(catLabel(c))+'</span></label>').join('');
   const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(w.label)+'</button>').join('');
   setModal(
     '<h3>What happened here?</h3>'+
@@ -582,7 +630,7 @@ function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.remov
   if(searchPin){map.removeLayer(searchPin);searchPin=null;} }
 function setHeader(key){const C=CITIES[key];
   document.getElementById('h1').textContent=C.name+' — Latam Crime Map';
-  document.getElementById('sub').textContent=C.model==='city'?'City-level overall rating · neighbourhoods not yet mapped':(C.districts.length+' areas · tap a district for its rating');
+  document.getElementById('sub').textContent=C.model==='city'?t('city_overall','City-level overall rating · neighbourhoods not yet mapped'):(C.districts.length+' '+t('areas_tap','areas · tap a district for its rating'));
   currentCityName=C.name; const ci=document.getElementById('cityInput'); if(ci)ci.value=C.name;}
 function buildCity(key,opts){
   opts=opts||{}; clearCity(); cityKey=key; const C=CITIES[key];
@@ -637,7 +685,7 @@ function buildOverview(){overviewGroup.clearLayers();
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
   if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
     document.getElementById('h1').textContent='Latam Crime Map';
-    document.getElementById('sub').textContent='Select a city, or click the map';
+    document.getElementById('sub').textContent=t('sub_overview','Select a city, or click the map');
     currentCityName=''; const ci=document.getElementById('cityInput'); if(ci)ci.value=''; }
   else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); }
   updateContribUi(); }
@@ -721,6 +769,8 @@ document.getElementById('myReportsBtn').onclick=openMyReports;
 const moreBtn=document.getElementById('moreBtn'),moreWrap=document.getElementById('moreWrap');
 function setMore(o){moreWrap.classList.toggle('hidden',!o);moreBtn.classList.toggle('open',o);moreBtn.setAttribute('aria-expanded',o);}
 moreBtn.onclick=()=>{const open=moreWrap.classList.contains('hidden');setMore(open);persist('sm_more',open?'1':'0');};
+// i18n: wire the language switcher and translate the static chrome on load.
+(function(){ const ls=document.getElementById('langSel'); if(ls){ ls.value=LANG; ls.onchange=e=>setLang(e.target.value); } applyStatic(); })();
 // --- US-21: reset settings. Clears every sm_* key EXCEPT the reporter identity/queue (so you keep the
 // ability to see & withdraw your own reports); non-sm_ keys (GoatCounter) are left untouched. ---
 const RESET_KEEP={sm_token:1,sm_queue:1};
@@ -965,10 +1015,11 @@ function showWelcome(){
   if(typeof jr==='object')jr.welcomeShown=1; _curModal='welcome';
   setModal(
     '<h3>Latam Crime Map</h3>'+
-    '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>.<br><br>'+
-    'Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter, and more detailed cities are coming soon.<br><br>'+
-    'Thank you!</p>'+
-    '<div class="mrow"><button class="mbtn primary" onclick="closeModal()">OK</button></div>'
+    '<p class="msub">'+t('welcome_body',
+      'Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>.<br><br>'+
+      'Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter, and more detailed cities are coming soon.<br><br>'+
+      'Thank you!')+'</p>'+
+    '<div class="mrow"><button class="mbtn primary" onclick="closeModal()">'+t('ok','OK')+'</button></div>'
   );
 }
 // Re-apply saved transparency / basemap / toggles before the first paint.

@@ -1,20 +1,20 @@
 {
-  "_comment": "Issue categories for the 'Report an issue' sheet (CROWDSOURCING.md §2). Shared by backend validation and the frontend sheet. Array order = display order (least severe first). There is intentionally NO people/demographic category — see §0/§1.",
+  "_comment": "Issue categories for the 'Report an issue' sheet (CROWDSOURCING.md §2). Shared by backend validation and the frontend sheet. Array order = display order (least severe first). There is intentionally NO people/demographic category — see §0/§1. label_es/label_pt are draft translations (US-12), English (label) is the source + fallback.",
   "categories": [
-    { "key": "environment", "label": "Poorly lit / deserted / no exit",       "type": "environment",  "base_weight": 0.3 },
-    { "key": "witnessed",   "label": "Witnessed a crime here",                 "type": "incident_2nd", "base_weight": 0.5 },
-    { "key": "theft_grab",  "label": "Phone or bag snatched / pickpocketed",   "type": "incident",     "base_weight": 0.9 },
-    { "key": "robbery",     "label": "Robbed / mugged (by force or threat)",   "type": "incident",     "base_weight": 1.0 },
-    { "key": "followed",    "label": "Followed or harassed",                   "type": "incident",     "base_weight": 0.7 },
-    { "key": "threat",      "label": "Threatened",                             "type": "incident",     "base_weight": 0.8 },
-    { "key": "vehicle",     "label": "Car broken into / vehicle theft",        "type": "incident",     "base_weight": 0.8 },
-    { "key": "other",       "label": "Other",                                  "type": "incident",     "base_weight": 0.5 }
+    { "key": "environment", "label": "Poorly lit / deserted / no exit",     "label_es": "Mal iluminado / desierto / sin salida", "label_pt": "Mal iluminado / deserto / sem saída",     "type": "environment",  "base_weight": 0.3 },
+    { "key": "witnessed",   "label": "Witnessed a crime here",               "label_es": "Presencié un delito aquí",              "label_pt": "Presenciei um crime aqui",                "type": "incident_2nd", "base_weight": 0.5 },
+    { "key": "theft_grab",  "label": "Phone or bag snatched / pickpocketed", "label_es": "Robo de celular o bolso / carterismo",  "label_pt": "Celular ou bolsa arrancados / furto",     "type": "incident",     "base_weight": 0.9 },
+    { "key": "robbery",     "label": "Robbed / mugged (by force or threat)", "label_es": "Asalto / atraco (con fuerza o amenaza)","label_pt": "Assaltado / roubado (força ou ameaça)",   "type": "incident",     "base_weight": 1.0 },
+    { "key": "followed",    "label": "Followed or harassed",                 "label_es": "Seguido/a o acosado/a",                 "label_pt": "Seguido/a ou assediado/a",                "type": "incident",     "base_weight": 0.7 },
+    { "key": "threat",      "label": "Threatened",                           "label_es": "Amenazado/a",                           "label_pt": "Ameaçado/a",                              "type": "incident",     "base_weight": 0.8 },
+    { "key": "vehicle",     "label": "Car broken into / vehicle theft",      "label_es": "Robo en/de vehículo",                   "label_pt": "Furto em/de veículo",                     "type": "incident",     "base_weight": 0.8 },
+    { "key": "other",       "label": "Other",                                "label_es": "Otro",                                  "label_pt": "Outro",                                   "type": "incident",     "base_weight": 0.5 }
   ],
   "when_buckets": [
-    { "key": "today", "label": "Today",         "recency": 1.0 },
-    { "key": "d30",   "label": "Last 30 days",  "recency": 0.8 },
-    { "key": "y1",    "label": "Last 12 months","recency": 0.5 },
-    { "key": "older", "label": "Older",         "recency": 0.3 }
+    { "key": "today", "label": "Today",          "label_es": "Hoy",             "label_pt": "Hoje",            "recency": 1.0 },
+    { "key": "d30",   "label": "Last 30 days",   "label_es": "Últimos 30 días", "label_pt": "Últimos 30 dias", "recency": 0.8 },
+    { "key": "y1",    "label": "Last 12 months", "label_es": "Últimos 12 meses","label_pt": "Últimos 12 meses","recency": 0.5 },
+    { "key": "older", "label": "Older",          "label_es": "Anterior",        "label_pt": "Mais antigo",     "recency": 0.3 }
   ],
   "first_hand_factor": { "true": 1.0, "false": 0.5 }
 }
