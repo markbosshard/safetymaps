@@ -40,6 +40,10 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   neighbouring districts still visible + slow-pulsing blue dot & accuracy halo; focuses the user's city.
 - **Districts, wave 2** (US-9) — Quito → 17 DMQ parroquias (urban Quito + Calderón, Cumbayá, Tumbaco,
   Conocoto…), inheriting the overall rating. Source: DMQ open parroquias (flandrade/quito-crime-map).
+- **Districts, waves 3–4** (US-9) — Guayaquil (15 parroquias urbanas), Cali (22 comunas), Cartagena (17
+  UCGs), Brasília (31 Regiões Administrativas), all inheriting the overall rating. Sources: municipal
+  ArcGIS / IPE.DF GeoServer open data (verified live) + Douglas-Peucker simplification (~44 m) so full-res
+  boundaries don't bloat the bundle (Cali 27k→660 verts).
 - **First-party usage analytics** (feeds US-6) — privacy-preserving event stream keyed by the anonymous
   browser token: `session`/`view`/`end` beacons → `event` table, with a rich per-session `meta` summary
   (pans, zooms, favourite zoom level, active dwell, districts opened, report left?, search/locate used,
@@ -61,14 +65,15 @@ continent view reads fine as is.
   auto-detect + `sm_lang`; `categories.json` gains `label_es`/`label_pt`. English fallback so it's never
   half-broken. (An exhaustive string inventory — 136 strings, 45 static / 91 dynamic — is already done and
   parked, ready to execute.) The new `lang` collection field will show the real es/pt split to prioritise.
-- **US-9 (waves 2+) — District the big single-municipio cities.** Wave 1 (8 cities) + wave 2 (Quito)
-  shipped. Remaining circles are single municipios with no geoBoundaries sub-level, so each needs a bespoke
-  per-country source, staged: **Ecuador** — Guayaquil still pending (its urban core is one parroquia in the
-  open 2012 DPA layer; needs a parroquias-urbanas source) → **Colombia** comunas/localidades (Cali, Cartagena) →
-  **Brazil** bairros (Brasília RAs, Manaus, Florianópolis, Foz, Santarém) → **Argentina** barrios (Rosario,
-  Córdoba, Mendoza, Bariloche — ADM2 departamentos are too coarse) → **Mexico** colonias/AGEBs (Tijuana,
-  Cd Juárez, Torreón, Saltillo, Mexicali, León) + La Paz/Cochabamba, Tegucigalpa. Same verify-then-ship loop
-  as wave 1; districts inherit the one overall rating unless a trustworthy source lets us differentiate.
+- **US-9 (waves 5+) — District the remaining single-municipio cities.** Done: waves 1–2 (8 cities + Quito),
+  waves 3–4 (Guayaquil, Cali, Cartagena, Brasília). Remaining, each needing a bespoke per-country source:
+  **Brazil** — Manaus & Florianópolis via OSM Overpass (needs relation ring-assembly — verified sources exist,
+  the official Manaus IMPLURB ArcGIS returns null geometry so OSM is the path), plus Foz do Iguaçu, Santarém →
+  **Argentina** barrios (Rosario, Córdoba, Mendoza, Bariloche — ADM2 departamentos are too coarse) →
+  **Mexico** colonias/AGEBs (Tijuana, Cd Juárez, Torreón, Saltillo, Mexicali, León) + La Paz/Cochabamba,
+  Tegucigalpa. Same verify-then-ship loop; districts inherit the one overall rating unless a trustworthy
+  source differentiates them. `scripts/add_districts.js` now supports geoBoundaries, direct GeoJSON, ArcGIS
+  query endpoints, merge-by-name, and DP simplification.
 
 - **US-23 — Grow tracking into a "crowdsourcing-health" system.** Builds on the delivered event stream
   (Delivered) — the metrics that actually steer a *growing* crowd map (the flywheel: visitors → contributors

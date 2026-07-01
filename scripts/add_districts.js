@@ -28,6 +28,8 @@ const QUITO = 'https://raw.githubusercontent.com/flandrade/quito-crime-map/maste
 const GYE  = 'https://geoportalcat.guayaquil.gob.ec/arcgis/rest/services/Geoportal_Actualizado/GEOPORTAL_ACTUALIZADO/MapServer/9/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
 const CALI = 'https://services7.arcgis.com/fHfQ8qeNWagUQB9e/arcgis/rest/services/Comunas_Cal/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
 const CTG  = 'https://services.arcgis.com/deQSb0Gn7gDPf3uV/arcgis/rest/services/UnidadesComunerasResponsables_Cartagena/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson';
+// Brasília: the 33 Regiões Administrativas of the Distrito Federal (official IPE.DF GeoServer WFS, WGS84).
+const BSB  = 'https://catalogo.ipe.df.gov.br/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3ALimite_RA_20190&outputFormat=json&srsName=EPSG%3A4326';
 
 // key | source | metro box [W,S,E,N] | (optional) name property override
 const JOBS = [
@@ -57,6 +59,10 @@ const JOBS = [
   // Cartagena: Unidades Comuneras de Gobierno (numbered UCGs + Boquilla/Zona Expansión). Labels kept raw (UCG n).
   { key: 'cartagena', src: { kind: 'url', url: CTG, nameKey: 'COD_UGC', raw: true }, box: [-75.60, 10.27, -75.36, 10.53], simplify: 0.0004,
     label: 'unidades comuneras', cite: { text: 'Unidades Comuneras de Gobierno — Cartagena (open data)', url: 'https://geoportal-cartagena.hub.arcgis.com/' } },
+  // Brazil (wave 4): Brasília / DF → 33 Regiões Administrativas (official IPE.DF). Manaus/Floripa need OSM
+  // relation ring-assembly (deferred). RAs span the whole DF, so a generous box + intersect match.
+  { key: 'brasilia', src: { kind: 'url', url: BSB, nameKey: 'ra' }, box: [-48.30, -16.06, -47.30, -15.50], match: 'intersect', simplify: 0.0005,
+    label: 'regiões administrativas', cite: { text: 'Regiões Administrativas do DF — IPE.DF (GeoServer)', url: 'https://catalogo.ipe.df.gov.br/' } },
 ];
 
 const centroid = (g) => { let sx = 0, sy = 0, n = 0; const ps = g.type === 'Polygon' ? [g.coordinates] : g.coordinates; for (const p of ps) for (const q of p[0]) { sx += q[0]; sy += q[1]; n++; } return [sx / n, sy / n]; };
