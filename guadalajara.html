@@ -585,9 +585,9 @@ function overallScore(key){const C=CITIES[key];
   let s=0,n=0;C.districts.forEach(d=>{if(d.score!=null){s+=d.score;n++;}});return n?s/n:null;}
 function buildOverview(){overviewGroup.clearLayers();
   Object.keys(CITIES).forEach(key=>{const ll=centerOf(key);const sc=overallScore(key);
-    const m=L.circleMarker(ll,{radius:overviewRadius(),weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity});
+    const m=L.circleMarker(ll,{radius:overviewRadius(),weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity,bubblingMouseEvents:false});
     m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-13]});
-    m.on('click',()=>focusCity(key));
+    m.on('click',(ev)=>{ if(ev&&ev.originalEvent)L.DomEvent.stop(ev.originalEvent); focusCity(key); });
     m.addTo(overviewGroup);});}
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
   if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
@@ -917,8 +917,9 @@ function showOverviewHome(){
 function showWelcome(){
   setModal(
     '<h3>Latam Crime Map</h3>'+
-    '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>. Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter. Thank you!<br><br>'+
-    '<span style="color:#8896ad">Smaller cities aren’t mapped in detail yet — they’re on the way.</span></p>'+
+    '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>.<br><br>'+
+    'Your honest feedback — just <b>click the map</b> where something happened — makes this map smarter, and more detailed cities are coming soon.<br><br>'+
+    'Thank you!</p>'+
     '<div class="mrow"><button class="mbtn primary" onclick="closeModal()">OK</button></div>'
   );
 }
