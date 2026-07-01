@@ -181,7 +181,7 @@
  .mbtn.primary:disabled{opacity:.5;cursor:not-allowed}
  .mmsg{font-size:12px;margin-top:10px;line-height:1.4;min-height:1px}
  .mmsg.ok{color:#9fe6c0}.mmsg.err{color:#ffb4b4}
- .mrlink{background:none;border:none;color:#86b4e6;font-size:12px;cursor:pointer;padding:0;font-family:inherit}
+ .mrlink{background:none;border:none;color:#86b4e6;font-size:13.5px;font-weight:600;cursor:pointer;padding:2px 0;font-family:inherit}
  .mrlink:hover{color:#a9cdf2}
  .myr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
  .myr:first-child{border-top:none}
@@ -232,7 +232,7 @@
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
      </div>
-     <div class="grp mrrow"><button id="myReportsBtn" class="mrlink">My reports ›</button><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
+     <div class="grp mrrow"><button id="myReportsBtn" class="mrlink">📍 My Rated Spots ›</button><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
@@ -463,7 +463,7 @@ function openIssueSheet(){
   };
 }
 async function openMyReports(){
-  setModal('<h3>My reports</h3><p class="msub">Reports you’ve submitted from this browser that are awaiting our review. You can withdraw any of them.</p><div id="myrList" style="font-size:13px;color:#cdd6e4">Loading…</div><div class="mrow"><button class="mbtn" onclick="closeModal()">Close</button></div>');
+  setModal('<h3>My Rated Spots</h3><p class="msub">Spots you’ve rated from this browser that are awaiting our review. You can withdraw any of them.</p><div id="myrList" style="font-size:13px;color:#cdd6e4">Loading…</div><div class="mrow"><button class="mbtn" onclick="closeModal()">Close</button></div>');
   let data; try{const r=await fetch(API+'/my-reports?token='+encodeURIComponent(smToken()));data=await r.json();}catch(e){data=null;}
   const el=document.getElementById('myrList'); if(!el)return;
   if(!data||!data.ok){ el.textContent='Couldn’t load your reports — please try again later.'; return; }
@@ -677,19 +677,24 @@ document.getElementById('resetBtn').onclick=()=>{
   resetSettings(); location.href='/'; };
 // --- US-20: contribute call-to-action. A dismissible pill (retires for good once dismissed or after a
 // successful report), plus a crosshair cursor over a focused city, so people learn they can tap to rate. ---
-function ctaHidden(){ return lsGet('sm_ctahide')==='1'; }
+// The rating CTA is shown only to people who have NEVER rated, and only on the first 3 PAGE loads
+// (sm_loadcount — page loads, not city-drags). Dismiss (×) hides it for this load; a successful rating
+// retires it for good (sm_rated). Once rated, or after 3 loads, it never appears again.
+let ctaDismissed=false;
+function everRated(){ return lsGet('sm_rated')==='1'; }
+function ctaEligible(){ return !everRated() && !ctaDismissed && (parseInt(lsGet('sm_loadcount')||'0',10)||0)<=3; }
 // Keep the CTA just below the header (its height changes with viewport width / search open).
 function placeCta(){ const cta=document.getElementById('cta'),hd=document.querySelector('header'); if(cta&&hd) cta.style.top=(hd.offsetHeight+10)+'px'; }
 window.addEventListener('resize',placeCta);
 function updateContribUi(){
   const inCity = !overviewOn && cityKey && CITIES[cityKey];
-  const cta=document.getElementById('cta'); if(cta){ cta.classList.toggle('hidden', !(inCity && !ctaHidden())); placeCta(); }
+  const cta=document.getElementById('cta'); if(cta){ cta.classList.toggle('hidden', !(inCity && ctaEligible())); placeCta(); }
   const lb=document.getElementById('locateBtn'); if(lb) lb.classList.remove('hidden');   // always available
   const mc=map&&map.getContainer&&map.getContainer(); if(mc) mc.classList.toggle('rmode', !!inCity);
 }
-function retireCta(){ persist('sm_ctahide','1'); const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); }
-document.getElementById('ctaX').onclick=retireCta;
-window.retireCta=retireCta;   // called on first successful report
+function retireCta(){ persist('sm_rated','1'); const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); }
+document.getElementById('ctaX').onclick=()=>{ ctaDismissed=true; const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); };
+window.retireCta=retireCta;   // called on a successful rating
 // --- US-22: locate me. Device geolocation -> zoom to a level where neighbouring districts still show,
 // with a slowly-pulsing blue dot (+ accuracy halo), like Google Maps. ---
 let locMarker=null,locHalo=null;
@@ -828,6 +833,9 @@ function selectResult(it){
 async function runSuggest(q){
   const seq=++searchSeq;
   const cities=cityMatch(q,3).map(c=>({type:'city',name:c.name,sub:'City · open the map',key:c.key}));
+  // In the continent overview no single city is loaded, so only offer city matches — never geocode
+  // addresses against a default city (which made São Paulo results appear out of nowhere).
+  if(overviewOn){ renderResults(cities, 'Open a city first to search places within it'); return; }
   const locals=districtSuggest(q);
   if(cities.length||locals.length)renderResults([...cities,...locals]);
   let places; try{places=await geocodeList(q);}catch(e){places=undefined;}
@@ -915,10 +923,13 @@ function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   flushQueue();                                   // re-send any reports queued while offline
   const loads=(parseInt(lsGet('sm_loadcount')||'0',10)||0)+1; persist('sm_loadcount',loads);
   const k=explicitCity();
-  if(k){ focusCity(k); }
+  let onCity=false;
+  if(k){ focusCity(k); onCity=true; }
   else { const last=lsGet('sm_lastcity');
-    if(loads>=2 && last && CITIES[last]){ focusCity(last); } else { showOverviewHome(); } }
-  if(loads<=3) showWelcome();
+    if(loads>=2 && last && CITIES[last]){ focusCity(last); onCity=true; } else { showOverviewHome(); } }
+  // The zoom-in welcome only makes sense when landing on the continent overview. When a city is loaded on
+  // page load, we instead nudge with the rating CTA (updateContribUi, first 3 loads, only if never rated).
+  if(!onCity && loads<=3) showWelcome();
 }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
 window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) focusCity(k,{fromPop:true});});
