@@ -29,7 +29,7 @@ db.exec(`
     ip_hash     TEXT NOT NULL,              -- salted hash of IP+day — NEVER raw IP
     created_at  TEXT NOT NULL,
     released    INTEGER NOT NULL DEFAULT 0, -- 0 = pending manual release, 1 = applied to cities.json
-    UNIQUE (city, cluster_id, token)        -- one active report per area per browser (upsert)
+    UNIQUE (city, cluster_id, token, kind)  -- one SAFE and one ISSUE per area per browser (a felt-safe and an issue are different signals; don't overwrite each other)
   );
 
   CREATE TABLE IF NOT EXISTS feedback (
@@ -55,11 +55,40 @@ for (const col of ['device', 'lang', 'referer']) {
   try { db.exec(`ALTER TABLE feedback ADD COLUMN ${col} TEXT`); } catch (e) {}
 }
 
+// Migration: widen the report uniqueness from (city,cluster_id,token) to (city,cluster_id,token,kind) so a
+// "felt-safe" tap and an "issue" report in the SAME area no longer overwrite each other. SQLite can't alter
+// a UNIQUE constraint in place, so rebuild the table (only when the old 3-column constraint is present).
+const reportDDL = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='report'").get();
+if (reportDDL && /UNIQUE\s*\(\s*city\s*,\s*cluster_id\s*,\s*token\s*\)/i.test(reportDDL.sql)) {
+  db.exec('BEGIN');
+  try {
+    db.exec(`
+      CREATE TABLE report_mig (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        city TEXT NOT NULL, cluster_id TEXT NOT NULL, kind TEXT NOT NULL,
+        category TEXT, first_hand INTEGER, when_bucket TEXT, reason TEXT,
+        reason_class TEXT DEFAULT 'none', weight REAL DEFAULT 0, email TEXT,
+        lat REAL, lng REAL, token TEXT NOT NULL, ip_hash TEXT NOT NULL,
+        created_at TEXT NOT NULL, released INTEGER NOT NULL DEFAULT 0,
+        device TEXT, lang TEXT, referer TEXT,
+        UNIQUE (city, cluster_id, token, kind)
+      );
+      INSERT INTO report_mig (id,city,cluster_id,kind,category,first_hand,when_bucket,reason,reason_class,weight,email,lat,lng,token,ip_hash,created_at,released,device,lang,referer)
+        SELECT id,city,cluster_id,kind,category,first_hand,when_bucket,reason,reason_class,weight,email,lat,lng,token,ip_hash,created_at,released,device,lang,referer FROM report;
+      DROP TABLE report;
+      ALTER TABLE report_mig RENAME TO report;
+    `);
+    db.exec('COMMIT');
+    db.exec('CREATE INDEX IF NOT EXISTS idx_report_city ON report(city); CREATE INDEX IF NOT EXISTS idx_report_pending ON report(released);');
+    console.log('  migrated report uniqueness to (city,cluster_id,token,kind)');
+  } catch (e) { db.exec('ROLLBACK'); throw e; }
+}
+
 // Upsert: newest report from a token replaces its older one for the same area (§5 de-dupe).
 const upsertReport = db.prepare(`
   INSERT INTO report (city, cluster_id, kind, category, first_hand, when_bucket, reason, weight, email, lat, lng, token, ip_hash, created_at, device, lang, referer)
   VALUES (@city, @cluster_id, @kind, @category, @first_hand, @when_bucket, @reason, @weight, @email, @lat, @lng, @token, @ip_hash, @created_at, @device, @lang, @referer)
-  ON CONFLICT (city, cluster_id, token) DO UPDATE SET
+  ON CONFLICT (city, cluster_id, token, kind) DO UPDATE SET
     kind=@kind, category=@category, first_hand=@first_hand, when_bucket=@when_bucket,
     reason=@reason, weight=@weight, email=@email, lat=@lat, lng=@lng, ip_hash=@ip_hash, created_at=@created_at,
     device=@device, lang=@lang, referer=@referer, released=0

@@ -107,9 +107,10 @@
  .rstbtn:hover{color:#fff;border-color:var(--ui);background:rgba(255,255,255,.13)}
  .rstbtn svg{width:15px;height:15px}
  /* US-22 locate-me button + pulsing blue dot */
- #locateBtn{position:absolute;right:12px;bottom:18px;z-index:1001;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:none;color:#5f6368;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3),0 0 0 1px rgba(0,0,0,.05);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transition:.12s}
- #locateBtn:hover{color:#1a73e8;background:#fff}
- #locateBtn.on{color:#1a73e8}
+ #locateBtn{position:absolute;right:12px;bottom:18px;z-index:1001;width:38px;height:38px;border-radius:50%;background:rgba(16,26,46,.9);border:1px solid var(--line);color:#e8eef6;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px #0006;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.12s}
+ #locateBtn svg{width:19px;height:19px}
+ #locateBtn:hover{color:#fff;border-color:var(--ui)}
+ #locateBtn.on{color:#4c9be8;border-color:#4c9be8}
  #locateBtn.on svg{animation:locspin 1s linear infinite}
  @keyframes locspin{to{transform:rotate(360deg)}}
  .locdot{display:block;width:16px;height:16px;border-radius:50%;background:#4c9be8;border:2px solid #fff;box-shadow:0 0 0 0 rgba(76,155,232,.5);animation:locpulse 2.6s ease-out infinite}
@@ -178,6 +179,7 @@
  .chip:hover{border-color:#3a4660}.chip.sel{border-color:var(--accent);background:#16223a;color:#fff}
  .mrow{display:flex;gap:8px;margin-top:6px}
  .mbtn{flex:1;-webkit-appearance:none;appearance:none;border-radius:9px;padding:10px;font-size:13px;font-weight:650;cursor:pointer;border:1px solid var(--line);background:#0b1322;color:#cdd6e4}
+ .mbtn.thanks-close{padding:14px;font-size:15px}
  .mbtn:hover{border-color:#3a4660}
  .mbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
  .mbtn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
@@ -411,7 +413,7 @@ async function reportSafe(btn){
   if(!popupCtx)return; btn.disabled=true;
   const m=document.getElementById('popmsg'); if(m){m.style.color='#6b7688';m.textContent='…';}
   const res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});
-  if(res.ok){ popupThanks(true); toast(res.message||THANKS); }
+  if(res.ok){ popupThanks(true); thanksModal(res.message); }
   else if(res.offline){ queueBody(res.body); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
   else { if(m){m.style.color='#9b2f2f';m.textContent=submitErr(res);} btn.disabled=false; }
 }
@@ -424,6 +426,8 @@ function setModal(html){const m=document.getElementById('modal');_lastFocus=docu
 function closeModal(){const m=document.getElementById('modal');m.classList.add('hidden');document.getElementById('mcard').innerHTML='';
   if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
+// Post-rating thank-you: a modal that stays up until the user closes it (a big, easy Close button).
+function thanksModal(msg){ setModal('<h3>Thank you! 🙏</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
   if(!popupCtx)return;
@@ -460,7 +464,7 @@ function openIssueSheet(){
     if(when)payload.when_bucket=when; if(fh!==null)payload.first_hand=(fh==='1');
     if(reason)payload.reason=reason; if(email)payload.email=email;
     const res=await postReport(payload);
-    if(res.ok){ closeModal(); popupThanks(false); toast(res.message||THANKS); }
+    if(res.ok){ popupThanks(false); thanksModal(res.message); }
     else if(res.offline){ queueBody(res.body); closeModal(); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
     else { msg.className='mmsg err'; msg.textContent=submitErr(res); submit.disabled=false; }
   };
