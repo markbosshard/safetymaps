@@ -40,7 +40,8 @@ function bundle() {
     .replace('/*__CMAP__*/[]', JSON.stringify(cmap))
     .replace('/*__CATEGORIES__*/{}', JSON.stringify(categories))
     .replace('__MAPTILER_KEY__', mtKey)
-    .replace(/__BUILD_DATE__/g, buildDate);
+    .replace(/__BUILD_DATE__/g, buildDate)
+    .replace(/__BUILD_YEAR__/g, buildDate.slice(0, 4));
 
   // Fill the OpenGraph/Twitter meta. The default (home/overview + any non-listed path via 404.html)
   // uses the generic LatAm image; the top cities below get their OWN image so a shared /sao-paulo link
