@@ -656,6 +656,7 @@ function openDistrict(d,ll){
   showReportPoint(p.lat,p.lng);
   const lyr=d._lyr; if(lyr){ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
     hovered=lyr; lyr.setStyle({weight:2.4,color:'#fff',opacity:1}); lyr.bringToFront(); }
+  zoomToPin(p.lat,p.lng);
 }
 // Report a point ANYWHERE you tap — even outside a painted area (city peripheries, or cities with
 // just a single bubble). The backend buckets it from lat/lng (H3 for city-level, nearest district else).
@@ -667,6 +668,7 @@ function openPointReport(ll){
   popupCtx={areaName:CITIES[cityKey].name,cluster_id:null,lat:p.lat,lng:p.lng};
   reportPopup=L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]}).setLatLng(ll).setContent(pointPopupContent()).openOn(map);
   showReportPoint(p.lat,p.lng);
+  zoomToPin(p.lat,p.lng);
 }
 function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.removeLayer(l._tip);}); layers=[]; hovered=null;
   if(searchPin){map.removeLayer(searchPin);searchPin=null;} if(typeof updateSearchClear==='function')updateSearchClear(); }
@@ -706,6 +708,8 @@ function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length
 // --- Overview (Task A): all cities as markers when zoomed out; lazy-focus a city when you zoom into it ---
 const OVERVIEW_Z=8;
 const REPORT_MIN_Z=10;   // below this a city is still "a dot from far": clicks open the city, never a report pin
+const PIN_ZOOM=16;       // dropping a pin snaps to this "street-corner" zoom, so people see they're rating an exact spot
+const PIN_KEEP_Z=13;     // zoom back out past this and the pin is removed — a pin marks a corner, not a whole area
 const overviewGroup=L.layerGroup();
 let overviewOn=false;
 // Bigger dots the further you zoom out (base was 7): ~2x at country/state view, ~1.5x near city zoom.
@@ -921,6 +925,13 @@ function showReportPoint(lat,lng){ clearReportPoint();
     html:'<svg width="24" height="34" viewBox="0 0 24 34"><path d="M12 0C5.4 0 0 5.2 0 11.6 0 20 12 34 12 34s12-14 12-22.4C24 5.2 18.6 0 12 0z" fill="#475569" stroke="#fff" stroke-width="2"/><circle cx="12" cy="11.5" r="4" fill="#fff"/></svg>'})}).addTo(map); }
 function clearReportPoint(){ if(reportPin){map.removeLayer(reportPin);reportPin=null;} }
 map.on('popupclose',clearReportPoint);
+// Dropping a pin (map click, district click or a searched address) snaps to a close street-corner zoom so
+// people see they're rating an exact spot, not a whole district. Only zoom IN — never yank someone closer.
+function zoomToPin(lat,lng){ if(map.getZoom()<PIN_ZOOM) map.setView([lat,lng],PIN_ZOOM,{animate:true}); }
+// …and zooming back out past PIN_KEEP_Z drops the pin again, reinforcing that it marked a precise corner.
+map.on('zoomend',()=>{ if(map.getZoom()>=PIN_KEEP_Z)return;
+  if(reportPin){ try{map.closePopup();}catch(e){} clearReportPoint(); }
+  if(searchPin){ map.removeLayer(searchPin); searchPin=null; if(typeof updateSearchClear==='function')updateSearchClear(); } });
 // How far outside a city a point report is still allowed: pad the city bbox by half its longest
 // span (min ~2.5km, so tiny bubbles still get a little periphery). Beyond that — or once the spot is
 // clearly inside ANOTHER city's footprint — we decline, so you can't drop a pin three cities away.
@@ -1005,7 +1016,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
 function selectResult(it){
   if(!it)return; if(typeof jr==='object')jr.searches++; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
   if(it.type==='city'){ focusCity(it.key); return; }
-  dropPin(it.lat,it.lon); map.flyTo([it.lat,it.lon],14);
+  dropPin(it.lat,it.lon); zoomToPin(it.lat,it.lon);
   if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
   const d=districtAt(it.lon,it.lat);
   if(d){openDistrict(d,[it.lat,it.lon]);return;}
