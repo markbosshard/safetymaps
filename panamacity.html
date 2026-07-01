@@ -468,7 +468,7 @@ function openFeedback(){
     else { msg.className='mmsg err'; msg.textContent=res.offline?'You’re offline — please try again when you reconnect.':submitErr(res); submit.disabled=false; }
   };
 }
-const RHERE='<div class="rhere">📍 <i>Exact location matters</i> — not just the district. Future maps will be more detailed.</div>';
+const RHERE='<div class="rhere">📍 <i>Exact location matters when you report below</i> — not just the district. Future maps will be more detailed.</div>';
 function popupContent(d){
   const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
   if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
@@ -582,7 +582,7 @@ function renderSources(){
   else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis); }
   if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">More resources</div>'+srcList(C.resources);
   h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
-  h+='<div class="sfoot"><b>Ratings refreshed 2026-06-30.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
+  h+='<div class="sfoot"><b>Ratings refreshed 2026-07-01.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
 // Typable City combobox (replaces the native <select>): focus shows all cities grouped; typing filters
