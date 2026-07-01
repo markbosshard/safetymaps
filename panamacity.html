@@ -32,7 +32,10 @@
  .hbtn:hover,.hbtn.on{border-color:rgba(255,255,255,.55);color:#fff;background:rgba(255,255,255,.24)}
  .hbtn svg{width:18px;height:18px}
  .vote{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
- .leaflet-popup-content{margin:10px 12px;max-width:240px}
+ .leaflet-popup-content{margin:10px 14px;max-width:240px;padding-right:18px}
+ /* Bigger, easier-to-hit popup close button (top-right) */
+ .leaflet-container a.leaflet-popup-close-button{width:32px;height:32px;padding:0;font:26px/32px Tahoma,Verdana,sans-serif;color:#6b7688}
+ .leaflet-container a.leaflet-popup-close-button:hover{color:#1a1f2b;background:transparent}
  .vbtn{-webkit-appearance:none;appearance:none;cursor:pointer;font-size:11px;font-weight:650;border-radius:7px;padding:3px 9px;border:1px solid #c9cfdb;background:#f3f5f9;color:#3a4660;transition:.12s}
  .vbtn.up{border-color:#c3dccb;color:#2f6b46;background:#edf6f0}
  .vbtn.flag{border-color:#ddc4c4;color:#8a4444;background:#f8efef}
@@ -236,7 +239,7 @@
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
- <div id="cta" class="hidden"><span>👆 Tap any point on the map to rate it — <b>▲ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
+ <div id="cta" class="hidden"><span>👆 Tap any point on the map to rate it — <b>✓ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
  <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6.8"/><path d="M12 1.4V4.2M12 19.8v2.8M1.4 12H4.2M19.8 12h2.8"/></svg></button>
 
  <div id="legend" class="panel">
@@ -359,7 +362,7 @@ let layers=[];
 function styleFor(d){const v=d.score;
   return {color:showBorders?'#0d1426':color(v),weight:showBorders?0.7:0.3,opacity:showBorders?0.85:0.3,fillColor:color(v),fillOpacity:opacity};}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
-// --- Crowd reports (CROWDSOURCING.md). Asymmetric: ▲ Felt-safe = one tap; ⚑ issue = a category sheet.
+// --- Crowd reports (CROWDSOURCING.md). Asymmetric: ✓ Felt-safe = one tap; ⚑ issue = a category sheet.
 // No live scoring — submissions are stored and applied via a MANUAL release every few days.
 const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'http://localhost:8787':'https://api.latamcrimemap.com';
 const THANKS='Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.';
@@ -385,7 +388,7 @@ function submitReportEmail(){
     .catch(()=>{ if(btn)btn.disabled=false; });
 }
 function actionRow(){
-  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">▲ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
+  return '<div class="vote"><button class="vbtn up" onclick="reportSafe(this)">✓ Felt-safe here</button><button class="vbtn flag" onclick="openIssueSheet()">⚑ Report an issue here</button><span class="vtally" id="popmsg"></span></div>';
 }
 function buildBody(payload){return Object.assign({city:cityKey,token:smToken()},payload);}
 async function postBody(body){
@@ -469,7 +472,7 @@ async function openMyReports(){
   if(!data||!data.ok){ el.textContent='Couldn’t load your reports — please try again later.'; return; }
   if(!data.reports.length){ el.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; return; }
   el.innerHTML=data.reports.map(rp=>{
-    const what=rp.kind==='safe'?'▲ Felt-safe':'⚑ '+esc(rp.category_label||'Issue');
+    const what=rp.kind==='safe'?'✓ Felt-safe':'⚑ '+esc(rp.category_label||'Issue');
     const d=(rp.created_at||'').slice(0,10);
     return '<div class="myr" data-id="'+rp.id+'"><div><b>'+esc(rp.city_name)+'</b> · '+what+' <span style="color:#8896ad">· '+d+'</span></div><button class="mbtn" style="flex:none;width:auto;padding:5px 10px" onclick="withdrawReport('+rp.id+',this)">Withdraw</button></div>';
   }).join('');
