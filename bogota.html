@@ -93,6 +93,13 @@
  #legendOpen{right:64px;bottom:18px}#sourcesOpen{left:12px;bottom:18px}
  /* US-21 menu reset button */
  .mrrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+ .morebtn{display:flex;align-items:center;gap:8px;width:100%;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#e8eef6;border-radius:7px;padding:7px 10px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.12s}
+ .morebtn:hover{background:rgba(255,255,255,.13)}
+ .morebtn svg{width:15px;height:15px;flex:none}
+ .morebtn .chev{margin-left:auto;transition:transform .16s}
+ .morebtn.open .chev{transform:rotate(180deg)}
+ #moreWrap{display:flex;flex-direction:column;gap:9px}
+ #moreWrap.hidden{display:none}
  .rstbtn{-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted);border-radius:7px;width:30px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:.12s}
  .rstbtn:hover{color:#fff;border-color:var(--ui);background:rgba(255,255,255,.13)}
  .rstbtn svg{width:15px;height:15px}
@@ -105,7 +112,7 @@
  .locdot{display:block;width:16px;height:16px;border-radius:50%;background:#4c9be8;border:2px solid #fff;box-shadow:0 0 0 0 rgba(76,155,232,.5);animation:locpulse 2.6s ease-out infinite}
  @keyframes locpulse{0%{box-shadow:0 0 0 0 rgba(76,155,232,.5)}70%{box-shadow:0 0 0 15px rgba(76,155,232,0)}100%{box-shadow:0 0 0 0 rgba(76,155,232,0)}}
  /* US-20 contribute call-to-action pill */
- #cta{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:1150;display:flex;align-items:center;gap:9px;background:rgba(15,110,86,.96);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:8px 10px 8px 15px;font-size:12.5px;font-weight:600;box-shadow:0 6px 20px #0007;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92%}
+ #cta{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:1150;display:flex;align-items:center;gap:9px;background:#d81f2a;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:9px 11px 9px 16px;font-size:13px;font-weight:700;box-shadow:0 6px 22px rgba(216,31,42,.5),0 2px 8px #0007;max-width:94%}
  #cta b{font-weight:800;white-space:nowrap}
  #cta button{background:rgba(255,255,255,.18);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
  #cta button:hover{background:rgba(255,255,255,.32)}
@@ -210,6 +217,8 @@
          <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
          <div id="cityList" class="hidden" role="listbox"></div>
        </div></div>
+     <button id="moreBtn" class="morebtn" aria-expanded="false" aria-controls="moreWrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>More settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+     <div id="moreWrap" class="hidden">
      <div class="grp"><span class="cap">Underlay</span>
        <select id="base">
          <option value="osm" selected>Street map (OSM)</option>
@@ -222,11 +231,12 @@
        <div class="row" style="margin-top:7px"><span>District names</span><label class="switch"><input type="checkbox" id="lbl" checked aria-label="Show district names"><span class="slider"></span></label></div>
        <div class="row" style="margin-top:7px"><span>Borders</span><label class="switch"><input type="checkbox" id="bord" checked aria-label="Show borders"><span class="slider"></span></label></div>
      </div>
+     </div>
      <div class="grp mrrow"><button id="myReportsBtn" class="mrlink">My reports ›</button><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
- <div id="cta" class="hidden"><span>👆 Tap any area to rate it — <b>▲ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
+ <div id="cta" class="hidden"><span>👆 Tap any point on the map to rate it — <b>▲ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
  <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6.8"/><path d="M12 1.4V4.2M12 19.8v2.8M1.4 12H4.2M19.8 12h2.8"/></svg></button>
 
  <div id="legend" class="panel">
@@ -569,7 +579,7 @@ function buildOverview(){overviewGroup.clearLayers();
   Object.keys(CITIES).forEach(key=>{const ll=centerOf(key);const sc=overallScore(key);
     const m=L.circleMarker(ll,{radius:overviewRadius(),weight:1.5,color:'#fff',fillColor:color(sc),fillOpacity:opacity});
     m.bindTooltip(CITIES[key].name,{direction:'top',offset:[0,-13]});
-    m.on('click',()=>{setOverview(false);map.flyTo(ll,CITIES[key].tier_level==='detailed'?11:10);buildCity(key,{fit:false});});
+    m.on('click',()=>focusCity(key));
     m.addTo(overviewGroup);});}
 function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
   if(on){ overviewGroup.addTo(map); layers.forEach(l=>{map.removeLayer(l);if(l._tip)map.removeLayer(l._tip);});
@@ -652,6 +662,10 @@ sourcesOpenBtn.onclick=()=>setSources(true);
 setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.getElementById('myReportsBtn').onclick=openMyReports;
+// Collapse the map settings (underlay/transparency/toggles) behind a "More settings" gear; City stays visible.
+const moreBtn=document.getElementById('moreBtn'),moreWrap=document.getElementById('moreWrap');
+function setMore(o){moreWrap.classList.toggle('hidden',!o);moreBtn.classList.toggle('open',o);moreBtn.setAttribute('aria-expanded',o);}
+moreBtn.onclick=()=>{const open=moreWrap.classList.contains('hidden');setMore(open);persist('sm_more',open?'1':'0');};
 // --- US-21: reset settings. Clears every sm_* key EXCEPT the reporter identity/queue (so you keep the
 // ability to see & withdraw your own reports); non-sm_ keys (GoatCounter) are left untouched. ---
 const RESET_KEEP={sm_token:1,sm_queue:1};
@@ -750,7 +764,9 @@ async function isWater(lat,lng){
 }
 // Click anywhere on a focused city (incl. the periphery / outside a single bubble) to report there.
 // District clicks are handled by the per-layer handler; here we only catch clicks outside any district.
-map.on('click',async e=>{ if(overviewOn)return; const C=CITIES[cityKey]; if(!C||!C.districts)return;
+map.on('click',async e=>{
+  if(overviewOn){ const k=cityAt(e.latlng.lng,e.latlng.lat); if(k) focusCity(k); return; }   // overview: click a city to zoom in — never a report pin
+  const C=CITIES[cityKey]; if(!C||!C.districts)return;
   const ll=e.latlng; if(districtAt(ll.lng,ll.lat))return;
   if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
   showReportPoint(ll.lat,ll.lng);                                  // instant feedback while we check
@@ -875,6 +891,7 @@ function restoreSettings(){
   const b=lsGet('sm_basemap'); if(b&&bases[b]&&b!==curKey){try{map.removeLayer(curBase);}catch(e){}curKey=b;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();const bs=document.getElementById('base');if(bs)bs.value=b;}
   const lb=lsGet('sm_labels'); if(lb!=null){showLabels=(lb==='true');document.getElementById('lbl').checked=showLabels;}
   const bo=lsGet('sm_borders'); if(bo!=null){showBorders=(bo==='true');document.getElementById('bord').checked=showBorders;}
+  if(lsGet('sm_more')==='1'&&typeof setMore==='function')setMore(true);   // remember an expanded "More settings"
   restyle();
 }
 // Focus a city on load: center+zoom first (fitBounds can land a big metro at <=OVERVIEW_Z and bounce
