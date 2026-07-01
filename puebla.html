@@ -112,7 +112,7 @@
  .locdot{display:block;width:16px;height:16px;border-radius:50%;background:#4c9be8;border:2px solid #fff;box-shadow:0 0 0 0 rgba(76,155,232,.5);animation:locpulse 2.6s ease-out infinite}
  @keyframes locpulse{0%{box-shadow:0 0 0 0 rgba(76,155,232,.5)}70%{box-shadow:0 0 0 15px rgba(76,155,232,0)}100%{box-shadow:0 0 0 0 rgba(76,155,232,0)}}
  /* US-20 contribute call-to-action pill */
- #cta{position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:1250;display:flex;align-items:center;gap:6px;background:#d81f2a;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:24px;padding:7px 8px 7px 17px;font-size:13px;font-weight:700;box-shadow:0 6px 22px rgba(216,31,42,.5),0 2px 8px #0007;max-width:94%}
+ #cta{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);z-index:1250;display:flex;align-items:center;gap:6px;background:#d81f2a;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:24px;padding:7px 8px 7px 17px;font-size:13px;font-weight:700;box-shadow:0 6px 22px rgba(216,31,42,.5),0 2px 8px #0007;max-width:94%}
  #cta b{font-weight:800;white-space:nowrap}
  #cta button{background:rgba(255,255,255,.22);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
  #cta button:hover{background:rgba(255,255,255,.4)}
@@ -563,6 +563,7 @@ function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length
   if(showLabels)applyLabelColor();}
 // --- Overview (Task A): all cities as markers when zoomed out; lazy-focus a city when you zoom into it ---
 const OVERVIEW_Z=8;
+const REPORT_MIN_Z=10;   // below this a city is still "a dot from far": clicks open the city, never a report pin
 const overviewGroup=L.layerGroup();
 let overviewOn=false;
 // Bigger dots the further you zoom out (base was 7): ~2x at country/state view, ~1.5x near city zoom.
@@ -683,9 +684,9 @@ document.getElementById('resetBtn').onclick=()=>{
 let ctaDismissed=false;
 function everRated(){ return lsGet('sm_rated')==='1'; }
 function ctaEligible(){ return !everRated() && !ctaDismissed && (parseInt(lsGet('sm_loadcount')||'0',10)||0)<=3; }
-// Keep the CTA just below the header (its height changes with viewport width / search open).
-function placeCta(){ const cta=document.getElementById('cta'),hd=document.querySelector('header'); if(cta&&hd) cta.style.top=(hd.offsetHeight+10)+'px'; }
-window.addEventListener('resize',placeCta);
+// CTA is anchored to the bottom via CSS (bottom:76px) — sits in the lower band, above the legend/sources
+// launchers, and clear of the top city selector. Clear any legacy inline top from earlier builds.
+function placeCta(){ const cta=document.getElementById('cta'); if(cta) cta.style.top='auto'; }
 function updateContribUi(){
   const inCity = !overviewOn && cityKey && CITIES[cityKey];
   const cta=document.getElementById('cta'); if(cta){ cta.classList.toggle('hidden', !(inCity && ctaEligible())); placeCta(); }
@@ -775,9 +776,13 @@ async function isWater(lat,lng){
 // Click anywhere on a focused city (incl. the periphery / outside a single bubble) to report there.
 // District clicks are handled by the per-layer handler; here we only catch clicks outside any district.
 map.on('click',async e=>{
-  if(overviewOn){ const k=cityAt(e.latlng.lng,e.latlng.lat); if(k) focusCity(k); return; }   // overview: click a city to zoom in — never a report pin
+  const ll=e.latlng;
+  // Zoomed out (overview OR below the report zoom) a city is just a dot — clicking opens it, never a pin.
+  if(overviewOn || map.getZoom()<REPORT_MIN_Z){ const k=cityAt(ll.lng,ll.lat); if(k) focusCity(k); return; }
+  // If the click landed in a DIFFERENT city's footprint, open that city instead of trying to report here.
+  const other=cityAt(ll.lng,ll.lat); if(other && other!==cityKey){ focusCity(other); return; }
   const C=CITIES[cityKey]; if(!C||!C.districts)return;
-  const ll=e.latlng; if(districtAt(ll.lng,ll.lat))return;
+  if(districtAt(ll.lng,ll.lat))return;
   if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
   showReportPoint(ll.lat,ll.lng);                                  // instant feedback while we check
   if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.',5000,true); return; }
