@@ -130,6 +130,7 @@
  #search>button:hover{border-color:rgba(255,255,255,.55);color:#fff;background:rgba(255,255,255,.24)}#search>button svg{width:16px;height:16px}
  #searchResults{position:absolute;top:100%;left:0;right:0;margin-top:6px;background:rgba(16,26,46,.98);border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 34px #000a;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden;z-index:1300}
  #searchResults.hidden{display:none}
+ #searchClear.hidden{display:none}#searchClear svg{width:15px;height:15px}
  .sres{display:block;width:100%;text-align:left;padding:9px 12px;cursor:pointer;border:none;border-top:1px solid var(--line);background:none;color:#e8eef6;font-family:inherit}
  .sres:first-child{border-top:none}
  .sres:hover,.sres.active{background:#1b2a45}
@@ -211,6 +212,7 @@
    <span class="sub" id="sub"></span>
    <div id="search">
      <input id="searchInput" type="text" data-i18n-ph="search_ph" placeholder="Search within current map view" autocomplete="off" enterkeyhint="search" aria-label="Search address, district or city" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list"/>
+     <button id="searchClear" class="hidden" data-i18n-title="clear" title="Clear search" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
      <button id="searchBtn" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
      <div id="searchResults" class="hidden" role="listbox"></div>
    </div>
@@ -379,7 +381,7 @@ const STRINGS={ es:{
   my_spots:'📍 Mis lugares valorados ›', legend:'Leyenda', sources:'Fuentes', sources_method:'Fuentes y método',
   risk_scale:'Riesgo de seguridad (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Precaución', tier_avoid:'Evitar',
-  search_ph:'Buscar en la vista actual del mapa', lang_label:'Idioma',
+  search_ph:'Buscar en la vista actual del mapa', lang_label:'Idioma', clear:'Borrar búsqueda',
   sub_overview:'Elige una ciudad o toca el mapa', areas_tap:'zonas · toca un distrito para ver su valoración',
   city_overall:'Valoración general de la ciudad · barrios aún no mapeados',
   btn_safe:'✓ Me sentí seguro/a', btn_issue:'⚑ Reportar un problema',
@@ -394,7 +396,7 @@ const STRINGS={ es:{
   my_spots:'📍 Meus locais avaliados ›', legend:'Legenda', sources:'Fontes', sources_method:'Fontes e método',
   risk_scale:'Risco de segurança (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Cuidado', tier_avoid:'Evitar',
-  search_ph:'Buscar na vista atual do mapa', lang_label:'Idioma',
+  search_ph:'Buscar na vista atual do mapa', lang_label:'Idioma', clear:'Limpar busca',
   sub_overview:'Escolha uma cidade ou toque no mapa', areas_tap:'áreas · toque num distrito para ver a avaliação',
   city_overall:'Avaliação geral da cidade · bairros ainda não mapeados',
   btn_safe:'✓ Senti-me seguro/a', btn_issue:'⚑ Relatar um problema',
@@ -627,7 +629,7 @@ function openPointReport(ll){
   showReportPoint(p.lat,p.lng);
 }
 function clearCity(){ layers.forEach(l=>{map.removeLayer(l); if(l._tip)map.removeLayer(l._tip);}); layers=[]; hovered=null;
-  if(searchPin){map.removeLayer(searchPin);searchPin=null;} }
+  if(searchPin){map.removeLayer(searchPin);searchPin=null;} if(typeof updateSearchClear==='function')updateSearchClear(); }
 function setHeader(key){const C=CITIES[key];
   document.getElementById('h1').textContent=C.name+' — Latam Crime Map';
   document.getElementById('sub').textContent=C.model==='city'?t('city_overall','City-level overall rating · neighbourhoods not yet mapped'):(C.districts.length+' '+t('areas_tap','areas · tap a district for its rating'));
@@ -848,7 +850,8 @@ function ptInGeom(x,y,g){const ps=g.type==='MultiPolygon'?g.coordinates:[g.coord
 function districtAt(lon,lat){for(const d of CITIES[cityKey].districts)if(ptInGeom(lon,lat,d.geom))return d;return null;}
 function dropPin(lat,lon){ if(searchPin)map.removeLayer(searchPin);
   searchPin=L.marker([lat,lon],{icon:L.divIcon({className:'pinwrap',iconSize:[28,38],iconAnchor:[14,38],
-    html:'<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.8 0 1 5.8 1 13c0 9.2 13 25 13 25s13-15.8 13-25C27 5.8 21.2 0 14 0z" fill="#475569" stroke="#fff" stroke-width="2"/><circle cx="14" cy="13" r="4.5" fill="#fff"/></svg>'})}).addTo(map); }
+    html:'<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.8 0 1 5.8 1 13c0 9.2 13 25 13 25s13-15.8 13-25C27 5.8 21.2 0 14 0z" fill="#475569" stroke="#fff" stroke-width="2"/><circle cx="14" cy="13" r="4.5" fill="#fff"/></svg>'})}).addTo(map);
+  if(typeof updateSearchClear==='function')updateSearchClear(); }
 let reportPin=null;
 function showReportPoint(lat,lng){ clearReportPoint();
   reportPin=L.marker([lat,lng],{interactive:false,keyboard:false,zIndexOffset:1000,
@@ -972,7 +975,11 @@ async function runSuggest(q){
 function onType(){const q=searchInput.value.trim();
   if(q.length<2){hideResults();return;}
   renderResults([],'Searching…'); runSuggest(q);}
-searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(onType,260);});
+searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(onType,260);updateSearchClear();});
+// Clear (×) button: appears once there's a query or a dropped search pin; empties the field and removes the pin.
+const searchClearBtn=document.getElementById('searchClear');
+function updateSearchClear(){ if(searchClearBtn) searchClearBtn.classList.toggle('hidden', !(searchInput.value.trim() || searchPin)); }
+if(searchClearBtn) searchClearBtn.onclick=()=>{ if(searchPin){map.removeLayer(searchPin);searchPin=null;} searchInput.value=''; hideResults(); updateSearchClear(); searchInput.focus(); };
 searchInput.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'){e.preventDefault();searchResults.classList.contains('hidden')?onType():setActive(sresActive+1);}
   else if(e.key==='ArrowUp'){e.preventDefault();setActive(sresActive-1);}
