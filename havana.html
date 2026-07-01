@@ -71,7 +71,7 @@
  .ptitle{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600}
  .pbtn{-webkit-appearance:none;appearance:none;background:#0b1322;border:1px solid var(--line);color:#cdd6e4;border-radius:7px;width:28px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex:none}
  .pbtn:hover{border-color:#3a4660;color:#fff}.pbtn svg{width:15px;height:15px}
- #legend{right:12px;bottom:18px;min-width:208px;max-width:240px;max-height:70vh;overflow:auto}
+ #legend{right:12px;bottom:72px;min-width:208px;max-width:240px;max-height:70vh;overflow:auto}
  #legend .ltitle{font-size:11px;font-weight:600;margin-bottom:9px}
  .cbrow{display:flex;gap:8px;height:140px}
  .cbar{width:16px;border-radius:4px;border:1px solid rgba(255,255,255,.25)}
@@ -90,7 +90,27 @@
  .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;color:#0c1320}
  .launch{position:absolute;z-index:1001;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;border-radius:10px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;gap:7px;box-shadow:0 2px 10px #0006;font-size:12px;font-weight:600;padding:10px 13px}
  .launch:hover{border-color:#3a4660}.launch svg{width:16px;height:16px;flex:none}
- #legendOpen{right:12px;bottom:18px}#sourcesOpen{left:12px;bottom:18px}
+ #legendOpen{right:12px;bottom:72px}#sourcesOpen{left:12px;bottom:18px}
+ /* US-21 menu reset button */
+ .ctrlhead{display:flex;justify-content:flex-start;align-items:center;margin:-2px 0 -1px}
+ .rstbtn{-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted);border-radius:7px;width:30px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:.12s}
+ .rstbtn:hover{color:#fff;border-color:var(--ui);background:rgba(255,255,255,.13)}
+ .rstbtn svg{width:15px;height:15px}
+ /* US-22 locate-me button + pulsing blue dot */
+ #locateBtn{position:absolute;right:12px;bottom:18px;z-index:1001;width:42px;height:42px;border-radius:50%;background:rgba(16,26,46,.95);border:1px solid var(--line);color:#e8eef6;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px #0006;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.12s}
+ #locateBtn:hover{color:#fff;border-color:var(--ui)}
+ #locateBtn.on{color:#4c9be8;border-color:#4c9be8}
+ #locateBtn.on svg{animation:locspin 1s linear infinite}
+ @keyframes locspin{to{transform:rotate(360deg)}}
+ .locdot{display:block;width:16px;height:16px;border-radius:50%;background:#4c9be8;border:2px solid #fff;box-shadow:0 0 0 0 rgba(76,155,232,.5);animation:locpulse 2.6s ease-out infinite}
+ @keyframes locpulse{0%{box-shadow:0 0 0 0 rgba(76,155,232,.5)}70%{box-shadow:0 0 0 15px rgba(76,155,232,0)}100%{box-shadow:0 0 0 0 rgba(76,155,232,0)}}
+ /* US-20 contribute call-to-action pill */
+ #cta{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:1150;display:flex;align-items:center;gap:9px;background:rgba(15,110,86,.96);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:8px 10px 8px 15px;font-size:12.5px;font-weight:600;box-shadow:0 6px 20px #0007;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92%}
+ #cta b{font-weight:800;white-space:nowrap}
+ #cta button{background:rgba(255,255,255,.18);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
+ #cta button:hover{background:rgba(255,255,255,.32)}
+ #cta.hidden,#locateBtn.hidden{display:none}
+ .leaflet-container.rmode.leaflet-grab{cursor:crosshair}
  #ctrlOpen{display:none}
  #search{margin-left:auto;display:flex;align-items:center;gap:6px;position:relative}
  #search input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:7px 10px;font-size:13px;width:200px;outline:none}
@@ -185,6 +205,7 @@
    <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
    <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span>Feedback &amp; Contact</span></button>
    <div id="ctrl">
+     <div class="ctrlhead"><button id="resetBtn" class="rstbtn" title="Reset settings to default" aria-label="Reset settings to default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button></div>
      <div><span class="cap">City</span>
        <div class="combo" id="cityCombo">
          <input id="cityInput" type="text" placeholder="Select a city…" autocomplete="off" enterkeyhint="go" aria-label="Select or search a city" role="combobox" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list"/>
@@ -206,6 +227,8 @@
    </div>
  </header>
  <div id="map"></div><div id="hint"></div>
+ <div id="cta" class="hidden"><span>👆 Tap any area to rate it — <b>▲ safe</b> or <b>⚑ issue</b></span><button id="ctaX" title="Dismiss" aria-label="Dismiss">×</button></div>
+ <button id="locateBtn" class="hidden" title="Show my location" aria-label="Show my location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3.2M12 18.8V22M2 12h3.2M18.8 12H22"/></svg></button>
 
  <div id="legend" class="panel">
    <div class="phead"><span class="ptitle">Legend</span>
@@ -362,7 +385,7 @@ async function postBody(body){
   let j={};try{j=await r.json();}catch(e){}
   return {ok:r.ok&&j.ok!==false,status:r.status,rate:r.status===429,server:r.status>=500,message:j.message};
 }
-async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; return res; }
+async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; if(res.ok&&typeof retireCta==='function')retireCta(); return res; }
 function submitErr(res){ return res.offline?'You’re offline — your report is saved and will send when you reconnect.'
   : res.rate?'You’re sending a lot right now — please wait a minute and try again.'
   : res.server?'Our server hiccuped — please try again shortly.'
@@ -519,7 +542,7 @@ function buildCity(key,opts){
     if(map.getZoom()<=OVERVIEW_Z) map.setZoom(OVERVIEW_Z+1); }   // never let a fit land in overview range
   setHeader(key);
   try{if(!opts.fromPop)history.replaceState(null,'','/'+(SLUG[key]||key));}catch(e){}
-  renderSources(); refreshLabels(); gcCount();
+  renderSources(); refreshLabels(); gcCount(); updateContribUi();
 }
 function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));if(typeof overviewGroup!=='undefined')overviewGroup.eachLayer(m=>m.setStyle({fillOpacity:opacity}));}
 function clearHover(){ if(hovered){ hovered.setStyle(styleFor(hovered._d)); hovered=null; } }
@@ -554,7 +577,8 @@ function setOverview(on){ if(on===overviewOn)return; overviewOn=on;
     document.getElementById('h1').textContent='Latam Crime Map';
     document.getElementById('sub').textContent='Select a city, or click the map';
     currentCityName=''; const ci=document.getElementById('cityInput'); if(ci)ci.value=''; }
-  else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); } }
+  else { map.removeLayer(overviewGroup); layers.forEach(l=>l.addTo(map)); setHeader(cityKey); refreshLabels(); }
+  updateContribUi(); }
 function cityAt(lon,lat){ let best=null,bestD=Infinity;
   for(const k of Object.keys(CITIES)){const b=CITIES[k].bbox,pad=0.15;
     const w=Math.min(b[0],b[2])-pad,e=Math.max(b[0],b[2])+pad,s=Math.min(b[1],b[3])-pad,n=Math.max(b[1],b[3])+pad;
@@ -629,6 +653,47 @@ sourcesOpenBtn.onclick=()=>setSources(true);
 setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.getElementById('myReportsBtn').onclick=openMyReports;
+// --- US-21: reset settings. Clears every sm_* key EXCEPT the reporter identity/queue (so you keep the
+// ability to see & withdraw your own reports); non-sm_ keys (GoatCounter) are left untouched. ---
+const RESET_KEEP={sm_token:1,sm_queue:1};
+function resetSettings(){ try{ for(const k of Object.keys(localStorage)){ if(k.indexOf('sm_')===0 && !RESET_KEEP[k]) localStorage.removeItem(k); } }catch(e){} }
+document.getElementById('resetBtn').onclick=()=>{
+  if(!window.confirm('Reset all settings and preferences to default?\nYour submitted reports are kept.'))return;
+  resetSettings(); location.href='/'; };
+// --- US-20: contribute call-to-action. A dismissible pill (retires for good once dismissed or after a
+// successful report), plus a crosshair cursor over a focused city, so people learn they can tap to rate. ---
+function ctaHidden(){ return lsGet('sm_ctahide')==='1'; }
+function updateContribUi(){
+  const inCity = !overviewOn && cityKey && CITIES[cityKey];
+  const cta=document.getElementById('cta'); if(cta) cta.classList.toggle('hidden', !(inCity && !ctaHidden()));
+  const lb=document.getElementById('locateBtn'); if(lb) lb.classList.remove('hidden');   // always available
+  const mc=map&&map.getContainer&&map.getContainer(); if(mc) mc.classList.toggle('rmode', !!inCity);
+}
+function retireCta(){ persist('sm_ctahide','1'); const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); }
+document.getElementById('ctaX').onclick=retireCta;
+window.retireCta=retireCta;   // called on first successful report
+// --- US-22: locate me. Device geolocation -> zoom to a level where neighbouring districts still show,
+// with a slowly-pulsing blue dot (+ accuracy halo), like Google Maps. ---
+let locMarker=null,locHalo=null;
+function showLocDot(lat,lng,acc){
+  if(locMarker)map.removeLayer(locMarker); if(locHalo)map.removeLayer(locHalo);
+  locHalo=L.circle([lat,lng],{radius:Math.max(30,Math.min(acc||60,600)),color:'#4c9be8',weight:1,opacity:.45,fillColor:'#4c9be8',fillOpacity:.12,interactive:false}).addTo(map);
+  locMarker=L.marker([lat,lng],{icon:L.divIcon({className:'locwrap',iconSize:[20,20],iconAnchor:[10,10],html:'<span class="locdot"></span>'}),interactive:false,keyboard:false,zIndexOffset:1000}).addTo(map);
+}
+document.getElementById('locateBtn').onclick=()=>{
+  const btn=document.getElementById('locateBtn');
+  if(!navigator.geolocation){ toast('Location isn’t available on this device.',4500,true); return; }
+  btn.classList.add('on');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    btn.classList.remove('on');
+    const c=pos.coords; showLocDot(c.latitude,c.longitude,c.accuracy);
+    map.setView([c.latitude,c.longitude], 13, {animate:true});
+    const k=cityAt(c.longitude,c.latitude); if(k&&k!==cityKey) focusCity(k);
+  }, err=>{
+    btn.classList.remove('on');
+    toast(err&&err.code===1?'Location permission denied — you can enable it in your browser settings.':'Couldn’t get your location. Please try again.',5000,true);
+  }, {enableHighAccuracy:true,timeout:10000,maximumAge:60000});
+};
 document.querySelector('.mback').onclick=closeModal;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 // Keep keyboard focus inside an open modal (Tab wraps).
