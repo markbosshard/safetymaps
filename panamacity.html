@@ -139,6 +139,8 @@
  #langMenu button{background:none;border:none;cursor:pointer;font-size:19px;line-height:1;padding:5px 8px;border-radius:6px;opacity:.6}
  #langMenu button:hover{background:rgba(255,255,255,.14);opacity:1}
  #langMenu button.on{opacity:1;background:rgba(255,255,255,.2)}
+ #langCur.txt{font-size:13px;font-weight:800;letter-spacing:.5px}
+ #langMenu button.txt{font-size:13px;font-weight:800;letter-spacing:.5px;min-width:30px;text-align:center}
  .sres{display:block;width:100%;text-align:left;padding:9px 12px;cursor:pointer;border:none;border-top:1px solid var(--line);background:none;color:#e8eef6;font-family:inherit}
  .sres:first-child{border-top:none}
  .sres:hover,.sres.active{background:#1b2a45}
@@ -808,8 +810,13 @@ function setMore(o){moreWrap.classList.toggle('hidden',!o);moreBtn.classList.tog
 moreBtn.onclick=()=>{const open=moreWrap.classList.contains('hidden');setMore(open);persist('sm_more',open?'1':'0');};
 // i18n: wire the language switcher and translate the static chrome on load.
 const FLAG={en:'🇬🇧',es:'🇪🇸',pt:'🇧🇷'};
-function updateLangUI(){ const cur=document.getElementById('langCur'); if(cur)cur.textContent=FLAG[LANG]||FLAG.en;
-  document.querySelectorAll('#langMenu button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-lang')===LANG));
+// Flag emojis render badly on desktop (Windows shows them as "GB"/"ES"/"BR" letterboxes), so on a
+// mouse/fine-pointer device we use clean bold EN/ES/PT labels; touch devices keep the nicer flags.
+const LTEXT={en:'EN',es:'ES',pt:'PT'};
+const LANG_DESKTOP=!!(window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches);
+const langLabel=l=>LANG_DESKTOP?(LTEXT[l]||LTEXT.en):(FLAG[l]||FLAG.en);
+function updateLangUI(){ const cur=document.getElementById('langCur'); if(cur){cur.textContent=langLabel(LANG); cur.classList.toggle('txt',LANG_DESKTOP);}
+  document.querySelectorAll('#langMenu button').forEach(b=>{ const dl=b.getAttribute('data-lang'); b.textContent=langLabel(dl); b.classList.toggle('txt',LANG_DESKTOP); b.classList.toggle('on',dl===LANG); });
   const ls=document.getElementById('langSel'); if(ls)ls.value=LANG; }
 (function(){ const ls=document.getElementById('langSel'); if(ls) ls.onchange=e=>setLang(e.target.value);
   const cur=document.getElementById('langCur'), menu=document.getElementById('langMenu');
