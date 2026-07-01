@@ -382,9 +382,12 @@ function track(kind,extra){ if(DNT)return;
   }catch(e){}
 }
 // A rich per-session journey summary, sent inside the 'end' beacon. All counters/flags — no content, no PII.
-const jr={pans:0,zooms:0,zt:{},zmax:0,zmin:99,reports:0,searches:0,locates:0,districts:0,
+const jr={pans:0,zooms:0,zt:{},zmax:0,zmin:99,reports:0,searches:0,searchMiss:0,locates:0,districts:0,
+  issueOpened:0,issueSubmitted:0,
   setBase:0,setTransp:0,setLabels:0,setBorders:0,menuClosed:0,legendOpened:0,sourcesOpened:0,
   welcomeShown:0,welcomeClosed:0,thanksShown:0,thanksClosed:0,modalsShown:0,modalsClosed:0,ctaDismiss:0};
+let _lastMissQ='';   // dedupe repeated search-miss logs for the same query
+function logSearchMiss(q){ q=(q||'').trim(); if(q.length<3||q===_lastMissQ)return; _lastMissQ=q; jr.searchMiss++; track('search',{q:q.slice(0,80),hit:0}); }
 let _z=map.getZoom(),_zAt=Date.now();
 function _accZoom(){ jr.zt[_z]=(jr.zt[_z]||0)+(Date.now()-_zAt); _zAt=Date.now(); }
 map.on('zoomend',()=>{ _accZoom(); _z=map.getZoom(); jr.zooms++; if(_z>jr.zmax)jr.zmax=_z; if(_z<jr.zmin)jr.zmin=_z; });
@@ -393,7 +396,8 @@ function journeySummary(){ _accZoom();
   let favZ=null,best=-1; for(const k in jr.zt){ if(jr.zt[k]>best){best=jr.zt[k];favZ=+k;} }
   const modalOpen=(function(){const m=document.getElementById('modal');return (m&&!m.classList.contains('hidden'))?1:0;})();
   return {pans:jr.pans,zooms:jr.zooms,favZoom:favZ,zmax:jr.zmax,zmin:(jr.zmin===99?null:jr.zmin),
-    reports:jr.reports,searches:jr.searches,locates:jr.locates,districts:jr.districts,
+    reports:jr.reports,searches:jr.searches,searchMiss:jr.searchMiss,locates:jr.locates,districts:jr.districts,
+    issueOpened:jr.issueOpened,issueSubmitted:jr.issueSubmitted,
     setBase:jr.setBase,setTransp:jr.setTransp,setLabels:jr.setLabels,setBorders:jr.setBorders,
     menuClosed:jr.menuClosed,legendOpened:jr.legendOpened,sourcesOpened:jr.sourcesOpened,
     welcome:[jr.welcomeShown,jr.welcomeClosed],thanks:[jr.thanksShown,jr.thanksClosed],
@@ -469,7 +473,7 @@ function toast(msg,ms,err){const t=document.getElementById('toast');t.textConten
 function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>Thank you! 🙏</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
-  if(!popupCtx)return;
+  if(!popupCtx)return; if(typeof jr==='object')jr.issueOpened++;
   let cat=null,when=null,fh=null;
   const cats=CAT.categories.map(c=>'<label class="opt"><input type="radio" name="cat" value="'+c.key+'"><span>'+esc(c.label)+'</span></label>').join('');
   const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(w.label)+'</button>').join('');
@@ -503,7 +507,7 @@ function openIssueSheet(){
     if(when)payload.when_bucket=when; if(fh!==null)payload.first_hand=(fh==='1');
     if(reason)payload.reason=reason; if(email)payload.email=email;
     const res=await postReport(payload);
-    if(res.ok){ popupThanks(false); thanksModal(res.message); }
+    if(res.ok){ jr.issueSubmitted++; popupThanks(false); thanksModal(res.message); }
     else if(res.offline){ queueBody(res.body); closeModal(); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
     else { msg.className='mmsg err'; msg.textContent=submitErr(res); submit.disabled=false; }
   };
@@ -901,7 +905,7 @@ async function runSuggest(q){
   const cities=cityMatch(q,3).map(c=>({type:'city',name:c.name,sub:'City · open the map',key:c.key}));
   // In the continent overview no single city is loaded, so only offer city matches — never geocode
   // addresses against a default city (which made São Paulo results appear out of nowhere).
-  if(overviewOn){ renderResults(cities, 'Open a city first to search places within it'); return; }
+  if(overviewOn){ renderResults(cities, 'Open a city first to search places within it'); if(!cities.length)logSearchMiss(q); return; }
   const locals=districtSuggest(q);
   if(cities.length||locals.length)renderResults([...cities,...locals]);
   let places; try{places=await geocodeList(q);}catch(e){places=undefined;}
@@ -913,6 +917,7 @@ async function runSuggest(q){
     if(items.some(x=>{const xn=cityNorm(x.name);return xn===pn||(xn&&pn&&(xn.startsWith(pn)||pn.startsWith(xn)))||(x.lat!=null&&Math.abs(x.lat-p.lat)<0.01&&Math.abs(x.lon-p.lon)<0.01);}))continue;
     items.push(p);}
   renderResults(items);
+  if(!items.length)logSearchMiss(q);
 }
 function onType(){const q=searchInput.value.trim();
   if(q.length<2){hideResults();return;}

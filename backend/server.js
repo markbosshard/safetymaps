@@ -187,7 +187,7 @@ app.post('/event', express.text({ type: '*/*', limit: '2kb' }), (req, res) => {
   try { b = JSON.parse(req.body || '{}'); } catch (e) { return res.status(400).json({ ok: false }); }
   const token = typeof b.token === 'string' ? b.token.slice(0, 64) : '';
   const kind = b.kind;
-  if (!token || (kind !== 'session' && kind !== 'view' && kind !== 'end')) return res.status(400).json({ ok: false });
+  if (!token || (kind !== 'session' && kind !== 'view' && kind !== 'end' && kind !== 'search')) return res.status(400).json({ ok: false });
   const iph = ipHash(req);
   if (dbm.countEventsByIp.get(iph, dayStartIso()).n >= MAX_EVENTS_PER_IP_DAY) return res.json({ ok: true }); // over cap: drop quietly
   dbm.insertEvent.run({

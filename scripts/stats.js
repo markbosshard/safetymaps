@@ -87,6 +87,58 @@ if (top.length) {
   top.forEach(r => console.log(`   ${r.city.padEnd(20)} ${String(r.v).padStart(4)} · ${String(r.u).padStart(3)}  ${bar(r.v, mv)}`));
 }
 
+// ---- Funnel & demand ----
+if (ends.length) {
+  const n = ends.length;
+  const sum = (f) => ends.reduce((a, m) => a + (f(m) || 0), 0);
+  const io = sum(m => m.issueOpened), is = sum(m => m.issueSubmitted);
+  console.log(`\n▸ Funnel`);
+  console.log(`   issue sheet opened ${io} → submitted ${is}` + (io ? `   (abandoned ${Math.round((1 - is / io) * 100)}%)` : ''));
+  console.log(`   sessions with a dead-end search: ${ends.filter(m => m.searchMiss > 0).length}/${n}`);
+}
+const misses = all(`SELECT meta FROM event WHERE kind='search'`)
+  .map(r => { try { return JSON.parse(r.meta); } catch (e) { return null; } }).filter(m => m && m.hit === 0 && m.q);
+if (misses.length) {
+  const freq = {}; misses.forEach(m => { const q = String(m.q).toLowerCase().trim(); freq[q] = (freq[q] || 0) + 1; });
+  const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  console.log(`\n▸ Top search MISSES  (looked for, not found → demand-ranked build list)`);
+  top.forEach(([q, c]) => console.log(`   ${String(c).padStart(3)} ×  ${q}`));
+}
+const sessRows = all(`SELECT session, MIN(CASE WHEN kind='view' THEN ts END) firstView, MIN(ts) firstTs
+  FROM event WHERE session IS NOT NULL GROUP BY session`);
+if (sessRows.length) {
+  const bounced = sessRows.filter(s => !s.firstView).length;
+  const ttf = sessRows.filter(s => s.firstView).map(s => (new Date(s.firstView) - new Date(s.firstTs))).filter(x => x >= 0).sort((a, b) => a - b);
+  console.log(`\n▸ Landing`);
+  console.log(`   bounced (no city opened): ${bounced}/${sessRows.length} (${Math.round(bounced / sessRows.length * 100)}%)` +
+    (ttf.length ? `   time-to-first-city median ${fmtMs(ttf[Math.floor(ttf.length / 2)])}` : ''));
+}
+
+// ---- Contributions & data health (from the `report` table) ----
+const hasReport = one("SELECT name FROM sqlite_master WHERE type='table' AND name='report'");
+if (hasReport) {
+  const rt = one(`SELECT COUNT(*) n, COUNT(DISTINCT token) contributors,
+    SUM(CASE WHEN kind='safe' THEN 1 ELSE 0 END) safe, SUM(CASE WHEN kind='issue' THEN 1 ELSE 0 END) issue,
+    SUM(CASE WHEN first_hand=1 THEN 1 ELSE 0 END) fh, SUM(CASE WHEN first_hand IS NOT NULL THEN 1 ELSE 0 END) fhk,
+    SUM(CASE WHEN email IS NOT NULL THEN 1 ELSE 0 END) withemail FROM report`);
+  if (rt && rt.n) {
+    console.log(`\n▸ Contributions  (report table)`);
+    console.log(`   ${rt.n} reports · ${rt.contributors} contributors · safe ${rt.safe} / issue ${rt.issue}` +
+      (rt.fhk ? ` · first-hand ${Math.round(rt.fh / rt.fhk * 100)}%` : '') + ` · left email ${Math.round(rt.withemail / rt.n * 100)}%`);
+    const repeat = all(`SELECT COUNT(*) c FROM report GROUP BY token HAVING c>=2`);
+    console.log(`   repeat contributors (≥2 reports): ${repeat.length}/${rt.contributors}` + (repeat.length ? `  (max ${Math.max(...repeat.map(r => r.c))} by one)` : ''));
+    const cats = all(`SELECT category, COUNT(*) c FROM report WHERE kind='issue' AND category IS NOT NULL GROUP BY category ORDER BY c DESC LIMIT 6`);
+    if (cats.length) console.log(`   top issue categories: ` + cats.map(c => `${c.category}·${c.c}`).join('  '));
+    const cityCov = all(`SELECT city, COUNT(*) c, COUNT(DISTINCT cluster_id) d FROM report GROUP BY city ORDER BY c DESC LIMIT 8`);
+    console.log(`   coverage (city·reports/areas): ` + cityCov.map(r => `${r.city}·${r.c}/${r.d}`).join('  '));
+    const conflict = all(`SELECT city FROM report GROUP BY city, cluster_id HAVING SUM(kind='safe')>0 AND SUM(kind='issue')>0`);
+    console.log(`   safe↔issue conflict areas: ${conflict.length}`);
+    const now = Date.now(), day = 86400000, buckets = { '<1d': 0, '<7d': 0, '<30d': 0, '30d+': 0 };
+    all(`SELECT created_at FROM report`).forEach(r => { const a = now - new Date(r.created_at); if (a >= 0) buckets[a < day ? '<1d' : a < 7 * day ? '<7d' : a < 30 * day ? '<30d' : '30d+']++; });
+    console.log(`   report age: ` + Object.entries(buckets).map(([k, v]) => `${k} ${v}`).join('  '));
+  }
+}
+
 // ---- Device / language mix (from the event context) ----
 const dev = all(`SELECT COALESCE(device,'?') d, COUNT(DISTINCT token) u FROM event GROUP BY d ORDER BY u DESC`);
 const lang = all(`SELECT COALESCE(lang,'?') l, COUNT(DISTINCT token) u FROM event GROUP BY l ORDER BY u DESC LIMIT 6`);
