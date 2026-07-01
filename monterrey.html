@@ -414,7 +414,7 @@ const STRINGS={ es:{
   rhere:'La ubicación exacta importa al reportar', rhere2:' — no solo el distrito. Pronto habrá mapas más detallados.',
   cta_full:'👆 Toca cualquier punto del mapa para valorarlo — <b>✓ seguro</b> o <b>⚑ problema</b>',
   welcome_body:'Acércate o elige una gran ciudad como <b>Ciudad de México</b> o <b>São Paulo</b>.<br><br>Tu opinión honesta —solo <b>toca el mapa</b> donde ocurrió algo— hace este mapa más inteligente, y pronto habrá más ciudades con detalle.<br><br>¡Gracias!',
-  ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', reset_title:'Restablecer ajustes', locate_title:'Mostrar mi ubicación'
+  ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', reset_title:'Restablecer ajustes', reset_confirm:'¿Restablecer todos los ajustes y preferencias?\nTus lugares valorados seguirán guardados.', locate_title:'Mostrar mi ubicación'
 }, pt:{
   fb_contact:'Comentários e contato', city:'Cidade', more_settings:'Mais ajustes', underlay:'Mapa base',
   base_osm:'Mapa de ruas (OSM)', base_sat:'Satélite', base_dark:'Escuro', base_light:'Claro / mínimo',
@@ -438,7 +438,7 @@ const STRINGS={ es:{
   rhere:'A localização exata importa ao relatar', rhere2:' — não apenas o distrito. Em breve mapas mais detalhados.',
   cta_full:'👆 Toque em qualquer ponto do mapa para avaliá-lo — <b>✓ seguro</b> ou <b>⚑ problema</b>',
   welcome_body:'Aproxime o zoom ou escolha uma grande cidade como <b>Cidade do México</b> ou <b>São Paulo</b>.<br><br>Seu feedback honesto —basta <b>tocar no mapa</b> onde algo aconteceu— torna este mapa mais inteligente, e em breve haverá mais cidades com detalhe.<br><br>Obrigado!',
-  ok:'OK', close:'Fechar', thanks_title:'Obrigado! 🙏', reset_title:'Redefinir ajustes', locate_title:'Mostrar minha localização'
+  ok:'OK', close:'Fechar', thanks_title:'Obrigado! 🙏', reset_title:'Redefinir ajustes', reset_confirm:'Redefinir todas as configurações e preferências?\nSeus locais avaliados permanecerão salvos.', locate_title:'Mostrar minha localização'
 } };
 let LANG=(function(){ try{ const s=localStorage.getItem('sm_lang'); if(s&&/^(en|es|pt)$/.test(s))return s; const n=(navigator.language||'en').slice(0,2).toLowerCase(); return (n==='es'||n==='pt')?n:'en'; }catch(e){ return 'en'; } })();
 function t(key,dflt){ const d=STRINGS[LANG]&&STRINGS[LANG][key]; return d!=null?d:(dflt!=null?dflt:key); }
@@ -825,7 +825,7 @@ function updateLangUI(){ const cur=document.getElementById('langCur'); if(cur)cu
 const RESET_KEEP={sm_token:1,sm_queue:1};
 function resetSettings(){ try{ for(const k of Object.keys(localStorage)){ if(k.indexOf('sm_')===0 && !RESET_KEEP[k]) localStorage.removeItem(k); } }catch(e){} }
 document.getElementById('resetBtn').onclick=()=>{
-  if(!window.confirm('Reset all settings and preferences to default?\nYour submitted reports are kept.'))return;
+  if(!window.confirm(t('reset_confirm','Reset all settings and preferences to default?\nYour rated spots will remain saved.')))return;
   resetSettings(); location.href='/'; };
 // --- US-20: contribute call-to-action. A dismissible pill (retires for good once dismissed or after a
 // successful report), plus a crosshair cursor over a focused city, so people learn they can tap to rate. ---
