@@ -32,6 +32,12 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   districts inherit the one honest overall rating): Oaxaca City (30), Antigua GT (14), Montevideo (10),
   Maracay (7), Mérida (6), San José CR (28), San Juan PR (26), Cusco (6). New `scripts/add_districts.js`
   generalises geoBoundaries ADM2/ADM3 + the Peru INEI distrito source.
+- **Contribute call-to-action** (US-20) — a dismissible "👆 Tap any area to rate it" pill in city view +
+  crosshair cursor; retires after dismiss or a first successful report. Fixes "people don't know they can tap".
+- **Menu reset button** (US-21) — ↻ at the top-left of the opened menu; clears all settings/localStorage
+  except the reporter identity + queue (keeps report-withdrawal ability) and GoatCounter keys.
+- **"Locate me" button** (US-22) — Google-style bottom-right button; device geolocation → zoom with
+  neighbouring districts still visible + slow-pulsing blue dot & accuracy halo; focuses the user's city.
 
 ---
 
@@ -42,33 +48,6 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-20 — Make "click the map to contribute" discoverable.** *Problem:* people don't realise they can
-  tap the map (a district → rating popup, or empty space → a point report). Today the only hint is the
-  onboarding overlay, which retires after 3 opens, so returning/most users never learn the gesture.
-  *Approach (layered, cheap → richer):*
-  (1) an **always-visible call-to-action** — a small floating pill bottom-centre, e.g. "＋ Rate this area —
-  tap the map", that fades but returns on idle;
-  (2) a **one-time coach-mark**: a pulsing ripple + "Tap here to rate" the first time each city opens
-  (separate from the welcome modal, keyed per-session not per-lifetime);
-  (3) a **crosshair cursor** over a focused city on desktop, signalling clickability;
-  (4) **hover/long-press tooltips** on districts ("Tap to rate · ▲ safe / ⚑ issue");
-  (5) an explicit **"＋ Report" mode button** (header or bottom bar) that arms a crosshair + banner
-  "Tap where it happened", turning the implicit gesture into an obvious mode for people who won't guess it.
-  Recommended first cut: (1) + (2) + (5). Measure with the new GoatCounter events before adding more.
-- **US-21 — Reset button inside the menu.** A small circular-arrow (↻ refresh) icon at the **top-left of
-  the opened hamburger menu**. Resets all app settings **and** clears localStorage back to defaults —
-  **except** an allowlist that survives: the reporter identity/queue (so someone keeps the ability to see &
-  withdraw their own reports) and anything GoatCounter uses. So: **clear** `sm_lang`, transparency, basemap,
-  toggles (names/borders), onboarding-seen counters, last-city; **keep** the report token + offline report
-  queue + GoatCounter keys. Confirm before wiping ("Reset settings to default? Your reports stay."), then
-  re-render to defaults. (First step: audit the exact `localStorage` keys in use and split into clear/keep.)
-- **US-22 — "Locate me" button (Google-Maps style).** A round button **bottom-right** that uses the device
-  geolocation (`navigator.geolocation`, works iOS/Android/Windows). On tap: zoom to a **useful level where
-  neighbouring districts are still visible** (roughly the city/district zoom, not max), and drop a **slowly
-  pulsing blue dot** (+ soft accuracy halo) at the user's position, like Google Maps. Handle gracefully:
-  permission denied → a short toast; location outside our covered cities → recentre to the nearest covered
-  city (or a "we don't cover that area yet" note). HTTPS is already in place, which the geolocation API
-  requires.
 - **US-12 — Spanish & Portuguese UI (i18n).** Large and quality-sensitive (you wanted native-speaker
   review). Approach: a `STRINGS` dict (`en`/`es`/`pt`) + `t(id)` everywhere + a switcher + `navigator.language`
   auto-detect + `sm_lang`; `categories.json` gains `label_es`/`label_pt`. English fallback so it's never
