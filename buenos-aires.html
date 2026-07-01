@@ -682,9 +682,9 @@ document.getElementById('resetBtn').onclick=()=>{
 // --- US-20: contribute call-to-action. A dismissible pill (retires for good once dismissed or after a
 // successful report), plus a crosshair cursor over a focused city, so people learn they can tap to rate. ---
 // The rating CTA is shown only to people who have NEVER rated, and only on the first 3 PAGE loads
-// (sm_loadcount — page loads, not city-drags). Dismiss (×) hides it for this load; a successful rating
-// retires it for good (sm_rated). Once rated, or after 3 loads, it never appears again.
-let ctaDismissed=false;
+// (sm_loadcount — page loads, not city-drags). A successful rating retires it for good (sm_rated).
+// Dismiss (×) hides it — but if they then never actually tap a point on the map, we nudge ONCE more.
+let ctaDismissed=false, ctaEngaged=false, ctaReminded=false, ctaTimer=null;
 function everRated(){ return lsGet('sm_rated')==='1'; }
 function ctaEligible(){ return !everRated() && !ctaDismissed && (parseInt(lsGet('sm_loadcount')||'0',10)||0)<=3; }
 // CTA is anchored to the bottom via CSS (bottom:76px) — sits in the lower band, above the legend/sources
@@ -696,8 +696,20 @@ function updateContribUi(){
   const lb=document.getElementById('locateBtn'); if(lb) lb.classList.remove('hidden');   // always available
   const mc=map&&map.getContainer&&map.getContainer(); if(mc) mc.classList.toggle('rmode', !!inCity);
 }
-function retireCta(){ persist('sm_rated','1'); const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); }
-document.getElementById('ctaX').onclick=()=>{ ctaDismissed=true; const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); };
+function retireCta(){ persist('sm_rated','1'); clearTimeout(ctaTimer); const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden'); }
+// Second (and last) nudge: fires only if they closed the box but never opened a point/district popup.
+function remindCta(){
+  if(ctaReminded||ctaEngaged||everRated()||overviewOn||!cityKey||!CITIES[cityKey])return;
+  ctaReminded=true; ctaDismissed=false;
+  const sp=document.querySelector('#cta span'); if(sp) sp.innerHTML='👆 Psst — one tap rates a spot. Try any point — <b>✓ safe</b> or <b>⚑ issue</b>';
+  updateContribUi();
+}
+document.getElementById('ctaX').onclick=()=>{
+  ctaDismissed=true; const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden');
+  if(!ctaReminded && !ctaEngaged){ clearTimeout(ctaTimer); ctaTimer=setTimeout(remindCta,25000); }   // nudge once if they never tap
+};
+// Opening ANY popup (district or point, rating or not) counts as tapping a point — cancel the reminder.
+map.on('popupopen',()=>{ ctaEngaged=true; clearTimeout(ctaTimer); ctaTimer=null; });
 window.retireCta=retireCta;   // called on a successful rating
 // --- US-22: locate me. Device geolocation -> zoom to a level where neighbouring districts still show,
 // with a slowly-pulsing blue dot (+ accuracy halo), like Google Maps. ---
