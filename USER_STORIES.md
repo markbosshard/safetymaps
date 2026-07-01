@@ -120,3 +120,15 @@ continent view reads fine as is.
     hosted geo/browser/OS/referrer/campaign counts. Pull via its API for those aggregates.
   - Caveat to handle in the dashboard: our stream is **not** bot-filtered → cross-check volumes against
     GoatCounter (a later step could add light bot heuristics). Sits with US-7 in the later/bigger area.
+
+---
+
+## 🌎 1M+ metros still missing
+
+**The glaring ones (2M+ metros we don't have):**
+- 🇻🇪 **Caracas** (~2.9M) — *the capital; we oddly have Maracay but not Caracas*
+- 🇧🇷 **Porto Alegre** (~4.1M) — RS capital, one of Brazil's biggest
+- 🇻🇪 **Maracaibo** (~2.2M) · **Valencia** (~2.0M)
+- 🇨🇴 **Barranquilla** (~2.2M)
+- 🇧🇴 **Santa Cruz de la Sierra** (~2.0M) — Bolivia's largest city
+- 🇭🇹 **Port-au-Prince** (~2.7M) — *if you count Haiti as LatAm*
