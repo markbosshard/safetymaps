@@ -70,6 +70,29 @@ continent view reads fine as is.
   Cd Juárez, Torreón, Saltillo, Mexicali, León) + La Paz/Cochabamba, Tegucigalpa. Same verify-then-ship loop
   as wave 1; districts inherit the one overall rating unless a trustworthy source lets us differentiate.
 
+- **US-23 — Grow tracking into a "crowdsourcing-health" system.** Builds on the delivered event stream
+  (Delivered) — the metrics that actually steer a *growing* crowd map (the flywheel: visitors → contributors
+  → data density → better map). Surface via `npm run stats` sections now, and the US-6 dashboard later. Most
+  of this is **already sitting in the `report`/`event` tables** — only search-miss + issue-sheet abandonment
+  need new instrumentation. Grouped:
+  - **Contribution funnel.** Issue-sheet opened-but-not-submitted = **abandonment** *(new flag on the sheet)*;
+    **contribution latency** (first visit → first report) *(free)*; **repeat-contributor** distribution
+    (reports per token — broad participation vs power users) *(free)*.
+  - **Demand / growth compass.** **Search-miss logging** — a `search` event with a hit/miss flag + the missed
+    query kept review-only (like report `reason`), so uncovered cities/areas people search for become a
+    demand-ranked **build list** *(new)*; **bounce** (session, never opened a city) + **time-to-first-city**
+    *(mostly free from timestamps)*.
+  - **Data health & coverage.** Reports per city/district; districts with ≥1 / ≥3 reports (a **cold-map** of
+    where to seed); safe/issue ratio, category mix, first-hand share; **safe↔issue conflict** per district;
+    report **freshness** (age distribution) *(all free from `report`)*.
+  - **Trust / abuse.** Reports per token & per ip_hash/day (spam), **rejected** submissions (the bias-gate),
+    **bot-share** estimate by cross-checking volumes against GoatCounter *(mostly free)*.
+  - **Retention.** New-vs-returning over time; **contributor retention** (contributors who return *and*
+    contribute again) *(free)*.
+  Privacy stays as-is: anonymous token, no PII, no raw IP, DNT-respected; search-miss queries are review-only
+  and never served. First cheap slice: search-miss + issue-sheet abandonment + a "data-health & funnel"
+  stats section.
+
 ### Bigger / optional
 
 - **US-7 — Published crime data.** Replace editorial scores with official data (Mexico SESNSP, Brazil
