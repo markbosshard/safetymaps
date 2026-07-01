@@ -20,6 +20,10 @@ const ROOT = path.join(__dirname, '..');
 const FILE = path.join(ROOT, 'cities.json');
 
 const PERU = 'https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_distrital_simple.geojson';
+// Quito: parroquias of the Metropolitan District (Fernanda Andrade's quito-crime-map, from the DMQ open data).
+// The historic urban core is one "Quito" parroquia; the surrounding parroquias (Calderón, Cumbayá, Tumbaco,
+// Conocoto…) are real, populous communities — far better than one circle. A box trims the far rural NW parishes.
+const QUITO = 'https://raw.githubusercontent.com/flandrade/quito-crime-map/master/data/parroquias_quito.geojson';
 
 // key | source | metro box [W,S,E,N] | (optional) name property override
 const JOBS = [
@@ -37,6 +41,8 @@ const JOBS = [
   { key: 'san-juan',          src: { kind: 'gb', iso3: 'PRI', level: 'ADM3' }, box: [-66.18, 18.36, -66.00, 18.48] },
   // --- Peru INEI distritos (same source as Lima/Arequipa) ---
   { key: 'cusco',             src: { kind: 'url', url: PERU, prov: 'CUSCO', provKey: 'NOMBPROV', nameKey: 'NOMBDIST' }, box: [-72.05, -13.63, -71.84, -13.46] },
+  // --- Ecuador (wave 2): Quito parroquias (DMQ). Guayaquil deferred — no clean parroquias-urbanas source yet. ---
+  { key: 'quito',             src: { kind: 'url', url: QUITO, nameKey: 'parroquia' }, box: [-78.58, -0.42, -78.34, -0.02] },
 ];
 
 const centroid = (g) => { let sx = 0, sy = 0, n = 0; const ps = g.type === 'Polygon' ? [g.coordinates] : g.coordinates; for (const p of ps) for (const q of p[0]) { sx += q[0]; sy += q[1]; n++; } return [sx / n, sy / n]; };
