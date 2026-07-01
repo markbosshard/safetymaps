@@ -398,6 +398,14 @@ const STRINGS={ es:{
   risk_scale:'Riesgo de seguridad (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Precaución', tier_avoid:'Evitar',
   search_ph:'Buscar en la vista actual del mapa', lang_label:'Idioma', clear:'Borrar búsqueda',
+  my_spots_title:'Mis lugares valorados', my_spots_sub:'Lugares que valoraste desde este navegador, pendientes de revisión. Puedes retirar cualquiera.',
+  loading:'Cargando…', load_err:'No se pudieron cargar tus valoraciones — inténtalo más tarde.', no_reports:'Aún no hay valoraciones pendientes desde este navegador.',
+  withdraw:'Retirar', retry:'Reintentar', felt_safe_short:'✓ Me sentí seguro/a', issue_short:'Problema',
+  fb_sub:'Cualquier cosa sobre el mapa — una corrección, una ciudad para añadir, un error, o simplemente escríbenos.',
+  fb_msg_label:'Tu mensaje', fb_msg_ph:'¿Qué tienes en mente?', fb_email_label:'Email (opcional) — para responderte sobre cambios de implementación',
+  cancel:'Cancelar', send:'Enviar', fb_empty:'Por favor escribe un mensaje.', offline:'Estás sin conexión — inténtalo de nuevo al reconectarte.',
+  src_basis:'Base de la clasificación de seguridad', src_more:'Más recursos', src_general:'Referencias generales (todas las ciudades)',
+  src_foot:'<b>Valoraciones actualizadas __BUILD_DATE__.</b> Las valoraciones son una síntesis editorial de seguridad para viajeros (São Paulo: un modelo continuo muestreado), no una métrica única de criminalidad. Los polígonos son datos abiertos oficiales donde se muestran; las entradas a nivel de ciudad usan un círculo indicativo, no un límite. Las condiciones varían por cuadra y hora del día; esto no es una garantía de seguridad.',
   sub_overview:'Elige una ciudad o toca el mapa', areas_tap:'zonas · toca un distrito para ver su valoración',
   city_overall:'Valoración general de la ciudad · barrios aún no mapeados',
   btn_safe:'✓ Me sentí seguro/a', btn_issue:'⚑ Reportar un problema',
@@ -413,6 +421,14 @@ const STRINGS={ es:{
   risk_scale:'Risco de segurança (1 = seguro → 10 = alto)',
   tier_safe:'Seguro', tier_moderate:'Moderado', tier_caution:'Cuidado', tier_avoid:'Evitar',
   search_ph:'Buscar na vista atual do mapa', lang_label:'Idioma', clear:'Limpar busca',
+  my_spots_title:'Meus locais avaliados', my_spots_sub:'Locais que você avaliou neste navegador, aguardando revisão. Você pode remover qualquer um.',
+  loading:'Carregando…', load_err:'Não foi possível carregar suas avaliações — tente mais tarde.', no_reports:'Ainda não há avaliações pendentes neste navegador.',
+  withdraw:'Remover', retry:'Tentar de novo', felt_safe_short:'✓ Senti-me seguro/a', issue_short:'Problema',
+  fb_sub:'Qualquer coisa sobre o mapa — uma correção, uma cidade para adicionar, um erro, ou apenas fale conosco.',
+  fb_msg_label:'Sua mensagem', fb_msg_ph:'O que você quer dizer?', fb_email_label:'Email (opcional) — para responder sobre mudanças de implementação',
+  cancel:'Cancelar', send:'Enviar', fb_empty:'Por favor escreva uma mensagem.', offline:'Você está offline — tente novamente ao reconectar.',
+  src_basis:'Base da classificação de segurança', src_more:'Mais recursos', src_general:'Referências gerais (todas as cidades)',
+  src_foot:'<b>Avaliações atualizadas em __BUILD_DATE__.</b> As avaliações são uma síntese editorial de segurança para viajantes (São Paulo: um modelo contínuo amostrado), não uma métrica única de criminalidade. Os polígonos são dados abertos oficiais onde mostrados; entradas a nível de cidade usam um círculo indicativo, não um limite. As condições variam por quarteirão e horário; isto não é garantia de segurança.',
   sub_overview:'Escolha uma cidade ou toque no mapa', areas_tap:'áreas · toque num distrito para ver a avaliação',
   city_overall:'Avaliação geral da cidade · bairros ainda não mapeados',
   btn_safe:'✓ Senti-me seguro/a', btn_issue:'⚑ Relatar um problema',
@@ -579,29 +595,29 @@ function openIssueSheet(){
   };
 }
 async function openMyReports(){
-  setModal('<h3>My Rated Spots</h3><p class="msub">Spots you’ve rated from this browser that are awaiting our review. You can withdraw any of them.</p><div id="myrList" style="font-size:13px;color:#cdd6e4">Loading…</div><div class="mrow"><button class="mbtn" onclick="closeModal()">Close</button></div>');
+  setModal('<h3>'+t('my_spots_title','My Rated Spots')+'</h3><p class="msub">'+t('my_spots_sub','Spots you’ve rated from this browser that are awaiting our review. You can withdraw any of them.')+'</p><div id="myrList" style="font-size:13px;color:#cdd6e4">'+t('loading','Loading…')+'</div><div class="mrow"><button class="mbtn" onclick="closeModal()">'+t('close','Close')+'</button></div>');
   let data; try{const r=await fetch(API+'/my-reports?token='+encodeURIComponent(smToken()));data=await r.json();}catch(e){data=null;}
   const el=document.getElementById('myrList'); if(!el)return;
-  if(!data||!data.ok){ el.textContent='Couldn’t load your reports — please try again later.'; return; }
-  if(!data.reports.length){ el.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; return; }
+  if(!data||!data.ok){ el.textContent=t('load_err','Couldn’t load your reports — please try again later.'); return; }
+  if(!data.reports.length){ el.innerHTML='<span style="color:#8896ad">'+t('no_reports','No pending reports from this browser yet.')+'</span>'; return; }
   el.innerHTML=data.reports.map(rp=>{
-    const what=rp.kind==='safe'?'✓ Felt-safe':'⚑ '+esc(rp.category_label||'Issue');
+    const what=rp.kind==='safe'?t('felt_safe_short','✓ Felt-safe'):'⚑ '+esc(rp.category_label||t('issue_short','Issue'));
     const d=(rp.created_at||'').slice(0,10);
-    return '<div class="myr" data-id="'+rp.id+'"><div><b>'+esc(rp.city_name)+'</b> · '+what+' <span style="color:#8896ad">· '+d+'</span></div><button class="mbtn" style="flex:none;width:auto;padding:5px 10px" onclick="withdrawReport('+rp.id+',this)">Withdraw</button></div>';
+    return '<div class="myr" data-id="'+rp.id+'"><div><b>'+esc(rp.city_name)+'</b> · '+what+' <span style="color:#8896ad">· '+d+'</span></div><button class="mbtn" style="flex:none;width:auto;padding:5px 10px" onclick="withdrawReport('+rp.id+',this)">'+t('withdraw','Withdraw')+'</button></div>';
   }).join('');
 }
 async function withdrawReport(id,btn){ btn.disabled=true; btn.textContent='…';
   let ok=false; try{const r=await fetch(API+'/report/'+id,{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({token:smToken()})});const j=await r.json().catch(()=>({}));ok=r.ok&&j.ok;}catch(e){}
   if(ok){ const row=btn.closest('.myr'); if(row)row.remove(); const list=document.getElementById('myrList'); if(list&&!list.querySelector('.myr'))list.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; }
-  else { btn.disabled=false; btn.textContent='Retry'; }
+  else { btn.disabled=false; btn.textContent=t('retry','Retry'); }
 }
 function openFeedback(){
   setModal(
-    '<h3>Feedback &amp; Contact</h3>'+
-    '<p class="msub">Anything about the map — a correction, a city to add, a bug, or just reach out to us.</p>'+
-    '<div class="mfield"><label>Your message</label><textarea id="fbText" maxlength="4000" placeholder="What’s on your mind?"></textarea></div>'+
-    '<div class="mfield"><label>Email (optional) — for a reply regarding implementation changes</label><input type="email" id="fbEmail" placeholder="you@example.com"></div>'+
-    '<div class="mrow"><button class="mbtn" onclick="closeModal()">Cancel</button><button class="mbtn primary" id="fbSubmit">Send</button></div>'+
+    '<h3>'+t('fb_contact','Feedback &amp; Contact')+'</h3>'+
+    '<p class="msub">'+t('fb_sub','Anything about the map — a correction, a city to add, a bug, or just reach out to us.')+'</p>'+
+    '<div class="mfield"><label>'+t('fb_msg_label','Your message')+'</label><textarea id="fbText" maxlength="4000" placeholder="'+t('fb_msg_ph','What’s on your mind?')+'"></textarea></div>'+
+    '<div class="mfield"><label>'+t('fb_email_label','Email (optional) — for a reply regarding implementation changes')+'</label><input type="email" id="fbEmail" placeholder="you@example.com"></div>'+
+    '<div class="mrow"><button class="mbtn" onclick="closeModal()">'+t('cancel','Cancel')+'</button><button class="mbtn primary" id="fbSubmit">'+t('send','Send')+'</button></div>'+
     '<div class="mmsg" id="fbMsg"></div>'
   );
   const submit=document.getElementById('fbSubmit');
@@ -609,20 +625,20 @@ function openFeedback(){
     const text=document.getElementById('fbText').value.trim();
     const email=document.getElementById('fbEmail').value.trim();
     const msg=document.getElementById('fbMsg');
-    if(!text){msg.className='mmsg err';msg.textContent='Please enter a message.';return;}
+    if(!text){msg.className='mmsg err';msg.textContent=t('fb_empty','Please enter a message.');return;}
     submit.disabled=true;
     let res; try{const r=await fetch(API+'/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,email,token:smToken()})});let j={};try{j=await r.json();}catch(e){}res={ok:r.ok&&j.ok!==false,rate:r.status===429,server:r.status>=500,message:j.message};}catch(e){res={ok:false,offline:true};}
     if(res.ok){ closeModal(); toast(res.message||THANKS); }
-    else { msg.className='mmsg err'; msg.textContent=res.offline?'You’re offline — please try again when you reconnect.':submitErr(res); submit.disabled=false; }
+    else { msg.className='mmsg err'; msg.textContent=res.offline?t('offline','You’re offline — please try again when you reconnect.'):submitErr(res); submit.disabled=false; }
   };
 }
-const RHERE='<div class="rhere">📍 <i>Exact location matters when you report below</i> — not just the district. Future maps will be more detailed.</div>';
+function RHERE(){ return '<div class="rhere">📍 <i>'+t('rhere','Exact location matters when you report below')+'</i>'+t('rhere2',' — not just the district. Future maps will be more detailed.')+'</div>'; }
 function popupContent(d){
   const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
   if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
   else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
   else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`;
-  return head+RHERE+actionRow();
+  return head+RHERE()+actionRow();
 }
 function openDistrict(d,ll){
   if(typeof jr==='object')jr.districts++;
@@ -636,7 +652,7 @@ function openDistrict(d,ll){
 // Report a point ANYWHERE you tap — even outside a painted area (city peripheries, or cities with
 // just a single bubble). The backend buckets it from lat/lng (H3 for city-level, nearest district else).
 function pointPopupContent(){
-  return `<b>${esc(CITIES[cityKey].name)}</b>`+RHERE+actionRow();
+  return `<b>${esc(CITIES[cityKey].name)}</b>`+RHERE()+actionRow();
 }
 function openPointReport(ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
@@ -733,10 +749,10 @@ function renderSources(){
   let h=`<div class="ltitle">${esc(C.name)}</div><div class="snote">${esc(C.note)}</div>`;
   const S=C.sources;
   if(Array.isArray(S)){ if(S.length)h+=srcList(S); }
-  else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">Safety-tier basis</div>'+srcList(S.basis); }
-  if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">More resources</div>'+srcList(C.resources);
-  h+='<div class="scat">General references (all cities)</div>'+srcList(GENERAL);
-  h+='<div class="sfoot"><b>Ratings refreshed __BUILD_DATE__.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.</div>';
+  else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">'+t('src_basis','Safety-tier basis')+'</div>'+srcList(S.basis); }
+  if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">'+t('src_more','More resources')+'</div>'+srcList(C.resources);
+  h+='<div class="scat">'+t('src_general','General references (all cities)')+'</div>'+srcList(GENERAL);
+  h+='<div class="sfoot">'+t('src_foot','<b>Ratings refreshed __BUILD_DATE__.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.')+'</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
 // Typable City combobox (replaces the native <select>): focus shows all cities grouped; typing filters
@@ -978,7 +994,7 @@ function selectResult(it){
   popupCtx={areaName:it.name||'this spot',cluster_id:null,lat:it.lat,lng:it.lon};
   const where=esc((it.sub||'').split(',').slice(1,3).join(',').trim())||'outside the mapped areas';
   reportPopup=L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]})
-    .setLatLng([it.lat,it.lon]).setContent(`<b>${esc(it.name)}</b><br><small style="color:#56627a">${where}</small>`+RHERE+actionRow()).openOn(map);
+    .setLatLng([it.lat,it.lon]).setContent(`<b>${esc(it.name)}</b><br><small style="color:#56627a">${where}</small>`+RHERE()+actionRow()).openOn(map);
   showReportPoint(it.lat,it.lon);
 }
 async function runSuggest(q){
@@ -1072,6 +1088,9 @@ function restoreSettings(){
 // overview (updateView). Centre + fixed city zoom avoids that. Use for ALL city selection (load, dropdown,
 // search, back/forward) — only the overview marker click can flyTo + buildCity safely on its own.
 function focusCity(key,opts){
+  // Close any open report popup + pin first: their keepInView/autoPan would otherwise fight setView and
+  // drag the map back toward the old city (e.g. a live Rio pin blocking a jump to São Paulo).
+  try{map.closePopup();}catch(e){} if(typeof clearReportPoint==='function')clearReportPoint();
   setOverview(false);
   map.setView(centerOf(key), CITIES[key].tier_level==='detailed'?11:10, {animate:false});
   buildCity(key,Object.assign({fit:false},opts||{}));
