@@ -196,6 +196,7 @@ app.post('/event', express.text({ type: '*/*', limit: '2kb' }), (req, res) => {
     kind,
     city: (typeof b.city === 'string' && CITIES[b.city]) ? b.city : null,
     ms: (typeof b.ms === 'number' && b.ms >= 0) ? Math.min(Math.round(b.ms), 86400000) : null,
+    meta: (b.meta && typeof b.meta === 'object') ? JSON.stringify(b.meta).slice(0, 2000) : null,
     ip_hash: iph, ts: new Date().toISOString(),
     ...reqContext(req),
   });

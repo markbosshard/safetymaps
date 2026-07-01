@@ -40,6 +40,12 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   neighbouring districts still visible + slow-pulsing blue dot & accuracy halo; focuses the user's city.
 - **Districts, wave 2** (US-9) — Quito → 17 DMQ parroquias (urban Quito + Calderón, Cumbayá, Tumbaco,
   Conocoto…), inheriting the overall rating. Source: DMQ open parroquias (flandrade/quito-crime-map).
+- **First-party usage analytics** (feeds US-6) — privacy-preserving event stream keyed by the anonymous
+  browser token: `session`/`view`/`end` beacons → `event` table, with a rich per-session `meta` summary
+  (pans, zooms, favourite zoom level, active dwell, districts opened, report left?, search/locate used,
+  settings changed, menu closed?, legend/sources opened?, welcome/thanks/CTA shown-vs-dismissed, modal
+  left open?). `npm run stats` renders it (journeys, dwell, returning, explorers, top cities, behaviour).
+  No PII, no raw IP, respects Do-Not-Track.
 
 ---
 
@@ -69,8 +75,16 @@ continent view reads fine as is.
 - **US-7 — Published crime data.** Replace editorial scores with official data (Mexico SESNSP, Brazil
   SSP-SP/ISP-RJ, Chile CEAD, Colombia Policía Nacional…). A multi-country data project — each source has its
   own format/units; needs careful, reviewed per-country work to stay within the honesty rule. Headline future task.
-- **US-6 — A whole admin backend.** *Needs to be specified.* Grows out of the original "surface per-city
-  analytics" idea (most-viewed cities from GoatCounter) into a proper operator console: review/triage of
-  incoming reports + feedback, the manual-release workflow, score editing, and analytics — all in one place
-  instead of the current CLI (`npm run review`) + hand-edited `cities.json`. Scope, auth, and hosting are
-  open; we're not building it yet. Sits with US-7 in the later/bigger area.
+- **US-6 — A whole admin backend.** *Needs full spec; not building yet.* A web operator console that
+  replaces the CLIs (`npm run review` / `npm run stats`) + hand-edited `cities.json`: report/feedback
+  **triage**, the **manual-release** workflow, **score editing**, and an **analytics dashboard**. The
+  analytics **collection layer is already built** (see Delivered — the token-keyed `event` stream + rich
+  per-session journey `meta`); this story is its **visualiser**.
+  **Analytics sourcing — we keep BOTH, with a clear split:**
+  - **Our own `event` DB** = the primary source: per-visitor **anonymous journeys** (returns, cities opened,
+    dwell, pans/zooms/favourite zoom, which UI they touched, whether they rated) — keyed by `sm_token`, so
+    it can join to actual report data. GoatCounter structurally *can't* do this (it's sessionless).
+  - **GoatCounter stays** for what it's hardened at and we shouldn't rebuild: **bot/spider filtering** and
+    hosted geo/browser/OS/referrer/campaign counts. Pull via its API for those aggregates.
+  - Caveat to handle in the dashboard: our stream is **not** bot-filtered → cross-check volumes against
+    GoatCounter (a later step could add light bot heuristics). Sits with US-7 in the later/bigger area.

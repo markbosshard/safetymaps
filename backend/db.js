@@ -55,6 +55,7 @@ db.exec(`
     kind     TEXT NOT NULL,          -- 'session' (load) | 'view' (opened a city) | 'end' (dwell update)
     city     TEXT,                   -- city key, or null for the overview/home
     ms       INTEGER,                -- active ms this session (on 'end' events)
+    meta     TEXT,                   -- JSON session summary on 'end' (pans, zooms, fav zoom, UI interactions…)
     ip_hash  TEXT,                   -- salted hash of IP+day — NEVER raw IP
     device   TEXT, lang TEXT, referer TEXT,
     ts       TEXT NOT NULL
@@ -71,6 +72,7 @@ for (const col of ['device', 'lang', 'referer']) {
   try { db.exec(`ALTER TABLE report ADD COLUMN ${col} TEXT`); } catch (e) {}
   try { db.exec(`ALTER TABLE feedback ADD COLUMN ${col} TEXT`); } catch (e) {}
 }
+try { db.exec('ALTER TABLE event ADD COLUMN meta TEXT'); } catch (e) { /* exists */ }
 
 // Migration: widen the report uniqueness from (city,cluster_id,token) to (city,cluster_id,token,kind) so a
 // "felt-safe" tap and an "issue" report in the SAME area no longer overwrite each other. SQLite can't alter
@@ -122,8 +124,8 @@ const countFeedbackByIp = db.prepare(`SELECT COUNT(*) n FROM feedback WHERE ip_h
 
 // Usage events (first-party analytics).
 const insertEvent = db.prepare(`
-  INSERT INTO event (token, session, kind, city, ms, ip_hash, device, lang, referer, ts)
-  VALUES (@token, @session, @kind, @city, @ms, @ip_hash, @device, @lang, @referer, @ts)
+  INSERT INTO event (token, session, kind, city, ms, meta, ip_hash, device, lang, referer, ts)
+  VALUES (@token, @session, @kind, @city, @ms, @meta, @ip_hash, @device, @lang, @referer, @ts)
 `);
 const countEventsByIp = db.prepare(`SELECT COUNT(*) n FROM event WHERE ip_hash=? AND ts>=?`);
 

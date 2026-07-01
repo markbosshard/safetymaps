@@ -43,6 +43,25 @@ if (dwell.length) {
   console.log(`   median ${fmtMs(med)}   avg ${fmtMs(Math.round(sum / dwell.length))}   longest ${fmtMs(dwell[dwell.length - 1])}`);
 }
 
+// ---- Behaviour, from the per-session journey summary (meta on 'end' events) ----
+const ends = all(`SELECT meta FROM event WHERE kind='end' AND meta IS NOT NULL`)
+  .map(r => { try { return JSON.parse(r.meta); } catch (e) { return null; } }).filter(Boolean);
+if (ends.length) {
+  const n = ends.length;
+  const avg = (f) => (ends.reduce((a, m) => a + (f(m) || 0), 0) / n);
+  const pct = (f) => Math.round(ends.filter(f).length / n * 100);
+  const favz = {}; ends.forEach(m => { if (m.favZoom != null) favz[m.favZoom] = (favz[m.favZoom] || 0) + 1; });
+  const favEntries = Object.entries(favz).sort((a, b) => b[1] - a[1]);
+  console.log(`\n▸ Behaviour  (${n} summarised sessions)`);
+  console.log(`   moved (pans) avg ${avg(m => m.pans).toFixed(1)}   zoom-changes avg ${avg(m => m.zooms).toFixed(1)}   deepest zoom ${Math.max(0, ...ends.map(m => m.zmax || 0))}`);
+  console.log(`   favourite zoom      : ` + (favEntries.slice(0, 4).map(([z, c]) => `z${z}·${c}`).join('  ') || '—'));
+  console.log(`   left a report       : ${pct(m => m.reports > 0)}%      opened a district: ${pct(m => m.districts > 0)}%`);
+  console.log(`   used search / locate: ${pct(m => m.searches > 0)}% / ${pct(m => m.locates > 0)}%`);
+  console.log(`   changed a setting   : base ${pct(m => m.setBase)}%  transparency ${pct(m => m.setTransp)}%  labels ${pct(m => m.setLabels)}%  borders ${pct(m => m.setBorders)}%`);
+  console.log(`   closed the menu     : ${pct(m => m.menuClosed)}%      opened legend ${pct(m => m.legendOpened)}%   opened sources ${pct(m => m.sourcesOpened)}%`);
+  console.log(`   welcome shown/dismissed: ${pct(m => m.welcome && m.welcome[0])}% / ${pct(m => m.welcome && m.welcome[1])}%   left a modal open: ${pct(m => m.modalLeftOpen)}%   CTA dismissed: ${pct(m => m.ctaDismiss)}%`);
+}
+
 // ---- Returning visitors (same token across ≥2 UTC days) ----
 const ret = all(`SELECT token, COUNT(DISTINCT substr(ts,1,10)) d, COUNT(DISTINCT session) s
   FROM event GROUP BY token`);

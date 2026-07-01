@@ -381,11 +381,29 @@ function track(kind,extra){ if(DNT)return;
     else{ fetch(API+'/event',{method:'POST',headers:{'content-type':'text/plain'},body,keepalive:true}).catch(()=>{}); }
   }catch(e){}
 }
+// A rich per-session journey summary, sent inside the 'end' beacon. All counters/flags — no content, no PII.
+const jr={pans:0,zooms:0,zt:{},zmax:0,zmin:99,reports:0,searches:0,locates:0,districts:0,
+  setBase:0,setTransp:0,setLabels:0,setBorders:0,menuClosed:0,legendOpened:0,sourcesOpened:0,
+  welcomeShown:0,welcomeClosed:0,thanksShown:0,thanksClosed:0,modalsShown:0,modalsClosed:0,ctaDismiss:0};
+let _z=map.getZoom(),_zAt=Date.now();
+function _accZoom(){ jr.zt[_z]=(jr.zt[_z]||0)+(Date.now()-_zAt); _zAt=Date.now(); }
+map.on('zoomend',()=>{ _accZoom(); _z=map.getZoom(); jr.zooms++; if(_z>jr.zmax)jr.zmax=_z; if(_z<jr.zmin)jr.zmin=_z; });
+map.on('dragend',()=>{ jr.pans++; });
+function journeySummary(){ _accZoom();
+  let favZ=null,best=-1; for(const k in jr.zt){ if(jr.zt[k]>best){best=jr.zt[k];favZ=+k;} }
+  const modalOpen=(function(){const m=document.getElementById('modal');return (m&&!m.classList.contains('hidden'))?1:0;})();
+  return {pans:jr.pans,zooms:jr.zooms,favZoom:favZ,zmax:jr.zmax,zmin:(jr.zmin===99?null:jr.zmin),
+    reports:jr.reports,searches:jr.searches,locates:jr.locates,districts:jr.districts,
+    setBase:jr.setBase,setTransp:jr.setTransp,setLabels:jr.setLabels,setBorders:jr.setBorders,
+    menuClosed:jr.menuClosed,legendOpened:jr.legendOpened,sourcesOpened:jr.sourcesOpened,
+    welcome:[jr.welcomeShown,jr.welcomeClosed],thanks:[jr.thanksShown,jr.thanksClosed],
+    modals:[jr.modalsShown,jr.modalsClosed],modalLeftOpen:modalOpen,ctaDismiss:jr.ctaDismiss};
+}
 // Dwell = ACTIVE time only (paused while the tab is hidden). Reported on hide/leave; the server keeps the max.
 let _shownAt=Date.now(), _activeMs=0;
-function trackDwell(){ if(document.visibilityState!=='hidden'){ _activeMs+=Date.now()-_shownAt; _shownAt=Date.now(); } track('end',{ms:_activeMs}); }
-document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){ _activeMs+=Date.now()-_shownAt; track('end',{ms:_activeMs}); } else { _shownAt=Date.now(); } });
-window.addEventListener('pagehide',trackDwell);
+function sendEnd(){ track('end',{ms:_activeMs,meta:journeySummary()}); }
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){ _activeMs+=Date.now()-_shownAt; _accZoom(); sendEnd(); } else { _shownAt=Date.now(); _zAt=Date.now(); } });
+window.addEventListener('pagehide',()=>{ if(document.visibilityState!=='hidden')_activeMs+=Date.now()-_shownAt; sendEnd(); });
 // Persist UI preferences so a returning traveller keeps their city, transparency, basemap and toggles.
 function persist(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
@@ -415,7 +433,7 @@ async function postBody(body){
   let j={};try{j=await r.json();}catch(e){}
   return {ok:r.ok&&j.ok!==false,status:r.status,rate:r.status===429,server:r.status>=500,message:j.message};
 }
-async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; if(res.ok&&typeof retireCta==='function')retireCta(); return res; }
+async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; if(res.ok){ jr.reports++; if(typeof retireCta==='function')retireCta(); } return res; }
 function submitErr(res){ return res.offline?'You’re offline — your report is saved and will send when you reconnect.'
   : res.rate?'You’re sending a lot right now — please wait a minute and try again.'
   : res.server?'Our server hiccuped — please try again shortly.'
@@ -436,14 +454,19 @@ async function reportSafe(btn){
 // reusable modal + toast
 const MODAL_FOCUSABLE='button,[href],input,textarea,select,[tabindex]:not([tabindex="-1"])';
 let _lastFocus=null;
+let _curModal=null;
 function setModal(html){const m=document.getElementById('modal');_lastFocus=document.activeElement;
   document.getElementById('mcard').innerHTML=html;m.classList.remove('hidden');
+  if(typeof jr==='object')jr.modalsShown++;
   const f=m.querySelector(MODAL_FOCUSABLE);if(f)setTimeout(()=>{try{f.focus();}catch(e){}},0);}
-function closeModal(){const m=document.getElementById('modal');m.classList.add('hidden');document.getElementById('mcard').innerHTML='';
+function closeModal(){const m=document.getElementById('modal');const wasOpen=!m.classList.contains('hidden');
+  m.classList.add('hidden');document.getElementById('mcard').innerHTML='';
+  if(wasOpen&&typeof jr==='object'){ jr.modalsClosed++; if(_curModal==='welcome')jr.welcomeClosed=1; if(_curModal==='thanks')jr.thanksClosed=1; }
+  _curModal=null;
   if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
 // Post-rating thank-you: a modal that stays up until the user closes it (a big, easy Close button).
-function thanksModal(msg){ setModal('<h3>Thank you! 🙏</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
+function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>Thank you! 🙏</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
   if(!popupCtx)return;
@@ -532,6 +555,7 @@ function popupContent(d){
   return head+RHERE+actionRow();
 }
 function openDistrict(d,ll){
+  if(typeof jr==='object')jr.districts++;
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};
   popupCtx={areaName:d.name,cluster_id:d.cluster_id||null,lat:p.lat,lng:p.lng};
   reportPopup=L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]}).setLatLng(ll).setContent(popupContent(d)).openOn(map);
@@ -672,20 +696,20 @@ cityInput.addEventListener('keydown',e=>{
 cityListEl.addEventListener('click',e=>{const b=e.target.closest('.sres[data-i]');if(b)pickCity(cityItems[+b.dataset.i]);});
 cityInput.addEventListener('blur',()=>{setTimeout(()=>{cityInput.value=currentCityName||'';},170);});
 document.addEventListener('click',e=>{if(!e.target.closest('#cityCombo'))hideCityList();});
-document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();persist('sm_basemap',curKey);};
-document.getElementById('op').oninput=e=>{opacity=1-e.target.value/100;restyle();persist('sm_opacity',opacity);};
-document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();persist('sm_borders',showBorders);};
-document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();persist('sm_labels',showLabels);};
+document.getElementById('base').onchange=e=>{map.removeLayer(curBase);curKey=e.target.value;curBase=bases[curKey].addTo(map);curBase.bringToBack();applyLabelColor();persist('sm_basemap',curKey);jr.setBase=1;};
+document.getElementById('op').oninput=e=>{opacity=1-e.target.value/100;restyle();persist('sm_opacity',opacity);jr.setTransp=1;};
+document.getElementById('bord').onchange=e=>{showBorders=e.target.checked;restyle();persist('sm_borders',showBorders);jr.setBorders=1;};
+document.getElementById('lbl').onchange=e=>{showLabels=e.target.checked;refreshLabels();persist('sm_labels',showLabels);jr.setLabels=1;};
 const ctrlEl=document.getElementById('ctrl'),legendEl=document.getElementById('legend'),sourcesEl=document.getElementById('sources');
 const menuBtn=document.getElementById('menuBtn'),legendOpenBtn=document.getElementById('legendOpen'),sourcesOpenBtn=document.getElementById('sourcesOpen');
 function setCtrl(o){ctrlEl.classList.toggle('open',o);menuBtn.classList.toggle('on',o);menuBtn.setAttribute('aria-expanded',o);}
 function setLegend(o){legendEl.classList.toggle('hidden',!o);legendOpenBtn.classList.toggle('hidden',o);}
 function setSources(o){sourcesEl.classList.toggle('hidden',!o);sourcesOpenBtn.classList.toggle('hidden',o);}
-menuBtn.onclick=()=>setCtrl(!ctrlEl.classList.contains('open'));
+menuBtn.onclick=()=>{const open=ctrlEl.classList.contains('open'); if(open)jr.menuClosed=1; setCtrl(!open);};
 document.getElementById('legendCollapse').onclick=()=>setLegend(false);
-legendOpenBtn.onclick=()=>setLegend(true);
+legendOpenBtn.onclick=()=>{jr.legendOpened=1;setLegend(true);};
 document.getElementById('sourcesCollapse').onclick=()=>setSources(false);
-sourcesOpenBtn.onclick=()=>setSources(true);
+sourcesOpenBtn.onclick=()=>{jr.sourcesOpened=1;setSources(true);};
 setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.getElementById('myReportsBtn').onclick=openMyReports;
@@ -726,7 +750,7 @@ function remindCta(){
   updateContribUi();
 }
 document.getElementById('ctaX').onclick=()=>{
-  ctaDismissed=true; const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden');
+  ctaDismissed=true; jr.ctaDismiss=1; const cta=document.getElementById('cta'); if(cta)cta.classList.add('hidden');
   if(!ctaReminded && !ctaEngaged){ clearTimeout(ctaTimer); ctaTimer=setTimeout(remindCta,25000); }   // nudge once if they never tap
 };
 // Opening ANY popup (district or point, rating or not) counts as tapping a point — cancel the reminder.
@@ -741,6 +765,7 @@ function showLocDot(lat,lng,acc){
   locMarker=L.marker([lat,lng],{icon:L.divIcon({className:'locwrap',iconSize:[20,20],iconAnchor:[10,10],html:'<span class="locdot"></span>'}),interactive:false,keyboard:false,zIndexOffset:1000}).addTo(map);
 }
 document.getElementById('locateBtn').onclick=()=>{
+  jr.locates++;
   const btn=document.getElementById('locateBtn');
   if(!navigator.geolocation){ toast('Location isn’t available on this device.',4500,true); return; }
   btn.classList.add('on');
@@ -859,7 +884,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
   sresActive=(i+btns.length)%btns.length;btns.forEach(b=>b.classList.remove('active'));
   btns[sresActive].classList.add('active');btns[sresActive].scrollIntoView({block:'nearest'});}
 function selectResult(it){
-  if(!it)return; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
+  if(!it)return; if(typeof jr==='object')jr.searches++; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
   if(it.type==='city'){ focusCity(it.key); return; }
   dropPin(it.lat,it.lon); map.flyTo([it.lat,it.lon],14);
   if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
@@ -932,6 +957,7 @@ function showOverviewHome(){
 }
 // Onboarding overlay (dismiss with OK, backdrop, or Esc). Shown on the first 3 page loads, then retired.
 function showWelcome(){
+  if(typeof jr==='object')jr.welcomeShown=1; _curModal='welcome';
   setModal(
     '<h3>Latam Crime Map</h3>'+
     '<p class="msub">Zoom in or pick a major city like <b>Mexico City</b> or <b>São Paulo</b>.<br><br>'+
