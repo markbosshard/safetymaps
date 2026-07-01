@@ -18,6 +18,7 @@
     "shareimg": "node scripts/make_share_images.js",
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
+    "stats": "node scripts/stats.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
   },
   "license": "UNLICENSED",

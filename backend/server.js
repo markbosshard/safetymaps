@@ -26,6 +26,7 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET || '';   // empty => skip bot check (local dev)
 const MAX_REPORTS_PER_IP_DAY = parseInt(process.env.MAX_REPORTS_PER_IP_DAY || '60', 10);
 const MAX_FEEDBACK_PER_IP_DAY = parseInt(process.env.MAX_FEEDBACK_PER_IP_DAY || '10', 10);
+const MAX_EVENTS_PER_IP_DAY = parseInt(process.env.MAX_EVENTS_PER_IP_DAY || '3000', 10);
 
 const THANKS = 'Many thanks for becoming a part of the Latam Crime Map community! ' +
   'We update our maps every few days to reflect on feedback.';
@@ -177,6 +178,28 @@ app.post('/feedback', async (req, res) => {
     ...reqContext(req),
   });
   res.json({ ok: true, message: THANKS });
+});
+
+// First-party usage event (privacy-preserving). Sent by the client via sendBeacon as text/plain (a "simple"
+// request → no CORS preflight), so parse the raw text here. Anonymous token only; no PII; never a raw IP.
+app.post('/event', express.text({ type: '*/*', limit: '2kb' }), (req, res) => {
+  let b = {};
+  try { b = JSON.parse(req.body || '{}'); } catch (e) { return res.status(400).json({ ok: false }); }
+  const token = typeof b.token === 'string' ? b.token.slice(0, 64) : '';
+  const kind = b.kind;
+  if (!token || (kind !== 'session' && kind !== 'view' && kind !== 'end')) return res.status(400).json({ ok: false });
+  const iph = ipHash(req);
+  if (dbm.countEventsByIp.get(iph, dayStartIso()).n >= MAX_EVENTS_PER_IP_DAY) return res.json({ ok: true }); // over cap: drop quietly
+  dbm.insertEvent.run({
+    token,
+    session: typeof b.session === 'string' ? b.session.slice(0, 64) : null,
+    kind,
+    city: (typeof b.city === 'string' && CITIES[b.city]) ? b.city : null,
+    ms: (typeof b.ms === 'number' && b.ms >= 0) ? Math.min(Math.round(b.ms), 86400000) : null,
+    ip_hash: iph, ts: new Date().toISOString(),
+    ...reqContext(req),
+  });
+  res.json({ ok: true });
 });
 
 // Public aggregate: COUNTS ONLY, never raw text, never a moved score (manual release moves scores).

@@ -370,6 +370,22 @@ const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'ht
 const THANKS='Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.';
 const APPLIED='Your report is in — we review and apply changes to the map within the next few days.';
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
+// --- First-party, privacy-preserving usage analytics ---------------------------------------------------
+// Anonymous only: the sm_token (a random UUID, no identity) links one browser's journey — which cities it
+// opens and roughly how long it stays — WITHOUT any PII. Respects Do-Not-Track (then it sends nothing).
+const DNT=(navigator.doNotTrack==='1'||navigator.doNotTrack==='yes'||window.doNotTrack==='1');
+const SESSION=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('s'+Date.now()+Math.random().toString(36).slice(2));
+function track(kind,extra){ if(DNT)return;
+  try{ const body=JSON.stringify(Object.assign({token:smToken(),session:SESSION,kind},extra||{}));
+    if(navigator.sendBeacon){ navigator.sendBeacon(API+'/event',new Blob([body],{type:'text/plain'})); }
+    else{ fetch(API+'/event',{method:'POST',headers:{'content-type':'text/plain'},body,keepalive:true}).catch(()=>{}); }
+  }catch(e){}
+}
+// Dwell = ACTIVE time only (paused while the tab is hidden). Reported on hide/leave; the server keeps the max.
+let _shownAt=Date.now(), _activeMs=0;
+function trackDwell(){ if(document.visibilityState!=='hidden'){ _activeMs+=Date.now()-_shownAt; _shownAt=Date.now(); } track('end',{ms:_activeMs}); }
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){ _activeMs+=Date.now()-_shownAt; track('end',{ms:_activeMs}); } else { _shownAt=Date.now(); } });
+window.addEventListener('pagehide',trackDwell);
 // Persist UI preferences so a returning traveller keeps their city, transparency, basemap and toggles.
 function persist(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
@@ -559,6 +575,7 @@ function buildCity(key,opts){
   setHeader(key);
   try{if(!opts.fromPop)history.replaceState(null,'','/'+(SLUG[key]||key));}catch(e){}
   renderSources(); refreshLabels(); gcCount(); updateContribUi();
+  track('view',{city:key});
 }
 function restyle(){hovered=null;layers.forEach(l=>l.setStyle(styleFor(l._d)));if(typeof overviewGroup!=='undefined')overviewGroup.eachLayer(m=>m.setStyle({fillOpacity:opacity}));}
 function clearHover(){ if(hovered){ hovered.setStyle(styleFor(hovered._d)); hovered=null; } }
@@ -955,6 +972,7 @@ function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   // The zoom-in welcome only makes sense when landing on the continent overview. When a city is loaded on
   // page load, we instead nudge with the rating CTA (updateContribUi, first 3 loads, only if never rated).
   if(!onCity && loads<=3) showWelcome();
+  track('session',{city: onCity ? (explicitCity()||lsGet('sm_lastcity')||null) : null});
 }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
 window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) focusCity(k,{fromPop:true});});

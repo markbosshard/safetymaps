@@ -45,6 +45,23 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_report_city ON report(city);
   CREATE INDEX IF NOT EXISTS idx_report_pending ON report(released);
   CREATE INDEX IF NOT EXISTS idx_feedback_pending ON feedback(released);
+
+  -- First-party, privacy-preserving usage events (opt-out via Do-Not-Track on the client). Keyed by the
+  -- anonymous browser token — links a person's journey (cities opened, dwell) WITHOUT any identity/PII.
+  CREATE TABLE IF NOT EXISTS event (
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    token    TEXT NOT NULL,          -- anonymous browser UUID (same as reports)
+    session  TEXT,                   -- per-page-load id, to group one visit
+    kind     TEXT NOT NULL,          -- 'session' (load) | 'view' (opened a city) | 'end' (dwell update)
+    city     TEXT,                   -- city key, or null for the overview/home
+    ms       INTEGER,                -- active ms this session (on 'end' events)
+    ip_hash  TEXT,                   -- salted hash of IP+day — NEVER raw IP
+    device   TEXT, lang TEXT, referer TEXT,
+    ts       TEXT NOT NULL
+  );
+  CREATE INDEX IF NOT EXISTS idx_event_token ON event(token);
+  CREATE INDEX IF NOT EXISTS idx_event_session ON event(session);
+  CREATE INDEX IF NOT EXISTS idx_event_ts ON event(ts);
 `);
 
 // Idempotent migrations for DBs created before a column existed. `device`/`lang`/`referer` are derived
@@ -103,6 +120,13 @@ const insertFeedback = db.prepare(`
 const countReportsByIp = db.prepare(`SELECT COUNT(*) n FROM report WHERE ip_hash=? AND created_at>=?`);
 const countFeedbackByIp = db.prepare(`SELECT COUNT(*) n FROM feedback WHERE ip_hash=? AND created_at>=?`);
 
+// Usage events (first-party analytics).
+const insertEvent = db.prepare(`
+  INSERT INTO event (token, session, kind, city, ms, ip_hash, device, lang, referer, ts)
+  VALUES (@token, @session, @kind, @city, @ms, @ip_hash, @device, @lang, @referer, @ts)
+`);
+const countEventsByIp = db.prepare(`SELECT COUNT(*) n FROM event WHERE ip_hash=? AND ts>=?`);
+
 // Public aggregate: counts only — NEVER raw reason. Score is not moved here (manual release only).
 const aggByCity = db.prepare(`
   SELECT cluster_id,
@@ -129,6 +153,7 @@ module.exports = {
   db, DB_PATH,
   upsertReport, insertFeedback,
   countReportsByIp, countFeedbackByIp,
+  insertEvent, countEventsByIp,
   aggByCity, topCategories,
   myReports, deleteMyReport,
 };
