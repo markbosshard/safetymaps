@@ -38,6 +38,8 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   except the reporter identity + queue (keeps report-withdrawal ability) and GoatCounter keys.
 - **"Locate me" button** (US-22) — Google-style bottom-right button; device geolocation → zoom with
   neighbouring districts still visible + slow-pulsing blue dot & accuracy halo; focuses the user's city.
+- **Districts, wave 2** (US-9) — Quito → 17 DMQ parroquias (urban Quito + Calderón, Cumbayá, Tumbaco,
+  Conocoto…), inheriting the overall rating. Source: DMQ open parroquias (flandrade/quito-crime-map).
 
 ---
 
@@ -53,9 +55,10 @@ continent view reads fine as is.
   auto-detect + `sm_lang`; `categories.json` gains `label_es`/`label_pt`. English fallback so it's never
   half-broken. (An exhaustive string inventory — 136 strings, 45 static / 91 dynamic — is already done and
   parked, ready to execute.) The new `lang` collection field will show the real es/pt split to prioritise.
-- **US-9 (waves 2+) — District the big single-municipio cities.** Wave 1 (8 cities) shipped. Remaining
-  circles are single municipios with no geoBoundaries sub-level, so each needs a bespoke per-country source,
-  staged: **Ecuador** parroquias (Quito, Guayaquil) → **Colombia** comunas/localidades (Cali, Cartagena) →
+- **US-9 (waves 2+) — District the big single-municipio cities.** Wave 1 (8 cities) + wave 2 (Quito)
+  shipped. Remaining circles are single municipios with no geoBoundaries sub-level, so each needs a bespoke
+  per-country source, staged: **Ecuador** — Guayaquil still pending (its urban core is one parroquia in the
+  open 2012 DPA layer; needs a parroquias-urbanas source) → **Colombia** comunas/localidades (Cali, Cartagena) →
   **Brazil** bairros (Brasília RAs, Manaus, Florianópolis, Foz, Santarém) → **Argentina** barrios (Rosario,
   Córdoba, Mendoza, Bariloche — ADM2 departamentos are too coarse) → **Mexico** colonias/AGEBs (Tijuana,
   Cd Juárez, Torreón, Saltillo, Mexicali, León) + La Paz/Cochabamba, Tegucigalpa. Same verify-then-ship loop
