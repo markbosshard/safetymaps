@@ -131,10 +131,14 @@
  #searchResults{position:absolute;top:100%;left:0;right:0;margin-top:6px;background:rgba(16,26,46,.98);border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 34px #000a;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden;z-index:1300}
  #searchResults.hidden{display:none}
  #searchClear.hidden{display:none}#searchClear svg{width:15px;height:15px}
- #langFlags{display:flex;gap:1px;align-items:center;flex:none}
- #langFlags button{background:none;border:none;cursor:pointer;font-size:18px;line-height:1;padding:3px 4px;border-radius:6px;opacity:.4;filter:grayscale(.4);transition:.12s}
- #langFlags button:hover{opacity:.85;filter:none}
- #langFlags button.on{opacity:1;filter:none;background:rgba(255,255,255,.2)}
+ #langFlags{position:relative;flex:none}
+ #langCur{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:8px;cursor:pointer;font-size:16px;line-height:1;height:34px;width:34px;display:flex;align-items:center;justify-content:center;padding:0}
+ #langCur:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5)}
+ #langMenu{position:absolute;top:100%;right:0;margin-top:5px;background:rgba(16,26,46,.98);border:1px solid var(--line);border-radius:9px;box-shadow:0 12px 30px #0009;padding:4px;display:flex;flex-direction:column;gap:2px;z-index:1400}
+ #langMenu.hidden{display:none}
+ #langMenu button{background:none;border:none;cursor:pointer;font-size:18px;line-height:1;padding:5px 8px;border-radius:6px;opacity:.6}
+ #langMenu button:hover{background:rgba(255,255,255,.14);opacity:1}
+ #langMenu button.on{opacity:1;background:rgba(255,255,255,.2)}
  .sres{display:block;width:100%;text-align:left;padding:9px 12px;cursor:pointer;border:none;border-top:1px solid var(--line);background:none;color:#e8eef6;font-family:inherit}
  .sres:first-child{border-top:none}
  .sres:hover,.sres.active{background:#1b2a45}
@@ -222,10 +226,13 @@
    </div>
    <button id="searchToggle" class="hbtn" title="Search" aria-label="Search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
    <button id="fbBtn" class="hbtn fbbtn" title="Feedback & Contact" aria-label="Feedback and Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg><span data-i18n="fb_contact">Feedback &amp; Contact</span></button>
-   <div id="langFlags" role="group" aria-label="Language">
-     <button type="button" data-lang="en" title="English">🇬🇧</button>
-     <button type="button" data-lang="es" title="Español">🇪🇸</button>
-     <button type="button" data-lang="pt" title="Português">🇧🇷</button>
+   <div id="langFlags">
+     <button type="button" id="langCur" aria-haspopup="true" aria-expanded="false" title="Language">🇬🇧</button>
+     <div id="langMenu" class="hidden" role="menu">
+       <button type="button" data-lang="en" title="English">🇬🇧</button>
+       <button type="button" data-lang="es" title="Español">🇪🇸</button>
+       <button type="button" data-lang="pt" title="Português">🇧🇷</button>
+     </div>
    </div>
    <div id="ctrl">
      <div><span class="cap" data-i18n="city">City</span>
@@ -781,9 +788,18 @@ const moreBtn=document.getElementById('moreBtn'),moreWrap=document.getElementByI
 function setMore(o){moreWrap.classList.toggle('hidden',!o);moreBtn.classList.toggle('open',o);moreBtn.setAttribute('aria-expanded',o);}
 moreBtn.onclick=()=>{const open=moreWrap.classList.contains('hidden');setMore(open);persist('sm_more',open?'1':'0');};
 // i18n: wire the language switcher and translate the static chrome on load.
-function updateLangUI(){ document.querySelectorAll('#langFlags button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-lang')===LANG)); const ls=document.getElementById('langSel'); if(ls)ls.value=LANG; }
+const FLAG={en:'🇬🇧',es:'🇪🇸',pt:'🇧🇷'};
+function updateLangUI(){ const cur=document.getElementById('langCur'); if(cur)cur.textContent=FLAG[LANG]||FLAG.en;
+  document.querySelectorAll('#langMenu button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-lang')===LANG));
+  const ls=document.getElementById('langSel'); if(ls)ls.value=LANG; }
 (function(){ const ls=document.getElementById('langSel'); if(ls) ls.onchange=e=>setLang(e.target.value);
-  document.querySelectorAll('#langFlags button').forEach(b=>b.onclick=()=>setLang(b.getAttribute('data-lang')));
+  const cur=document.getElementById('langCur'), menu=document.getElementById('langMenu');
+  function closeMenu(){ if(menu){menu.classList.add('hidden');} if(cur)cur.setAttribute('aria-expanded','false'); }
+  if(cur&&menu){
+    cur.onclick=(e)=>{ e.stopPropagation(); const willOpen=menu.classList.contains('hidden'); menu.classList.toggle('hidden',!willOpen); cur.setAttribute('aria-expanded',willOpen?'true':'false'); };
+    menu.querySelectorAll('button').forEach(b=>b.onclick=()=>{ setLang(b.getAttribute('data-lang')); closeMenu(); });
+    document.addEventListener('click',(e)=>{ if(!e.target.closest('#langFlags'))closeMenu(); });
+  }
   applyStatic(); updateLangUI(); })();
 // --- US-21: reset settings. Clears every sm_* key EXCEPT the reporter identity/queue (so you keep the
 // ability to see & withdraw your own reports); non-sm_ keys (GoatCounter) are left untouched. ---
