@@ -140,7 +140,75 @@ if (hasReport) {
     const now = Date.now(), day = 86400000, buckets = { '<1d': 0, '<7d': 0, '<30d': 0, '30d+': 0 };
     all(`SELECT created_at FROM report`).forEach(r => { const a = now - new Date(r.created_at); if (a >= 0) buckets[a < day ? '<1d' : a < 7 * day ? '<7d' : a < 30 * day ? '<30d' : '30d+']++; });
     console.log(`   report age: ` + Object.entries(buckets).map(([k, v]) => `${k} ${v}`).join('  '));
+
+    // ---- Spam heat — top tokens by report count ----
+    const topTokens = all(`SELECT substr(token,1,12) tok, COUNT(*) n, COUNT(DISTINCT city) cities, COUNT(DISTINCT substr(created_at,1,10)) days FROM report GROUP BY token ORDER BY n DESC LIMIT 10`);
+    if (topTokens.length > 1) {
+      const suspicious = topTokens.filter(r => r.n >= 5);
+      if (suspicious.length) {
+        console.log(`\n▸ Spam heat — top tokens by report count`);
+        suspicious.forEach(r => console.log(`   ${r.tok}…  ${r.n} reports  ${r.cities} cit  ${r.days} days`));
+      }
+    }
+
+    // ---- District cold-map — how many districts have ≥1 / ≥3 crowd reports ----
+    const fs = require('fs'), citiesPath = path.join(__dirname, '..', 'cities.json');
+    if (fs.existsSync(citiesPath)) {
+      const CITIES = JSON.parse(fs.readFileSync(citiesPath, 'utf8'));
+      const detailedCities = Object.values(CITIES).filter(c => c.tier_level === 'detailed' && c.districts && c.districts.length > 1);
+      if (detailedCities.length) {
+        // reports per cluster_id
+        const repByCluster = {};
+        all(`SELECT cluster_id, COUNT(*) n FROM report GROUP BY cluster_id`).forEach(r => { repByCluster[r.cluster_id] = r.n; });
+        const totDistricts = detailedCities.reduce((a, c) => a + c.districts.length, 0);
+        let with1 = 0, with3 = 0;
+        for (const c of detailedCities) {
+          for (const d of c.districts) {
+            const n = d.cluster_id ? (repByCluster[d.cluster_id] || 0) : 0;
+            if (n >= 1) with1++;
+            if (n >= 3) with3++;
+          }
+        }
+        console.log(`\n▸ District coverage  (${totDistricts} districts across ${detailedCities.length} detailed cities)`);
+        console.log(`   ≥1 report: ${with1}/${totDistricts} (${Math.round(with1/totDistricts*100)}%)   ≥3 reports: ${with3}/${totDistricts} (${Math.round(with3/totDistricts*100)}%)`);
+        // Top districts by report count
+        const ranked = [];
+        for (const c of detailedCities) {
+          for (const d of c.districts) {
+            const n = d.cluster_id ? (repByCluster[d.cluster_id] || 0) : 0;
+            if (n > 0) ranked.push({ label: `${c.name}/${d.name}`, n });
+          }
+        }
+        ranked.sort((a, b) => b.n - a.n);
+        if (ranked.length) console.log(`   most-reported: ` + ranked.slice(0, 5).map(r => `${r.label}·${r.n}`).join('  '));
+      }
+    }
+
+    // ---- Contributor retention over time ----
+    const dailyContrib = all(`SELECT substr(created_at,1,10) day, COUNT(DISTINCT token) n FROM report GROUP BY day ORDER BY day`);
+    if (dailyContrib.length > 1) {
+      console.log(`\n▸ Daily new contributors`);
+      dailyContrib.slice(-14).forEach(r => console.log(`   ${r.day}  ${String(r.n).padStart(3)}  ${bar(r.n, Math.max(...dailyContrib.map(x => x.n)), 20)}`));
+    }
   }
+}
+
+// ---- GoatCounter bot-share cross-check (optional, set GC_SITE=xxx GC_TOKEN=yyy) ----
+const GC_SITE = process.env.GC_SITE, GC_TOKEN = process.env.GC_TOKEN;
+if (GC_SITE && GC_TOKEN) {
+  const https = require('https');
+  const gcFetch = () => new Promise((res, rej) => {
+    https.get(`https://${GC_SITE}.goatcounter.com/api/v0/stats/total`, { headers: { Authorization: `Bearer ${GC_TOKEN}` } }, r => {
+      let d = ''; r.on('data', c => d += c); r.on('end', () => { try { res(JSON.parse(d)); } catch(e) { rej(e); } });
+    }).on('error', rej);
+  });
+  gcFetch().then(gc => {
+    const gcSessions = gc.total_pageviews || gc.total || 0;
+    const ourSessions = one('SELECT COUNT(DISTINCT session) n FROM event WHERE kind="session"').n;
+    const ratio = ourSessions && gcSessions ? (ourSessions / gcSessions).toFixed(2) : '?';
+    console.log(`\n▸ Bot cross-check  (GoatCounter ${GC_SITE})`);
+    console.log(`   our sessions: ${ourSessions}   GC sessions: ${gcSessions}   ratio ${ratio}x  (>2x suggests bots in our stream)`);
+  }).catch(e => console.log(`\n▸ Bot cross-check: GoatCounter error — ${e.message}`));
 }
 
 // ---- Device / language mix (from the event context) ----
