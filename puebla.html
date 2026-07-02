@@ -517,11 +517,11 @@ function track(kind,extra){ if(DNT)return;
 }
 // A rich per-session journey summary, sent inside the 'end' beacon. All counters/flags — no content, no PII.
 const jr={pans:0,zooms:0,zt:{},zmax:0,zmin:99,reports:0,searches:0,searchMiss:0,locates:0,districts:0,
-  issueOpened:0,issueSubmitted:0,
+  issueOpened:0,issueSubmitted:0,issueAbandoned:0,
   setBase:0,setTransp:0,setLabels:0,setBorders:0,menuClosed:0,legendOpened:0,sourcesOpened:0,
   welcomeShown:0,welcomeClosed:0,thanksShown:0,thanksClosed:0,modalsShown:0,modalsClosed:0,ctaDismiss:0};
 let _lastMissQ='';   // dedupe repeated search-miss logs for the same query
-function logSearchMiss(q){ q=(q||'').trim(); if(q.length<3||q===_lastMissQ)return; _lastMissQ=q; jr.searchMiss++; track('search',{q:q.slice(0,80),hit:0}); }
+function logSearchMiss(q){ q=(q||'').trim(); if(q.length<3||q===_lastMissQ)return; _lastMissQ=q; jr.searchMiss++; track('search',{meta:{q:q.slice(0,80),hit:0}}); }
 let _z=map.getZoom(),_zAt=Date.now();
 function _accZoom(){ jr.zt[_z]=(jr.zt[_z]||0)+(Date.now()-_zAt); _zAt=Date.now(); }
 map.on('zoomend',()=>{ _accZoom(); _z=map.getZoom(); jr.zooms++; if(_z>jr.zmax)jr.zmax=_z; if(_z<jr.zmin)jr.zmin=_z; });
@@ -531,7 +531,7 @@ function journeySummary(){ _accZoom();
   const modalOpen=(function(){const m=document.getElementById('modal');return (m&&!m.classList.contains('hidden'))?1:0;})();
   return {pans:jr.pans,zooms:jr.zooms,favZoom:favZ,zmax:jr.zmax,zmin:(jr.zmin===99?null:jr.zmin),
     reports:jr.reports,searches:jr.searches,searchMiss:jr.searchMiss,locates:jr.locates,districts:jr.districts,
-    issueOpened:jr.issueOpened,issueSubmitted:jr.issueSubmitted,
+    issueOpened:jr.issueOpened,issueSubmitted:jr.issueSubmitted,issueAbandoned:jr.issueAbandoned,
     setBase:jr.setBase,setTransp:jr.setTransp,setLabels:jr.setLabels,setBorders:jr.setBorders,
     menuClosed:jr.menuClosed,legendOpened:jr.legendOpened,sourcesOpened:jr.sourcesOpened,
     welcome:[jr.welcomeShown,jr.welcomeClosed],thanks:[jr.thanksShown,jr.thanksClosed],
@@ -599,7 +599,7 @@ function setModal(html){const m=document.getElementById('modal');_lastFocus=docu
   const f=m.querySelector(MODAL_FOCUSABLE);if(f)setTimeout(()=>{try{f.focus();}catch(e){}},0);}
 function closeModal(){const m=document.getElementById('modal');const wasOpen=!m.classList.contains('hidden');
   m.classList.add('hidden');document.getElementById('mcard').innerHTML='';
-  if(wasOpen&&typeof jr==='object'){ jr.modalsClosed++; if(_curModal==='welcome')jr.welcomeClosed=1; if(_curModal==='thanks')jr.thanksClosed=1; }
+  if(wasOpen&&typeof jr==='object'){ jr.modalsClosed++; if(_curModal==='welcome')jr.welcomeClosed=1; if(_curModal==='thanks')jr.thanksClosed=1; if(_curModal==='issue')jr.issueAbandoned++; }
   _curModal=null;
   if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
@@ -607,7 +607,7 @@ function toast(msg,ms,err){const t=document.getElementById('toast');t.textConten
 function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>'+t('thanks_title','Thank you! 🙏')+'</h3><p class="msub">'+esc(msg||t('thanks_msg','Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.'))+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">'+t('close','Close')+'</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
-  if(!popupCtx)return; if(typeof jr==='object')jr.issueOpened++;
+  if(!popupCtx)return; if(typeof jr==='object')jr.issueOpened++; _curModal='issue';
   let cat=null,when=null,fh=null;
   const cats=CAT.categories.map(c=>'<label class="opt"><input type="radio" name="cat" value="'+c.key+'"><span>'+esc(catLabel(c))+'</span></label>').join('');
   const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(catLabel(w))+'</button>').join('');
@@ -1064,6 +1064,7 @@ function setActive(i){const btns=searchResults.querySelectorAll('.sres[data-i]')
   btns[sresActive].classList.add('active');btns[sresActive].scrollIntoView({block:'nearest'});}
 function selectResult(it){
   if(!it)return; if(typeof jr==='object')jr.searches++; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
+  track('search',{meta:{hit:1}});
   if(it.type==='city'){ focusCity(it.key); return; }
   dropPin(it.lat,it.lon); zoomToPin(it.lat,it.lon);
 }

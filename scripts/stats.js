@@ -91,9 +91,9 @@ if (top.length) {
 if (ends.length) {
   const n = ends.length;
   const sum = (f) => ends.reduce((a, m) => a + (f(m) || 0), 0);
-  const io = sum(m => m.issueOpened), is = sum(m => m.issueSubmitted);
+  const io = sum(m => m.issueOpened), is = sum(m => m.issueSubmitted), ia = sum(m => m.issueAbandoned || 0);
   console.log(`\n▸ Funnel`);
-  console.log(`   issue sheet opened ${io} → submitted ${is}` + (io ? `   (abandoned ${Math.round((1 - is / io) * 100)}%)` : ''));
+  console.log(`   issue sheet opened ${io} → submitted ${is}${ia ? ` / explicitly abandoned ${ia}` : ''}` + (io ? `   (${Math.round((1 - is / io) * 100)}% didn't submit)` : ''));
   console.log(`   sessions with a dead-end search: ${ends.filter(m => m.searchMiss > 0).length}/${n}`);
 }
 const misses = all(`SELECT meta FROM event WHERE kind='search'`)
@@ -127,6 +127,10 @@ if (hasReport) {
       (rt.fhk ? ` · first-hand ${Math.round(rt.fh / rt.fhk * 100)}%` : '') + ` · left email ${Math.round(rt.withemail / rt.n * 100)}%`);
     const repeat = all(`SELECT COUNT(*) c FROM report GROUP BY token HAVING c>=2`);
     console.log(`   repeat contributors (≥2 reports): ${repeat.length}/${rt.contributors}` + (repeat.length ? `  (max ${Math.max(...repeat.map(r => r.c))} by one)` : ''));
+    const retContr = all(`SELECT token FROM report GROUP BY token HAVING COUNT(DISTINCT substr(created_at,1,10))>=2`);
+    console.log(`   contributor retention (reported on 2+ days): ${retContr.length}/${rt.contributors}`);
+    const latency = all(`SELECT r.token, MIN(r.created_at) fr, MIN(e.ts) fs FROM report r JOIN event e ON e.token=r.token WHERE e.kind='session' GROUP BY r.token`).map(r => (new Date(r.fr)-new Date(r.fs))).filter(x=>x>=0).sort((a,b)=>a-b);
+    if(latency.length) console.log(`   contribution latency (first visit → first report) median ${fmtMs(latency[Math.floor(latency.length/2)])}   (${latency.length} contributors matched)`);
     const cats = all(`SELECT category, COUNT(*) c FROM report WHERE kind='issue' AND category IS NOT NULL GROUP BY category ORDER BY c DESC LIMIT 6`);
     if (cats.length) console.log(`   top issue categories: ` + cats.map(c => `${c.category}·${c.c}`).join('  '));
     const cityCov = all(`SELECT city, COUNT(*) c, COUNT(DISTINCT cluster_id) d FROM report GROUP BY city ORDER BY c DESC LIMIT 8`);
