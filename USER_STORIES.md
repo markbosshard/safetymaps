@@ -89,28 +89,15 @@ continent view reads fine as is.
   source differentiates them. `scripts/add_districts.js` now supports geoBoundaries, direct GeoJSON, ArcGIS
   query endpoints, merge-by-name, and DP simplification.
 
-- **US-23 — Grow tracking into a "crowdsourcing-health" system.** Builds on the delivered event stream
-  (Delivered) — the metrics that actually steer a *growing* crowd map (the flywheel: visitors → contributors
-  → data density → better map). Surface via `npm run stats` sections now, and the US-6 dashboard later. Most
-  of this is **already sitting in the `report`/`event` tables** — only search-miss + issue-sheet abandonment
-  need new instrumentation. Grouped:
-  - **Contribution funnel.** Issue-sheet opened-but-not-submitted = **abandonment** *(new flag on the sheet)*;
-    **contribution latency** (first visit → first report) *(free)*; **repeat-contributor** distribution
-    (reports per token — broad participation vs power users) *(free)*.
-  - **Demand / growth compass.** **Search-miss logging** — a `search` event with a hit/miss flag + the missed
-    query kept review-only (like report `reason`), so uncovered cities/areas people search for become a
-    demand-ranked **build list** *(new)*; **bounce** (session, never opened a city) + **time-to-first-city**
-    *(mostly free from timestamps)*.
-  - **Data health & coverage.** Reports per city/district; districts with ≥1 / ≥3 reports (a **cold-map** of
-    where to seed); safe/issue ratio, category mix, first-hand share; **safe↔issue conflict** per district;
-    report **freshness** (age distribution) *(all free from `report`)*.
-  - **Trust / abuse.** Reports per token & per ip_hash/day (spam), **rejected** submissions (the bias-gate),
-    **bot-share** estimate by cross-checking volumes against GoatCounter *(mostly free)*.
-  - **Retention.** New-vs-returning over time; **contributor retention** (contributors who return *and*
-    contribute again) *(free)*.
-  Privacy stays as-is: anonymous token, no PII, no raw IP, DNT-respected; search-miss queries are review-only
-  and never served. First cheap slice: search-miss + issue-sheet abandonment + a "data-health & funnel"
-  stats section.
+- **US-23 — Crowdsourcing-health metrics — FIRST SLICE DELIVERED.** The three new instrumentation pieces
+  are shipped: (1) `logSearchMiss` now wraps `{q,hit:0}` in `meta` so queries are actually persisted in the
+  event table (was a bug — data was silently dropped); `selectResult` emits `search {meta:{hit:1}}` for
+  successful picks. (2) `openIssueSheet` sets `_curModal='issue'`; `closeModal` increments
+  `jr.issueAbandoned` when the sheet is dismissed without submitting — included in `journeySummary`. (3)
+  `stats.js` shows explicit abandonment count in the Funnel section, plus new Contributions lines for
+  contributor retention (2+ report-days) and contribution latency (first session → first report).
+  **Remaining / future:** districts with ≥1/≥3 reports cold-map; per-token spam heat; bot-share
+  cross-check with GoatCounter; contributor retention chart over time. No PII added.
 
 ### Bigger / optional
 
