@@ -687,7 +687,7 @@ function buildCity(key,opts){
     lyr.on('mouseover',()=>{ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
       hovered=lyr; lyr.setStyle({weight:2.2,color:'#fff',opacity:1}); lyr.bringToFront(); });
     lyr.on('mouseout',()=>{ if(hovered===lyr){ lyr.setStyle(styleFor(lyr._d)); hovered=null; } });
-    lyr.on('click',e=>openDistrict(d,e.latlng));
+    lyr.on('click',e=>{ clearTimeout(clickTimer); clickTimer=setTimeout(()=>openDistrict(d,e.latlng),250); });
   });
   const grp=L.featureGroup(layers);
   if(opts.fit!==false){ map.fitBounds(grp.getBounds().pad(C.model==='city'?0.5:0.03),{animate:false});
@@ -918,7 +918,7 @@ function dropPin(lat,lon){ if(searchPin)map.removeLayer(searchPin);
   searchPin=L.marker([lat,lon],{icon:L.divIcon({className:'pinwrap',iconSize:[28,38],iconAnchor:[14,38],
     html:'<svg width="28" height="38" viewBox="0 0 28 38"><path d="M14 0C6.8 0 1 5.8 1 13c0 9.2 13 25 13 25s13-15.8 13-25C27 5.8 21.2 0 14 0z" fill="#475569" stroke="#fff" stroke-width="2"/><circle cx="14" cy="13" r="4.5" fill="#fff"/></svg>'})}).addTo(map);
   if(typeof updateSearchClear==='function')updateSearchClear(); }
-let reportPin=null;
+let reportPin=null,clickTimer=null;
 function showReportPoint(lat,lng){ clearReportPoint();
   reportPin=L.marker([lat,lng],{interactive:false,keyboard:false,zIndexOffset:1000,
     icon:L.divIcon({className:'reppin',iconSize:[24,34],iconAnchor:[12,34],
@@ -974,11 +974,15 @@ map.on('click',async e=>{
   const other=cityAt(ll.lng,ll.lat); if(other && other!==cityKey){ focusCity(other); return; }
   const C=CITIES[cityKey]; if(!C||!C.districts)return;
   if(districtAt(ll.lng,ll.lat))return;
-  if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
-  showReportPoint(ll.lat,ll.lng);                                  // instant feedback while we check
-  if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.',5000,true); return; }
-  if(!reportPin)return;                                            // popup/pin was cleared meanwhile
-  openPointReport(ll); });
+  clearTimeout(clickTimer);
+  clickTimer=setTimeout(async()=>{
+    if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
+    showReportPoint(ll.lat,ll.lng);
+    if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.',5000,true); return; }
+    if(!reportPin)return;
+    openPointReport(ll);
+  },250); });
+map.on('dblclick',()=>clearTimeout(clickTimer));
 // Geocoder: autocomplete dropdown of districts + MapTiler places. Nothing zooms until a row is picked.
 const searchInput=document.getElementById('searchInput');
 const searchResults=document.getElementById('searchResults');
@@ -1017,14 +1021,6 @@ function selectResult(it){
   if(!it)return; if(typeof jr==='object')jr.searches++; hideResults(); collapseSearch(); searchInput.value=it.name; searchInput.blur();
   if(it.type==='city'){ focusCity(it.key); return; }
   dropPin(it.lat,it.lon); zoomToPin(it.lat,it.lon);
-  if(it.type==='district'&&it._d){openDistrict(it._d,[it.lat,it.lon]);return;}
-  const d=districtAt(it.lon,it.lat);
-  if(d){openDistrict(d,[it.lat,it.lon]);return;}
-  popupCtx={areaName:it.name||'this spot',cluster_id:null,lat:it.lat,lng:it.lon};
-  const where=esc((it.sub||'').split(',').slice(1,3).join(',').trim())||'outside the mapped areas';
-  reportPopup=L.popup({maxWidth:240,autoPanPadding:[16,16],keepInView:true,offset:[0,-18]})
-    .setLatLng([it.lat,it.lon]).setContent(`<b>${esc(it.name)}</b><br><small style="color:#56627a">${where}</small>`+RHERE()+actionRow()).openOn(map);
-  showReportPoint(it.lat,it.lon);
 }
 async function runSuggest(q){
   const seq=++searchSeq;
