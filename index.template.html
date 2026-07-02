@@ -374,7 +374,7 @@ let tileErr=0,tileOk=false,fellBack=false;
 function onTileOk(){tileOk=true;hint.style.display='none';}
 function onTileErr(){
   if(++tileErr<3||tileOk)return;
-  if(MAPTILER_KEY&&!fellBack){ // MapTiler not serving here (e.g. this origin isn't on the key) → free tiles so the map never goes grey
+  if(MAPTILER_KEY&&!fellBack){ // MapTiler not serving here (e.g. this origin isn’t on the key) → free tiles so the map never goes grey
     fellBack=true; tileErr=0;
     try{map.removeLayer(curBase);}catch(e){}
     bases=freeBases(); bindTiles(); curBase=bases[curKey].addTo(map); curBase.bringToBack(); applyLabelColor();
@@ -418,7 +418,29 @@ const STRINGS={ es:{
   rhere:'La ubicación exacta importa al reportar', rhere2:' — no solo el distrito. Pronto habrá mapas más detallados.',
   cta_full:'👆 Toca cualquier punto del mapa para valorarlo — <b>✓ seguro</b> o <b>⚑ problema</b>',
   welcome_body:'Acércate o elige una gran ciudad como <b>Ciudad de México</b> o <b>São Paulo</b>.<br><br>Tu opinión honesta —solo <b>toca el mapa</b> donde ocurrió algo— hace este mapa más inteligente, y pronto habrá más ciudades con detalle.<br><br>¡Gracias!',
-  ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', reset_title:'Restablecer ajustes', reset_confirm:'¿Restablecer todos los ajustes y preferencias?\nTus lugares valorados seguirán guardados.', locate_title:'Mostrar mi ubicación'
+  ok:'OK', close:'Cerrar', thanks_title:'¡Gracias! 🙏', thanks_msg:'¡Muchas gracias por ser parte de la comunidad de Latam Crime Map! Actualizamos nuestros mapas cada pocos días para reflejar los comentarios.',
+  reset_title:'Restablecer ajustes', reset_confirm:'¿Restablecer todos los ajustes y preferencias?\nTus lugares valorados seguirán guardados.', locate_title:'Mostrar mi ubicación',
+  issue_title:'¿Qué pasó aquí?',
+  issue_sub:'📍 Estás reportando <b>el punto exacto que tocaste</b> en __NAME__. Este mapa registra <b>incidentes y condiciones</b>, nunca quién vive en un lugar.',
+  when_opt:'Cuándo (opcional)', fh_opt:'¿De primera mano? (opcional)',
+  fh_me:'Me pasó a mí', fh_heard:'Me lo contaron',
+  reason_label:'¿Qué pasó, en tus palabras? (opcional)', reason_label_req:'Por favor describe (requerido)',
+  reason_ph:'p. ej. me robaron el móvil cerca del metro de noche', reason_ph_other:'Por favor describe qué pasó',
+  email_upd:'Email (opcional — te avisaremos cuando el mapa se actualice)',
+  issue_submit:'Enviar reporte', reason_err:'Por favor describe qué pasó.',
+  saved_offline:'Guardado — lo enviaremos cuando vuelvas a tener conexión.',
+  email_hint:'¿Quieres un email cuando el mapa se actualice? (opcional)',
+  email_ok:'✓ Te escribiremos cuando el mapa se actualice.', notify_me:'Avísame',
+  loc_unavail:'La ubicación no está disponible en este dispositivo.',
+  loc_denied:'Permiso de ubicación denegado — puedes activarlo en los ajustes del navegador.',
+  loc_err:'No se pudo obtener tu ubicación. Inténtalo de nuevo.',
+  outside_city:'Ese punto está fuera de __CITY__. Acércate a la ciudad donde quieres reportar.',
+  water_err:'Parece agua — elige un punto en tierra.',
+  submit_err_off:'Estás sin conexión — tu reporte está guardado y se enviará cuando te reconectes.',
+  submit_err_rate:'Estás enviando demasiado ahora — espera un momento e inténtalo de nuevo.',
+  submit_err_srv:'Error en el servidor — inténtalo de nuevo en breve.',
+  submit_err_gen:'No se pudo enviar — inténtalo de nuevo.',
+  applied_msg:'Tu reporte está registrado — revisamos y aplicamos cambios al mapa en los próximos días.'
 }, pt:{
   fb_contact:'Comentários e contato', city:'Cidade', more_settings:'Ajustes', underlay:'Mapa base',
   base_osm:'Mapa de ruas (OSM)', base_sat:'Satélite', base_dark:'Escuro', base_light:'Claro / mínimo',
@@ -443,7 +465,29 @@ const STRINGS={ es:{
   rhere:'A localização exata importa ao relatar', rhere2:' — não apenas o distrito. Em breve mapas mais detalhados.',
   cta_full:'👆 Toque em qualquer ponto do mapa para avaliá-lo — <b>✓ seguro</b> ou <b>⚑ problema</b>',
   welcome_body:'Aproxime o zoom ou escolha uma grande cidade como <b>Cidade do México</b> ou <b>São Paulo</b>.<br><br>Seu feedback honesto —basta <b>tocar no mapa</b> onde algo aconteceu— torna este mapa mais inteligente, e em breve haverá mais cidades com detalhe.<br><br>Obrigado!',
-  ok:'OK', close:'Fechar', thanks_title:'Obrigado! 🙏', reset_title:'Redefinir ajustes', reset_confirm:'Redefinir todas as configurações e preferências?\nSeus locais avaliados permanecerão salvos.', locate_title:'Mostrar minha localização'
+  ok:'OK', close:'Fechar', thanks_title:'Obrigado! 🙏', thanks_msg:'Muito obrigado por fazer parte da comunidade do Latam Crime Map! Atualizamos nossos mapas a cada poucos dias para refletir o feedback.',
+  reset_title:'Redefinir ajustes', reset_confirm:'Redefinir todas as configurações e preferências?\nSeus locais avaliados permanecerão salvos.', locate_title:'Mostrar minha localização',
+  issue_title:'O que aconteceu aqui?',
+  issue_sub:'📍 Você está relatando <b>o ponto exato que tocou</b> em __NAME__. Este mapa registra <b>incidentes e condições</b>, nunca quem mora em algum lugar.',
+  when_opt:'Quando (opcional)', fh_opt:'Em primeira mão? (opcional)',
+  fh_me:'Aconteceu comigo', fh_heard:'Ouvi dizer',
+  reason_label:'O que aconteceu, em suas palavras? (opcional)', reason_label_req:'Por favor descreva (obrigatório)',
+  reason_ph:'ex.: celular roubado perto do metrô à noite', reason_ph_other:'Por favor descreva o que aconteceu',
+  email_upd:'Email (opcional — avisaremos quando o mapa for atualizado)',
+  issue_submit:'Enviar relato', reason_err:'Por favor descreva o que aconteceu.',
+  saved_offline:'Salvo — enviaremos quando você voltar a ter conexão.',
+  email_hint:'Quer um email quando o mapa for atualizado? (opcional)',
+  email_ok:'✓ Enviaremos um email quando o mapa for atualizado.', notify_me:'Me avise',
+  loc_unavail:'A localização não está disponível neste dispositivo.',
+  loc_denied:'Permissão de localização negada — você pode ativá-la nas configurações do navegador.',
+  loc_err:'Não foi possível obter sua localização. Tente novamente.',
+  outside_city:'Esse ponto está fora de __CITY__. Aproxime o zoom para a cidade em que deseja relatar.',
+  water_err:'Parece água — escolha um ponto em terra.',
+  submit_err_off:'Você está offline — seu relato foi salvo e será enviado quando você se reconectar.',
+  submit_err_rate:'Você está enviando muito agora — aguarde um momento e tente novamente.',
+  submit_err_srv:'Erro no servidor — tente novamente em breve.',
+  submit_err_gen:'Não foi possível enviar — tente novamente.',
+  applied_msg:'Seu relato foi registrado — revisamos e aplicamos as mudanças ao mapa nos próximos dias.'
 } };
 let LANG=(function(){ try{ const s=localStorage.getItem('sm_lang'); if(s&&/^(en|es|pt)$/.test(s))return s; const n=(navigator.language||'en').slice(0,2).toLowerCase(); return (n==='es'||n==='pt')?n:'en'; }catch(e){ return 'en'; } })();
 function t(key,dflt){ const d=STRINGS[LANG]&&STRINGS[LANG][key]; return d!=null?d:(dflt!=null?dflt:key); }
@@ -461,7 +505,7 @@ function setLang(l){ if(!/^(en|es|pt)$/.test(l))return; LANG=l; try{localStorage
   try{ if(overviewOn){ const s=document.getElementById('sub'); if(s)s.textContent=t('sub_overview','Select a city, or click the map'); } else if(cityKey&&CITIES[cityKey]){setHeader(cityKey);} renderSources(); updateContribUi(); }catch(e){} }
 function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('t'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('sm_token',t);}}catch(e){t='t'+Date.now();}return t;}
 // --- First-party, privacy-preserving usage analytics ---------------------------------------------------
-// Anonymous only: the sm_token (a random UUID, no identity) links one browser's journey — which cities it
+// Anonymous only: the sm_token (a random UUID, no identity) links one browser’s journey — which cities it
 // opens and roughly how long it stays — WITHOUT any PII. Respects Do-Not-Track (then it sends nothing).
 const DNT=(navigator.doNotTrack==='1'||navigator.doNotTrack==='yes'||window.doNotTrack==='1');
 const SESSION=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('s'+Date.now()+Math.random().toString(36).slice(2));
@@ -503,9 +547,9 @@ function persist(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 let popupCtx=null,reportPopup=null;
 function popupThanks(showEmail){ if(!reportPopup)return;
-  let html='<div class="rthanks">✓ Thanks! '+APPLIED+'</div>';
-  if(showEmail) html+='<div class="remail" id="remailRow"><div class="remailhint">Want an email when the map updates? (optional)</div>'
-    +'<div class="remailrow"><input type="email" id="rEmail" placeholder="you@example.com"><button id="rEmailBtn" onclick="submitReportEmail()">Notify me</button></div></div>';
+  let html='<div class="rthanks">✓ Thanks! '+t('applied_msg',APPLIED)+'</div>';
+  if(showEmail) html+='<div class="remail" id="remailRow"><div class="remailhint">'+t('email_hint','Want an email when the map updates? (optional)')+'</div>'
+    +'<div class="remailrow"><input type="email" id="rEmail" placeholder="you@example.com"><button id="rEmailBtn" onclick="submitReportEmail()">'+t('notify_me','Notify me')+'</button></div></div>';
   reportPopup.setContent(html);
 }
 function submitReportEmail(){
@@ -514,7 +558,7 @@ function submitReportEmail(){
   if(!email||!email.includes('@')){ inp.style.borderColor='#b14a4a'; inp.focus(); return; }
   const btn=document.getElementById('rEmailBtn'); if(btn)btn.disabled=true;
   postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id,email})
-    .then(()=>{ const r=document.getElementById('remailRow'); if(r)r.innerHTML='<span class="remailok">✓ We’ll email you when the map updates.</span>'; })
+    .then(()=>{ const r=document.getElementById('remailRow'); if(r)r.innerHTML='<span class="remailok">'+t('email_ok','✓ We’ll email you when the map updates.')+'</span>'; })
     .catch(()=>{ if(btn)btn.disabled=false; });
 }
 function actionRow(){
@@ -528,10 +572,10 @@ async function postBody(body){
   return {ok:r.ok&&j.ok!==false,status:r.status,rate:r.status===429,server:r.status>=500,message:j.message};
 }
 async function postReport(payload){ const body=buildBody(payload); const res=await postBody(body); res.body=body; if(res.ok){ jr.reports++; if(typeof retireCta==='function')retireCta(); } return res; }
-function submitErr(res){ return res.offline?'You’re offline — your report is saved and will send when you reconnect.'
-  : res.rate?'You’re sending a lot right now — please wait a minute and try again.'
-  : res.server?'Our server hiccuped — please try again shortly.'
-  : (res.message||'Couldn’t send — please try again.'); }
+function submitErr(res){ return res.offline?t('submit_err_off','You’re offline — your report is saved and will send when you reconnect.')
+  : res.rate?t('submit_err_rate','You’re sending a lot right now — please wait a minute and try again.')
+  : res.server?t('submit_err_srv','Our server hiccuped — please try again shortly.')
+  : (res.message||t('submit_err_gen','Couldn’t send — please try again.')); }
 // Offline queue: failed-while-offline reports are kept and re-sent on the next load/success.
 function loadQueue(){try{return JSON.parse(lsGet('sm_queue')||'[]');}catch(e){return [];}}
 function saveQueue(q){persist('sm_queue',JSON.stringify(q));}
@@ -542,7 +586,7 @@ async function reportSafe(btn){
   const m=document.getElementById('popmsg'); if(m){m.style.color='#6b7688';m.textContent='…';}
   const res=await postReport({kind:'safe',lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id});
   if(res.ok){ popupThanks(true); thanksModal(res.message); }
-  else if(res.offline){ queueBody(res.body); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
+  else if(res.offline){ queueBody(res.body); popupThanks(false); toast(t('saved_offline','Saved — we’ll send it once you’re back online.')); }
   else { if(m){m.style.color='#9b2f2f';m.textContent=submitErr(res);} btn.disabled=false; }
 }
 // reusable modal + toast
@@ -560,29 +604,30 @@ function closeModal(){const m=document.getElementById('modal');const wasOpen=!m.
   if(_lastFocus&&_lastFocus.focus){try{_lastFocus.focus();}catch(e){}} _lastFocus=null;}
 function toast(msg,ms,err){const t=document.getElementById('toast');t.textContent=msg;t.classList.toggle('err',!!err);t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),ms||4500);}
 // Post-rating thank-you: a modal that stays up until the user closes it (a big, easy Close button).
-function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>'+t('thanks_title','Thank you! 🙏')+'</h3><p class="msub">'+esc(msg||'Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.')+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">Close</button></div>'); }
+function thanksModal(msg){ if(typeof jr==='object')jr.thanksShown=1; _curModal='thanks'; setModal('<h3>'+t('thanks_title','Thank you! 🙏')+'</h3><p class="msub">'+esc(msg||t('thanks_msg','Many thanks for becoming a part of the Latam Crime Map community! We update our maps every few days to reflect on feedback.'))+'</p><div class="mrow"><button class="mbtn primary thanks-close" onclick="closeModal()">'+t('close','Close')+'</button></div>'); }
 function chipGroup(id,attr,cb){const el=document.getElementById(id);if(!el)return;el.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('sel');el.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));if(!was){b.classList.add('sel');cb(b.dataset[attr]);}else cb(null);});}
 function openIssueSheet(){
   if(!popupCtx)return; if(typeof jr==='object')jr.issueOpened++;
   let cat=null,when=null,fh=null;
   const cats=CAT.categories.map(c=>'<label class="opt"><input type="radio" name="cat" value="'+c.key+'"><span>'+esc(catLabel(c))+'</span></label>').join('');
-  const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(w.label)+'</button>').join('');
+  const whens=CAT.when_buckets.map(w=>'<button type="button" class="chip" data-when="'+w.key+'">'+esc(catLabel(w))+'</button>').join('');
+  const issueSub=t('issue_sub','📍 You’re reporting <b>the exact spot you tapped</b> in __NAME__. This map records <b>incidents and conditions</b>, never who lives somewhere.').replace('__NAME__',esc(popupCtx.areaName));
   setModal(
-    '<h3>What happened here?</h3>'+
-    '<p class="msub">📍 You’re reporting <b>the exact spot you tapped</b> in '+esc(popupCtx.areaName)+'. This map records <b>incidents and conditions</b>, never who lives somewhere.</p>'+
+    '<h3>'+t('issue_title','What happened here?')+'</h3>'+
+    '<p class="msub">'+issueSub+'</p>'+
     '<div class="optlist" id="catList">'+cats+'</div>'+
-    '<div class="mfield"><label>When (optional)</label><div class="chips" id="whenChips">'+whens+'</div></div>'+
-    '<div class="mfield"><label>First-hand? (optional)</label><div class="chips" id="fhChips"><button type="button" class="chip" data-fh="1">Happened to me</button><button type="button" class="chip" data-fh="0">Heard about it</button></div></div>'+
-    '<div class="mfield"><label id="reasonLabel">What happened, in your words (optional)</label><textarea id="reasonTxt" maxlength="1000" placeholder="e.g. phone snatched near the metro at night"></textarea></div>'+
-    '<div class="mfield"><label>Email (optional — we’ll email you when the map updates)</label><input type="email" id="issueEmail" placeholder="you@example.com"></div>'+
-    '<div class="mrow"><button class="mbtn" onclick="closeModal()">Cancel</button><button class="mbtn primary" id="issueSubmit" disabled>Submit report</button></div>'+
+    '<div class="mfield"><label>'+t('when_opt','When (optional)')+'</label><div class="chips" id="whenChips">'+whens+'</div></div>'+
+    '<div class="mfield"><label>'+t('fh_opt','First-hand? (optional)')+'</label><div class="chips" id="fhChips"><button type="button" class="chip" data-fh="1">'+t('fh_me','Happened to me')+'</button><button type="button" class="chip" data-fh="0">'+t('fh_heard','Heard about it')+'</button></div></div>'+
+    '<div class="mfield"><label id="reasonLabel">'+t('reason_label','What happened, in your words (optional)')+'</label><textarea id="reasonTxt" maxlength="1000" placeholder="'+t('reason_ph','e.g. phone snatched near the metro at night')+'"></textarea></div>'+
+    '<div class="mfield"><label>'+t('email_upd','Email (optional — we’ll email you when the map updates)')+'</label><input type="email" id="issueEmail" placeholder="you@example.com"></div>'+
+    '<div class="mrow"><button class="mbtn" onclick="closeModal()">'+t('cancel','Cancel')+'</button><button class="mbtn primary" id="issueSubmit" disabled>'+t('issue_submit','Submit report')+'</button></div>'+
     '<div class="mmsg" id="issueMsg"></div>'
   );
   const submit=document.getElementById('issueSubmit');
   document.getElementById('catList').addEventListener('change',e=>{cat=e.target.value;document.querySelectorAll('#catList .opt').forEach(o=>o.classList.toggle('sel',o.querySelector('input').checked));submit.disabled=!cat;
     const other=cat==='other';
-    document.getElementById('reasonLabel').textContent=other?'Please describe (required)':'What happened, in your words (optional)';
-    document.getElementById('reasonTxt').placeholder=other?'Please describe what happened':'e.g. phone snatched near the metro at night';
+    document.getElementById('reasonLabel').textContent=other?t('reason_label_req','Please describe (required)'):t('reason_label','What happened, in your words (optional)');
+    document.getElementById('reasonTxt').placeholder=other?t('reason_ph_other','Please describe what happened'):t('reason_ph','e.g. phone snatched near the metro at night');
   });
   chipGroup('whenChips','when',v=>when=v);
   chipGroup('fhChips','fh',v=>fh=v);
@@ -590,7 +635,7 @@ function openIssueSheet(){
     if(!cat)return;
     const reason=document.getElementById('reasonTxt').value.trim();
     const msg=document.getElementById('issueMsg');
-    if(cat==='other'&&!reason){ msg.className='mmsg err'; msg.textContent='Please describe what happened.'; document.getElementById('reasonTxt').focus(); return; }
+    if(cat==='other'&&!reason){ msg.className='mmsg err'; msg.textContent=t('reason_err','Please describe what happened.'); document.getElementById('reasonTxt').focus(); return; }
     submit.disabled=true;
     const email=document.getElementById('issueEmail').value.trim();
     const payload={kind:'issue',category:cat,lat:popupCtx.lat,lng:popupCtx.lng,cluster_id:popupCtx.cluster_id};
@@ -598,7 +643,7 @@ function openIssueSheet(){
     if(reason)payload.reason=reason; if(email)payload.email=email;
     const res=await postReport(payload);
     if(res.ok){ jr.issueSubmitted++; popupThanks(false); thanksModal(res.message); }
-    else if(res.offline){ queueBody(res.body); closeModal(); popupThanks(false); toast('Saved — we’ll send it once you’re back online.'); }
+    else if(res.offline){ queueBody(res.body); closeModal(); popupThanks(false); toast(t('saved_offline','Saved — we’ll send it once you’re back online.')); }
     else { msg.className='mmsg err'; msg.textContent=submitErr(res); submit.disabled=false; }
   };
 }
@@ -616,7 +661,7 @@ async function openMyReports(){
 }
 async function withdrawReport(id,btn){ btn.disabled=true; btn.textContent='…';
   let ok=false; try{const r=await fetch(API+'/report/'+id,{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({token:smToken()})});const j=await r.json().catch(()=>({}));ok=r.ok&&j.ok;}catch(e){}
-  if(ok){ const row=btn.closest('.myr'); if(row)row.remove(); const list=document.getElementById('myrList'); if(list&&!list.querySelector('.myr'))list.innerHTML='<span style="color:#8896ad">No pending reports from this browser yet.</span>'; }
+  if(ok){ const row=btn.closest('.myr'); if(row)row.remove(); const list=document.getElementById('myrList'); if(list&&!list.querySelector('.myr'))list.innerHTML='<span style="color:#8896ad">'+t('no_reports','No pending reports from this browser yet.')+'</span>'; }
   else { btn.disabled=false; btn.textContent=t('retry','Retry'); }
 }
 function openFeedback(){
@@ -708,7 +753,7 @@ function refreshLabels(){const C=CITIES[cityKey]; const small=C.districts.length
 // --- Overview (Task A): all cities as markers when zoomed out; lazy-focus a city when you zoom into it ---
 const OVERVIEW_Z=8;
 const REPORT_MIN_Z=10;   // below this a city is still "a dot from far": clicks open the city, never a report pin
-const PIN_ZOOM=16;       // dropping a pin snaps to this "street-corner" zoom, so people see they're rating an exact spot
+const PIN_ZOOM=16;       // dropping a pin snaps to this "street-corner" zoom, so people see they’re rating an exact spot
 const PIN_KEEP_Z=13;     // zoom back out past this and the pin is removed — a pin marks a corner, not a whole area
 const overviewGroup=L.layerGroup();
 let overviewOn=false;
@@ -744,7 +789,7 @@ function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=
   if(z<=OVERVIEW_Z){ setOverview(true); sizeOverview(); return; }
   if(overviewOn) setOverview(false);
   const c=map.getCenter(), k=cityAt(c.lng,c.lat);
-  // Build when we resolve a city that isn't the current one, OR when the current city's polygons aren't
+  // Build when we resolve a city that isn’t the current one, OR when the current city’s polygons aren’t
   // actually on the map yet (e.g. arriving from the overview, where cityKey defaults but nothing is built).
   if(k&&(k!==cityKey||!layers.length)){ buildCity(k,{fit:false}); } else { refreshLabels(); } }
 map.on('zoomend',updateView); map.on('moveend',updateView);
@@ -884,21 +929,21 @@ function showLocDot(lat,lng,acc){
 document.getElementById('locateBtn').onclick=()=>{
   jr.locates++;
   const btn=document.getElementById('locateBtn');
-  if(!navigator.geolocation){ toast('Location isn’t available on this device.',4500,true); return; }
+  if(!navigator.geolocation){ toast(t('loc_unavail','Location isn’t available on this device.'),4500,true); return; }
   btn.classList.add('on');
   navigator.geolocation.getCurrentPosition(pos=>{
     btn.classList.remove('on');
     const c=pos.coords;
-    // We're zooming away to the user's location — drop any tapped report needle + close its popup first,
+    // We’re zooming away to the user’s location — drop any tapped report needle + close its popup first,
     // otherwise its keepInView/autoPan drags the map back and it never lands on the new location.
     try{map.closePopup();}catch(e){} clearReportPoint();
     const k=cityAt(c.longitude,c.latitude);
-    if(k&&k!==cityKey){ setOverview(false); buildCity(k,{fit:false}); }   // load the destination city's layers, without moving
+    if(k&&k!==cityKey){ setOverview(false); buildCity(k,{fit:false}); }   // load the destination city’s layers, without moving
     showLocDot(c.latitude,c.longitude,c.accuracy);
-    map.setView([c.latitude,c.longitude], 13, {animate:true});           // final view = the user's location
+    map.setView([c.latitude,c.longitude], 13, {animate:true});           // final view = the user’s location
   }, err=>{
     btn.classList.remove('on');
-    toast(err&&err.code===1?'Location permission denied — you can enable it in your browser settings.':'Couldn’t get your location. Please try again.',5000,true);
+    toast(err&&err.code===1?t('loc_denied','Location permission denied — you can enable it in your browser settings.'):t('loc_err','Couldn’t get your location. Please try again.'),5000,true);
   }, {enableHighAccuracy:true,timeout:10000,maximumAge:60000});
 };
 document.querySelector('.mback').onclick=closeModal;
@@ -926,7 +971,7 @@ function showReportPoint(lat,lng){ clearReportPoint();
 function clearReportPoint(){ if(reportPin){map.removeLayer(reportPin);reportPin=null;} }
 map.on('popupclose',clearReportPoint);
 // Dropping a pin (map click, district click or a searched address) snaps to a close street-corner zoom so
-// people see they're rating an exact spot, not a whole district. Only zoom IN — never yank someone closer.
+// people see they’re rating an exact spot, not a whole district. Only zoom IN — never yank someone closer.
 function zoomToPin(lat,lng){ if(map.getZoom()<PIN_ZOOM) map.setView([lat,lng],PIN_ZOOM,{animate:true}); }
 // …and zooming back out past PIN_KEEP_Z drops the pin again, reinforcing that it marked a precise corner.
 map.on('zoomend',()=>{ if(map.getZoom()>=PIN_KEEP_Z)return;
@@ -934,7 +979,7 @@ map.on('zoomend',()=>{ if(map.getZoom()>=PIN_KEEP_Z)return;
   if(searchPin){ map.removeLayer(searchPin); searchPin=null; if(typeof updateSearchClear==='function')updateSearchClear(); } });
 // How far outside a city a point report is still allowed: pad the city bbox by half its longest
 // span (min ~2.5km, so tiny bubbles still get a little periphery). Beyond that — or once the spot is
-// clearly inside ANOTHER city's footprint — we decline, so you can't drop a pin three cities away.
+// clearly inside ANOTHER city’s footprint — we decline, so you can’t drop a pin three cities away.
 function withinReportRange(lat,lng){
   const C=CITIES[cityKey],[W,S,E,N]=C.bbox;
   const pad=Math.max(Math.max(Math.abs(E-W),Math.abs(N-S))*0.5,0.025);
@@ -943,11 +988,11 @@ function withinReportRange(lat,lng){
   return true;
 }
 // Best-effort "is this water?" via MapTiler reverse geocoding. On land near a city the nearest named
-// feature is close; over a bay/ocean it's far away (or there's nothing). Biased to NOT block — it only
+// feature is close; over a bay/ocean it’s far away (or there’s nothing). Biased to NOT block — it only
 // rejects the clear cases, and errors never block (the manual review step is the real backstop).
 // Land mask (Natural Earth 10m, lazily fetched once) tells land from water with no per-click network.
 // A point is land if it — or a ring of points ~2km around it — sits inside a land polygon and not in a
-// lake. The ~2km tolerance keeps narrow coastal strips (e.g. Cancún's hotel zone) from reading as water.
+// lake. The ~2km tolerance keeps narrow coastal strips (e.g. Cancún’s hotel zone) from reading as water.
 let LANDMASK=null,landmaskReq=null;
 function loadLandmask(){ if(LANDMASK)return Promise.resolve(LANDMASK);
   if(!landmaskReq) landmaskReq=fetch('landmask.json').then(r=>r.json()).then(j=>LANDMASK=j).catch(()=>LANDMASK={land:[],lakes:[]});
@@ -960,7 +1005,7 @@ function nearLand(lat,lng,m,km){ if(ptInPolys(lng,lat,m.land))return true;
   return false; }
 async function isWater(lat,lng){
   const m=await loadLandmask();
-  if(!m.land||!m.land.length)return false;          // mask unavailable -> don't block
+  if(!m.land||!m.land.length)return false;          // mask unavailable -> don’t block
   if(ptInPolys(lng,lat,m.lakes))return true;        // inside a lake / large lagoon
   return !nearLand(lat,lng,m,2);                     // not on or near land -> water
 }
@@ -970,15 +1015,15 @@ map.on('click',async e=>{
   const ll=e.latlng;
   // Zoomed out (overview OR below the report zoom) a city is just a dot — clicking opens it, never a pin.
   if(overviewOn || map.getZoom()<REPORT_MIN_Z){ const k=cityAt(ll.lng,ll.lat); if(k) focusCity(k); return; }
-  // If the click landed in a DIFFERENT city's footprint, open that city instead of trying to report here.
+  // If the click landed in a DIFFERENT city’s footprint, open that city instead of trying to report here.
   const other=cityAt(ll.lng,ll.lat); if(other && other!==cityKey){ focusCity(other); return; }
   const C=CITIES[cityKey]; if(!C||!C.districts)return;
   if(districtAt(ll.lng,ll.lat))return;
   clearTimeout(clickTimer);
   clickTimer=setTimeout(async()=>{
-    if(!withinReportRange(ll.lat,ll.lng)){ toast('That spot is outside '+C.name+'. Zoom to the city you want to report in.',5000,true); return; }
+    if(!withinReportRange(ll.lat,ll.lng)){ toast(t('outside_city','That spot is outside __CITY__. Zoom to the city you want to report in.').replace('__CITY__',C.name),5000,true); return; }
     showReportPoint(ll.lat,ll.lng);
-    if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast('That looks like water — please pick a spot on land.',5000,true); return; }
+    if(await isWater(ll.lat,ll.lng)){ clearReportPoint(); toast(t('water_err','That looks like water — please pick a spot on land.'),5000,true); return; }
     if(!reportPin)return;
     openPointReport(ll);
   },250); });
@@ -1045,7 +1090,7 @@ function onType(){const q=searchInput.value.trim();
   if(q.length<2){hideResults();return;}
   renderResults([],'Searching…'); runSuggest(q);}
 searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(onType,260);updateSearchClear();});
-// Clear (×) button: appears once there's a query or a dropped search pin; empties the field and removes the pin.
+// Clear (×) button: appears once there’s a query or a dropped search pin; empties the field and removes the pin.
 const searchClearBtn=document.getElementById('searchClear');
 function updateSearchClear(){ if(searchClearBtn) searchClearBtn.classList.toggle('hidden', !(searchInput.value.trim() || searchPin)); }
 if(searchClearBtn) searchClearBtn.onclick=()=>{ if(searchPin){map.removeLayer(searchPin);searchPin=null;} searchInput.value=''; hideResults(); updateSearchClear(); searchInput.focus(); };
