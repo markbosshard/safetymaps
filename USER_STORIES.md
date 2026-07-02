@@ -1,6 +1,6 @@
 # Latam Crime Map — user stories
 
-Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
+Updated 2026-07-02. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
 (crowd backend, Hetzner). Two parts: **Delivered** and **Backlog** (with status notes).
 
 ---
@@ -67,6 +67,20 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   settings changed, menu closed?, legend/sources opened?, welcome/thanks/CTA shown-vs-dismissed, modal
   left open?). `npm run stats` renders it (journeys, dwell, returning, explorers, top cities, behaviour).
   No PII, no raw IP, respects Do-Not-Track.
+- **Districts, wave 5** (US-9) — 7 more single-circle cities upgraded via OSM Overpass ring-assembly
+  (`scripts/add_districts_wave5.js`): Manaus (51 bairros), Florianópolis (7 distritos), Rosario (52
+  barrios), Córdoba (21 barrios), La Paz (9 macrodistritos, already done), Cochabamba (8 distritos),
+  Tegucigalpa (12 distritos). Reverted to single circle: Mendoza/Bariloche (OSM level 9 returns 299/80
+  micro-barrios — too granular), Tijuana (bbox overlap pulls US/San Diego neighbourhoods), Saltillo
+  (only one residential estate mapped), Foz do Iguaçu (relations are Ciudad del Este/PY, not Brazil).
+  Santarém, Ciudad Juárez, Torreón, Mexicali, León: no OSM administrative boundary data at any level.
+  `scripts/cleanup_wave5.js` handles post-run reverts from backups.
+- **Crowdsourcing-health metrics** (US-23) — `npm run stats` additions: spam heat (top tokens by report
+  count, flags burst submitters); district cold-map (% of choropleth districts with ≥1/≥3 crowd reports,
+  cross-referenced via `cluster_id`); daily contributor retention chart (last 14 days); GoatCounter
+  bot-share cross-check via `GC_SITE`/`GC_TOKEN` env vars to flag inflated event counts. All four
+  remaining items shipped on top of the first-slice instrumentation (search-miss fix, abandonment tracking,
+  contribution-latency lines).
 
 ---
 
@@ -77,25 +91,7 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-9 (waves 5+) — District the remaining single-municipio cities.** Done: waves 1–2 (8 cities + Quito),
-  waves 3–4 (Guayaquil, Cali, Cartagena, Brasília). Remaining, each needing a bespoke per-country source:
-  **Brazil** — Manaus & Florianópolis via OSM Overpass (needs relation ring-assembly — verified sources exist,
-  the official Manaus IMPLURB ArcGIS returns null geometry so OSM is the path), plus Foz do Iguaçu, Santarém →
-  **Argentina** barrios (Rosario, Córdoba, Mendoza, Bariloche — ADM2 departamentos are too coarse) →
-  **Mexico** colonias/AGEBs (Tijuana, Cd Juárez, Torreón, Saltillo, Mexicali, León) + La Paz/Cochabamba,
-  Tegucigalpa. Same verify-then-ship loop; districts inherit the one overall rating unless a trustworthy
-  source differentiates them. `scripts/add_districts.js` now supports geoBoundaries, direct GeoJSON, ArcGIS
-  query endpoints, merge-by-name, and DP simplification.
-
-- **US-23 — Crowdsourcing-health metrics — FIRST SLICE DELIVERED.** The three new instrumentation pieces
-  are shipped: (1) `logSearchMiss` now wraps `{q,hit:0}` in `meta` so queries are actually persisted in the
-  event table (was a bug — data was silently dropped); `selectResult` emits `search {meta:{hit:1}}` for
-  successful picks. (2) `openIssueSheet` sets `_curModal='issue'`; `closeModal` increments
-  `jr.issueAbandoned` when the sheet is dismissed without submitting — included in `journeySummary`. (3)
-  `stats.js` shows explicit abandonment count in the Funnel section, plus new Contributions lines for
-  contributor retention (2+ report-days) and contribution latency (first session → first report).
-  **Remaining / future:** districts with ≥1/≥3 reports cold-map; per-token spam heat; bot-share
-  cross-check with GoatCounter; contributor retention chart over time. No PII added.
+*(No open small-medium stories — all instrumentation and district waves through wave 5 are delivered.)*
 
 ### Bigger / optional
 
