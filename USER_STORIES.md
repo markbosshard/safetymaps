@@ -56,6 +56,11 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
 - **Search drops only grey pin** (US-24) — `selectResult` for non-city geocoder results now does only
   `dropPin` (grey `searchPin`) + `zoomToPin`, matching "Locate me". No report sheet or `reportPin` is
   opened; the user taps the exact spot themselves.
+- **Spanish & Portuguese UI (i18n)** (US-12) — all previously-English strings wired through `t()` with
+  es + pt translations in `STRINGS`: issue sheet (title, sub, When/First-hand chips, reason label/ph,
+  email hint, Submit), submitErr messages, thanksModal (Applied text, email hint, Notify-me, email-ok),
+  geolocation toasts, map-click toasts (outside-city, water), withdrawReport modal, when-bucket chips via
+  `catLabel()`. `lang` analytics field shows the real language split.
 - **First-party usage analytics** (feeds US-6) — privacy-preserving event stream keyed by the anonymous
   browser token: `session`/`view`/`end` beacons → `event` table, with a rich per-session `meta` summary
   (pans, zooms, favourite zoom level, active dwell, districts opened, report left?, search/locate used,
@@ -72,13 +77,6 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-12 — Spanish & Portuguese UI (i18n) — ALL STRINGS TRANSLATED; native review pending.**
-  Code complete: all previously-English strings are now wired through `t()` with es+pt drafts in STRINGS —
-  issue sheet (title, sub, When/First-hand chips, reason label/ph, email hint, Submit button), submitErr
-  messages, popupThanks (Applied text, email hint, Notify-me, email-ok), thanksModal body/Close, geolocation
-  toasts, map-click toasts (outside-city, water), withdrawReport empty-list. when_buckets chips now use
-  `catLabel()` for es/pt labels from categories.json. **Native-speaker review of ALL es+pt draft translations
-  is still required before calling this story fully done.** The `lang` analytics field shows the real split.
 - **US-9 (waves 5+) — District the remaining single-municipio cities.** Done: waves 1–2 (8 cities + Quito),
   waves 3–4 (Guayaquil, Cali, Cartagena, Brasília). Remaining, each needing a bespoke per-country source:
   **Brazil** — Manaus & Florianópolis via OSM Overpass (needs relation ring-assembly — verified sources exist,
