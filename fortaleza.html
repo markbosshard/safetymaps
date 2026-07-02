@@ -85,7 +85,9 @@
  .tier small{color:var(--muted)}
  #sources{left:12px;bottom:18px;min-width:230px;max-width:300px;max-height:70vh;overflow:auto}
  #sources .ltitle{font-size:12px;font-weight:600;margin-bottom:8px}
- .snote{font-size:12px;color:#c4d0e0;line-height:1.45;margin-bottom:9px}
+ .snote{font-size:13px;color:#c4d0e0;line-height:1.5;margin-bottom:10px}
+ .sgeneral{font-size:11px;color:var(--muted);margin-top:4px}
+ .sgeneral a{color:#7099c0}
  .slist{margin:0 0 9px;padding-left:16px;font-size:12.5px;line-height:1.5}
  .slist a{color:#86b4e6}
  .scat{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:#7f8ca3;font-weight:700;margin:11px 0 3px}
@@ -409,8 +411,8 @@ const STRINGS={ es:{
   fb_sub:'Cualquier cosa sobre el mapa — una corrección, una ciudad para añadir, un error, o simplemente escríbenos.',
   fb_msg_label:'Tu mensaje', fb_msg_ph:'¿Qué tienes en mente?', fb_email_label:'Email (opcional) — para responderte sobre cambios de implementación',
   cancel:'Cancelar', send:'Enviar', fb_empty:'Por favor escribe un mensaje.', offline:'Estás sin conexión — inténtalo de nuevo al reconectarte.',
-  src_basis:'Base de la clasificación de seguridad', src_more:'Más recursos', src_general:'Referencias generales (todas las ciudades)',
-  src_foot:'<b>Valoraciones actualizadas en 2026.</b> Las valoraciones son una síntesis editorial de seguridad para viajeros (São Paulo: un modelo continuo muestreado), no una métrica única de criminalidad. Los polígonos son datos abiertos oficiales donde se muestran; las entradas a nivel de ciudad usan un círculo indicativo, no un límite. Las condiciones varían por cuadra y hora del día; esto no es una garantía de seguridad.',
+  src_basis:'Fuentes de la valoración', src_more:'Más recursos', src_general:'También consultado:',
+  src_foot:'<b>Valoraciones actualizadas en 2026.</b> Síntesis editorial de seguridad — no una métrica única de criminalidad. Las entradas a nivel de ciudad usan un círculo indicativo, no un límite. Las condiciones varían por cuadra y hora del día; esto no es una garantía de seguridad.',
   sub_overview:'Elige una ciudad o toca el mapa', areas_tap:'zonas · toca un distrito para ver su valoración',
   sub_cta:'Ayuda a mejorar el mapa: toca un punto y valóralo como seguro o peligroso. ¡Gracias!',
   city_overall:'Valoración general de la ciudad · barrios aún no mapeados',
@@ -456,8 +458,8 @@ const STRINGS={ es:{
   fb_sub:'Qualquer coisa sobre o mapa — uma correção, uma cidade para adicionar, um erro, ou apenas fale conosco.',
   fb_msg_label:'Sua mensagem', fb_msg_ph:'O que você quer dizer?', fb_email_label:'Email (opcional) — para responder sobre mudanças de implementação',
   cancel:'Cancelar', send:'Enviar', fb_empty:'Por favor escreva uma mensagem.', offline:'Você está offline — tente novamente ao reconectar.',
-  src_basis:'Base da classificação de segurança', src_more:'Mais recursos', src_general:'Referências gerais (todas as cidades)',
-  src_foot:'<b>Avaliações atualizadas em 2026.</b> As avaliações são uma síntese editorial de segurança para viajantes (São Paulo: um modelo contínuo amostrado), não uma métrica única de criminalidade. Os polígonos são dados abertos oficiais onde mostrados; entradas a nível de cidade usam um círculo indicativo, não um limite. As condições variam por quarteirão e horário; isto não é garantia de segurança.',
+  src_basis:'Fontes da avaliação', src_more:'Mais recursos', src_general:'Também consultado:',
+  src_foot:'<b>Avaliações atualizadas em 2026.</b> Síntese editorial de segurança — não uma métrica única de criminalidade. Entradas a nível de cidade usam um círculo indicativo, não um limite. As condições variam por quarteirão e horário; isto não é garantia de segurança.',
   sub_overview:'Escolha uma cidade ou toque no mapa', areas_tap:'áreas · toque num distrito para ver a avaliação',
   sub_cta:'Ajude a melhorar o mapa: toque num ponto e avalie-o como seguro ou perigoso. Obrigado!',
   city_overall:'Avaliação geral da cidade · bairros ainda não mapeados',
@@ -794,22 +796,17 @@ function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=
   if(k&&(k!==cityKey||!layers.length)){ buildCity(k,{fit:false}); } else { refreshLabels(); } }
 map.on('zoomend',updateView); map.on('moveend',updateView);
 buildOverview();
-const GENERAL=[
-  {text:'U.S. State Dept — Travel Advisories',url:'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html'},
-  {text:'U.S. OSAC — country reports',url:'https://www.osac.gov/'},
-  {text:'UK FCDO — Foreign Travel Advice',url:'https://www.gov.uk/foreign-travel-advice'},
-  {text:'Numbeo — Crime indices',url:'https://www.numbeo.com/crime/'}
-];
+const GENERAL_LINKS='<a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener noreferrer">US State Dept</a> · <a href="https://www.osac.gov/" target="_blank" rel="noopener noreferrer">OSAC</a> · <a href="https://www.gov.uk/foreign-travel-advice" target="_blank" rel="noopener noreferrer">UK FCDO</a> · <a href="https://www.numbeo.com/crime/" target="_blank" rel="noopener noreferrer">Numbeo</a>';
 function srcList(items){return '<ul class="slist">'+items.map(s=>s.url?`<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${esc(s.text)}</a></li>`:`<li>${esc(s.text)}</li>`).join('')+'</ul>';}
 function renderSources(){
   const C=CITIES[cityKey];
   let h=`<div class="ltitle">${esc(C.name)}</div><div class="snote">${esc(C.note)}</div>`;
   const S=C.sources;
-  if(Array.isArray(S)){ if(S.length)h+=srcList(S); }
-  else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">'+t('src_basis','Safety-tier basis')+'</div>'+srcList(S.basis); }
+  if(Array.isArray(S)){ if(S.length){ h+='<div class="scat">'+t('src_basis','Rating sources')+'</div>'+srcList(S); } }
+  else if(S&&S.basis&&S.basis.length){ h+='<div class="scat">'+t('src_basis','Rating sources')+'</div>'+srcList(S.basis); }
   if(Array.isArray(C.resources)&&C.resources.length) h+='<div class="scat">'+t('src_more','More resources')+'</div>'+srcList(C.resources);
-  h+='<div class="scat">'+t('src_general','General references (all cities)')+'</div>'+srcList(GENERAL);
-  h+='<div class="sfoot">'+t('src_foot','<b>Ratings refreshed in 2026.</b> Ratings are an editorial travel-safety synthesis (São Paulo: a sampled continuous model), not a single crime-rate metric. Boundary polygons are official open data where shown; city-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.')+'</div>';
+  h+='<div class="sgeneral">'+t('src_general','Also cross-referenced:')+'&nbsp;'+GENERAL_LINKS+'</div>';
+  h+='<div class="sfoot">'+t('src_foot','<b>Ratings refreshed 2026.</b> Editorial travel-safety synthesis — not a single crime-rate metric. City-level entries use an indicative circle, not a boundary. Conditions vary by block and time of day; this is not a guarantee of safety.')+'</div>';
   document.getElementById('sourcesBody').innerHTML=h;
 }
 // Typable City combobox (replaces the native <select>): focus shows all cities grouped; typing filters
