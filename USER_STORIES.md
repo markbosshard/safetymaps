@@ -50,6 +50,12 @@ Updated 2026-06-30. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   Culiacán (MX), San Pedro Sula (HN), Managua (NI), Santiago de los Caballeros (DO), Port-au-Prince (HT).
   Honest city-level circles with editorial overall ratings (`scripts/add_missing_metros.js` → bubbles →
   clipland → clusters); no invented neighbourhood detail. Adds Nicaragua & Haiti to the country set.
+- **Double-tap fix** (US-25) — debounced the district-layer and periphery click handlers with a 250 ms
+  timer cancelled by `map.on('dblclick')`, so a double-tap does only Leaflet's native one-level zoom with
+  no pin and no snap to PIN_ZOOM.
+- **Search drops only grey pin** (US-24) — `selectResult` for non-city geocoder results now does only
+  `dropPin` (grey `searchPin`) + `zoomToPin`, matching "Locate me". No report sheet or `reportPin` is
+  opened; the user taps the exact spot themselves.
 - **First-party usage analytics** (feeds US-6) — privacy-preserving event stream keyed by the anonymous
   browser token: `session`/`view`/`end` beacons → `event` table, with a rich per-session `meta` summary
   (pans, zooms, favourite zoom level, active dwell, districts opened, report left?, search/locate used,
@@ -66,17 +72,6 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-25 — Double-tap to zoom must not drop a pin or over-zoom (bug).** Regression from the pin-drop-zoom
-  work: a double-tap (Leaflet's default zoom gesture) also registers as a `map.on('click')` → it drops a
-  report pin and snaps to `PIN_ZOOM` (16). A double-tap should just do the normal one-level zoom, no pin,
-  no jump. Fix: don't treat the two taps of a double-tap as a report click (e.g. delay the single-click
-  report until `dblclick` is ruled out, or `L.DomEvent` guard), and never run `zoomToPin` for a double-tap.
-  Touches the `map.on('click')` handler + `zoomToPin` in `index.template.html`.
-- **US-24 — Searching an address shouldn't pre-drop a rating pin.** Right now picking a geocoder result
-  zooms in *and* opens the report pin/popup (`reportPin`) at that spot. It should behave like "Locate me":
-  drop only the single neutral location pin (the grey `searchPin`) and zoom in — no report sheet, no
-  `reportPin` — then let the user tap the exact spot to rate. Touches `selectResult` in
-  `index.template.html` (currently calls `openDistrict`/point-report after `dropPin`).
 - **US-12 — Spanish & Portuguese UI (i18n) — FOUNDATION SHIPPED; remainder + native review open.**
   Delivered: a `STRINGS` (en/es/pt) dict + `t()` with English fallback + `applyStatic()` (data-i18n /
   -ph / -title / -html) + a language switcher (More settings) + `navigator.language` auto-detect + `sm_lang`
