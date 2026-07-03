@@ -1,0 +1,21 @@
+[
+  {
+    "id": "state_dept_ve",
+    "source_name": "US State Department Travel Advisory",
+    "source_class": "advisory",
+    "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "advisory_level": "See link",
+    "excerpt": "Secure .gov websites use HTTPS lock ( ) or https:// means you’ve safely connected to the .gov website. Share sensitive information only on official, secure websites. Venezuela Earthquakes: Americans in need of consular assistance can call: +1-202-501-4444 (abroad) | +1-888-407-4747 (.., Canada) | Get Safety and Security Updates | Enroll in STEP | Follow: @TravelGov, @USEmbassyVE, WhatsApp “.. Citizens.” More information Worldwide Caution: The Department of State advises Americans worldwide to exercise increased caution. Crime and kidnapping Conditions in some parts of Venezuela remain dangerous. Violent crimes such as homicide, armed robbery, and kidnapping occur. Travelers face increased risk using unregulated taxis from Maiquetia Simon Bolivar International Airport serving Caracas. Security risks are also present when using ATMs near the airport. government employees working in Venezuela are not allowed to use public transportation due to safety risks. Irregular armed groups can carry out acts of violence against citizens without warning. Terrorism There is risk of terrorist violence, including terrorist attacks and other activity in Venezuela."
+  },
+  {
+    "id": "fcdo_ve",
+    "source_name": "UK FCDO Travel Advice — Safety and Security",
+    "source_class": "advisory",
+    "url": "https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security",
+    "published_date": "2026-07",
+    "license": "Open Government Licence v3.0",
+    "excerpt": "Safety and security - Venezuela travel advice - GOV.UK Cookies on GOV.UK We use some essential cookies to make this website work. Warning FCDO advises against all travel to parts of Venezuela. Warning FCDO advises against all but essential travel to parts of Venezuela. Subscriptions Get email alerts Safety and security This guide also has safety advice for regions of Venezuela . Find out how to reduce your risk from terrorism while abroad . Protests and demonstrations Demonstrations and gatherings can turn violent and could be dispersed by the use of force, including with the use of rubber bullets and tear gas. Crime Armed robbery, mugging, carjacking and burglary are common in parts of Venezuela and can be accompanied by extreme violence. Crime in rural areas In many rural areas, the authority of the Venezuelan state is limited, and the British Embassy’s ability to help British nationals in trouble in these areas will also be limited."
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "state_dept_br",
+    "source_name": "US State Department Travel Advisory",
+    "source_class": "advisory",
+    "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "advisory_level": "Level 2 — Exercise Increased Caution Updated to add risk indicator for kidnapping",
+    "excerpt": "Brazil Travel Advisory --> Worldwide Caution: The Department of State advises Americans worldwide to exercise increased caution. Visas Intercountry Adoption International Parental Child Abduction Replace or Certify Documents Travel Advisories English Travel Advisories Travel.State.Gov > Travel Advisories > Brazil Travel Advisory --> Share this page: All Filter Countries Brazil Travel Advisory Travel Advisory May 29, 2025 Brazil - Level 2: Exercise Increased Caution Updated to add risk indicator for kidnapping . Exercise increased caution in Brazil due to crime and kidnapping. Do not travel to these areas due to crime: Anywhere within 160 km/100 miles of Brazil’s land borders with Bolivia, Colombia, Guyana, French Guiana, Paraguay, Peru, Suriname, and Venezuela. Country Summary: Violent crime, including murder, armed robbery, and carjacking, can occur in urban areas, day and night. Gang activity and organized crime are widespread and often tied to the recreational drug trade. Assaults, including with sedatives and drugs placed in drinks, are common, especially in Rio de Janeiro."
+  },
+  {
+    "id": "fcdo_br",
+    "source_name": "UK FCDO Travel Advice — Safety and Security",
+    "source_class": "advisory",
+    "url": "https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security",
+    "published_date": "2026-07",
+    "license": "Open Government Licence v3.0",
+    "excerpt": "Safety and security - Brazil travel advice - GOV.UK Cookies on GOV.UK We use some essential cookies to make this website work. Warning FCDO advises against all but essential travel to parts of Brazil. Subscriptions Get email alerts Safety and security This guide also has safety advice for regions of Brazil . Find out how to reduce your risk from terrorism while abroad . You should exercise caution around major sites in large Brazilian cities. The security situation in many favelas is unpredictable and can be dangerous. Crime If you’re the victim of crime, contact the local police number 190 or the nearest British embassy or consulate. Theft and robbery Robberies are common in many cities, particularly on buses. Thefts are particularly common on public beaches and include ‘arrastões’ where large groups of thieves run through an area of the beach grabbing possessions. To reduce your risk: avoid wearing expensive jewellery and watches avoid carrying large sums of money avoid using a mobile phone in the street leave your passport and valuables in a safe place Criminal Kidnapping Short-term opportunistic kidnapping (called ‘express kidnapping’) can happen."
+  }
+]

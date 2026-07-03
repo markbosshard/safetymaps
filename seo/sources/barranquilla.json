@@ -1,0 +1,21 @@
+[
+  {
+    "id": "state_dept_co",
+    "source_name": "US State Department Travel Advisory",
+    "source_class": "advisory",
+    "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "advisory_level": "Level 4 — Do not travel",
+    "excerpt": "Secure .gov websites use HTTPS lock ( ) or https:// means you’ve safely connected to the .gov website. Share sensitive information only on official, secure websites. Venezuela Earthquakes: Americans in need of consular assistance can call: +1-202-501-4444 (abroad) | +1-888-407-4747 (.., Canada) | Get Safety and Security Updates | Enroll in STEP | Follow: @TravelGov, @USEmbassyVE, WhatsApp “.. Citizens.” More information Worldwide Caution: The Department of State advises Americans worldwide to exercise increased caution. Do Not Travel to: Arauca, Cauca (excluding Popayán), Valle del Cauca (excluding Cali) and Norte de Santander departments due to crime and terrorism . Within 10km/5mi of the Colombia-Venezuela border region due to crime, kidnapping, conflict between armed groups, and the risk of detention . Advisory summary Violent crime is common in many areas of Colombia, including murder, assault, and robbery. Other crimes, such as drugging, extortion, kidnapping, and armed break-ins—including at hotels and other places tourists stay—also occur frequently in some regions. Street crime occurs throughout Colombia and can quickly become violent."
+  },
+  {
+    "id": "fcdo_co",
+    "source_name": "UK FCDO Travel Advice — Safety and Security",
+    "source_class": "advisory",
+    "url": "https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security",
+    "published_date": "2026-07",
+    "license": "Open Government Licence v3.0",
+    "excerpt": "Safety and security - Colombia travel advice - GOV.UK Cookies on GOV.UK We use some essential cookies to make this website work. Warning FCDO advises against all but essential travel to parts of Colombia. Subscriptions Get email alerts Safety and security Terrorism There is a high threat of terrorist attack globally affecting UK interests and British nationals, including from groups and individuals who view the UK and British nationals as targets. Find out how to reduce your risk from terrorism while abroad . They can turn violent and may lead to an increase in the police and military presence. There is a heightened risk of violence across the country when elections are held due to the interference of armed groups and criminal gangs in the electoral process. Crime Drugs, organised crime and terrorism are inextricably linked in Colombia. Street crime Pickpocketing, mugging and armed robbery are a problem, especially in major cities, including Bogotá, Medellín, Cali and the Caribbean coast. Criminal kidnapping Short-term opportunistic abductions known as ‘express kidnappings’ are common in Colombia."
+  }
+]

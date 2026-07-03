@@ -1,0 +1,41 @@
+[
+  {
+    "id": "state_dept_ar",
+    "source_name": "US State Department Travel Advisory",
+    "source_class": "advisory",
+    "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "advisory_level": "Level 1 — Exercise Normal Precautions The health risk indicator was added",
+    "excerpt": "Argentina Travel Advisory --> Worldwide Caution: The Department of State advises Americans worldwide to exercise increased caution. Visas Intercountry Adoption International Parental Child Abduction Replace or Certify Documents Travel Advisories English Travel Advisories Travel.State.Gov > Travel Advisories > Argentina Travel Advisory --> Share this page: All Filter Countries Argentina Travel Advisory Travel Advisory May 20, 2026 Argentina - Level 1: Exercise Normal Precautions The health risk indicator was added. The risk for most travelers is extremely low; the United States is working with international partners to investigate and prevent further viral spread. Advisory Summary Exercise increased caution in City of Rosario (Santa Fe province) due to crime . Level 2: Exercise Increased Caution – City of Rosario Criminal and narcotics trafficking elements are active in Rosario (Santa Fe province) resulting in increased crime and violence."
+  },
+  {
+    "id": "fcdo_ar",
+    "source_name": "UK FCDO Travel Advice — Safety and Security",
+    "source_class": "advisory",
+    "url": "https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security",
+    "published_date": "2026-07",
+    "license": "Open Government Licence v3.0",
+    "excerpt": "Safety and security - Argentina travel advice - GOV.UK Cookies on GOV.UK We use some essential cookies to make this website work. Accept additional cookies Reject additional cookies View cookies Hide cookie message Skip to main content Foreign travel advice Argentina Subscriptions Get email alerts Safety and security Terrorism There is a high threat of terrorist attack globally affecting UK interests and British nationals, including from groups and individuals who view the UK and British nationals as targets. Find out how to reduce your risk from terrorism while abroad . Some demonstrations attract large numbers of people, and they can occasionally turn violent. You should: avoid all protests, demonstrations and marches exercise normal caution at any large gathering be aware of your surroundings monitor the local news follow the advice of local authorities There have also been occasional Falklands-related protests, including outside the British Embassy and British-affiliated businesses in Argentina."
+  },
+  {
+    "id": "editorial_mapa_del_delito__gcba_",
+    "source_name": "Mapa del Delito (GCBA)",
+    "source_class": "editorial",
+    "url": "https://data.buenosaires.gob.ar/dataset/delitos",
+    "published_date": null,
+    "license": "see source",
+    "excerpt": "",
+    "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  },
+  {
+    "id": "editorial_osac___argentina",
+    "source_name": "OSAC — Argentina",
+    "source_class": "editorial",
+    "url": "https://www.osac.gov/Country/Argentina",
+    "published_date": null,
+    "license": "see source",
+    "excerpt": "",
+    "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  }
+]

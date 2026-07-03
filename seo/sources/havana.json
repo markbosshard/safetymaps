@@ -1,0 +1,21 @@
+[
+  {
+    "id": "state_dept_cu",
+    "source_name": "US State Department Travel Advisory",
+    "source_class": "advisory",
+    "url": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/cuba-travel-advisory.html",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "advisory_level": "See link",
+    "excerpt": "Cuba Travel Advisory --> Worldwide Caution: The Department of State advises Americans worldwide to exercise increased caution. Exercise increased caution in Cuba due to crime and unreliable electrical power . Country Summary: Petty crime is a risk for travelers in Cuba. Violent crime, including armed robbery and homicide, is also on the rise in Cuba."
+  },
+  {
+    "id": "fcdo_cu",
+    "source_name": "UK FCDO Travel Advice — Safety and Security",
+    "source_class": "advisory",
+    "url": "https://www.gov.uk/foreign-travel-advice/cuba/safety-and-security",
+    "published_date": "2026-07",
+    "license": "Open Government Licence v3.0",
+    "excerpt": "Safety and security - Cuba travel advice - GOV.UK Cookies on GOV.UK We use some essential cookies to make this website work. Warning FCDO advises against all but essential travel to Cuba. Subscriptions Get email alerts Safety and security Terrorism There is a high threat of terrorist attack globally affecting UK interests and British nationals, including from groups and individuals who view the UK and British nationals as targets. Find out how to reduce your risk from terrorism while abroad . Crime Levels of crime are generally lower than in the UK, but the difficult economic situation means opportunistic crime is increasing. Protecting your belongings There is a risk of theft from luggage when baggage is being handled on arrival or departure at the airport. You should: not pack valuables in your hold luggage lock suitcases shrink-wrap luggage before check-in if possible Be aware of pickpockets and bag-snatching: in the streets of Old Havana or any crowded areas on public transport in nightclubs Do not carry large amounts of cash or wear expensive-looking jewellery. Beware of theft from your accommodation, particularly from private guest houses (‘casas particulares’)."
+  }
+]
