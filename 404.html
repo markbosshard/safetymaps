@@ -16,6 +16,43 @@
 <meta name="twitter:title" content="Latam Crime Map"/>
 <meta name="twitter:description" content="Neighbourhood and city safety across Latin America — 96 cities on a green-to-red scale, synthesized from multiple safety sources."/>
 <meta name="twitter:image" content="https://latamcrimemap.com/og-image.png"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Latam Crime Map",
+      "url": "https://latamcrimemap.com/",
+      "description": "Consolidated travel-safety map for 96 Latin American cities. Rates city and neighbourhood safety by reported incidents and conditions — synthesized from official advisories, crime data, and traveller sources.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://latamcrimemap.com/?city={city}"
+        },
+        "query-input": "required name=city"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "name": "Latam Crime Map — city and neighbourhood safety ratings",
+      "description": "Consolidated incident-based safety ratings for 96 cities across Latin America, derived from official government advisories, crime statistics, crime indices, and traveller community reports.",
+      "url": "https://latamcrimemap.com/",
+      "creator": {
+        "@type": "Organization",
+        "name": "Latam Crime Map",
+        "url": "https://latamcrimemap.com/"
+      },
+      "license": "https://latamcrimemap.com/method/",
+      "dateModified": "2026-07-03",
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Latin America"
+      },
+      "variableMeasured": "Travel safety by reported incidents and conditions (1–10 scale)"
+    }
+  ]
+}</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
@@ -521,7 +558,8 @@ function track(kind,extra){ if(DNT)return;
 const jr={pans:0,zooms:0,zt:{},zmax:0,zmin:99,reports:0,searches:0,searchMiss:0,locates:0,districts:0,
   issueOpened:0,issueSubmitted:0,issueAbandoned:0,
   setBase:0,setTransp:0,setLabels:0,setBorders:0,menuClosed:0,legendOpened:0,sourcesOpened:0,
-  welcomeShown:0,welcomeClosed:0,thanksShown:0,thanksClosed:0,modalsShown:0,modalsClosed:0,ctaDismiss:0};
+  welcomeShown:0,welcomeClosed:0,thanksShown:0,thanksClosed:0,modalsShown:0,modalsClosed:0,ctaDismiss:0,
+  feedbackNudgeShown:0,feedbackNudgeDismissed:0,drilldownClicks:0};
 let _lastMissQ='';   // dedupe repeated search-miss logs for the same query
 function logSearchMiss(q){ q=(q||'').trim(); if(q.length<3||q===_lastMissQ)return; _lastMissQ=q; jr.searchMiss++; track('search',{meta:{q:q.slice(0,80),hit:0}}); }
 let _z=map.getZoom(),_zAt=Date.now();
@@ -537,7 +575,8 @@ function journeySummary(){ _accZoom();
     setBase:jr.setBase,setTransp:jr.setTransp,setLabels:jr.setLabels,setBorders:jr.setBorders,
     menuClosed:jr.menuClosed,legendOpened:jr.legendOpened,sourcesOpened:jr.sourcesOpened,
     welcome:[jr.welcomeShown,jr.welcomeClosed],thanks:[jr.thanksShown,jr.thanksClosed],
-    modals:[jr.modalsShown,jr.modalsClosed],modalLeftOpen:modalOpen,ctaDismiss:jr.ctaDismiss};
+    modals:[jr.modalsShown,jr.modalsClosed],modalLeftOpen:modalOpen,ctaDismiss:jr.ctaDismiss,
+    feedbackNudge:[jr.feedbackNudgeShown,jr.feedbackNudgeDismissed],drilldownClicks:jr.drilldownClicks};
 }
 // Dwell = ACTIVE time only (paused while the tab is hidden). Reported on hide/leave; the server keeps the max.
 let _shownAt=Date.now(), _activeMs=0;
@@ -688,12 +727,15 @@ function openFeedback(){
   };
 }
 function RHERE(){ return '<div class="rhere">📍 <i>'+t('rhere','Exact location matters when you report below')+'</i>'+t('rhere2',' — not just the district. Future maps will be more detailed.')+'</div>'; }
+function drilldownLink(){
+  return `<div style="margin-top:8px;text-align:right"><a href="/${cityKey}" style="font-size:11px;color:#6b8ab0;text-decoration:none" onmouseover="this.style.color='#a8c8e8'" onmouseout="this.style.color='#6b8ab0'" onclick="if(typeof jr==='object')jr.drilldownClicks=(jr.drilldownClicks||0)+1">See city overview →</a></div>`;
+}
 function popupContent(d){
   const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
   if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
   else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
   else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`;
-  return head+RHERE()+actionRow();
+  return head+RHERE()+actionRow()+drilldownLink();
 }
 function openDistrict(d,ll){
   if(typeof jr==='object')jr.districts++;
@@ -853,6 +895,54 @@ sourcesOpenBtn.onclick=()=>{jr.sourcesOpened=1;setSources(true);};
 setCtrl(true); setLegend(window.innerWidth>680); setSources(false);
 document.getElementById('fbBtn').onclick=openFeedback;
 document.getElementById('myReportsBtn').onclick=openMyReports;
+// US-26 — Feedback nudge: after 5 min active dwell, point an arrow at the feedback button.
+// Fires once per browser (sm_fb_nudged), not if feedback modal is already open.
+(function(){
+  if(persist('sm_fb_nudged')){return;}
+  const NUDGE_DELAY=5*60*1000, NUDGE_AUTO_DISMISS=8000;
+  let nudgeTimer=null, nudgeDismissTimer=null;
+  const NUDGE_HTML=`<div id="fbNudge" style="position:fixed;z-index:2200;pointer-events:auto" aria-live="polite">
+    <div style="background:#0F6E56;color:#fff;border-radius:10px;padding:11px 15px;max-width:220px;box-shadow:0 4px 18px #0009;font-size:13.5px;line-height:1.45;border:1px solid rgba(255,255,255,.18)">
+      Please drop an honest feedback and help us improve the map — thanks a lot in advance!
+      <div style="margin-top:6px;text-align:right"><button onclick="dismissFbNudge()" style="-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:3px 9px;font-size:12px;cursor:pointer">Got it</button></div>
+    </div>
+    <div style="width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:9px solid #0F6E56;position:absolute;top:-9px;right:28px"></div>
+  </div>`;
+  function positionNudge(){
+    const btn=document.getElementById('fbBtn'); if(!btn)return null;
+    const r=btn.getBoundingClientRect();
+    const el=document.getElementById('fbNudge'); if(!el)return;
+    el.style.top=(r.bottom+4)+'px';
+    el.style.right=(window.innerWidth-r.right)+'px';
+    el.style.left='auto';
+  }
+  window.dismissFbNudge=function(){
+    const el=document.getElementById('fbNudge'); if(el)el.remove();
+    clearTimeout(nudgeDismissTimer);
+    map.off('click',dismissFbNudge);
+    persist('sm_fb_nudged','1');
+    if(typeof jr==='object')jr.feedbackNudgeDismissed=1;
+  };
+  function showNudge(){
+    if(persist('sm_fb_nudged'))return;
+    if(document.getElementById('modal')&&!document.getElementById('modal').classList.contains('hidden'))return;
+    const wrap=document.createElement('div'); wrap.innerHTML=NUDGE_HTML;
+    document.body.appendChild(wrap.firstElementChild);
+    positionNudge();
+    if(typeof jr==='object')jr.feedbackNudgeShown=1;
+    nudgeDismissTimer=setTimeout(dismissFbNudge,NUDGE_AUTO_DISMISS);
+    map.on('click',dismissFbNudge);
+    document.getElementById('fbBtn').addEventListener('click',dismissFbNudge,{once:true});
+  }
+  function scheduleNudge(){
+    const elapsed=_activeMs+(Date.now()-_shownAt);
+    const remaining=Math.max(0, NUDGE_DELAY-elapsed);
+    clearTimeout(nudgeTimer);
+    nudgeTimer=setTimeout(showNudge, remaining);
+  }
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible')scheduleNudge(); });
+  scheduleNudge();
+})();
 // Collapse the map settings (underlay/transparency/toggles) behind a "More settings" gear; City stays visible.
 const moreBtn=document.getElementById('moreBtn'),moreWrap=document.getElementById('moreWrap');
 function setMore(o){moreWrap.classList.toggle('hidden',!o);moreBtn.classList.toggle('open',o);moreBtn.setAttribute('aria-expanded',o);}

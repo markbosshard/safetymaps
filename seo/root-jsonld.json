@@ -1,0 +1,37 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Latam Crime Map",
+      "url": "https://latamcrimemap.com/",
+      "description": "Consolidated travel-safety map for 96 Latin American cities. Rates city and neighbourhood safety by reported incidents and conditions — synthesized from official advisories, crime data, and traveller sources.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://latamcrimemap.com/?city={city}"
+        },
+        "query-input": "required name=city"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "name": "Latam Crime Map — city and neighbourhood safety ratings",
+      "description": "Consolidated incident-based safety ratings for 96 cities across Latin America, derived from official government advisories, crime statistics, crime indices, and traveller community reports.",
+      "url": "https://latamcrimemap.com/",
+      "creator": {
+        "@type": "Organization",
+        "name": "Latam Crime Map",
+        "url": "https://latamcrimemap.com/"
+      },
+      "license": "https://latamcrimemap.com/method/",
+      "dateModified": "2026-07-03",
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Latin America"
+      },
+      "variableMeasured": "Travel safety by reported incidents and conditions (1–10 scale)"
+    }
+  ]
+}

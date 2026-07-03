@@ -19,6 +19,9 @@
     "backend": "node backend/server.js",
     "review": "node scripts/review.js",
     "stats": "node scripts/stats.js",
+    "seo": "node scripts/seo_pages.js",
+    "pipeline": "node scripts/seo_pipeline.js",
+    "sov": "node scripts/seo_sov.js",
     "deploy": "echo \"Deploy: push index.html to the GitHub Pages repo (static, no server). See PROJECT.md §12.\""
   },
   "license": "UNLICENSED",
