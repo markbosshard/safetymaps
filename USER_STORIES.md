@@ -1,6 +1,6 @@
 # Latam Crime Map — user stories
 
-Updated 2026-07-03. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
+Updated 2026-07-03 (SEO/GEO first pass delivered). Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
 (crowd backend, Hetzner). Two parts: **Delivered** and **Backlog** (with status notes).
 
 ---
@@ -81,6 +81,23 @@ Updated 2026-07-03. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `htt
   bot-share cross-check via `GC_SITE`/`GC_TOKEN` env vars to flag inflated event counts. All four
   remaining items shipped on top of the first-slice instrumentation (search-miss fix, abandonment tracking,
   contribution-latency lines).
+- **SEO & GEO discoverability layer** (Epics B–E, H2, US-26) — full first-pass discoverability stack:
+  **96 city content pages** replacing SPA copies — each `/{city}` is now a proper HTML content page with
+  `<h1>="Is {City} safe for travelers?"`, definition-first safety tier verdict, named safest/highest-risk
+  districts for 19 cities with differentiated scores, US State Dept advisory per country, Q&A block, and
+  source links. Content is in raw HTML (no JS injection). **Technical SEO**: `robots.txt` (explicit Allow
+  for GPTBot/ClaudeBot/OAI-SearchBot/PerplexityBot/Google-Extended), `llms.txt` (LLM index with
+  positioning statement + all 96 city links), auto-generated `sitemap.xml` (98 URLs, regenerates every
+  build). **Structured data**: `FAQPage` + `BreadcrumbList` + `WebPage/isBasedOn` JSON-LD on every city
+  page; root `Dataset` + `WebSite` JSON-LD in `index.html`. **`/method/` page**: authoritative methodology
+  page explaining events-not-feelings, source classes, and honesty rule — linked from every city page.
+  **Map UX (H2)**: "See city overview →" muted link in district popup, below report actions, tracked as
+  `drilldownClicks` in journey meta. **Feedback nudge (US-26)**: after 5 min active dwell, CSS arrow
+  tooltip pointing at feedback button; 8 s auto-dismiss; fires once per browser (`sm_fb_nudged`).
+  **Pipeline scaffolding (A1–A5)**: `scripts/seo_pipeline.js` — 4-stage grounded synthesis + entailment
+  critic + bias filter + confidence gating; ready to run when `ANTHROPIC_API_KEY` +
+  `seo/sources/{city}.json` exist. **AI SoV tracker (G2)**: `npm run sov` probes Claude/ChatGPT/
+  Perplexity with "is {city} safe" queries and logs citation presence.
 
 ---
 
@@ -91,7 +108,9 @@ continent view reads fine as is.
 
 ### Open
 
-- **US-26 — Feedback nudge for engaged users.** After 5 minutes of cumulative active dwell on the map
+*(US-26 delivered in SEO/GEO commit above. No remaining open small-medium stories.)*
+
+- **US-26 — Feedback nudge for engaged users.** ✅ Delivered — see Delivered section above. After 5 minutes of cumulative active dwell on the map
   (using the existing active-ms tracking, not wall-clock time), show a small tooltip-style popover with a
   CSS arrow pointing at the feedback (✉) button in the top-right corner. Copy: *"Please drop an honest
   feedback and help us improve the map — thanks a lot in advance!"* Behaviour: auto-dismisses after 8 s
