@@ -1,6 +1,6 @@
 # Latam Crime Map — user stories
 
-Updated 2026-07-02. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
+Updated 2026-07-03. Live: `https://latamcrimemap.com` (map, GitHub Pages) + `https://api.latamcrimemap.com`
 (crowd backend, Hetzner). Two parts: **Delivered** and **Backlog** (with status notes).
 
 ---
@@ -91,7 +91,111 @@ continent view reads fine as is.
 
 ### Open
 
-*(No open small-medium stories — all instrumentation and district waves through wave 5 are delivered.)*
+- **US-26 — Feedback nudge for engaged users.** After 5 minutes of cumulative active dwell on the map
+  (using the existing active-ms tracking, not wall-clock time), show a small tooltip-style popover with a
+  CSS arrow pointing at the feedback (✉) button in the top-right corner. Copy: *"Please drop an honest
+  feedback and help us improve the map — thanks a lot in advance!"* Behaviour: auto-dismisses after 8 s
+  (enough time to read and decide); also dismissed immediately by any map click, Escape, or clicking the
+  button itself. Fires **once per browser ever** (localStorage flag `sm_fb_nudged`) so returning visitors
+  never see it again. Does not fire if the feedback modal is already open. The nudge counts as a UI
+  interaction in the journey `meta` (`feedbackNudgeShown`, `feedbackNudgeClicked`) so stats can track
+  conversion. No i18n needed for v1 (English only); add es/pt strings in a follow-up if uptick warrants it.
+
+### SEO & GEO — Discoverability (full spec: `SEO_GEO.md` + `SEO_GEO_USER_STORIES.md`)
+
+**Positioning:** LatamCrimeMap as *the consolidator* — one place that reconciles government advisories,
+official crime feeds, crime indices, and traveler reports into a single incident-based read per city/district.
+Defensible from day one because the *sources* exist for every city, even without proprietary ratings yet.
+Full build order and acceptance criteria in the spec docs; summary below by epic.
+
+**Epic A — Trustworthy consolidated content (build first — gates all of B–H)**
+- **A1 — Grounded synthesis only.** LLM generator receives *only* the place's `sources.json` excerpts
+  (no world-knowledge path). Every claim in the output tags ≥1 `source_id`; untagged claims are dropped
+  at build time and logged as coverage failures.
+- **A2 — Entailment double-check.** A *separate* critic LLM call checks each `(claim, cited_excerpt)` pair:
+  `yes | partial | no`. `no` drops the claim; too many drops on one page marks it `confidence: limited`.
+  Self-grading in one pass doesn't count — must be a distinct call.
+- **A3 — Honest limited-data pages.** When source density is too low or verification strips too much, ship a
+  `limited` page (banner + primary-source links, no confident verdict, no risk-coloured map). A neighborhood
+  with nothing to synthesize is not generated at all. `limited` is a valid shipped state, not a failure.
+- **A4 — Bias-filtered prose.** Generated draft is run through the CROWDSOURCING §4 `rejected` classifier;
+  people-characterization strips and regenerates that passage. If regeneration still fails → drop, don't ship.
+- **A5 — Source conflict surfaced, not smoothed.** When sources disagree, the output names both sides and
+  attributes each. The reconciliation rubric fails a page that concatenates without noting conflict → regenerate
+  or downgrade. This is the anti-scraper guarantee; reconciliation is the original value.
+
+**Epic B — Crawlable, addressable pages**
+- **B1 — One URL per place.** `/{city}` per covered city; `/{city}/{district}` only where A3 clears.
+  Slugs = human-readable, mapped to `cluster_id`. Each page: exactly one `<h1>` = the exact question.
+- **B2 — Content in raw HTML.** `view-source:` shows the verdict + full prose. Nothing citable is JS-injected.
+  Pre-render regression here silently un-does the entire project — needs a CI check.
+- **B3 — Definition-first answer.** First sentence = reconciled verdict. A `<h2>` Q&A block covers the real
+  sub-questions (§3 templates), each answered direct-first in 1–3 sentences.
+
+**Epic C — AI citability (GEO)**
+- **C1 — Self-contained, attributed passages.** Every factual paragraph names its source(s) inline
+  ("per OSAC…", "Numbeo's index puts…") and makes sense lifted out of context. No "as above" dependencies.
+- **C2 — Crawler access + `llms.txt`.** `robots.txt` explicitly `Allow`s GPTBot, OAI-SearchBot, ClaudeBot,
+  PerplexityBot, Google-Extended. `llms.txt` at root leads with the positioning statement + links to
+  `/method/`, `/sources/`, all city pages. Verify Cloudflare bot mode isn't silently blocking these.
+- **C3 — Machine-readable provenance.** `isBasedOn`/`citation` JSON-LD per page listing sources used.
+  Visible sources list must match per-claim provenance from A1 exactly.
+- **C4 — Comparison & "safest area" pages.** `{hood} vs {hood}` and "safest areas in {city}" pages where
+  both places clear A3, drawing only on verified data. Maps to real §3 query templates.
+
+**Epic D — Visual discovery (Google Images)**
+- **D1 — Real choropleth render for map searches.** A real map render (not the OG social card) embedded on
+  each city page: descriptive filename (`sao-paulo-crime-safety-map.png`), place-specific alt text, caption,
+  ≥1200px, entry in image sitemap. The OG card and the real render are separate files with separate jobs.
+- **D2 — Image provenance & attribution.** `ImageObject` JSON-LD per map. OSM/CARTO/Esri attribution baked
+  into the image or caption where basemap tiles are used.
+- **D3 — No risk colour where data is thin.** `limited`-confidence areas render as neutral "insufficient data"
+  style. A coloured polygon is a safety claim and follows the same A2/A3 verification gate as prose.
+
+**Epic E — Structured data & technical SEO**
+- **E1 — `FAQPage` schema.** Every city/neighborhood page: valid `FAQPage` JSON-LD wrapping its Q&A block;
+  passes Google Rich Results test.
+- **E2 — Auto-generated sitemaps.** `sitemap.xml` (incl. `<image:image>` entries) regenerates every build
+  with `<lastmod>` = build date; submitted to Search Console + Bing; IndexNow pings changed URLs on build.
+- **E3 — Site-level entity markup.** Root: `Dataset` + `WebSite`. Every page: `BreadcrumbList` +
+  self-`canonical` + OG tags.
+
+**Epic F — Localization**
+- **F1 — PT/ES variants.** `/pt/…` and `/es/…` for covered cities, with `hreflang` + self-canonical per
+  variant. Query templates use the localized set (§3: "é seguro", "zonas peligrosas"…).
+- **F2 — No thin translations.** A variant is emitted only where the source place cleared A3. No machine-
+  translated stub is generated. Thin translated shells get demoted by Google; don't ship them.
+
+**Epic G — Measurement, audit & safety**
+- **G1 — Deterministic, auditable build.** Same `sources.json` in ⇒ byte-stable pages. Per-page log:
+  sources used, claims dropped, confidence tier. The build must fail loudly, never silently.
+- **G2 — AI Share-of-Voice tracking.** Scheduled job prompts ChatGPT/Perplexity/Claude/Gemini with §3
+  queries for covered cities; logs citation presence + AI-referred traffic over time.
+- **G3 — Thin-content & divergence watch.** Search Console + Bing wired; low-engagement pages flagged;
+  CROWDSOURCING §8 divergence check runs when crowd deltas exist (crowd signal drifting toward demographics).
+- **G4 — Correction/takedown path.** Any challenged claim traceable to its source, correctable or removable;
+  page rebuilds; change logged. This is a safety requirement, not a nicety.
+- **G5 — Source-clarity audit.** Per-city pass: displayed sources == `sources.json` provenance (no phantoms,
+  no silent omissions). Each shown source has a name, recency date, and working outbound link. Outputs a
+  per-city mismatch report.
+
+**Epic H — Map ↔ page linking & UX**
+- **H1 — No orphan pages.** `/` links full city list; each `/{city}` links its districts; each district page
+  has breadcrumbs up + sibling links sideways. Every page ≤3 crawlable clicks from `/`, with no JS/popup
+  dependency for discovery.
+- **H2 — Popup drilldown without cannibalising reports.** Report actions stay visually dominant. District
+  popup adds: name + one-line consolidated read, then a muted "See full breakdown →" link *below* the actions.
+  Both instrumented; if report rate drops when the link is present, demote its placement further.
+- **H3 — Page → map façade.** Static choropleth render (§4A) as hero — no Leaflet JS on initial load, verdict
+  text above the fold, LCP unaffected. Clicking the façade loads the live map in place (no navigation, no
+  hash/route change) with report popups working. A naive always-live Leaflet embed above the fold is
+  explicitly rejected — it kills the SEO it's meant to support.
+- **H4 — Sources box reflects real provenance.** Sources dialog lists, per city, each source *actually used*:
+  name, date/recency, outbound link. Matches C3 provenance. Limited-data cities say so explicitly. Verified
+  by G5 — not a static generic list.
+
+**Suggested sprint order (per spec):**
+Sprint 1: A1–A4 · Sprint 2: B1–B3, E1–E3, C2, H1 · Sprint 3: C1, C3, C4, D1–D3, H2–H4 · Sprint 4: F1–F2, A5, G1–G5
 
 ### Bigger / optional
 
