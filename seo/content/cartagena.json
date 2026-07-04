@@ -10,7 +10,7 @@
       "text": "The walled city by day is genuinely enjoyable with standard vigilance. Getsemaní (just outside the walls) is being gentrified but still requires caution at night. Bocagrande beach strip is manageable. Avoid the southern and northern residential districts beyond the tourist corridor. Do not accept drinks from strangers under any circumstances."
     },
     {
-      "text": "Official statistics: MinDefensa Colombia — homicidios en Cartagena: 2026: 113; 2025: 360; 2024: 381; 2023: 368; 2022: 366. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Cartagena: 2026: 113; 2025: 360; 2024: 381; 2023: 368; 2022: 366. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional. World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_co",
     "fcdo_co",
     "canada_dfatd_co",
-    "mindefensa_co_cartagena"
+    "mindefensa_co_cartagena",
+    "wb_homicide_co"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

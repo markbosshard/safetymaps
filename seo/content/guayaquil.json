@@ -8,13 +8,17 @@
     },
     {
       "text": "If transiting through Guayaquil (the main international airport gateway), pre-arrange hotel pickup, do not take street taxis, and go directly to your accommodation or onward transit. Do not walk in any part of the city. The airport itself is safe; the moment you exit the airport is where risk increases dramatically."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Ecuador: 2023: 45.7/100k; 2022: 27.4/100k; 2021: 14.1/100k; 2020: 7.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ec",
     "fcdo_ec",
-    "canada_dfatd_ec"
+    "canada_dfatd_ec",
+    "wb_homicide_ec"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

@@ -615,6 +615,58 @@ print(json.dumps({'y2025': d25, 'y2026q1': d26}))
   }
 }
 
+// ── World Bank / UNODC homicide rate (country-level fallback) ────────────────
+// Indicator VC.IHR.PSRC.P5: intentional homicides per 100k population.
+// Published by World Bank, sourced from UNODC — covers all LatAm countries.
+// Used as a fallback for countries where we don't have direct city-level data.
+// NOTE: country-level data, not city-level — excerpt clearly states this.
+// NOTE: must use http:// — HTTPS endpoint returns empty body.
+
+const WB_ISO3 = {
+  mx:'MEX', pe:'PER', ec:'ECU', bo:'BOL', ve:'VEN',
+  gt:'GTM', sv:'SLV', hn:'HND', ni:'NIC', cr:'CRI',
+  pa:'PAN', do:'DOM', ht:'HTI', cu:'CUB', py:'PRY', pr:'PRI',
+  // Direct-API countries — WB provides national context for cities not covered by state APIs
+  br:'BRA', ar:'ARG', co:'COL', cl:'CHL', uy:'URY',
+};
+
+const wbCache = {};
+
+async function fetchWorldBankHomicide(cityKey) {
+  const city = CITIES[cityKey];
+  const iso3 = WB_ISO3[city.country];
+  if (!iso3) return null;
+
+  try {
+    if (!wbCache[iso3]) {
+      const url = `http://api.worldbank.org/v2/country/${iso3}/indicator/VC.IHR.PSRC.P5?format=json&mrv=5`;
+      const raw = await get(url, { headers: { 'Accept': 'application/json' } });
+      const data = JSON.parse(raw);
+      if (!Array.isArray(data) || data.length < 2) return null;
+      const rows = data[1].filter(r => r.value !== null);
+      if (!rows.length) return null;
+      wbCache[iso3] = { country: data[1][0]?.country?.value, rows };
+    }
+
+    const { country, rows } = wbCache[iso3];
+    const lines = rows.slice(0, 4).map(r => `${r.date}: ${r.value.toFixed(1)}/100k`).join('; ');
+    const excerpt = `World Bank / UNODC — national intentional homicide rate for ${country}: ${lines}. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.`;
+
+    return {
+      id: `wb_homicide_${city.country}`,
+      source_name: `World Bank — Intentional Homicides per 100k (${country})`,
+      source_class: 'crime_data',
+      url: `https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=${iso3}`,
+      published_date: new Date().toISOString().slice(0, 7),
+      license: 'CC BY 4.0 — World Bank Open Data',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    wb_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -739,6 +791,11 @@ async function fetchForCity(key) {
   const uyOsp = await fetchUruguayMinterior(key);
   if (uyOsp) sources.push(uyOsp);
 
+  // Country-level fallback: World Bank / UNODC homicide rate
+  // Used for countries where we have no direct city-level crime API
+  const wbHom = await fetchWorldBankHomicide(key);
+  if (wbHom) sources.push(wbHom);
+
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);
   if (numbeo) sources.push(numbeo);
@@ -823,6 +880,7 @@ async function main() {
     if (COLOMBIA_CITIES[k] && !ids.has(`mindefensa_co_${k.replace(/-/g,'_')}`)) return true;
     if (CHILE_CITIES[k]    && !ids.has(`pdi_cl_${k.replace(/-/g,'_')}`))        return true;
     if (URUGUAY_CITIES[k]  && !ids.has(`uy_osp_${k.replace(/-/g,'_')}`))        return true;
+    if (WB_ISO3[CITIES[k]?.country] && !ids.has(`wb_homicide_${CITIES[k].country}`)) return true;
     return false;
   });
 

@@ -35,5 +35,14 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Panama travel advice Take normal security precautions (with regional advisories) Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 13:43 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Panama - Take normal security precautions Take normal security precautions in Panama. Back to top Safety and security Region between Metet&iacute; and the Colombian border Avoid all travel between Metet&iacute; and the Colombian border."
+  },
+  {
+    "id": "wb_homicide_pa",
+    "source_name": "World Bank — Intentional Homicides per 100k (Panama)",
+    "source_class": "crime_data",
+    "url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PAN",
+    "published_date": "2026-07",
+    "license": "CC BY 4.0 — World Bank Open Data",
+    "excerpt": "World Bank / UNODC — national intentional homicide rate for Panama: 2023: 11.7/100k; 2022: 11.3/100k; 2021: 12.7/100k; 2020: 11.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
   }
 ]

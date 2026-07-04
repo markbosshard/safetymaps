@@ -8,13 +8,17 @@
     },
     {
       "text": "Havana Vieja, Vedado, and Miramar are the main visitor areas; all are manageable with vigilance. Be selective about accepting help from strangers. Use CUC taxis with metered fares. As with Nicaragua, the physical safety from violence is reasonable; the political and legal risk environment is the primary concern for Western visitors."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Cuba: 2019: 4.5/100k; 2018: 4.4/100k; 2017: 4.6/100k; 2016: 5.1/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_cu",
     "fcdo_cu",
-    "canada_dfatd_cu"
+    "canada_dfatd_cu",
+    "wb_homicide_cu"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

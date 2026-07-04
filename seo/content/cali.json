@@ -10,7 +10,7 @@
       "text": "If visiting Cali — primarily for the salsa culture — stay in Ciudad Jardín or Granada, use vetted transport only, never walk after dark, and join organised salsa tours rather than independently bar-hopping. Minimise time outside the hotel and organised venues. This requires significantly higher vigilance than Medellín or Bogotá."
     },
     {
-      "text": "Official statistics: MinDefensa Colombia — homicidios en Cali: 2026: 460; 2025: 1068; 2024: 950; 2023: 1005; 2022: 986. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Cali: 2026: 460; 2025: 1068; 2024: 950; 2023: 1005; 2022: 986. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional. World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_co",
     "fcdo_co",
     "canada_dfatd_co",
-    "mindefensa_co_cali"
+    "mindefensa_co_cali",
+    "wb_homicide_co"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

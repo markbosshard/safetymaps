@@ -8,13 +8,17 @@
     },
     {
       "text": "Old San Juan's tourist streets, the Condado beach hotel corridor, and Isla Verde are all accessible with standard precautions. La Perla: do not enter. Rental car break-ins at beaches: leave nothing visible. San Juan operates significantly more safely than mainland Latin American cities at the same score — the similarity is in petty theft rather than violent crime."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Puerto Rico (US): 2023: 14.6/100k; 2022: 17.6/100k; 2021: 19.4/100k; 2020: 17.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_pr",
     "fcdo_pr",
-    "canada_dfatd_pr"
+    "canada_dfatd_pr",
+    "wb_homicide_pr"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

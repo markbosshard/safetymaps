@@ -8,13 +8,17 @@
     },
     {
       "text": "Visit the Centro Histórico by day in a group; do not linger after sunset. Beach visits should be during daytime hours with minimal valuables. Stay in hotels near the Lagoa da Jansen or Ponta D'Areia with secure facilities."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_br",
     "fcdo_br",
-    "canada_dfatd_br"
+    "canada_dfatd_br",
+    "wb_homicide_br"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

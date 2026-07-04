@@ -8,13 +8,17 @@
     },
     {
       "text": "The Barrio Villa Morra and Carmelitas commercial districts are safer for visitors. The historic centre is accessible by day. Avoid the bus terminal area at night and all peripheral barrios. The main concern for transit visitors is organised crime infrastructure rather than street-level violence."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Paraguay: 2023: 6.8/100k; 2022: 7.6/100k; 2021: 7.9/100k; 2020: 7.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_py",
     "fcdo_py",
-    "canada_dfatd_py"
+    "canada_dfatd_py",
+    "wb_homicide_py"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

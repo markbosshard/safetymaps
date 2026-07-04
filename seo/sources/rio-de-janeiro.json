@@ -64,5 +64,14 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  },
+  {
+    "id": "wb_homicide_br",
+    "source_name": "World Bank — Intentional Homicides per 100k (Brazil)",
+    "source_class": "crime_data",
+    "url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA",
+    "published_date": "2026-07",
+    "license": "CC BY 4.0 — World Bank Open Data",
+    "excerpt": "World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
   }
 ]

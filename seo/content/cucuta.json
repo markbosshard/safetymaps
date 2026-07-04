@@ -10,7 +10,7 @@
       "text": "If crossing through Cúcuta to or from Venezuela, plan arrivals by day, use vetted transport, do not display valuables, and do not linger at the border. The city is not a standard tourist destination; transit visitors should minimise time here and use pre-arranged transport."
     },
     {
-      "text": "Official statistics: MinDefensa Colombia — homicidios en Cúcuta: 2026: 120; 2025: 344; 2024: 291; 2023: 288; 2022: 245. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Cúcuta: 2026: 120; 2025: 344; 2024: 291; 2023: 288; 2022: 245. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional. World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_co",
     "fcdo_co",
     "canada_dfatd_co",
-    "mindefensa_co_cucuta"
+    "mindefensa_co_cucuta",
+    "wb_homicide_co"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

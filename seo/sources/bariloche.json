@@ -44,5 +44,14 @@
     "published_date": "2026-07",
     "license": "Creative Commons Attribution 2.5 Argentina",
     "excerpt": "SNIC Argentina — homicidios dolosos en Río Negro (nivel provincial): 2025: 25; 2024: 33; 2023: 27; 2022: 20; 2021: 26; 2020: 37. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
+  },
+  {
+    "id": "wb_homicide_ar",
+    "source_name": "World Bank — Intentional Homicides per 100k (Argentina)",
+    "source_class": "crime_data",
+    "url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG",
+    "published_date": "2026-07",
+    "license": "CC BY 4.0 — World Bank Open Data",
+    "excerpt": "World Bank / UNODC — national intentional homicide rate for Argentina: 2023: 4.5/100k; 2022: 4.3/100k; 2021: 4.6/100k; 2020: 5.4/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
   }
 ]

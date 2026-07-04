@@ -35,5 +35,14 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Bolivia travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Safety and security section – updated information on state of emergency; Need help? section – updated information on consular assistance Last updated: June 23, 2026 15:01 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Bolivia - Exercise a high degree of caution Exercise a high degree of caution in Bolivia due to the continuing political and social tensions resulting in frequent roadblocks throughout the country."
+  },
+  {
+    "id": "wb_homicide_bo",
+    "source_name": "World Bank — Intentional Homicides per 100k (Bolivia)",
+    "source_class": "crime_data",
+    "url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BOL",
+    "published_date": "2026-07",
+    "license": "CC BY 4.0 — World Bank Open Data",
+    "excerpt": "World Bank / UNODC — national intentional homicide rate for Bolivia: 2023: 4.4/100k; 2022: 4.0/100k; 2021: 3.5/100k; 2020: 3.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
   }
 ]

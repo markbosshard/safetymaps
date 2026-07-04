@@ -8,13 +8,17 @@
     },
     {
       "text": "Stay in the Recoleta or residential north zone for a calmer environment. Use vetted transport for the airport and bus terminal. Day trips to the Chapare coca region should use reputable tour operators. The altitude (2,558m) is more manageable than La Paz."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Bolivia: 2023: 4.4/100k; 2022: 4.0/100k; 2021: 3.5/100k; 2020: 3.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_bo",
     "fcdo_bo",
-    "canada_dfatd_bo"
+    "canada_dfatd_bo",
+    "wb_homicide_bo"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

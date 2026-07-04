@@ -10,7 +10,7 @@
       "text": "Stick to Zona Sul and Santa Teresa by day. After dark, use apps for all movement; do not walk between Lapa, Centro, and hotel districts. Avoid any road that passes through or alongside favela complexes regardless of time. Never display phones or jewellery on the waterfront."
     },
     {
-      "text": "Official statistics: ISP-RJ dados para Rio de Janeiro — 2026 (5 meses YTD): 419 homicídios dolosos, 451 CVLI, 25,425 roubos totais, 21 latrocínios. 2025: 965 homicídios, 62,132 roubos."
+      "text": "Official statistics: ISP-RJ dados para Rio de Janeiro — 2026 (5 meses YTD): 419 homicídios dolosos, 451 CVLI, 25,425 roubos totais, 21 latrocínios. 2025: 965 homicídios, 62,132 roubos. World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_br",
     "fcdo_br",
     "canada_dfatd_br",
-    "isprj_rio_de_janeiro"
+    "isprj_rio_de_janeiro",
+    "wb_homicide_br"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

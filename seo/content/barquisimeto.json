@@ -8,13 +8,17 @@
     },
     {
       "text": "Do not travel unless for essential purposes with specialist security support. The same Venezuela-wide cautions apply."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ve",
     "fcdo_ve",
-    "canada_dfatd_ve"
+    "canada_dfatd_ve",
+    "wb_homicide_ve"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

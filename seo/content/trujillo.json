@@ -8,13 +8,17 @@
     },
     {
       "text": "Trujillo is primarily a transit hub for archaeological sites. Stay near the Plaza Mayor or in Huanchaco for the calmer beach environment. Use vetted transport; do not walk alone at night in the city centre. Day trips to Chan Chan, Huaca del Sol, and Huaca de la Luna are organised through vetted agencies."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Peru: 2021: 8.6/100k; 2020: 5.8/100k; 2019: 7.3/100k; 2018: 7.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_pe",
     "fcdo_pe",
-    "canada_dfatd_pe"
+    "canada_dfatd_pe",
+    "wb_homicide_pe"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

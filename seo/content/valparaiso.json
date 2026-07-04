@@ -10,7 +10,7 @@
       "text": "Visit the UNESCO historic hillsides and Cerro Alegre/Concepción by day; leave before sunset or join a guided evening tour. The lower city (Plan) carries more standard urban risk. Use apps for return from evening dining. This is a worthwhile day-trip from Santiago with appropriate precautions."
     },
     {
-      "text": "Official statistics: PDI Chile — Valparaíso (Región de Valparaíso): 2025 año completo: 5 homicidios y femicidios, 152 robos con violencia e intimidación, 700 hurtos. 2026 Q1 (ene-mar): 2 homicidios. Fuente: Policía de Investigaciones de Chile, datos.gob.cl."
+      "text": "Official statistics: PDI Chile — Valparaíso (Región de Valparaíso): 2025 año completo: 5 homicidios y femicidios, 152 robos con violencia e intimidación, 700 hurtos. 2026 Q1 (ene-mar): 2 homicidios. Fuente: Policía de Investigaciones de Chile, datos.gob.cl. World Bank / UNODC — national intentional homicide rate for Chile: 2023: 6.3/100k; 2022: 6.8/100k; 2021: 4.7/100k; 2020: 5.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_cl",
     "fcdo_cl",
     "canada_dfatd_cl",
-    "pdi_cl_valparaiso"
+    "pdi_cl_valparaiso",
+    "wb_homicide_cl"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

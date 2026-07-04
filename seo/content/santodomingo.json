@@ -8,13 +8,17 @@
     },
     {
       "text": "Stay in Piantini, Naco, or hotels near the Malecón for a safer base. Visit Zona Colonial during daylight and return by app before dark. The DR's primary tourist draw (Punta Cana, Puerto Plata) operates at significantly lower risk than the capital."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Dominican Republic: 2023: 10.9/100k; 2022: 12.4/100k; 2021: 10.5/100k; 2020: 8.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_do",
     "fcdo_do",
-    "canada_dfatd_do"
+    "canada_dfatd_do",
+    "wb_homicide_do"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

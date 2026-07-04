@@ -8,13 +8,17 @@
     },
     {
       "text": "Stay in Miraflores or Barranco; day trips to Centro Histórico (Plaza Mayor, Larco Museum area) should use vetted apps for transport. Avoid San Juan de Miraflores, Villa María del Triunfo, and Comas. Do not use street taxis under any circumstances. The Lima tourist experience is very manageable when confined to the safe-zone districts."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Peru: 2021: 8.6/100k; 2020: 5.8/100k; 2019: 7.3/100k; 2018: 7.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_pe",
     "fcdo_pe",
-    "canada_dfatd_pe"
+    "canada_dfatd_pe",
+    "wb_homicide_pe"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

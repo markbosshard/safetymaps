@@ -10,7 +10,7 @@
       "text": "Business visitors to Campinas should stay in Cambuí, Bosque, or Bonfim Paulista — the city's safer districts. Use ride-hailing throughout. Do not walk in Centro at night. This is not a standard tourist destination; most visitors are here for business or Unicamp connections."
     },
     {
-      "text": "Official statistics: SSP-SP official crime statistics for Campinas region — 2026:\nHOMICÍDIO DOLOSO (2): 970 (2026); TENTATIVA DE HOMICÍDIO: 1,631 (2026); LESÃO CORPORAL SEGUIDA DE MORTE: 40 (2026); LESÃO CORPORAL DOLOSA: 73,747 (2026); LESÃO CORPORAL CULPOSA - OUTRAS: 1,426 (2026); LATROCÍNIO: 38 (2026); TOTAL DE ESTUPRO (4): 6,500 (2026); ESTUPRO: 1,514 (2026); ESTUPRO DE VULNERÁVEL: 4,986 (2026); TOTAL DE ROUBO - OUTROS (1): 60,374 (2026); ROUBO - OUTROS: 59,314 (2026); ROUBO DE VEÍCULO: 7,310 (2026); ROUBO DE CARGA: 1,060 (2026); FURTO - OUTROS: 221,268 (2026); FURTO DE VEÍCULO: 33,257 (2026)."
+      "text": "Official statistics: SSP-SP official crime statistics for Campinas region — 2026:\nHOMICÍDIO DOLOSO (2): 970 (2026); TENTATIVA DE HOMICÍDIO: 1,631 (2026); LESÃO CORPORAL SEGUIDA DE MORTE: 40 (2026); LESÃO CORPORAL DOLOSA: 73,747 (2026); LESÃO CORPORAL CULPOSA - OUTRAS: 1,426 (2026); LATROCÍNIO: 38 (2026); TOTAL DE ESTUPRO (4): 6,500 (2026); ESTUPRO: 1,514 (2026); ESTUPRO DE VULNERÁVEL: 4,986 (2026); TOTAL DE ROUBO - OUTROS (1): 60,374 (2026); ROUBO - OUTROS: 59,314 (2026); ROUBO DE VEÍCULO: 7,310 (2026); ROUBO DE CARGA: 1,060 (2026); FURTO - OUTROS: 221,268 (2026); FURTO DE VEÍCULO: 33,257 (2026). World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
@@ -18,7 +18,8 @@
     "state_dept_br",
     "fcdo_br",
     "canada_dfatd_br",
-    "sspsp_campinas"
+    "sspsp_campinas",
+    "wb_homicide_br"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

@@ -8,13 +8,17 @@
     },
     {
       "text": "Most tourists use San José only as a gateway; minimise urban dwell time. Stay in Escazú, Los Yoses, or Barrio Amón for lower risk. Use apps or pre-booked shuttles for all transport. Costa Rica's appeal is its national parks — the capital doesn't need to be the focus."
+    },
+    {
+      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Costa Rica: 2023: 17.7/100k; 2022: 12.9/100k; 2021: 11.6/100k; 2020: 11.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_cr",
     "fcdo_cr",
-    "canada_dfatd_cr"
+    "canada_dfatd_cr",
+    "wb_homicide_cr"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"
