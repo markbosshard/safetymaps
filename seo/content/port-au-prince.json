@@ -10,7 +10,10 @@
       "text": "Travel to Port-au-Prince should only occur for essential humanitarian or journalistic purposes with specialised security arrangements. All three government advisories recommend against all travel. If you must be there, use armoured vehicles, pre-arranged vetted security providers, remain in compound accommodation, and have an active extraction plan."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Haiti: 2023: 41.2/100k; 2022: 19.0/100k; 2021: 14.2/100k; 2020: 11.4/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Haiti: 2023: 41.2/100k; 2022: 19.0/100k; 2021: 14.2/100k; 2020: 11.4/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Haiti)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=HTI",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

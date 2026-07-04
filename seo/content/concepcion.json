@@ -10,7 +10,16 @@
       "text": "Standard urban precautions apply. For visitors en route to the Lake District or Los Ángeles, Concepción is a reasonable overnight stop with normal vigilance. The city centre is walkable by day."
     },
     {
-      "text": "Official statistics: PDI Chile — Concepción (Región del Biobío): 2025 año completo: 4 homicidios y femicidios, 111 robos con violencia e intimidación, 740 hurtos. 2026 Q1 (ene-mar): 1 homicidio. Fuente: Policía de Investigaciones de Chile, datos.gob.cl. World Bank / UNODC — national intentional homicide rate for Chile: 2023: 6.3/100k; 2022: 6.8/100k; 2021: 4.7/100k; 2020: 5.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "PDI Chile — Concepción (Región del Biobío): 2025 año completo: 4 homicidios y femicidios, 111 robos con violencia e intimidación, 740 hurtos. 2026 Q1 (ene-mar): 1 homicidio. Fuente: Policía de Investigaciones de Chile, datos.gob.cl.",
+      "source_name": "PDI Chile — Estadísticas Policiales (Concepción)",
+      "source_url": "https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18",
+      "source_class": "crime_data"
+    },
+    {
+      "text": "World Bank / UNODC — national intentional homicide rate for Chile: 2023: 6.3/100k; 2022: 6.8/100k; 2021: 4.7/100k; 2020: 5.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Chile)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CHL",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

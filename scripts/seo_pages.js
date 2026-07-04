@@ -189,9 +189,22 @@ function advisoryBadge(adv) {
   return `<span class="adv-badge" style="background:${bg}">${esc(adv.label)}</span>`;
 }
 
-function sourcesHtml(basis) {
-  if (!basis || !basis.length) return '<p>Sources being compiled — check back soon.</p>';
-  return basis.map(s => `<li>${s.url
+function buildSourcesList(basis, fetchedSources) {
+  const items = [];
+  const seenUrls = new Set();
+  for (const src of (fetchedSources || [])) {
+    if (!src.url || seenUrls.has(src.url)) continue;
+    if (!['advisory', 'crime_data'].includes(src.source_class)) continue;
+    seenUrls.add(src.url);
+    items.push({ text: src.source_name, url: src.url });
+  }
+  for (const b of (basis || [])) {
+    if (b.url && seenUrls.has(b.url)) continue;
+    if (b.url) seenUrls.add(b.url);
+    items.push(b);
+  }
+  if (!items.length) return '<p>Sources being compiled — check back soon.</p>';
+  return items.map(s => `<li>${s.url
     ? `<a href="${esc(s.url)}" rel="noopener noreferrer" target="_blank">${esc(s.text)}</a>`
     : esc(s.text)}</li>`).join('\n    ');
 }
@@ -270,7 +283,7 @@ function buildJsonLd(city, key, faq, score, basis) {
 
 // ── Page template ──────────────────────────────────────────────────────────────
 
-function cityPageHtml({ key, city, score, tier, tierCol, prose, faq, ds, basis, richContent, jsonLd }) {
+function cityPageHtml({ key, city, score, tier, tierCol, prose, faq, ds, basis, fetchedSources, richContent, jsonLd }) {
   const name    = city.name;
   const country = city.country;
   const adv     = ADVISORIES[country] || {};
@@ -349,9 +362,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -360,6 +375,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ ${esc(name)}</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=${key}" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -386,7 +402,7 @@ ${richContent ? richContent : `
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
-    ${sourcesHtml(basis)}
+    ${buildSourcesList(basis, fetchedSources)}
   </ul>
   <div class="meta-line">
     Last updated ${BUILD_DATE} &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities</a>
@@ -555,6 +571,7 @@ function buildSitemap(cityKeys) {
 
   const entries = [
     urlEntry(`${SITE}/`, '1.0'),
+    urlEntry(`${SITE}/about`, '0.7'),
     urlEntry(`${SITE}/method/`, '0.6'),
     ...cityKeys.map(k => urlEntry(`${SITE}/${k}`, '0.8')),
   ];
@@ -598,10 +615,154 @@ function buildRootJsonLd(cityCount) {
   }, null, 2);
 }
 
+// ── About / sources overview page ─────────────────────────────────────────────
+
+const COUNTRY_ORDER = ['br','mx','ar','co','pe','cl','ec','bo','ve','hn','gt','sv','ni','cr','pa','cu','do','pr','ht','uy','py'];
+
+function buildAboutPage() {
+  const title = 'Sources & Coverage — Latam Crime Map';
+  const desc  = 'Which sources power each city rating on Latam Crime Map: official government advisories, national crime statistics, and crime indices — all consolidated and linked per city.';
+
+  // Group cities by country, preserving country order
+  const byCountry = {};
+  for (const co of COUNTRY_ORDER) byCountry[co] = [];
+  for (const key of CITY_KEYS) {
+    const co = CITIES[key].country;
+    if (!byCountry[co]) byCountry[co] = [];
+    byCountry[co].push(key);
+  }
+
+  // Build per-country city blocks
+  const countryBlocks = COUNTRY_ORDER.map(co => {
+    const keys = byCountry[co];
+    if (!keys || !keys.length) return '';
+
+    const cityRows = keys.map(key => {
+      const city = CITIES[key];
+      const srcPath = path.join(SEO_DIR, 'sources', `${key}.json`);
+      let sources = [];
+      if (fs.existsSync(srcPath)) {
+        try { sources = JSON.parse(fs.readFileSync(srcPath, 'utf8')); } catch {}
+      }
+
+      const advisory  = sources.filter(s => s.source_class === 'advisory'   && s.url);
+      const crimeData = sources.filter(s => s.source_class === 'crime_data'  && s.url);
+
+      const srcLines = [...crimeData, ...advisory].map(s =>
+        `<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.source_name)}</a></li>`
+      ).join('');
+
+      const score  = cityScore(city);
+      const tier   = tierName(score);
+      const tColor = tierColor(score);
+
+      return `
+      <div class="city-row">
+        <div class="city-head">
+          <a href="${SITE}/${key}" class="city-link">${esc(city.name)}</a>
+          <span class="tier-pill" style="background:${tColor}">${esc(tier)}</span>
+        </div>
+        <ul class="src-list">${srcLines || '<li class="dim">advisory sources only — no direct stat API</li>'}</ul>
+      </div>`;
+    }).join('');
+
+    return `
+    <div class="country-block">
+      <h2>${esc(COUNTRY_NAMES[co] || co)}</h2>
+      ${cityRows}
+    </div>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}"/>
+<link rel="canonical" href="${SITE}/about"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Latam Crime Map"/>
+<meta property="og:title" content="${esc(title)}"/>
+<meta property="og:description" content="${esc(desc)}"/>
+<meta property="og:url" content="${SITE}/about"/>
+<meta property="og:image" content="${SITE}/og-image.png"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:#0d1426;color:#e8eef6;line-height:1.6}
+a{color:#1aa37c;text-decoration:none}
+a:hover{text-decoration:underline}
+.site-header{background:#0F6E56;padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-header a{color:#fff;font-weight:600;font-size:15px}
+.site-header .back{font-size:13px;opacity:.85}
+main{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:clamp(20px,4vw,28px);font-weight:700;margin-bottom:6px;color:#f0f4fa}
+.tagline{color:#7a8da8;font-size:14px;margin-bottom:24px}
+.meta-card{background:#101a2e;border:1px solid #1e2d48;border-radius:10px;padding:16px 18px;margin-bottom:28px}
+.meta-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.meta-card li{font-size:14px;color:#c8d6ea;padding-left:16px;position:relative}
+.meta-card li::before{content:"•";position:absolute;left:0;color:#1aa37c;font-weight:700}
+.meta-card a{color:#7db8e8}
+h2{font-size:15px;font-weight:700;color:#7a8da8;text-transform:uppercase;letter-spacing:.6px;
+  margin:28px 0 10px;border-bottom:1px solid #1e2d48;padding-bottom:6px}
+.city-row{margin-bottom:14px}
+.city-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.city-link{font-size:14px;font-weight:600;color:#e0eaf8}
+.city-link:hover{color:#1aa37c}
+.tier-pill{font-size:11px;font-weight:700;color:#0c1320;padding:1px 8px;border-radius:10px}
+.src-list{list-style:none;padding-left:14px;display:flex;flex-direction:column;gap:3px}
+.src-list li{font-size:12.5px;color:#7a8da8}
+.src-list li::before{content:"·";margin-right:5px;color:#3a4a6a}
+.src-list a{color:#7db8e8}
+.src-list a:hover{color:#a8d0f0}
+.dim{color:#4a5a78;font-style:italic}
+.meta-line{font-size:12px;color:#5b6c87;margin-top:28px;border-top:1px solid #1a2540;padding-top:12px}
+.meta-line a{color:#6b8ab0}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="back">← Latam Crime Map</a>
+  <span style="color:rgba(255,255,255,.4);font-size:13px">/ Sources &amp; Coverage</span>
+  <a href="/method/" style="margin-left:auto;font-size:13px;opacity:.85">Methodology →</a>
+</header>
+<main>
+  <h1>Sources &amp; Coverage</h1>
+  <p class="tagline">${CITY_KEYS.length} cities · ${COUNTRY_ORDER.length} countries · every rating traced to a named source</p>
+
+  <div class="meta-card">
+    <ul>
+      <li>Ratings are built from <strong>official government advisories</strong> (US State Dept, UK FCDO, Canada DFATD, Australia Smartraveller) plus <strong>official crime statistics</strong> where a direct API exists — never from world-knowledge alone.</li>
+      <li>Direct stat APIs wired: <strong>SSP-SP</strong> (São Paulo state), <strong>ISP-RJ</strong> (Rio), <strong>SNIC</strong> (Argentina — 5 cities), <strong>MinDefensa</strong> (Colombia — 7 cities), <strong>PDI Chile</strong> (Santiago, Valparaíso, Concepción), <strong>Uruguay OSP</strong> (Montevideo). World Bank / UNODC homicide rates cover all remaining countries.</li>
+      <li>All remaining cities use the <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener noreferrer">World Bank / UNODC national homicide indicator</a> (VC.IHR.PSRC.P5) as the crime-data baseline — explicitly noted as country-level, not city-specific.</li>
+      <li>Every source link below is live and fetchable — no editorial stubs, no fabricated numbers.</li>
+    </ul>
+  </div>
+
+  ${countryBlocks}
+
+  <div class="meta-line">
+    Last updated ${BUILD_DATE} &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities on map</a>
+  </div>
+</main>
+</body>
+</html>`;
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 function run() {
   let written = 0;
+
+  // About / sources overview page
+  if (!DRY) {
+    fs.writeFileSync(path.join(ROOT, 'about.html'), buildAboutPage());
+    console.log('  → about.html');
+    written++;
+  } else {
+    console.log('[dry] about.html');
+  }
 
   // Method page
   const methodDir = path.join(ROOT, 'method');
@@ -646,6 +807,11 @@ function run() {
     const prose   = tierProse(score, city.name, city.country);
     const ds      = districtSummary(city);
     const basis   = city.sources && city.sources.basis ? city.sources.basis : [];
+    const fetchedSrcPath = path.join(SEO_DIR, 'sources', `${key}.json`);
+    let fetchedSources = [];
+    if (fs.existsSync(fetchedSrcPath)) {
+      try { fetchedSources = JSON.parse(fs.readFileSync(fetchedSrcPath, 'utf8')); } catch {}
+    }
     const faq     = buildFAQ(city, key, score, ds);
     const jsonLd  = buildJsonLd(city, key, faq, score, basis);
 
@@ -656,16 +822,24 @@ function run() {
       try {
         const rich = JSON.parse(fs.readFileSync(richPath, 'utf8'));
         if (rich.verdict && rich.reconciliation) {
+          const proseItems = (rich.reconciliation || []).filter(r => !r.source_class);
+          const crimeItems = (rich.reconciliation || []).filter(r => r.source_class === 'crime_data');
+          let statsBlock = '';
+          if (crimeItems.length > 0) {
+            const bullets = crimeItems.map(r => `    <li>${esc(r.text)}</li>`).join('\n');
+            statsBlock = `\n  <h3>Official statistics</h3>\n  <ul class="sources-list stat-list">\n${bullets}\n  </ul>`;
+          }
           richContent = `
   <h2>What the sources say</h2>
   <p>${esc(rich.verdict.text)}</p>
-  ${(rich.reconciliation || []).map(r => `<p>${esc(r.text)}</p>`).join('')}
+  ${proseItems.map(r => `<p>${esc(r.text)}</p>`).join('\n  ')}
+  ${statsBlock}
   ${ds ? `<div>${districtHtml(ds, city.name)}</div>` : ''}`;
         }
       } catch (e) { /* malformed — fall through to limited */ }
     }
 
-    const html = cityPageHtml({ key, city, score, tier, tierCol, prose, faq, ds, basis, richContent, jsonLd });
+    const html = cityPageHtml({ key, city, score, tier, tierCol, prose, faq, ds, basis, fetchedSources, richContent, jsonLd });
 
     if (DRY) {
       console.log(`[dry] ${key}.html  (${tier}, ${ds ? ds.count + ' districts' : 'no districts'})`);

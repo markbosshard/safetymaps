@@ -10,7 +10,10 @@
       "text": "The main plaza (Parque Central), Central Park surroundings, and the tourist restaurant and hotel zone are genuinely accessible. Join guided tours for volcano ascents — do not hike independently. Travel between Antigua and Guatemala City should be with a reputable shuttle operator, not local bus."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Guatemala: 2023: 23.4/100k; 2022: 22.0/100k; 2021: 20.2/100k; 2020: 18.2/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Guatemala: 2023: 23.4/100k; 2022: 22.0/100k; 2021: 20.2/100k; 2020: 18.2/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Guatemala)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=GTM",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

@@ -10,7 +10,10 @@
       "text": "Stick to app-based rides; never flag down street taxis. Avoid the Tepito and La Merced neighbourhoods. The Metro is generally safe in major stations by day; avoid during late night. Most tourist sites — Zócalo, Chapultepec, Xochimilco, Frida Kahlo Museum — are accessible with vigilance. CDMX is very liveable for its risk score; the \"moderate\" rating reflects good tourist-district conditions."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Mexico: 2023: 24.9/100k; 2022: 25.9/100k; 2021: 28.0/100k; 2020: 29.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Mexico: 2023: 24.9/100k; 2022: 25.9/100k; 2021: 28.0/100k; 2020: 29.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Mexico)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

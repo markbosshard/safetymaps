@@ -150,9 +150,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -161,6 +163,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ Antigua Guatemala</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=antigua-guatemala" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -179,7 +182,13 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>Antigua Guatemala scores Moderate. This colonial city — Guatemala's most-visited tourist destination — has a far better security profile than Guatemala City. Tourist police patrol the cobblestone streets, and there is a visible security presence around the main plazas. All three advisories cover it under Guatemala's general elevated framework but do not issue city-specific escalation.</p>
-  <p>Petty theft is the main risk — pickpocketing in markets (Mercado de Artesanías) and on walks to viewpoints. Robbery on Cerro de la Cruz and the Agua volcano trail has been documented; armed guards now accompany most guided ascents. The road connection to Guatemala City carries its own risk after dark.</p><p>The main plaza (Parque Central), Central Park surroundings, and the tourist restaurant and hotel zone are genuinely accessible. Join guided tours for volcano ascents — do not hike independently. Travel between Antigua and Guatemala City should be with a reputable shuttle operator, not local bus.</p><p>Official statistics: World Bank / UNODC — national intentional homicide rate for Guatemala: 2023: 23.4/100k; 2022: 22.0/100k; 2021: 20.2/100k; 2020: 18.2/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>Petty theft is the main risk — pickpocketing in markets (Mercado de Artesanías) and on walks to viewpoints. Robbery on Cerro de la Cruz and the Agua volcano trail has been documented; armed guards now accompany most guided ascents. The road connection to Guatemala City carries its own risk after dark.</p>
+  <p>The main plaza (Parque Central), Central Park surroundings, and the tourist restaurant and hotel zone are genuinely accessible. Join guided tours for volcano ascents — do not hike independently. Travel between Antigua and Guatemala City should be with a reputable shuttle operator, not local bus.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>World Bank / UNODC — national intentional homicide rate for Guatemala: 2023: 23.4/100k; 2022: 22.0/100k; 2021: 20.2/100k; 2020: 18.2/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   <div><p>The live map shows <strong>14 mapped districts</strong> in Antigua Guatemala, all carrying the same overall safety rating. Explore them on the interactive map to see the geographic spread.</p></div>
 
   <h2>Common questions</h2>
@@ -203,6 +212,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/guatemala" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/guatemala-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/guatemala/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/guatemala" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=GTM" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Guatemala)</a></li>
     <li>Editorial travel-safety synthesis (US State Dept advisories, OSAC, Numbeo); districts inherit the city overall until crowd input or official data differentiates them</li>
   </ul>
   <div class="meta-line">

@@ -10,7 +10,16 @@
       "text": "Use Cabify or InDriver (vetted apps) for all transport; do not use yellow taxis or enter vehicles with strangers. Keep phones out of sight entirely — phone theft is pandemic. Chapinero Alto and Usaquén are the safest areas for evening dining. Avoid walking east of Carrera 7 in La Candelaria at any hour."
     },
     {
-      "text": "Official statistics: MinDefensa Colombia — homicidios en Bogotá: 2026: 454; 2025: 1186; 2024: 1214; 2023: 1084; 2022: 1017. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional. World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "MinDefensa Colombia — homicidios en Bogotá: 2026: 454; 2025: 1186; 2024: 1214; 2023: 1084; 2022: 1017. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional.",
+      "source_name": "Colombia MinDefensa — Homicidios (Bogotá)",
+      "source_url": "https://www.datos.gov.co/resource/m8fd-ahd9",
+      "source_class": "crime_data"
+    },
+    {
+      "text": "World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Colombia)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

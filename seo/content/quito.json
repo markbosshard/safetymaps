@@ -10,7 +10,10 @@
       "text": "Stay in La Carolina, Quito Norte (González Suárez corridor), or Cumbayá valley for lower risk. The Centro Histórico requires a guide or organised tour — do not explore independently. Avoid La Mariscal at night. Use only app-based transport. Ecuador's security situation has deteriorated faster than most destination guides acknowledge — use current advisories."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Ecuador: 2023: 45.7/100k; 2022: 27.4/100k; 2021: 14.1/100k; 2020: 7.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Ecuador: 2023: 45.7/100k; 2022: 27.4/100k; 2021: 14.1/100k; 2020: 7.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Ecuador)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ECU",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

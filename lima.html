@@ -164,9 +164,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -175,6 +177,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ Lima</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=lima" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -193,7 +196,13 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>Lima scores Moderate overall, with significant variation between the coastal Miraflores/Barranco/San Isidro tourist triangle and the wider city. The tourist-facing districts are genuinely manageable with precautions; large parts of Lima Metropolitana (Comas, Villa El Salvador, San Juan de Lurigancho) carry much higher risk. All three advisories flag Peru at elevated caution.</p>
-  <p>Express kidnapping, phone theft, and robbery are well-documented in tourist areas including Miraflores waterfront (the Larcomar area). Fake taxis are a serious safety concern — all advisories specifically warn against street taxis. Pickpocketing is common on public transport and in the historic centre.</p><p>Stay in Miraflores or Barranco; day trips to Centro Histórico (Plaza Mayor, Larco Museum area) should use vetted apps for transport. Avoid San Juan de Miraflores, Villa María del Triunfo, and Comas. Do not use street taxis under any circumstances. The Lima tourist experience is very manageable when confined to the safe-zone districts.</p><p>Official statistics: World Bank / UNODC — national intentional homicide rate for Peru: 2021: 8.6/100k; 2020: 5.8/100k; 2019: 7.3/100k; 2018: 7.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>Express kidnapping, phone theft, and robbery are well-documented in tourist areas including Miraflores waterfront (the Larcomar area). Fake taxis are a serious safety concern — all advisories specifically warn against street taxis. Pickpocketing is common on public transport and in the historic centre.</p>
+  <p>Stay in Miraflores or Barranco; day trips to Centro Histórico (Plaza Mayor, Larco Museum area) should use vetted apps for transport. Avoid San Juan de Miraflores, Villa María del Triunfo, and Comas. Do not use street taxis under any circumstances. The Lima tourist experience is very manageable when confined to the safe-zone districts.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>World Bank / UNODC — national intentional homicide rate for Peru: 2021: 8.6/100k; 2020: 5.8/100k; 2019: 7.3/100k; 2018: 7.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   <div>
     <p>The map covers <strong>47 districts</strong> with differentiated risk ratings:</p>
     <div class="district-bands">
@@ -233,6 +242,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/peru" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/peru-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/peru/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/peru" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Peru)</a></li>
     <li><a href="https://www.osac.gov/Country/Peru" rel="noopener noreferrer" target="_blank">OSAC — Peru</a></li>
     <li>Tiers: editorial travel-safety synthesis (advisories + traveller guidance)</li>
   </ul>

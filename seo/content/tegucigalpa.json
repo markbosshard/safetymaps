@@ -10,7 +10,10 @@
       "text": "If visiting Honduras for family connections or essential business, use hotel-arranged vetted transport for all movements, never travel alone, avoid all transport after dark, and maintain constant contact with a local host. Leisure travel to Tegucigalpa is not recommended; most international tourists access Honduras via La Ceiba or Roatán for the Bay Islands."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Honduras: 2023: 31.4/100k; 2022: 35.0/100k; 2021: 38.2/100k; 2020: 35.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Honduras: 2023: 31.4/100k; 2022: 35.0/100k; 2021: 38.2/100k; 2020: 35.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Honduras)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=HND",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

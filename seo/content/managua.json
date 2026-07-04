@@ -10,7 +10,10 @@
       "text": "If visiting Nicaragua, exercise extreme caution about any political expression, photography of security forces or government buildings, and interaction with anyone involved in opposition activities. The physical safety from violent crime is better than most regional neighbours, but the political risk is qualitatively different."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Nicaragua: 2021: 11.3/100k; 2019: 7.9/100k; 2018: 10.7/100k; 2017: 6.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Nicaragua: 2021: 11.3/100k; 2019: 7.9/100k; 2018: 10.7/100k; 2017: 6.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Nicaragua)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=NIC",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

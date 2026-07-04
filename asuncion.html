@@ -150,9 +150,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -161,6 +163,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ Asunción</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=asuncion" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -179,7 +182,13 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>Asunción scores Caution. Paraguay's capital has a mixed safety profile — manageable in the historical centre and Barrio Villa Morra commercial zone, with higher risk in peripheral areas. All three advisories place Paraguay at elevated caution, with some noting the border regions with Brazil and Argentina as particularly problematic for organised crime.</p>
-  <p>Petty theft and robbery occur in the historic centre and around the bus terminal. Some express kidnapping incidents are documented. Paraguay is a significant contraband corridor (electronics, fuel, counterfeit goods) and the criminal networks that support this create an elevated backdrop to urban crime.</p><p>The Barrio Villa Morra and Carmelitas commercial districts are safer for visitors. The historic centre is accessible by day. Avoid the bus terminal area at night and all peripheral barrios. The main concern for transit visitors is organised crime infrastructure rather than street-level violence.</p><p>Official statistics: World Bank / UNODC — national intentional homicide rate for Paraguay: 2023: 6.8/100k; 2022: 7.6/100k; 2021: 7.9/100k; 2020: 7.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>Petty theft and robbery occur in the historic centre and around the bus terminal. Some express kidnapping incidents are documented. Paraguay is a significant contraband corridor (electronics, fuel, counterfeit goods) and the criminal networks that support this create an elevated backdrop to urban crime.</p>
+  <p>The Barrio Villa Morra and Carmelitas commercial districts are safer for visitors. The historic centre is accessible by day. Avoid the bus terminal area at night and all peripheral barrios. The main concern for transit visitors is organised crime infrastructure rather than street-level violence.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>World Bank / UNODC — national intentional homicide rate for Paraguay: 2023: 6.8/100k; 2022: 7.6/100k; 2021: 7.9/100k; 2020: 7.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   <div><p>The live map shows <strong>16 mapped districts</strong> in Asunción, all carrying the same overall safety rating. Explore them on the interactive map to see the geographic spread.</p></div>
 
   <h2>Common questions</h2>
@@ -203,6 +212,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/paraguay" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/paraguay-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/paraguay/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/paraguay" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PRY" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Paraguay)</a></li>
     <li>Tiers: editorial travel-safety synthesis (OSAC/advisories); municipios without a curated tier inherit the city overall</li>
   </ul>
   <div class="meta-line">

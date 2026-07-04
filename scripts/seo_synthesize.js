@@ -542,9 +542,15 @@ for (const [key, content] of Object.entries(CONTENT)) {
     try {
       const sources = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
       const crimeData = sources.filter(s => s.source_class === 'crime_data' && s.excerpt);
-      if (crimeData.length > 0) {
-        const dataNote = crimeData.map(s => s.excerpt).join(' ');
-        content.reconciliation.push({ text: `Official statistics: ${dataNote}` });
+      for (const src of crimeData) {
+        content.reconciliation.push({
+          text: src.excerpt,
+          source_name: src.source_name,
+          source_url: src.url,
+          source_class: 'crime_data',
+        });
+      }
+      if (crimeData.length) {
         content.sources_used = [...(content.sources_used || []), ...crimeData.map(s => s.id)];
       }
     } catch (e) { /* ignore malformed source files */ }

@@ -164,9 +164,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -175,6 +177,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ Bogotá</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=bogota" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -193,7 +196,14 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>Bogotá scores Caution. The capital functions at two speeds: the tourist and business zones (La Candelaria historic centre by day, Chapinero, Zona Rosa, Usaquén) are manageable with precautions; the peripheral localidades (Bosa, Kennedy south of Transmilenio, Ciudad Bolívar) carry significantly elevated risk. Express kidnapping and scopolamine drugging are documented concerns for tourists.</p>
-  <p>Transmilenio (BRT) and public bus use carry high theft risk; advisories recommend ride-hailing apps for all movement. La Candelaria is accessible by day but should be exited before dark. The Zona Rosa (Parque 93, Andino mall area) is the most tourist-comfortable zone with good security.</p><p>Use Cabify or InDriver (vetted apps) for all transport; do not use yellow taxis or enter vehicles with strangers. Keep phones out of sight entirely — phone theft is pandemic. Chapinero Alto and Usaquén are the safest areas for evening dining. Avoid walking east of Carrera 7 in La Candelaria at any hour.</p><p>Official statistics: MinDefensa Colombia — homicidios en Bogotá: 2026: 454; 2025: 1186; 2024: 1214; 2023: 1084; 2022: 1017. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional. World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>Transmilenio (BRT) and public bus use carry high theft risk; advisories recommend ride-hailing apps for all movement. La Candelaria is accessible by day but should be exited before dark. The Zona Rosa (Parque 93, Andino mall area) is the most tourist-comfortable zone with good security.</p>
+  <p>Use Cabify or InDriver (vetted apps) for all transport; do not use yellow taxis or enter vehicles with strangers. Keep phones out of sight entirely — phone theft is pandemic. Chapinero Alto and Usaquén are the safest areas for evening dining. Avoid walking east of Carrera 7 in La Candelaria at any hour.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>MinDefensa Colombia — homicidios en Bogotá: 2026: 454; 2025: 1186; 2024: 1214; 2023: 1084; 2022: 1017. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional.</li>
+    <li>World Bank / UNODC — national intentional homicide rate for Colombia: 2023: 24.9/100k; 2022: 24.9/100k; 2021: 25.6/100k; 2020: 22.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   <div>
     <p>The map covers <strong>18 districts</strong> with differentiated risk ratings:</p>
     <div class="district-bands">
@@ -233,6 +243,12 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/colombia" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" rel="noopener noreferrer" target="_blank">Colombia MinDefensa — Homicidios (Bogotá)</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Colombia)</a></li>
     <li>SDSCJ — Secretaría Distrital de Seguridad, Convivencia y Justicia</li>
     <li><a href="https://www.osac.gov/Country/Colombia" rel="noopener noreferrer" target="_blank">OSAC — Colombia</a></li>
   </ul>

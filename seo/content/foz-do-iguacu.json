@@ -10,7 +10,10 @@
       "text": "For the falls, stay near the park entrance hotels. Do not cross into Ciudad del Este without a specific purpose and local knowledge. Avoid the border area after dark. Puerto Iguazú (Argentine side) is notably safer than the Brazilian or Paraguayan sides."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Brazil)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

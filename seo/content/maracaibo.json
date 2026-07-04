@@ -10,7 +10,10 @@
       "text": "The same guidance as Caracas applies: no leisure travel, specialist security arrangements if essential, constant emergency contact, and an extraction plan. Maracaibo is even less prepared to receive foreign visitors than Caracas due to infrastructure collapse."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Venezuela, RB)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

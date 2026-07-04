@@ -142,9 +142,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -153,6 +155,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ Maracaibo</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=maracaibo" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -171,7 +174,13 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>Maracaibo scores 9.0 — Avoid. Venezuela's second city sits in Zulia state, which has high gang activity and has experienced some of the most extreme deprivation from Venezuela's infrastructure collapse (most-referenced example: power outages lasting days). Crime, kidnapping, and armed robbery are at comparable levels to Caracas.</p>
-  <p>The city has gang warfare connected to Colombia border smuggling routes and fuel theft networks. Infrastructure collapse (power, water, fuel) adds a safety dimension beyond violent crime — medical emergencies cannot be reliably responded to. All three advisories cover Venezuela at Do Not Travel level.</p><p>The same guidance as Caracas applies: no leisure travel, specialist security arrangements if essential, constant emergency contact, and an extraction plan. Maracaibo is even less prepared to receive foreign visitors than Caracas due to infrastructure collapse.</p><p>Official statistics: World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>The city has gang warfare connected to Colombia border smuggling routes and fuel theft networks. Infrastructure collapse (power, water, fuel) adds a safety dimension beyond violent crime — medical emergencies cannot be reliably responded to. All three advisories cover Venezuela at Do Not Travel level.</p>
+  <p>The same guidance as Caracas applies: no leisure travel, specialist security arrangements if essential, constant emergency contact, and an extraction plan. Maracaibo is even less prepared to receive foreign visitors than Caracas due to infrastructure collapse.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   
 
   <h2>Common questions</h2>
@@ -191,6 +200,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/venezuela" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li>
     <li>Editorial travel-safety synthesis (US State Dept advisories, OSAC, Numbeo)</li>
   </ul>
   <div class="meta-line">

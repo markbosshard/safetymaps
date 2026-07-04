@@ -10,7 +10,10 @@
       "text": "The Zona Rosa, San Benito, and Colonia Escalón are appropriate for standard tourist activity. The historic centre is accessible by day. Exercise normal urban precautions — apps for transport, secure valuables. The dramatic improvement since 2021 may not yet be reflected in older travel guides; current government advisories (2024-25) are the right reference."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for El Salvador: 2022: 7.9/100k; 2021: 17.3/100k; 2020: 21.5/100k; 2019: 38.5/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for El Salvador: 2022: 7.9/100k; 2021: 17.3/100k; 2020: 21.5/100k; 2019: 38.5/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (El Salvador)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=SLV",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

@@ -10,7 +10,10 @@
       "text": "If visiting for the beaches, stay in Ponta Verde or Jatiúca hotels and restrict activity to the beachfront strip. Do not walk between hotels and beach at night — use apps. The wider city, including the commercial centre and all inland bairros, should be avoided by tourists."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Brazil)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

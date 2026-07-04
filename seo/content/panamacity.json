@@ -10,7 +10,10 @@
       "text": "Stay in Casco Viejo, Punta Paitilla, or Marbella for a safer experience. Do not walk from Casco Viejo into El Chorillo under any circumstances — the boundary is a one-block change from tourist to extremely high-risk. Use apps for all transport. The Canal (Miraflores Locks) and Biomuseo are safe daytime destinations with organised transport."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Panama: 2023: 11.7/100k; 2022: 11.3/100k; 2021: 12.7/100k; 2020: 11.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Panama: 2023: 11.7/100k; 2022: 11.3/100k; 2021: 12.7/100k; 2020: 11.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Panama)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PAN",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

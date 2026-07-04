@@ -10,7 +10,10 @@
       "text": "Business visitors to Santa Cruz should stay in Equipetrol or Norte. Use vetted transport. Do not walk in peripheral or market areas at night. The city is Bolivia's economic gateway and is used by many as a transit hub for the Amazon and Pantanal."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Bolivia: 2023: 4.4/100k; 2022: 4.0/100k; 2021: 3.5/100k; 2020: 3.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Bolivia: 2023: 4.4/100k; 2022: 4.0/100k; 2021: 3.5/100k; 2020: 3.6/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Bolivia)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BOL",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

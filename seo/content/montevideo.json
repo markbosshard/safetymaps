@@ -10,7 +10,10 @@
       "text": "Montevideo is an excellent destination for independent travel. Ciudad Vieja, Palermo, and Punta Carretas are all walkable by day and into the evening. Use standard urban precautions. This is the most relaxed major city on the list — enjoy it."
     },
     {
-      "text": "Official statistics: OSP Uruguay — homicidios dolosos en MONTEVIDEO (departamento): 2026 Q1: 44. 2025: 211. 2024: 233. Fuente: Observatorio Nacional de Violencia, Ministerio del Interior — datos.gub.uy."
+      "text": "OSP Uruguay — homicidios dolosos en MONTEVIDEO (departamento): 2026 Q1: 44. 2025: 211. 2024: 233. Fuente: Observatorio Nacional de Violencia, Ministerio del Interior — datos.gub.uy.",
+      "source_name": "OSP Uruguay — Homicidios Dolosos (MONTEVIDEO)",
+      "source_url": "https://www.gub.uy/ministerio-interior/datos-y-estadisticas/datos-abiertos",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

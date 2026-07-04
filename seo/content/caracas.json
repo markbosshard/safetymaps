@@ -10,7 +10,10 @@
       "text": "No part of Caracas is appropriate for leisure or independent tourism. If visiting for compelling family or humanitarian reasons, pre-arrange security through a specialist firm, use bulletproof vehicle transfers, stay in compound accommodation, never travel at night, and have an embassy contact and extraction plan active throughout. Do not attempt this without current local support."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Venezuela, RB: 2022: 12.6/100k; 2021: 19.3/100k; 2020: 29.5/100k; 2019: 41.0/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Venezuela, RB)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

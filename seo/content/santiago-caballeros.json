@@ -10,7 +10,10 @@
       "text": "Exercise standard Dominican caution: apps for transport, valuables secured, avoid walking alone at night in the centro and market areas. The Jardines Metropolitano and commercial north zone are the more manageable parts of the city."
     },
     {
-      "text": "Official statistics: World Bank / UNODC — national intentional homicide rate for Dominican Republic: 2023: 10.9/100k; 2022: 12.4/100k; 2021: 10.5/100k; 2020: 8.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+      "text": "World Bank / UNODC — national intentional homicide rate for Dominican Republic: 2023: 10.9/100k; 2022: 12.4/100k; 2021: 10.5/100k; 2020: 8.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.",
+      "source_name": "World Bank — Intentional Homicides per 100k (Dominican Republic)",
+      "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=DOM",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sources &amp; Coverage — Latam Crime Map</title>
+<meta name="description" content="Which sources power each city rating on Latam Crime Map: official government advisories, national crime statistics, and crime indices — all consolidated and linked per city."/>
+<link rel="canonical" href="https://latamcrimemap.com/about"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Latam Crime Map"/>
+<meta property="og:title" content="Sources &amp; Coverage — Latam Crime Map"/>
+<meta property="og:description" content="Which sources power each city rating on Latam Crime Map: official government advisories, national crime statistics, and crime indices — all consolidated and linked per city."/>
+<meta property="og:url" content="https://latamcrimemap.com/about"/>
+<meta property="og:image" content="https://latamcrimemap.com/og-image.png"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:#0d1426;color:#e8eef6;line-height:1.6}
+a{color:#1aa37c;text-decoration:none}
+a:hover{text-decoration:underline}
+.site-header{background:#0F6E56;padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-header a{color:#fff;font-weight:600;font-size:15px}
+.site-header .back{font-size:13px;opacity:.85}
+main{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:clamp(20px,4vw,28px);font-weight:700;margin-bottom:6px;color:#f0f4fa}
+.tagline{color:#7a8da8;font-size:14px;margin-bottom:24px}
+.meta-card{background:#101a2e;border:1px solid #1e2d48;border-radius:10px;padding:16px 18px;margin-bottom:28px}
+.meta-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.meta-card li{font-size:14px;color:#c8d6ea;padding-left:16px;position:relative}
+.meta-card li::before{content:"•";position:absolute;left:0;color:#1aa37c;font-weight:700}
+.meta-card a{color:#7db8e8}
+h2{font-size:15px;font-weight:700;color:#7a8da8;text-transform:uppercase;letter-spacing:.6px;
+  margin:28px 0 10px;border-bottom:1px solid #1e2d48;padding-bottom:6px}
+.city-row{margin-bottom:14px}
+.city-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.city-link{font-size:14px;font-weight:600;color:#e0eaf8}
+.city-link:hover{color:#1aa37c}
+.tier-pill{font-size:11px;font-weight:700;color:#0c1320;padding:1px 8px;border-radius:10px}
+.src-list{list-style:none;padding-left:14px;display:flex;flex-direction:column;gap:3px}
+.src-list li{font-size:12.5px;color:#7a8da8}
+.src-list li::before{content:"·";margin-right:5px;color:#3a4a6a}
+.src-list a{color:#7db8e8}
+.src-list a:hover{color:#a8d0f0}
+.dim{color:#4a5a78;font-style:italic}
+.meta-line{font-size:12px;color:#5b6c87;margin-top:28px;border-top:1px solid #1a2540;padding-top:12px}
+.meta-line a{color:#6b8ab0}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="back">← Latam Crime Map</a>
+  <span style="color:rgba(255,255,255,.4);font-size:13px">/ Sources &amp; Coverage</span>
+  <a href="/method/" style="margin-left:auto;font-size:13px;opacity:.85">Methodology →</a>
+</header>
+<main>
+  <h1>Sources &amp; Coverage</h1>
+  <p class="tagline">96 cities · 21 countries · every rating traced to a named source</p>
+
+  <div class="meta-card">
+    <ul>
+      <li>Ratings are built from <strong>official government advisories</strong> (US State Dept, UK FCDO, Canada DFATD, Australia Smartraveller) plus <strong>official crime statistics</strong> where a direct API exists — never from world-knowledge alone.</li>
+      <li>Direct stat APIs wired: <strong>SSP-SP</strong> (São Paulo state), <strong>ISP-RJ</strong> (Rio), <strong>SNIC</strong> (Argentina — 5 cities), <strong>MinDefensa</strong> (Colombia — 7 cities), <strong>PDI Chile</strong> (Santiago, Valparaíso, Concepción), <strong>Uruguay OSP</strong> (Montevideo). World Bank / UNODC homicide rates cover all remaining countries.</li>
+      <li>All remaining cities use the <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener noreferrer">World Bank / UNODC national homicide indicator</a> (VC.IHR.PSRC.P5) as the crime-data baseline — explicitly noted as country-level, not city-specific.</li>
+      <li>Every source link below is live and fetchable — no editorial stubs, no fabricated numbers.</li>
+    </ul>
+  </div>
+
+  
+    <div class="country-block">
+      <h2>Brazil</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sao-paulo" class="city-link">São Paulo</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ssp.sp.gov.br/estatistica/dados-mensais" target="_blank" rel="noopener noreferrer">SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Capital)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/rio-de-janeiro" class="city-link">Rio de Janeiro</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ispdados.rj.gov.br/" target="_blank" rel="noopener noreferrer">ISP-RJ — Instituto de Segurança Pública do Rio de Janeiro (Rio de Janeiro)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/brasilia" class="city-link">Brasília</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/belohorizonte" class="city-link">Belo Horizonte</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/recife" class="city-link">Recife</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/fortaleza" class="city-link">Fortaleza</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/salvador" class="city-link">Salvador</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/manaus" class="city-link">Manaus</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/curitiba" class="city-link">Curitiba</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/campinas" class="city-link">Campinas</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ssp.sp.gov.br/estatistica/dados-mensais" target="_blank" rel="noopener noreferrer">SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Campinas)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/goiania" class="city-link">Goiânia</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/belem" class="city-link">Belém</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/maceio" class="city-link">Maceió</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/vitoria" class="city-link">Vitória</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santarem" class="city-link">Santarém</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/florianopolis" class="city-link">Florianópolis</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/foz-do-iguacu" class="city-link">Foz do Iguaçu</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/porto-alegre" class="city-link">Porto Alegre</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santos" class="city-link">Santos</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ssp.sp.gov.br/estatistica/dados-mensais" target="_blank" rel="noopener noreferrer">SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Santos)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sorocaba" class="city-link">Sorocaba</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ssp.sp.gov.br/estatistica/dados-mensais" target="_blank" rel="noopener noreferrer">SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Sorocaba)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/ribeirao-preto" class="city-link">Ribeirão Preto</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.ssp.sp.gov.br/estatistica/dados-mensais" target="_blank" rel="noopener noreferrer">SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Ribeirão Preto)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sao-luis" class="city-link">São Luís</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/natal" class="city-link">Natal</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/joao-pessoa" class="city-link">João Pessoa</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/teresina" class="city-link">Teresina</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/joinville" class="city-link">Joinville</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/londrina" class="city-link">Londrina</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cuiaba" class="city-link">Cuiabá</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/aracaju" class="city-link">Aracaju</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Brazil)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/brazil" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/brazil" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Mexico</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/mexico-city" class="city-link">Mexico City</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/guadalajara" class="city-link">Guadalajara</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/monterrey" class="city-link">Monterrey</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/puebla" class="city-link">Puebla</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/merida" class="city-link">Mérida</a>
+          <span class="tier-pill" style="background:#16b87f">Safe</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/tijuana" class="city-link">Tijuana</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/ciudadjuarez" class="city-link">Ciudad Juárez</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/toluca" class="city-link">Toluca</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/torreon" class="city-link">Torreón</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/saltillo" class="city-link">Saltillo</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sanluispotosi" class="city-link">San Luis Potosí</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/aguascalientes" class="city-link">Aguascalientes</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cuernavaca" class="city-link">Cuernavaca</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/mexicali" class="city-link">Mexicali</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/queretaro" class="city-link">Querétaro</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/leon" class="city-link">León</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cancun" class="city-link">Cancún</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/los-cabos" class="city-link">Los Cabos</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/oaxaca-city" class="city-link">Oaxaca City</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/playa-del-carmen" class="city-link">Playa del Carmen</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/puerto-vallarta" class="city-link">Puerto Vallarta</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/culiacan" class="city-link">Culiacán</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Mexico)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/mexico" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/mexico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Argentina</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/buenos-aires" class="city-link">Buenos Aires</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.argentina.gob.ar/seguridad/snic/datos" target="_blank" rel="noopener noreferrer">SNIC — Sistema Nacional de Información Criminal (CABA)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Argentina)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/argentina" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/argentina" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cordoba" class="city-link">Córdoba</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.argentina.gob.ar/seguridad/snic/datos" target="_blank" rel="noopener noreferrer">SNIC — Sistema Nacional de Información Criminal (Córdoba)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Argentina)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/argentina" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/argentina" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/rosario" class="city-link">Rosario</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.argentina.gob.ar/seguridad/snic/datos" target="_blank" rel="noopener noreferrer">SNIC — Sistema Nacional de Información Criminal (Santa Fe)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Argentina)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/argentina" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/argentina" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/mendoza" class="city-link">Mendoza</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.argentina.gob.ar/seguridad/snic/datos" target="_blank" rel="noopener noreferrer">SNIC — Sistema Nacional de Información Criminal (Mendoza)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Argentina)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/argentina" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/argentina" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/bariloche" class="city-link">Bariloche</a>
+          <span class="tier-pill" style="background:#16b87f">Safe</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.argentina.gob.ar/seguridad/snic/datos" target="_blank" rel="noopener noreferrer">SNIC — Sistema Nacional de Información Criminal (Río Negro)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ARG" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Argentina)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/argentina" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/argentina/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/argentina" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Colombia</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/medellin" class="city-link">Medellín</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Medellín)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/bogota" class="city-link">Bogotá</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Bogotá)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cali" class="city-link">Cali</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Cali)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cartagena" class="city-link">Cartagena</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Cartagena)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/bucaramanga" class="city-link">Bucaramanga</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Bucaramanga)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/barranquilla" class="city-link">Barranquilla</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Barranquilla)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cucuta" class="city-link">Cúcuta</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.datos.gov.co/resource/m8fd-ahd9" target="_blank" rel="noopener noreferrer">Colombia MinDefensa — Homicidios (Cúcuta)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=COL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Colombia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/colombia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/colombia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/colombia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Peru</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/lima" class="city-link">Lima</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Peru)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/peru" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/peru-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/peru/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/peru" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/arequipa" class="city-link">Arequipa</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Peru)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/peru" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/peru-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/peru/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/peru" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cusco" class="city-link">Cusco</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Peru)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/peru" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/peru-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/peru/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/peru" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/trujillo" class="city-link">Trujillo</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Peru)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/peru" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/peru-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/peru/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/peru" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Chile</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santiago" class="city-link">Santiago</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18" target="_blank" rel="noopener noreferrer">PDI Chile — Estadísticas Policiales (Santiago)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CHL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Chile)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/chile" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/chile-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/chile/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/chile" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/valparaiso" class="city-link">Valparaíso</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18" target="_blank" rel="noopener noreferrer">PDI Chile — Estadísticas Policiales (Valparaíso)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CHL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Chile)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/chile" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/chile-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/chile/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/chile" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/concepcion" class="city-link">Concepción</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18" target="_blank" rel="noopener noreferrer">PDI Chile — Estadísticas Policiales (Concepción)</a></li><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CHL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Chile)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/chile" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/chile-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/chile/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/chile" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Ecuador</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/quito" class="city-link">Quito</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ECU" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Ecuador)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/ecuador" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/ecuador-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/ecuador/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/ecuador" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/guayaquil" class="city-link">Guayaquil</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=ECU" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Ecuador)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/ecuador" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/ecuador-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/ecuador/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/ecuador" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Bolivia</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/lapaz" class="city-link">La Paz</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BOL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Bolivia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/bolivia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/bolivia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/bolivia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/bolivia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/cochabamba" class="city-link">Cochabamba</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BOL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Bolivia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/bolivia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/bolivia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/bolivia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/bolivia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santa-cruz" class="city-link">Santa Cruz de la Sierra</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BOL" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Bolivia)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/bolivia" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/bolivia-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/bolivia/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/bolivia" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Venezuela</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/maracay" class="city-link">Maracay</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/venezuela" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/caracas" class="city-link">Caracas</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/venezuela" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/maracaibo" class="city-link">Maracaibo</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/venezuela" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/valencia-ve" class="city-link">Valencia</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/venezuela" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/barquisimeto" class="city-link">Barquisimeto</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=VEN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Venezuela, RB)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/venezuela" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/venezuela-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/venezuela/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/venezuela" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Honduras</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/tegucigalpa" class="city-link">Tegucigalpa</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=HND" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Honduras)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/honduras" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/honduras-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/honduras/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/honduras" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/san-pedro-sula" class="city-link">San Pedro Sula</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=HND" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Honduras)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/honduras" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/honduras-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/honduras/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/honduras" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Guatemala</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/guatemalacity" class="city-link">Guatemala City</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=GTM" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Guatemala)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/guatemala" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/guatemala-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/guatemala/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/guatemala" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/antigua-guatemala" class="city-link">Antigua Guatemala</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=GTM" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Guatemala)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/guatemala" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/guatemala-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/guatemala/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/guatemala" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>El Salvador</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sansalvador" class="city-link">San Salvador</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=SLV" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (El Salvador)</a></li><li><a href="https://www.osac.gov/Country/El-Salvador/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/el-salvador" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/el-salvador-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/el-salvador/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/el-salvador" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Nicaragua</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/managua" class="city-link">Managua</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=NIC" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Nicaragua)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/nicaragua" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/nicaragua-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/nicaragua/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/nicaragua" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Costa Rica</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/sanjose" class="city-link">San José</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CRI" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Costa Rica)</a></li><li><a href="https://www.osac.gov/Country/Costa-Rica/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/costa-rica" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/costa-rica-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/costa-rica/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/costa-rica" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Panama</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/panamacity" class="city-link">Panama City</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PAN" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Panama)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/panama" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/panama-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/panama/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/panama" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Cuba</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/havana" class="city-link">Havana</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CUB" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Cuba)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/cuba" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/cuba-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/cuba/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/cuba" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Dominican Republic</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santodomingo" class="city-link">Santo Domingo</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=DOM" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Dominican Republic)</a></li><li><a href="https://www.osac.gov/Country/Dominican-Republic/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/dominican-republic" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/dominican-republic-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/dominican-republic/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/dominican-republic" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/punta-cana" class="city-link">Punta Cana</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=DOM" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Dominican Republic)</a></li><li><a href="https://www.osac.gov/Country/Dominican-Republic/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/dominican-republic" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/dominican-republic-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/dominican-republic/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/dominican-republic" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/santiago-caballeros" class="city-link">Santiago de los Caballeros</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=DOM" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Dominican Republic)</a></li><li><a href="https://www.osac.gov/Country/Dominican-Republic/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/dominican-republic" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/dominican-republic-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/dominican-republic/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/dominican-republic" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Puerto Rico</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/san-juan" class="city-link">San Juan</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PRI" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Puerto Rico (US))</a></li><li><a href="https://www.osac.gov/Country/Puerto-Rico/Content" target="_blank" rel="noopener noreferrer">OSAC — Overseas Security Advisory Council</a></li><li><a href="https://travel.gc.ca/destinations/puerto-rico" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Haiti</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/port-au-prince" class="city-link">Port-au-Prince</a>
+          <span class="tier-pill" style="background:#c83233">Avoid</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=HTI" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Haiti)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/haiti" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/haiti-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/haiti/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/haiti" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Uruguay</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/montevideo" class="city-link">Montevideo</a>
+          <span class="tier-pill" style="background:#d6b609">Moderate</span>
+        </div>
+        <ul class="src-list"><li><a href="https://www.gub.uy/ministerio-interior/datos-y-estadisticas/datos-abiertos" target="_blank" rel="noopener noreferrer">OSP Uruguay — Homicidios Dolosos (MONTEVIDEO)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/uruguay" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/uruguay-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/uruguay/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/uruguay" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+    <div class="country-block">
+      <h2>Paraguay</h2>
+      
+      <div class="city-row">
+        <div class="city-head">
+          <a href="https://latamcrimemap.com/asuncion" class="city-link">Asunción</a>
+          <span class="tier-pill" style="background:#f38b10">Caution</span>
+        </div>
+        <ul class="src-list"><li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PRY" target="_blank" rel="noopener noreferrer">World Bank — Intentional Homicides per 100k (Paraguay)</a></li><li><a href="https://www.smartraveller.gov.au/destinations/americas/paraguay" target="_blank" rel="noopener noreferrer">Australia DFAT Smartraveller — Safety</a></li><li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/paraguay-travel-advisory.html" target="_blank" rel="noopener noreferrer">US State Department Travel Advisory</a></li><li><a href="https://www.gov.uk/foreign-travel-advice/paraguay/safety-and-security" target="_blank" rel="noopener noreferrer">UK FCDO Travel Advice — Safety and Security</a></li><li><a href="https://travel.gc.ca/destinations/paraguay" target="_blank" rel="noopener noreferrer">Canada DFATD Travel Advice</a></li></ul>
+      </div>
+    </div>
+
+  <div class="meta-line">
+    Last updated 2026-07-04 &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities on map</a>
+  </div>
+</main>
+</body>
+</html>

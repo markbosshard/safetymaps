@@ -150,9 +150,11 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 .risk-band .band-label{color:#f38b10}
 .district-note{font-size:13px;color:#6b7d9a;margin-top:8px}
 .sources-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sources-list li{font-size:14px}
+.sources-list li{font-size:14px;color:#c8d6ea}
 .sources-list a{color:#7db8e8}
 .sources-list a:hover{color:#a8d0f0}
+.stat-list{gap:10px}
+.stat-list li{font-size:14px;padding-left:12px;border-left:2px solid #263654}
 .meta-line{font-size:13px;color:#5b6c87;margin-top:20px;border-top:1px solid #1a2540;padding-top:14px}
 .meta-line a{color:#6b8ab0}
 </style>
@@ -161,6 +163,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 <header class="site-header">
   <a href="/" class="back">← Latam Crime Map</a>
   <span style="color:rgba(255,255,255,.4);font-size:13px">/ San José</span>
+  <a href="/about" style="font-size:13px;opacity:.8">Sources</a>
   <a href="/?city=sanjose" class="live-link">Open live map →</a>
 </header>
 <main>
@@ -179,7 +182,13 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>What the sources say</h2>
   <p>San José scores Caution. Costa Rica's capital is the country's most dangerous area despite the country's peaceful reputation. All three advisories note that crime in the greater San José area is significantly higher than elsewhere in Costa Rica, with pick-pocketing, robbery, and some carjacking documented.</p>
-  <p>The Barrio Chino (Chinatown), Mercado Central, La Merced church area, and the Zona Roja (red light district) carry high theft and robbery risk. La Sabana park and Escazú are safer. Public bus use carries substantial theft risk — robberies on buses are frequently reported.</p><p>Most tourists use San José only as a gateway; minimise urban dwell time. Stay in Escazú, Los Yoses, or Barrio Amón for lower risk. Use apps or pre-booked shuttles for all transport. Costa Rica's appeal is its national parks — the capital doesn't need to be the focus.</p><p>Official statistics: World Bank / UNODC — national intentional homicide rate for Costa Rica: 2023: 17.7/100k; 2022: 12.9/100k; 2021: 11.6/100k; 2020: 11.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</p>
+  <p>The Barrio Chino (Chinatown), Mercado Central, La Merced church area, and the Zona Roja (red light district) carry high theft and robbery risk. La Sabana park and Escazú are safer. Public bus use carries substantial theft risk — robberies on buses are frequently reported.</p>
+  <p>Most tourists use San José only as a gateway; minimise urban dwell time. Stay in Escazú, Los Yoses, or Barrio Amón for lower risk. Use apps or pre-booked shuttles for all transport. Costa Rica's appeal is its national parks — the capital doesn't need to be the focus.</p>
+  
+  <h3>Official statistics</h3>
+  <ul class="sources-list stat-list">
+    <li>World Bank / UNODC — national intentional homicide rate for Costa Rica: 2023: 17.7/100k; 2022: 12.9/100k; 2021: 11.6/100k; 2020: 11.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
+  </ul>
   <div><p>The live map shows <strong>28 mapped districts</strong> in San José, all carrying the same overall safety rating. Explore them on the interactive map to see the geographic spread.</p></div>
 
   <h2>Common questions</h2>
@@ -203,6 +212,12 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
 
   <h2>Sources consulted</h2>
   <ul class="sources-list">
+    <li><a href="https://www.osac.gov/Country/Costa-Rica/Content" rel="noopener noreferrer" target="_blank">OSAC — Overseas Security Advisory Council</a></li>
+    <li><a href="https://www.smartraveller.gov.au/destinations/americas/costa-rica" rel="noopener noreferrer" target="_blank">Australia DFAT Smartraveller — Safety</a></li>
+    <li><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/costa-rica-travel-advisory.html" rel="noopener noreferrer" target="_blank">US State Department Travel Advisory</a></li>
+    <li><a href="https://www.gov.uk/foreign-travel-advice/costa-rica/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
+    <li><a href="https://travel.gc.ca/destinations/costa-rica" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
+    <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=CRI" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Costa Rica)</a></li>
     <li>Editorial travel-safety synthesis (US State Dept advisories, OSAC, Numbeo); districts inherit the city overall until crowd input or official data differentiates them</li>
   </ul>
   <div class="meta-line">
