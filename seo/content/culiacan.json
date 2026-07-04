@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Culiacán scores Caution (right at the 7.5 threshold). The Sinaloa capital is the historic home base of the Sinaloa Cartel; while violence is often between cartel factions rather than directed at tourists, the city has among Mexico's highest homicide rates and multiple travel advisories specifically name it. US and Canada advisories rate Sinaloa at Level 4 (Do Not Travel)."
+  },
+  "reconciliation": [
+    {
+      "text": "Armed confrontations between cartel factions and security forces occur across the city. Kidnapping and extortion are documented. The US advisory explicitly warns against travel to Culiacán. October 2023 saw extraordinary gun battles throughout the city following a cartel leadership arrest."
+    },
+    {
+      "text": "This city is not recommended for tourist travel by any of the three advisory sources. If visiting for family or business reasons, consult up-to-date local intelligence, avoid all travel outside the main hotel corridor by night, and do not discuss cartel-related topics."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

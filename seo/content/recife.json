@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Recife is rated Avoid — one of Brazil's most consistently violent state capitals, with homicide rates in the top tier nationally. The historic Recife Antigo peninsula and beachfront of Boa Viagem attract tourists, but robbery is very common even in those areas. All three advisories include Recife under Brazil's elevated risk warning."
+  },
+  "reconciliation": [
+    {
+      "text": "Armed robbery, carjacking, and gang violence are endemic across much of the metro area. The beaches of Boa Viagem have very high theft rates; Canadian advisories warn of phone-snatching and mugging on the promenade. Olinda (colonial district) is a daytime-only destination; evenings carry significant risk."
+    },
+    {
+      "text": "If visiting Recife, stay in Boa Viagem in a hotel with secure parking, avoid the beachfront after dark entirely, and do not walk in Recife Antigo without a group. Use apps for all transport. The risk level means this city requires elevated vigilance throughout; casual street tourism is not advisable."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

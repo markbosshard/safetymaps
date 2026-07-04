@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Quito scores Caution. Ecuador's capital has experienced a dramatic increase in violent crime since 2022-23, driven by the collapse of criminal governance in coastal cities spilling inland and the inflow of Venezuelan criminal groups. All three advisories now place Ecuador at significantly elevated risk, more than in pre-2022 assessments."
+  },
+  "reconciliation": [
+    {
+      "text": "Express kidnapping, armed robbery, and mugging have increased in the historic centre (Centro Histórico) which was formerly manageable. La Mariscal neighbourhood (Foch area, previously the main backpacker zone) has experienced repeated robbery and kidnapping incidents. The US advisory specifically warns US government employees against travel to certain Quito areas."
+    },
+    {
+      "text": "Stay in La Carolina, Quito Norte (González Suárez corridor), or Cumbayá valley for lower risk. The Centro Histórico requires a guide or organised tour — do not explore independently. Avoid La Mariscal at night. Use only app-based transport. Ecuador's security situation has deteriorated faster than most destination guides acknowledge — use current advisories."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ec",
+    "fcdo_ec",
+    "canada_dfatd_ec"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

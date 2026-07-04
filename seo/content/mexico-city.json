@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Mexico City scores Moderate overall, but has enormous internal variation across its 16 boroughs. The tourist core — Roma, Condesa, Polanco, Juárez, historic Centro, and Coyoacán — is generally manageable with urban precautions. All three advisories rate CDMX as elevated caution but acknowledge the tourist districts are much safer than the city average."
+  },
+  "reconciliation": [
+    {
+      "text": "Express kidnapping (jalón), ride-share fraud (fake Uber/Didi drivers), and phone theft are the primary visitor risks. Canada's advisory specifically warns about criminals operating taxi and rideshare scams, and only ordering rides through the verified app interface. Pickpocketing is very common in Metro and Metrobús crowded carriages. Armed robbery occurs in outer boroughs (Iztapalapa, Tláhuac, Tepito/La Merced area)."
+    },
+    {
+      "text": "Stick to app-based rides; never flag down street taxis. Avoid the Tepito and La Merced neighbourhoods. The Metro is generally safe in major stations by day; avoid during late night. Most tourist sites — Zócalo, Chapultepec, Xochimilco, Frida Kahlo Museum — are accessible with vigilance. CDMX is very liveable for its risk score; the \"moderate\" rating reflects good tourist-district conditions."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

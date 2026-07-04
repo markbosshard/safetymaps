@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Florianópolis scores Moderate, making it one of the safer Brazilian cities for tourists. The island capital of Santa Catarina is a popular domestic and Argentine tourist destination, and its affluent demographics translate to lower crime rates. All three advisories cover it under Brazil's general framework but without specific escalation."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft is the dominant risk — pickpocketing at beaches (Jurerê Internacional, Ingleses, Lagoa da Conceição) and in the Centro. Car break-ins at beach car parks are common. Some northern mainland areas of Greater Florianópolis (São José) carry higher risk."
+    },
+    {
+      "text": "The island itself is very manageable for visitors. Lagoa da Conceição, Centro Histórico, and the northern beaches are tourist-friendly. Use normal urban precautions (valuables in hotel safes, apps for night transport). This is one of the most relaxed risk profiles on this list."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

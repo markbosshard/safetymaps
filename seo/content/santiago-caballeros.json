@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Santiago de los Caballeros scores Caution. The DR's second city is less tourist-oriented than the capital or Punta Cana; it is primarily a commercial and agricultural hub. Crime is moderate by Dominican standards but elevated above global baseline."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery, pickpocketing, and some vehicle crime occur in commercial areas. The city is rarely on international tourist itineraries but is used as a base for visitors to the Cibao valley and Jarabacoa mountains."
+    },
+    {
+      "text": "Exercise standard Dominican caution: apps for transport, valuables secured, avoid walking alone at night in the centro and market areas. The Jardines Metropolitano and commercial north zone are the more manageable parts of the city."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_do",
+    "fcdo_do",
+    "canada_dfatd_do"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

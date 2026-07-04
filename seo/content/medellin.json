@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Medellín scores Caution. Famous for its transformation from the world's most dangerous city in the 1980s-90s, Medellín has genuinely improved but still has dangerous areas. The tourist hubs — El Poblado, Laureles, Envigado — function at Moderate risk for visitors. The comunas on the hillsides (Belén, Robledo, some northern comunas) carry elevated risk."
+  },
+  "reconciliation": [
+    {
+      "text": "Express kidnapping (\"millirays\" fake police), drug-facilitated robbery (scopolamine), and pickpocketing in tourist areas are documented risks. All three advisories flag Colombia at elevated caution. The metro cable gondolas that access comunas have been safer for tourists than walking in those areas, but cable car tourism should be on vetted day tours."
+    },
+    {
+      "text": "El Poblado, Parque Lleras, and Laureles are the visitor-safe zones with good restaurants and nightlife under standard urban precautions. Avoid Niquitao, El Hueco (flea market area), and the northern hillside comunas without a local guide. The famous cable car tours to the comunas (Santa Cruz, Arví) should be on organised day tours only, not independent exploration."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Belo Horizonte sits at the high end of Caution, with significant variation between safer inner districts (Savassi, Funcionários, Lourdes, Serra) and very dangerous outer zones. All three advisories situate BH under Brazil's general high-crime warning; Canadian sources note that gang-related violence in urban areas includes BH."
+  },
+  "reconciliation": [
+    {
+      "text": "Violent robbery, including armed hold-ups, is more common in BH than in São Paulo's tourist districts. The Hipercentro (busy commercial downtown) is high-theft at all hours. Favelas in the northern and western periphery have gang presence and regular armed conflict."
+    },
+    {
+      "text": "Stay in Savassi, Lourdes, and Funcionários; these neighbourhoods have good restaurants and hotels with relatively low risk. Avoid walking alone downtown at night. Use ride-hailing. The tourist circuit (Pampulha, Mercado Central) is safe by day with normal caution."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Curitiba is one of Brazil's better-organised cities and scores Moderate. While not without crime, its planning and infrastructure make it notably safer for urban Brazil. All three advisories cover it under Brazil's general elevated warning, but no specific Curitiba-level advisory exists."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft — pickpocketing, phone-snatching — is the dominant risk in Centro (Rua XV de Novembro) and at the bus terminal (Rodoferroviária). Car break-ins are common in open parking. Some northern and southern peripheral zones carry higher crime, but these are not tourist areas."
+    },
+    {
+      "text": "The tourist circuit (Botanical Garden, Largo da Ordem, Santa Felicidade, Opera de Arame) is accessible with normal urban precautions. Batel and Água Verde are the city's safest and most comfortable residential/dining districts. Use apps for evening transport; walking in the centre is fine by day."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

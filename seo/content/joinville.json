@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Joinville scores Moderate. As Santa Catarina's largest city and an industrial hub, Joinville has a more stable economy and lower crime relative to most Brazilian cities. It is rarely a tourist destination — primarily a business centre."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft occurs in the commercial centre; some peripheral bairros have higher crime. No specific Joinville advisory beyond Brazil's general framework. By Brazilian standards, this is a relatively calm risk environment."
+    },
+    {
+      "text": "Business visitors should exercise standard precautions. The city centre is walkable by day. Avoid peripheral areas at night. This is one of the lower-risk cities on this list."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

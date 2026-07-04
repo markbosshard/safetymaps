@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Trujillo scores Caution. The La Libertad capital and gateway to Chan Chan and the Moche archaeological sites has a moderate crime profile, elevated above global baseline. Gang activity from Lima-based criminal groups has reached Trujillo. US and Canada advisories cover it under Peru's general elevated framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and mugging are the primary risks; the Centro Histórico has petty theft. The beaches of Huanchaco (popular with surfers) are generally safe by day. Bus terminal surroundings require caution."
+    },
+    {
+      "text": "Trujillo is primarily a transit hub for archaeological sites. Stay near the Plaza Mayor or in Huanchaco for the calmer beach environment. Use vetted transport; do not walk alone at night in the city centre. Day trips to Chan Chan, Huaca del Sol, and Huaca de la Luna are organised through vetted agencies."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_pe",
+    "fcdo_pe",
+    "canada_dfatd_pe"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

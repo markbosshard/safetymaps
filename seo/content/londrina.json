@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Londrina scores Moderate. This major Paraná state agricultural city has a developed economy and moderate crime profile — elevated by global standards but manageable within Brazil."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and robbery occur in the central commercial area. Some peripheral bairros have gang activity. No specific Londrina advisory beyond Brazil's general framework."
+    },
+    {
+      "text": "Standard Brazilian urban precautions apply. Centro is walkable by day; use apps for evening. Stay in the Gleba Palhano or Bela Suíça districts for a quieter risk environment."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

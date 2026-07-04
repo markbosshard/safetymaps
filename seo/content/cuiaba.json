@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cuiabá scores Caution. The Mato Grosso capital and primary gateway to the Pantanal and Chapada dos Guimarães has moderate crime — elevated beyond the national framework but manageable for transit visitors."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and carjacking are the main risks; some outer bairros have gang activity. The extreme heat and limited tourist infrastructure mean visitors often spend minimal time in the city itself, which reduces risk exposure."
+    },
+    {
+      "text": "If transiting through Cuiabá for Pantanal tours, stay near the Goiabeiras or Duque de Caxias areas. Use a reputable tour operator who handles all logistics. Minimize time in the city centre; Chapada dos Guimarães (separate from Cuiabá) has a safer risk profile."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

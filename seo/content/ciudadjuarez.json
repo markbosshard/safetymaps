@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Ciudad Juárez is rated Avoid. A Chihuahua border city historically ranked among the world's most violent, it experienced some improvement in the 2010s but remains extremely dangerous. Cartel violence, roadside crime, and targeted killings are ongoing. All three advisories rate Chihuahua state at Level 3–4."
+  },
+  "reconciliation": [
+    {
+      "text": "The US advisory places all of Chihuahua at Level 3 and advises US government employees not to travel to Ciudad Juárez. Violence occurs across the city; there is no safe tourist district. Kidnapping, express kidnapping, and robbery affect visitors as well as residents."
+    },
+    {
+      "text": "Travel to Ciudad Juárez for tourism is not recommended by any of the three advisories. If crossing for family visits or business, use established crossings, travel by day only, have local contacts arrange transport, and minimise time in the city. Do not travel south into Chihuahua state rural areas."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

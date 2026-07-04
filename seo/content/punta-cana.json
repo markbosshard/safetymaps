@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Punta Cana scores Moderate. The resort enclave is one of the Caribbean's most-visited destinations and operates at low risk within its all-inclusive hotel corridor. All three advisories note the DR at general elevated caution but the tourist resort zone is effectively insulated."
+  },
+  "reconciliation": [
+    {
+      "text": "Within the resort corridor, crime is rare. The risk increases outside — the town of Higuey (30 minutes from resorts) and transport routes carry more typical Dominican Republic crime dynamics. Occasional incidents at party tourism venues (Coco Bongo, downtown Punta Cana nightlife) are documented."
+    },
+    {
+      "text": "For all-inclusive resort visitors, this is a low-stress environment. Excursions outside the resort corridor should use organised tour operators, not independent transport. Do not hire informal guides or accept impromptu invitations from strangers in Bávaro town."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_do",
+    "fcdo_do",
+    "canada_dfatd_do"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

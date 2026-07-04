@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "João Pessoa scores Caution. This Paraíba coastal capital has a beautiful historic centre and pleasant beaches, but crime levels are elevated. The northeastern context (poverty, trafficking routes) creates a generally cautious risk environment."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery on the Tambaú and Manaíra beachfronts is reported; Centro Histórico daytime visits carry theft risk. Some outer bairros have gang activity. No specific João Pessoa advisory beyond Brazil's general framework."
+    },
+    {
+      "text": "Praia de Tambaú and the Cabo Branco beach strip are the main tourist areas; daytime visits with valuables secured are manageable. Avoid the Centre and all beaches after dark. This is a moderate-risk destination within the already-elevated northeastern Brazilian context."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

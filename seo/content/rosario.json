@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Rosario is rated Avoid. Santa Fe province's major city has experienced extraordinary levels of narco-related violence since 2022-23, connected to competing criminal factions controlling the cocaine trafficking corridor. The US State Dept advisory specifically carves out the City of Rosario with elevated warning within Argentina, rating it at Level 2 while Argentina overall is Level 1. Canadian advisories similarly note Rosario."
+  },
+  "reconciliation": [
+    {
+      "text": "Indiscriminate shootings, murders of civilians, and cartel-style targeted killings have become frequent. Rosario's homicide rate in 2023-24 approached levels unseen in Argentine cities in living memory. The city's situation is qualitatively different from the rest of Argentina on this list."
+    },
+    {
+      "text": "Exercise serious caution if visiting Rosario. Avoid all peripheral barrios; the central city itself carries elevated risk for random violence. Verify current security conditions before travel. If connecting through Rosario for other destinations, use direct transport without extended city stops."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ar",
+    "fcdo_ar",
+    "canada_dfatd_ar"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

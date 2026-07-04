@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Goiânia scores Caution. The capital of Goiás state, it is a mid-size inland city experiencing growing crime, with express kidnappings and carjackings a documented issue. All three advisories include it under Brazil's general elevated-risk framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and carjacking are the primary risks; the Setor Bueno and Setor Oeste areas are relatively safer, while peripheral zones carry higher risk. Armed robberies on commuter routes and at traffic stops are reported. Gang activity is concentrated in the outer city."
+    },
+    {
+      "text": "Most visitors to Goiânia are in transit to Chapada dos Veadeiros or Caldas Novas. Stay in Setor Bueno or around the Flamboyant mall area for relative safety. Use ride-hailing. The main tourist risk is carjacking on intercity roads in Goiás state."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

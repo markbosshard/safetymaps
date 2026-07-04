@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Vitória scores Caution. The Espírito Santo capital sits on an island and has a more contained geography than mainland Brazilian cities, moderating some crime dynamics, but drug trafficking-related violence in the metro area (especially Grande Vitória) is a significant concern."
+  },
+  "reconciliation": [
+    {
+      "text": "The island municipality itself is more manageable; Vila Velha and Serra on the mainland carry higher risk. Armed robbery and gang confrontations occur, primarily in peripheral zones. Canadian and US advisories cover Vitória under Brazil's general elevated warning."
+    },
+    {
+      "text": "Visitors are typically here for business or as a gateway to the coast. The Enseada do Suá and Praia do Canto neighbourhoods are safe for dining and hotels. Avoid the mainland metro periphery. Use ride-hailing for all transport."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

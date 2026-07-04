@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Aguascalientes scores Moderate. This central-western Mexican state is among the more stable in the country; the US advisory rates it Level 2, and it lacks the intense cartel presence of Jalisco, Sinaloa, or Tamaulipas. It is primarily an industrial and agricultural city."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and some robbery occur, consistent with Mexican urban norms. Limited organised crime activity compared to neighbouring states. The historic centre and Festival de San Marcos fair area are visitor-accessible."
+    },
+    {
+      "text": "Standard Mexican urban precautions apply. Aguascalientes is a manageable destination for business visitors and domestic tourists. Avoid night driving in rural parts of the state."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

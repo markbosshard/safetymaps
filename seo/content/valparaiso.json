@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Valparaíso scores Caution. Chile's main Pacific port and UNESCO World Heritage city has higher crime than Santiago, with robbery on the cerros (hillside neighbourhoods) well-documented. All three advisories note it under Chile's general elevated framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Robberies on the funicular lifts (ascensores), on hillside streets after dark, and at the bus terminal are reported. Cerro Alegre and Cerro Concepción — the main tourist hills — have heavy tourist police presence by day but require care after dark. The port area and Cerro Barón carry higher risk at most hours."
+    },
+    {
+      "text": "Visit the UNESCO historic hillsides and Cerro Alegre/Concepción by day; leave before sunset or join a guided evening tour. The lower city (Plan) carries more standard urban risk. Use apps for return from evening dining. This is a worthwhile day-trip from Santiago with appropriate precautions."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_cl",
+    "fcdo_cl",
+    "canada_dfatd_cl"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Rio is a Caution-tier city with extreme internal variation. The tourist corridor — Ipanema, Leblon, Copacabana, Santa Teresa, and Lapa at certain hours — is manageable with precautions. Favela complexes (Complexo da Maré, Complexo da Penha, Rocinha approaches) are effectively no-go for visitors; all three advisories rate them as Avoid-equivalent due to armed police operations and cartel/militia clashes."
+  },
+  "reconciliation": [
+    {
+      "text": "Stray bullets (\"bala perdida\") from favela confrontations occasionally reach adjacent tourist areas and transit corridors. The Canada DFATD advisory specifically names Maré and Penha complexes and warns that emergency services are difficult to reach in affected areas. Express robbery of tourists on Copacabana beachfront, particularly at night, is well-documented."
+    },
+    {
+      "text": "Stick to Zona Sul and Santa Teresa by day. After dark, use apps for all movement; do not walk between Lapa, Centro, and hotel districts. Avoid any road that passes through or alongside favela complexes regardless of time. Never display phones or jewellery on the waterfront."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

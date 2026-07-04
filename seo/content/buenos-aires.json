@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Buenos Aires scores Moderate. Argentina's capital is one of the more navigable major cities in South America for visitors, with Palermo, Recoleta, Belgrano, and San Telmo all accessible with standard precautions. All three advisories place Argentina at elevated caution overall, with the US advisory specifically flagging Rosario (Santa Fe province) rather than Buenos Aires for elevated crime."
+  },
+  "reconciliation": [
+    {
+      "text": "Express kidnapping (\"secuestro virtual\") — phone-based scam where callers convince families a relative is kidnapped — targets tourists. Pickpocketing in La Boca (tourist area, not residential), Constitución neighbourhood, and Once market area is common. La Boca's colourful Caminito street should be visited only in the indicated tourist zone; straying into residential blocks is risky."
+    },
+    {
+      "text": "San Telmo, Palermo, Recoleta, and the Puerto Madero waterfront are all appropriate for independent tourism. La Boca: visit only the Caminito tourist strip, not after dark. Avoid Constitución and the southernmost barrios at night. Subte (metro) is safe by day; use apps in the evening. Buenos Aires is one of the more relaxed capitals for independent visitors in this region."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ar",
+    "fcdo_ar",
+    "canada_dfatd_ar"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

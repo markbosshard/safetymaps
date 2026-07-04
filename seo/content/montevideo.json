@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Montevideo scores Moderate. Uruguay's capital is widely considered the safest major city in South America and is consistently near the top of regional quality-of-life indexes. All three advisories place Uruguay at their lowest risk level for the region — Level 1 in most frameworks, with standard precautions."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and pickpocketing occur in Ciudad Vieja (the old town) and on the Rambla waterfront promenade, but violent crime is substantially lower than anywhere else on this list. The commercial port area and surroundings of Terminal Tres Cruces (bus terminal) carry the highest theft risk."
+    },
+    {
+      "text": "Montevideo is an excellent destination for independent travel. Ciudad Vieja, Palermo, and Punta Carretas are all walkable by day and into the evening. Use standard urban precautions. This is the most relaxed major city on the list — enjoy it."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_uy",
+    "fcdo_uy",
+    "canada_dfatd_uy"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

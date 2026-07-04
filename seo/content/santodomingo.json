@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Santo Domingo scores Caution. The Dominican Republic capital has a tourist-accessible zone — Zona Colonial (a UNESCO World Heritage Site), Piantini, and the Malecón waterfront — alongside genuinely dangerous barrios. All three advisories note the DR at elevated caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery, pickpocketing, and some violent crime occur even in tourist zones. The Zona Colonial by day is manageable; after dark it requires more vigilance, especially away from the main pedestrian streets. Barrios like Ciudad Nueva (just behind Zona Colonial) and Los Alcarrizos carry much higher risk."
+    },
+    {
+      "text": "Stay in Piantini, Naco, or hotels near the Malecón for a safer base. Visit Zona Colonial during daylight and return by app before dark. The DR's primary tourist draw (Punta Cana, Puerto Plata) operates at significantly lower risk than the capital."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_do",
+    "fcdo_do",
+    "canada_dfatd_do"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "San Luis Potosí scores Caution. The SLP state capital is a colonial city with a well-preserved historic centre, but the state has elevated crime and the US advisory rates SLP at Level 2 (Exercise Increased Caution). Organised crime and highway robbery on intercity routes are documented."
+  },
+  "reconciliation": [
+    {
+      "text": "The Centro Histórico and tourist area are accessible with precautions. Robbery on federal highways through SLP state (including the CDMX-Laredo route) is a documented risk for road travellers. The city itself is less affected than the state's rural regions."
+    },
+    {
+      "text": "Visit the Centro Histórico and the Real de Catorce area (silver mining town) with a reputable guide. Avoid highway travel at night. The risk level in the city itself is moderate; the main advisories concern the surrounding state."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

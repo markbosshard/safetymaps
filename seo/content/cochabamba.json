@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cochabamba scores Caution. Bolivia's third city and agricultural heartland has a slightly lower profile than La Paz but the same advisory framework. Drug trafficking routes through the Chapare region southeast of Cochabamba create some elevated risk context. All three advisories cover Bolivia at elevated caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft, some robbery, and occasional express kidnapping are reported. The city's markets (Cancha area) and bus terminals carry elevated risk. The central plaza and restaurant zone are more manageable."
+    },
+    {
+      "text": "Stay in the Recoleta or residential north zone for a calmer environment. Use vetted transport for the airport and bus terminal. Day trips to the Chapare coca region should use reputable tour operators. The altitude (2,558m) is more manageable than La Paz."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_bo",
+    "fcdo_bo",
+    "canada_dfatd_bo"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

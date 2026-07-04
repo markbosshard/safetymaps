@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Havana scores Moderate. Cuba's capital has historically very low violent crime by regional standards — a legacy of the state's social control and economic model. However, economic desperation following the post-2020 crisis has increased petty theft and scams targeting tourists significantly. All three advisories place Cuba at elevated caution, noting the changed security context."
+  },
+  "reconciliation": [
+    {
+      "text": "Scams targeting tourists are now very common: jineteros (street hustlers) offering overpriced private rooms, restaurants, or transport; currency exchange scams; and taxi fraud. Pickpocketing in crowded areas and bag-snatching have increased. The more serious concern for foreign nationals: photographing security forces, protests (rare), or infrastructure without authorisation can result in detention."
+    },
+    {
+      "text": "Havana Vieja, Vedado, and Miramar are the main visitor areas; all are manageable with vigilance. Be selective about accepting help from strangers. Use CUC taxis with metered fares. As with Nicaragua, the physical safety from violence is reasonable; the political and legal risk environment is the primary concern for Western visitors."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_cu",
+    "fcdo_cu",
+    "canada_dfatd_cu"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

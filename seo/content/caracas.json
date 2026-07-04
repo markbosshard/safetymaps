@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Caracas is rated Avoid at the extreme end — score 9.5. The capital of Venezuela, facing acute state collapse since the mid-2010s, has one of the world's highest homicide rates. All three advisories issue their highest-tier warnings for Venezuela. Infrastructure failure, economic collapse, and the breakdown of law enforcement create a compounding risk environment unlike most cities on this list."
+  },
+  "reconciliation": [
+    {
+      "text": "Kidnapping (both express and organised), armed robbery, car-jacking, and murder are endemic across the city including the nominally safer eastern districts (Altamira, Las Mercedes, Chacao). Even the diplomatic zone has experienced violent incidents. Police involvement in crime is documented by multiple human rights organisations and all three advisories."
+    },
+    {
+      "text": "No part of Caracas is appropriate for leisure or independent tourism. If visiting for compelling family or humanitarian reasons, pre-arrange security through a specialist firm, use bulletproof vehicle transfers, stay in compound accommodation, never travel at night, and have an embassy contact and extraction plan active throughout. Do not attempt this without current local support."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ve",
+    "fcdo_ve",
+    "canada_dfatd_ve"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

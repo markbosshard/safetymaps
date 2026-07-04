@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Concepción scores Moderate. Chile's second city has a more industrial character than Santiago and lower tourist footfall. Crime is elevated above Santiago but below Valparaíso. All three advisories cover it under Chile's general framework without specific city escalation."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and some robbery occur in the city centre and around the terminal. The Barrio Universitario area near Universidad de Concepción is relatively active and safer. Talcahuano port town nearby carries higher risk."
+    },
+    {
+      "text": "Standard urban precautions apply. For visitors en route to the Lake District or Los Ángeles, Concepción is a reasonable overnight stop with normal vigilance. The city centre is walkable by day."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_cl",
+    "fcdo_cl",
+    "canada_dfatd_cl"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

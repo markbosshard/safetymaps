@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Teresina scores Caution. The Piauí state capital is one of Brazil's hotter and more isolated interior cities. Crime levels are moderate by northeastern Brazil standards; the main risks are robbery and opportunistic theft rather than the gang warfare that characterises some coastal cities."
+  },
+  "reconciliation": [
+    {
+      "text": "The main commercial and government districts carry standard Brazilian urban theft risk. No specific Teresina advisory beyond Brazil's general warning. The city is rarely a primary tourist destination."
+    },
+    {
+      "text": "Most visitors are here for business or domestic travel connections. Exercise standard precautions: apps for transport, hotels in Centro or Jóquei districts, no night walking in unfamiliar areas."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

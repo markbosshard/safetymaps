@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cancún scores Moderate overall, with a sharp split between the tourist Hotel Zone (Zona Hotelera) and downtown Cancún (Ciudad Cancún). The Hotel Zone is one of Mexico's most secure visitor environments with heavy police and private security presence. Downtown is at Caution level. US and Canada advisories exempt the Quintana Roo coast from higher state restrictions."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and some gang activity occur in downtown Cancún, away from the Hotel Zone. The Hotel Zone itself is generally very safe; violent incidents are rare and highly publicised when they occur. Playa del Carmen and Tulum have seen more safety incidents than Cancún proper in recent years."
+    },
+    {
+      "text": "Visitors who stay in the Hotel Zone and use vetted tours for excursions (Chichén Itzá, cenotes, Isla Mujeres) face genuinely low risk. Exercise caution at night in downtown Cancún and avoid the colonias west of the main commercial strips. The main tourist infrastructure is designed to insulate visitors from regional crime dynamics."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

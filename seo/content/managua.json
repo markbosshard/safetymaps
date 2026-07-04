@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Managua scores Moderate. Nicaragua under the Ortega-Murillo government has a paradoxical security profile: violent crime by street gangs is relatively low compared to neighbouring Honduras and El Salvador, partly because the government's security forces heavily patrol and suppress criminal activity. However, political repression is severe, and foreign nationals have been detained for political reasons."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and some robbery occur in the city's markets and the Carretera Masaya commercial strip. The main physical safety threat is ordinary street crime rather than gang warfare. The bigger risk for foreign nationals is unintentional political entanglement — photographing protests, security forces, or government infrastructure is dangerous."
+    },
+    {
+      "text": "If visiting Nicaragua, exercise extreme caution about any political expression, photography of security forces or government buildings, and interaction with anyone involved in opposition activities. The physical safety from violent crime is better than most regional neighbours, but the political risk is qualitatively different."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ni",
+    "fcdo_ni",
+    "canada_dfatd_ni"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

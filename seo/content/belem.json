@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Belém is rated Avoid. The Amazon River port city combines Brazil's highest-crime-zone dynamics with limited visitor infrastructure. Robbery and gang violence are widespread. All three advisories flag it under Brazil's high-crime rating; Canadian sources note organised crime is particularly common in northern and northeastern Brazil."
+  },
+  "reconciliation": [
+    {
+      "text": "The Ver-o-Peso market area and waterfront experience frequent muggings, even during daylight. Peripheral bairros are extremely dangerous. Visitors using Belém as a gateway to Marajó Island or river trips should be aware that transfers through the city carry meaningful risk."
+    },
+    {
+      "text": "Limit time in Belém to what is strictly necessary for your Amazon itinerary. Stay in the Nazaré or Umarizal districts (more central, slightly lower risk). Use vetted transfers for all port and ferry connections. This city requires a higher level of local knowledge than most on this list."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Mérida scores Safe — consistently rated the safest large city in Mexico. The Yucatán capital has very low violent crime by Mexican and regional standards; all three advisories note Yucatán state at Level 1 (Exercise Normal Precautions), the only Mexican state at that level."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft (pickpocketing, bag-snatching) and some car break-ins are reported but at rates far below the national norm. No significant cartel presence; Yucatán's state government has maintained security that is exceptional for Mexico."
+    },
+    {
+      "text": "Mérida is appropriate for independent travel including evening walks on the Paseo de Montejo and in the historic centre. Normal urban caution applies — secure valuables, be aware in crowded markets — but this is genuinely one of the more relaxed cities on this list. An excellent base for Chichén Itzá and Uxmal day trips."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

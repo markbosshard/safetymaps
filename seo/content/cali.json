@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cali is rated Avoid. Colombia's third city has very high violent crime driven by gang warfare, narco-trafficking, and competition between criminal groups. All three advisories flag Cali under Colombia's elevated risk rating; the US advisory issues specific Cali guidance within its Colombia page."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery is extremely common across the city including in tourist areas (San Antonio, Granada). The eastern comunas (Aguablanca district) are effectively no-go. Homicide rates are among the highest in Colombia. Even the \"safer\" west side neighbourhoods carry Caution-level risk."
+    },
+    {
+      "text": "If visiting Cali — primarily for the salsa culture — stay in Ciudad Jardín or Granada, use vetted transport only, never walk after dark, and join organised salsa tours rather than independently bar-hopping. Minimise time outside the hotel and organised venues. This requires significantly higher vigilance than Medellín or Bogotá."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Toluca scores Caution. The State of Mexico capital is in one of Mexico's most crime-affected states, though the city centre is somewhat insulated from the worst violence. Carjacking, kidnapping, and gang activity are documented in the broader metropolitan area."
+  },
+  "reconciliation": [
+    {
+      "text": "The US and Canada advisories rate Estado de México at Level 3 (Reconsider Travel), citing crime and kidnapping. The state has one of Mexico's highest kidnapping rates. Toluca's city centre (Zócalo, Cosmovitral botanical garden area) is relatively accessible but cannot be decoupled from the state's risk rating."
+    },
+    {
+      "text": "If visiting Toluca, stay in the Centro Histórico or hotel corridor, use vetted apps, and avoid travel on federal highways into the mountains without local guidance. Day trips from CDMX are manageable; overnight stays increase exposure to carjacking risk."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

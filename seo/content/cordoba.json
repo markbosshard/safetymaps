@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Córdoba scores Caution. Argentina's second city has a larger and more active student population than other Argentine cities (home to one of Latin America's oldest universities), and has moderate crime levels. All three advisories cover it under Argentina's general framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and robbery occur in the commercial centre and on night bus routes. Some outer barrios carry elevated risk. No specific Córdoba advisory escalation beyond Argentina's general rating."
+    },
+    {
+      "text": "The historic centre (Cabildo, Manzana Jesuítica), Nueva Córdoba student district, and Güemes antique market area are accessible with normal urban precautions. Use apps at night. The city is a reasonable base for Quebrada de Humahuaca and the Córdoba sierras."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ar",
+    "fcdo_ar",
+    "canada_dfatd_ar"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

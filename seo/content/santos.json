@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Santos scores Caution. Brazil's largest port city has a significant crime profile connected to port-related drug trafficking and gang activity. The beachfront area is the tourist draw; the interior of the city and the port district carry higher risk."
+  },
+  "reconciliation": [
+    {
+      "text": "The beachfront (Orla) is generally safer, though phone-snatching and beach theft occur. The Centro has robbery risk, especially at night. Some neighbourhoods associated with trafficking are off-limits to casual visitors."
+    },
+    {
+      "text": "If visiting for beaches, stick to the Orla and Gonzaga neighbourhoods. Do not venture into the port area or Centro without purpose. Santos is often a day-trip from São Paulo; staying overnight adds risk vs. daytime-only visits."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

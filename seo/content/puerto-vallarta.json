@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Puerto Vallarta scores Moderate. This Pacific coast resort city has a strong tourist security infrastructure and genuinely lower crime than many Mexican cities. US and Canada advisories rate Jalisco state at Level 3 but specifically exempt the Puerto Vallarta metropolitan zone in their guidance. The UK FCDO advises tourist caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and some drug-related incidents have occurred in less touristy areas and on the road between Vallarta and Guadalajara. The resort zones (Hotel Zone, Romántica neighbourhood, Zona Dorada) are well-policed. Night transport outside resort corridors warrants caution."
+    },
+    {
+      "text": "For the tourist zone, this is one of the safer Mexican beach destinations. Book excursions through reputable operators; do not rent motorbikes to explore on your own in unfamiliar areas. The journey by road to Guadalajara carries more risk than the city itself; consider flying."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cusco scores Moderate. The gateway to Machu Picchu is heavily oriented toward international tourism, and the historic centre has significant tourist police presence. Crime is primarily petty theft targeting tourists rather than violent crime. All three advisories cover Peru at general elevated caution but Cusco operates at the better end of that range."
+  },
+  "reconciliation": [
+    {
+      "text": "Pickpocketing in crowded markets (Mercado San Pedro), on transport to the Sacred Valley, and on the train to Aguas Calientes is the dominant risk. Mugging on the Saqsaywamán access trails and in less-lit parts of the historic centre at night is reported. Altitude sickness impairs judgment and increases vulnerability — rest on arrival."
+    },
+    {
+      "text": "The main Plaza de Armas and adjacent streets are safe for daytime tourism. Use vetted transport for Sacred Valley tours. Keep valuables in hotel safe. Do not hike to Saqsaywamán or surrounding ruins alone or at dusk. Cusco is one of the more comfortable tourist cities in South America despite Peru's broader risk rating."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_pe",
+    "fcdo_pe",
+    "canada_dfatd_pe"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

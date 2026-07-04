@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Tijuana is rated Avoid. The US-Mexico border city has one of the highest homicide rates in the world. Cartel territorial warfare over the Tijuana corridor produces frequent armed confrontations. The US, Canada, and UK advisories all place Baja California at their highest state-level restriction for Mexico."
+  },
+  "reconciliation": [
+    {
+      "text": "The Zona Norte tourist area (near the border crossing) has a relative police presence but still experiences armed robbery, kidnapping, and cartel-related homicides. Targeted violence is most concentrated in eastern and southeastern Tijuana colonias, but spillover to tourist areas is documented. Express kidnapping of visitors returning from Tijuana to the US is reported."
+    },
+    {
+      "text": "If crossing for a specific purpose, use the Sentri/CBX crossings and pre-arrange transport to avoid street taxis. Stay within the immediate border commercial zone for the minimum necessary time. Do not travel to eastern or southern colonias. Most travel advisories effectively recommend against leisure travel to Tijuana."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

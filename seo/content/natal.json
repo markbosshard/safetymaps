@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Natal scores Caution. The Rio Grande do Norte capital is a beach resort city, but robbery on tourist beaches and in the Centro is well-documented. All three advisories cover it under Brazil's northeastern elevated-risk framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Ponta Negra beach and the tourist strip are relatively safer than many Brazilian coastal cities, but phone theft and mugging remain common. The historic Ribeira district carries high risk after dark. Some peripheral bairros have gang violence."
+    },
+    {
+      "text": "Stay in Ponta Negra — the cleaner, more tourist-oriented southern beach area — rather than Artistas or Centro beachfront. Avoid beach after dark. Praia da Redinha and beaches north of the city are accessible by day only with a guide."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

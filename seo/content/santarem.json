@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Santarém scores Caution. This Amazon River confluence city is primarily a transit point for river travel and Tapajós boat trips. Crime is moderate by Brazilian standards but still elevated relative to safe global baseline; robbery and opportunistic theft are the main concerns."
+  },
+  "reconciliation": [
+    {
+      "text": "Visitor infrastructure is limited. Muggings in the waterfront and market area are reported. The city does not have the gang infrastructure of a major Brazilian metro, but isolation means emergency response is limited."
+    },
+    {
+      "text": "Keep visits to the waterfront area and arranged tours; book reputable river guides. The main beaches (Alter do Chão) outside the city are safer and more developed for tourism. Avoid wandering independently at night."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

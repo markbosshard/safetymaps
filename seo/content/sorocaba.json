@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Sorocaba scores Moderate. This São Paulo state industrial city is more manageable than the state capital and most northeastern cities, with crime concentrated in specific peripheral zones rather than central areas."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and robbery occur in the commercial centre, and some outer bairros have gang activity, but by Brazilian standards this is a moderate-risk city. There is no specific advisory escalation for Sorocaba beyond Brazil's general framework."
+    },
+    {
+      "text": "Visitors — primarily business travellers — should exercise standard urban precautions. The central area is walkable by day. Avoid peripheral industrial and residential zones at night. Use ride-hailing for all evening movement."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

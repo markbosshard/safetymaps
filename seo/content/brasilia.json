@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Brasília scores Caution overall, with a pronounced split between the Plano Piloto (the planned central district) and the surrounding satellite cities. The diplomatic and government zones, Asa Norte, and Asa Sul are secure by Brazilian urban standards. Satellite cities — Ceilândia, Taguatinga, and Planaltina — carry significantly higher crime rates and are not on typical visitor itineraries."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and carjacking occur in the Rodoviária (central bus terminal) area at night and on some Eixo Monumental access roads. UK FCDO and US State Dept both flag Brasília under Brazil's elevated crime advisory without carving out city-specific exemptions."
+    },
+    {
+      "text": "Visitors based in Asa Norte, Asa Sul, and the Lago Sul residential area face lower risk. Do not walk alone at night near the Rodoviária or Setor Comercial Sul. Use apps for transport. The satellite cities require a local guide or driver; visit by day only."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

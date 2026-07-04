@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Barquisimeto (Lara) scores Avoid. The \"Musical Capital of Venezuela\" is the country's fourth-largest city. Like all major Venezuelan cities, it faces elevated violent crime from state collapse dynamics, though it has historically been somewhat less violent than Caracas or Maracaibo. All three advisories cover Venezuela at their highest restriction level."
+  },
+  "reconciliation": [
+    {
+      "text": "Armed robbery and gang activity are documented. Infrastructure problems — power cuts, fuel shortages — add safety complications. The music and cultural scene that gave the city its reputation has severely contracted under economic conditions."
+    },
+    {
+      "text": "Do not travel unless for essential purposes with specialist security support. The same Venezuela-wide cautions apply."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ve",
+    "fcdo_ve",
+    "canada_dfatd_ve"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

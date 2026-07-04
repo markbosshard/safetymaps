@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Torreón scores Caution. La Laguna region's main city was a major cartel battleground in the 2000s-2010s; it has improved somewhat but Coahuila state retains elevated advisories. The US advisory rates Coahuila at Level 3 (Reconsider Travel) due to crime and kidnapping."
+  },
+  "reconciliation": [
+    {
+      "text": "Armed robbery and carjacking occur. The city has a functional commercial and industrial centre and some relative normalcy in everyday life, but no tourist infrastructure to speak of. Kidnapping remains a risk in the broader region."
+    },
+    {
+      "text": "Torreón is primarily a business-transit destination. Use hotel secure parking, vetted transport, and avoid night travel on highways. Do not drive on federal highways to Chihuahua or Durango state without current intelligence on route safety."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

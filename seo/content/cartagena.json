@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cartagena scores Caution. The walled city (Ciudad Amurallada) and Bocagrande tourist zone are among the more manageable visitor environments in Colombia, with heavy tourist police presence. Beyond the walls and the beach hotel strip, risk rises sharply. All three advisories note Colombia's generally elevated crime environment."
+  },
+  "reconciliation": [
+    {
+      "text": "Drug-facilitated robbery (scopolamine), pickpocketing in the walled city, and robbery on the Getsemaní neighbourhood roads (just outside the walls) are documented. Boat excursions to the islands (Rosario Islands, Playa Blanca) require careful operator selection — tourist-targeting is documented."
+    },
+    {
+      "text": "The walled city by day is genuinely enjoyable with standard vigilance. Getsemaní (just outside the walls) is being gentrified but still requires caution at night. Bocagrande beach strip is manageable. Avoid the southern and northern residential districts beyond the tourist corridor. Do not accept drinks from strangers under any circumstances."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

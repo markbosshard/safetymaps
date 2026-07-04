@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Foz do Iguaçu scores Moderate-to-Caution. The tourist infrastructure around the falls is well-developed and relatively safe, but the city sits at the triple border with Paraguay and Argentina, which is a major contraband and narcotics trafficking corridor. All three advisories note the elevated crime profile of Brazil's border regions."
+  },
+  "reconciliation": [
+    {
+      "text": "The falls themselves and the Itaipu dam area are tourist-controlled environments with low robbery risk. The Ciudad del Este (Paraguay) border crossing carries high theft and mugging risk, and all three advisories recommend vigilance crossing into Paraguay. The city's commercial areas and some bairros have gang activity."
+    },
+    {
+      "text": "For the falls, stay near the park entrance hotels. Do not cross into Ciudad del Este without a specific purpose and local knowledge. Avoid the border area after dark. Puerto Iguazú (Argentine side) is notably safer than the Brazilian or Paraguayan sides."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

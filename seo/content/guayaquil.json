@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Guayaquil is rated Avoid. Ecuador's largest city has experienced extraordinary levels of gang warfare since 2021-23, connected to port-related narco-trafficking. The city went from a moderate-risk destination to one of South America's most dangerous in under three years. All three advisories have moved Ecuador to their highest-concern tiers specifically because of Guayaquil."
+  },
+  "reconciliation": [
+    {
+      "text": "Drive-by shootings, carjackings, kidnapping, and armed robbery occur across the city including in tourist areas. The Malecón 2000 riverfront — previously the city's safest public space — has experienced violent incidents. The UK FCDO and Canada advisories explicitly warn against non-essential travel to Guayaquil. Gang warfare between criminal groups (Los Lobos, Los Tiguerones) has escalated to levels not seen in Colombia or Mexico."
+    },
+    {
+      "text": "If transiting through Guayaquil (the main international airport gateway), pre-arrange hotel pickup, do not take street taxis, and go directly to your accommodation or onward transit. Do not walk in any part of the city. The airport itself is safe; the moment you exit the airport is where risk increases dramatically."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ec",
+    "fcdo_ec",
+    "canada_dfatd_ec"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Ribeirão Preto scores Moderate. This agricultural and agribusiness hub in the interior of São Paulo state has a higher standard of living than many Brazilian cities, moderating crime. Express kidnappings (sequestros-relâmpago) of business travellers and vehicle theft are documented risks."
+  },
+  "reconciliation": [
+    {
+      "text": "The downtown area carries standard Brazilian urban theft risk. Peripheral zones have gang activity. No specific advisory beyond Brazil's general elevated warning. Crime in the city is moderate by Brazilian standards but elevated relative to global baseline."
+    },
+    {
+      "text": "Business and trade-fair visitors should use hotel secure parking, apps for transport, and the same precautions as in moderate-risk Brazilian cities. The central area and Vila Seixas are reasonably manageable by day."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

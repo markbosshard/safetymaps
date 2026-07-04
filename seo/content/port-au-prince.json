@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Port-au-Prince is rated Avoid at the extreme end. Haiti's capital is under effective gang control over large portions of the metropolitan area following state collapse. All three advisories — US, UK, and Canada — have issued their highest-level restrictions on Haiti, with the US at Level 4 (Do Not Travel). The UN characterises the security situation as near-total breakdown in some districts."
+  },
+  "reconciliation": [
+    {
+      "text": "Gang-controlled neighbourhoods (Cité Soleil, Bel Air, Martissant, Croix-des-Bouquets) are inaccessible. Kidnapping for ransom is rampant and affects aid workers, journalists, and ordinary travellers — not just wealthy targets. Armed ambushes on major roads are documented. The airport corridor itself has been subject to gang activity."
+    },
+    {
+      "text": "Travel to Port-au-Prince should only occur for essential humanitarian or journalistic purposes with specialised security arrangements. All three government advisories recommend against all travel. If you must be there, use armoured vehicles, pre-arranged vetted security providers, remain in compound accommodation, and have an active extraction plan."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ht",
+    "fcdo_ht",
+    "canada_dfatd_ht"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

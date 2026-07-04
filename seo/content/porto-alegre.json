@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Porto Alegre scores Caution. The Rio Grande do Sul capital is a major southern Brazilian city with significant crime, including carjackings and robberies. All three advisories include it under Brazil's general elevated framework."
+  },
+  "reconciliation": [
+    {
+      "text": "The Centro Histórico carries risk at night, and armed robbery is documented in many neighbourhoods. However, Moinhos de Vento, Independência, and Bela Vista are among the safer and more tourist-friendly areas. Gang activity is primarily in peripheral zones."
+    },
+    {
+      "text": "This is a business and gastronomy destination more than a tourist city. Stay in Moinhos de Vento or Independência. Use ride-hailing. Avoid the Área Central after dark and all peripheral bairros. The risk profile is similar to other Brazilian state capitals in this score range."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

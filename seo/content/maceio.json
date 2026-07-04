@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Maceió is rated Avoid. The Alagoas state capital has one of the highest homicide rates in Brazil, fuelled by gang warfare between drug factions competing for the state's trafficking routes. All three advisories flag the northeast under elevated risk."
+  },
+  "reconciliation": [
+    {
+      "text": "Despite beautiful beaches (Pajuçara, Ponta Verde, Jatiúca), robbery and violent crime are very common even in tourist areas. The lagoon district and the sea-facing tourist strip are relatively better than the interior bairros, but still require constant vigilance. Public beaches at night are effectively off-limits."
+    },
+    {
+      "text": "If visiting for the beaches, stay in Ponta Verde or Jatiúca hotels and restrict activity to the beachfront strip. Do not walk between hotels and beach at night — use apps. The wider city, including the commercial centre and all inland bairros, should be avoided by tourists."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

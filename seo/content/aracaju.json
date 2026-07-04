@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Aracaju scores Caution. This compact Sergipe capital has pleasant beaches and a walkable historical area, but robbery in tourist zones and peripheral gang activity are documented risks within Brazil's elevated national context."
+  },
+  "reconciliation": [
+    {
+      "text": "The Orla beach strip (Atalaia) is the main tourist area; muggings and theft on the beachfront are reported at night. The historic centre is manageable by day. Peripheral bairros carry higher risk."
+    },
+    {
+      "text": "Daytime beach visits to Atalaia are the main draw; do not remain on the beach after dark. Stay in waterfront hotels. Aracaju is a manageable short-trip destination within Sergipe with standard Brazilian precautions."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

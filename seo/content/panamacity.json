@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Panama City scores Caution. The modern financial centre has a tourist-accessible core (Casco Viejo historic district, Punta Paitilla/Marbella business zone, Albrook mall area) alongside genuinely dangerous neighbourhoods. All three advisories flag Panama at elevated caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Casco Viejo — the colonial old town — has been gentrifying rapidly and is patrolled, but the transition zone between Casco Viejo and El Chorillo neighbourhood (one of Panama's most dangerous) is abrupt. El Chorillo, Curundú, and San Miguelito carry very high crime. Taxi scams and pickpocketing in tourist areas are documented."
+    },
+    {
+      "text": "Stay in Casco Viejo, Punta Paitilla, or Marbella for a safer experience. Do not walk from Casco Viejo into El Chorillo under any circumstances — the boundary is a one-block change from tourist to extremely high-risk. Use apps for all transport. The Canal (Miraflores Locks) and Biomuseo are safe daytime destinations with organised transport."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_pa",
+    "fcdo_pa",
+    "canada_dfatd_pa"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

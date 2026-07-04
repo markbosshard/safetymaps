@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Fortaleza is rated Avoid, with one of the highest per-capita homicide rates among Brazilian state capitals. Gang warfare fuelled by regional drug factions (Comando Vermelho, GDE) produces frequent violent incidents. All three advisories include Fortaleza under Brazil's high-crime warning, and Canadian sources specifically note organised crime as prevalent in northeastern Brazil."
+  },
+  "reconciliation": [
+    {
+      "text": "Tourist beaches (Iracema, Meireles, Praia do Futuro) are relatively safer during the day with vigilance but experience robberies and muggings, especially at night. Robberies on public buses are documented. The commercial centre and most residential bairros beyond the beachfront carry Avoid-level risk."
+    },
+    {
+      "text": "Limit activity to established beachfront hotels and guided tourist circuits. Avoid beaches after dark entirely. Do not use ordinary taxis — use ride-hailing apps with named drivers. Keep visits short and itineraries predictable; this is not a city for independent exploration beyond the main tourist strip."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

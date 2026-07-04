@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Mendoza scores Moderate. The wine capital of Argentina and gateway to Aconcagua has a genuinely lower crime profile than Buenos Aires. All three advisories cover it under Argentina's general framework without specific escalation. The city's reliance on wine tourism and its walkable city centre contribute to a safer visitor environment."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft occurs in the city's markets and Plaza Independencia area. Some peripheral barrios carry higher risk but are not tourist areas. Mendoza is frequently cited as one of Argentina's safer major cities."
+    },
+    {
+      "text": "The main plaza, wine region tour circuit (Maipú, Luján de Cuyo), and trekking agencies in the city centre are accessible for independent tourism. Normal precautions apply; this is one of the more relaxed destinations on this list."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_ar",
+    "fcdo_ar",
+    "canada_dfatd_ar"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

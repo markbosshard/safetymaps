@@ -169,6 +169,39 @@ async function fetchFCDO(country) {
   }
 }
 
+// ── Canada DFATD ─────────────────────────────────────────────────────────────
+
+const CANADA_SLUGS = {
+  br:'brazil',mx:'mexico',ar:'argentina',co:'colombia',pe:'peru',cl:'chile',
+  ec:'ecuador',bo:'bolivia',ve:'venezuela',hn:'honduras',gt:'guatemala',
+  sv:'el-salvador',ni:'nicaragua',cr:'costa-rica',pa:'panama',cu:'cuba',
+  do:'dominican-republic',pr:'puerto-rico',ht:'haiti',uy:'uruguay',py:'paraguay',
+};
+
+async function fetchCanada(country) {
+  const slug = CANADA_SLUGS[country];
+  if (!slug) return null;
+  const url = `https://travel.gc.ca/destinations/${slug}`;
+  try {
+    const html = await get(url);
+    const text = stripHtml(html);
+    const { text: excerpt } = extractSafetySentences(text);
+    if (!excerpt) return null;
+    return {
+      id: `canada_dfatd_${country}`,
+      source_name: 'Canada DFATD Travel Advice',
+      source_class: 'advisory',
+      url,
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Government of Canada — Open Government Licence',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    canada_${country}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -257,9 +290,10 @@ async function fetchForCity(key) {
 
   if (!countryCache[country]) {
     countryCache[country] = {};
-    const [sd, fcdo] = await Promise.all([fetchStateDept(country), fetchFCDO(country)]);
+    const [sd, fcdo, ca] = await Promise.all([fetchStateDept(country), fetchFCDO(country), fetchCanada(country)]);
     if (sd)   countryCache[country].state_dept = sd;
     if (fcdo) countryCache[country].fcdo = fcdo;
+    if (ca)   countryCache[country].canada = ca;
   }
 
   const sources = Object.values(countryCache[country]).filter(Boolean);

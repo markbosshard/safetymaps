@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Querétaro scores Moderate. One of Mexico's most cited safe cities, the Querétaro state capital has consistently lower crime than national norms. The US and Canada advisories rate the state at Level 2 but note it as one of Mexico's more stable states. Strong industrial economy and institutional capacity contribute to better security."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft occurs in tourist areas. Isolated robberies and some organised crime activity exist but at low frequency for Mexico. The historic Centro (UNESCO listed) and the Arcos aqueduct area are genuinely accessible for independent tourism."
+    },
+    {
+      "text": "Querétaro is a recommended tourist destination within Mexico. Independent walking in the Centro Histórico, evening dining in the Andador Libertad area, and day trips to wine country (Cañón del Jilotepec) are all manageable. Normal precautions: apps for transport, valuables secured, no night walking in unfamiliar colonias."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Antigua Guatemala scores Moderate. This colonial city — Guatemala's most-visited tourist destination — has a far better security profile than Guatemala City. Tourist police patrol the cobblestone streets, and there is a visible security presence around the main plazas. All three advisories cover it under Guatemala's general elevated framework but do not issue city-specific escalation."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft is the main risk — pickpocketing in markets (Mercado de Artesanías) and on walks to viewpoints. Robbery on Cerro de la Cruz and the Agua volcano trail has been documented; armed guards now accompany most guided ascents. The road connection to Guatemala City carries its own risk after dark."
+    },
+    {
+      "text": "The main plaza (Parque Central), Central Park surroundings, and the tourist restaurant and hotel zone are genuinely accessible. Join guided tours for volcano ascents — do not hike independently. Travel between Antigua and Guatemala City should be with a reputable shuttle operator, not local bus."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_gt",
+    "fcdo_gt",
+    "canada_dfatd_gt"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

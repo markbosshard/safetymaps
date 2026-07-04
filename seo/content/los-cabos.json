@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Los Cabos scores Moderate. This Baja California Sur resort — combining San José del Cabo and Cabo San Lucas — is among Mexico's most secure tourist destinations. US and Canada advisories rate BCS at Level 2 with no specific restrictions on Los Cabos. The resort corridor is heavily secured."
+  },
+  "reconciliation": [
+    {
+      "text": "Crime in Los Cabos affects locals more than tourists, with some robbery and gang activity in non-resort areas. The tourist zone (Marina, hotel corridor, Medano Beach) is very well-policed. Venture into downtown San José or Cabo San Lucas colonias after dark with standard caution."
+    },
+    {
+      "text": "This is a very accessible resort destination. Airport transfers, marina excursions, and beach resorts operate at effective Safe conditions. Avoid riding in unmarked taxis; use hotel-arranged or Uber transport for any movement outside the resort zone."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Barranquilla scores Caution. The Caribbean port city and Carnival capital has a mixed safety profile — manageable in the El Prado and Buenavista commercial zones, more problematic in the extended metropolitan area. All three advisories cover it under Colombia's general elevated framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and some gang activity occur. The El Prado area and the commercial centres are functional for business and Carnival tourism. Peripheral barrios carry higher risk. Traffic crime on highway access routes is reported."
+    },
+    {
+      "text": "Most visitors come for Barranquilla Carnival (February). Stay in El Prado or the hotel corridor. Use vetted transport; do not walk long distances at night. During Carnival, exercise elevated vigilance in crowds — pickpocketing increases significantly."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

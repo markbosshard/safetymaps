@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Puebla scores Caution. The colonial city has strong tourist appeal (Centro Histórico is a UNESCO World Heritage Site) and a relatively manageable risk profile within Mexico, but Puebla state has elevated crime levels including roadside crime on federal highways."
+  },
+  "reconciliation": [
+    {
+      "text": "The zócalo (main square) and Centro Histórico are patrolled and functional for day visits. Robbery, pickpocketing, and assault are documented in the centre at night and in less-touristed areas. The US advisory places Puebla state at Level 2 (Exercise Increased Caution); Canada advises the same."
+    },
+    {
+      "text": "The colonial tourist core is accessible with normal precautions. Avoid wandering beyond the Centro Histórico at night. Exercise caution on federal highways connecting Puebla to CDMX, Oaxaca, and the coast — roadside robbery has been documented. Use vetted transport."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

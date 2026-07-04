@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "São Luís scores Caution. The Maranhão state capital and UNESCO World Heritage historic centre receives tourists, but sits in one of Brazil's poorest states with correspondingly high crime. Canadian advisories specifically flag northeastern Brazil as having prevalent organised crime."
+  },
+  "reconciliation": [
+    {
+      "text": "The historic azulejo tile district (Centro Histórico) attracts tourists but is also a robbery hotspot, particularly after dark. Beaches (Ponta D'Areia, Calhau) experience muggings. The wider metropolitan area has significant gang activity."
+    },
+    {
+      "text": "Visit the Centro Histórico by day in a group; do not linger after sunset. Beach visits should be during daytime hours with minimal valuables. Stay in hotels near the Lagoa da Jansen or Ponta D'Areia with secure facilities."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

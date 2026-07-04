@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Mexicali scores Caution. The Baja California border capital has lower tourism than Tijuana but is still in a high-crime state. US and Canada advisories place Baja California at elevated caution; Mexicali's risk is lower than Tijuana but still above national moderate."
+  },
+  "reconciliation": [
+    {
+      "text": "Armed robbery and carjacking occur; some organised crime presence. Industrial character means fewer tourist visitors. The border crossing area has moderate crime risk. Not a typical leisure destination."
+    },
+    {
+      "text": "Business and border crossing visitors should use vetted transport and avoid night driving. The city centre is functional but requires standard caution. Exercise particular care at night and in peripheral industrial/residential zones."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

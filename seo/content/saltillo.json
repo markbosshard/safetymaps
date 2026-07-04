@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Saltillo scores Moderate for Mexico. The Coahuila state capital is a manufacturing centre with a more stable security profile than much of northern Mexico, though the state is still at Level 3 in US/Canada advisories due to crime in other regions of Coahuila."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and some robbery occur in the Centre; carjacking and organised crime affect the broader state. Saltillo itself has lower violence rates than Torreón or Monterrey. The automotive industry presence creates a substantial foreign business community."
+    },
+    {
+      "text": "Business visitors can move normally in central Saltillo and hotel districts. Exercise standard Mexican urban precautions. Avoid rural highway travel in Coahuila state, particularly toward the Texas border municipalities and the Monclova industrial corridor after dark."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

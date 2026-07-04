@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Campinas scores Caution. As São Paulo state's second-largest city and an industrial hub, Campinas has significant crime concentrated in peripheral bairros while the commercial centre and affluent south-zone neighbourhoods are more manageable. All three advisories cover it under Brazil's general risk framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Car theft, armed robbery, and carjacking are the primary risks. Some central bairros (Centro, Cambuí) are reasonable for visitors by day; peripheral zones (DIC, districts north and east) have gang activity and should be avoided entirely."
+    },
+    {
+      "text": "Business visitors to Campinas should stay in Cambuí, Bosque, or Bonfim Paulista — the city's safer districts. Use ride-hailing throughout. Do not walk in Centro at night. This is not a standard tourist destination; most visitors are here for business or Unicamp connections."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

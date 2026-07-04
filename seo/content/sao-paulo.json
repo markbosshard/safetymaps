@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "São Paulo scores Moderate overall, but the city is deeply heterogeneous: wealthy inner neighbourhoods (Vila Madalena, Itaim Bibi, Pinheiros, Jardins) operate closer to Safe tier, while peripheral zones and the downtown Luz/Cracolândia corridor carry Caution-to-Avoid risk. All three government advisories flag petty theft and \"lightning kidnapping\" (sequestro-relâmpago) as the primary threats to visitors."
+  },
+  "reconciliation": [
+    {
+      "text": "Arrastões — coordinated group robberies — target crowded public spaces, metro stations, and beaches. Motorbike theft and carjacking are endemic across the city. The Canada advisory specifically notes phones and bags are frequently grabbed from café tables and moving vehicles."
+    },
+    {
+      "text": "Use ride-hailing apps rather than street taxis. Keep phones away on foot. Avoid Luz, Brás, and the Cracolândia area north of the historic centre at any hour. In the south zone, neighbourhoods like Moema, Vila Olimpia, and Consolação are reasonable for tourists with normal precautions."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_br",
+    "fcdo_br",
+    "canada_dfatd_br"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

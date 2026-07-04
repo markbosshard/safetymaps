@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Playa del Carmen scores Moderate. This Riviera Maya beach town is heavily tourist-oriented, with the 5th Avenue pedestrian strip and resort corridors providing a relatively secure visitor environment. US and Canada advisories exempt the Quintana Roo coast zone from state-level restrictions; the UK FCDO advises normal tourist precautions."
+  },
+  "reconciliation": [
+    {
+      "text": "Occasional incidents near nightclubs and beach parties have occurred — there were bar shootings in 2018 and a 2019 ferry explosion incident. Drug-related violence occurs in less touristed areas of Playa. Pickpocketing on the beach and in crowded tourist areas is common."
+    },
+    {
+      "text": "The 5th Avenue zone, Mamita's Beach area, and major resort compounds are suitable for standard tourist activity. Avoid beach areas at night away from resort lighting. Be cautious at late-night bars and clubs. Exercise more caution in ADO bus terminal surroundings after dark."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

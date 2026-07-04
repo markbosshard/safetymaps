@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Lima scores Moderate overall, with significant variation between the coastal Miraflores/Barranco/San Isidro tourist triangle and the wider city. The tourist-facing districts are genuinely manageable with precautions; large parts of Lima Metropolitana (Comas, Villa El Salvador, San Juan de Lurigancho) carry much higher risk. All three advisories flag Peru at elevated caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Express kidnapping, phone theft, and robbery are well-documented in tourist areas including Miraflores waterfront (the Larcomar area). Fake taxis are a serious safety concern — all advisories specifically warn against street taxis. Pickpocketing is common on public transport and in the historic centre."
+    },
+    {
+      "text": "Stay in Miraflores or Barranco; day trips to Centro Histórico (Plaza Mayor, Larco Museum area) should use vetted apps for transport. Avoid San Juan de Miraflores, Villa María del Triunfo, and Comas. Do not use street taxis under any circumstances. The Lima tourist experience is very manageable when confined to the safe-zone districts."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_pe",
+    "fcdo_pe",
+    "canada_dfatd_pe"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

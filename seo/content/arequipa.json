@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Arequipa scores Caution. Peru's second city — the \"White City\" — is a colonial heritage destination and base for Colca Canyon and El Misti. Crime levels are elevated above global baseline but more manageable than Lima. US and Canada advisories rate Peru at general elevated caution."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and pickpocketing occur in the historic centre and at transport hubs (bus terminal area). Some express kidnapping incidents are documented. The city is generally safer than Lima but requires the same transport precautions."
+    },
+    {
+      "text": "The main tourist circuit — Plaza de Armas, Santa Catalina Monastery, Yanahuara mirador — is accessible with normal precautions. Use vetted apps for all transport, especially to/from the bus terminal and airport. Avoid walking alone at night beyond the main plaza area."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_pe",
+    "fcdo_pe",
+    "canada_dfatd_pe"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

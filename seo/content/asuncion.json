@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Asunción scores Caution. Paraguay's capital has a mixed safety profile — manageable in the historical centre and Barrio Villa Morra commercial zone, with higher risk in peripheral areas. All three advisories place Paraguay at elevated caution, with some noting the border regions with Brazil and Argentina as particularly problematic for organised crime."
+  },
+  "reconciliation": [
+    {
+      "text": "Petty theft and robbery occur in the historic centre and around the bus terminal. Some express kidnapping incidents are documented. Paraguay is a significant contraband corridor (electronics, fuel, counterfeit goods) and the criminal networks that support this create an elevated backdrop to urban crime."
+    },
+    {
+      "text": "The Barrio Villa Morra and Carmelitas commercial districts are safer for visitors. The historic centre is accessible by day. Avoid the bus terminal area at night and all peripheral barrios. The main concern for transit visitors is organised crime infrastructure rather than street-level violence."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_py",
+    "fcdo_py",
+    "canada_dfatd_py"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

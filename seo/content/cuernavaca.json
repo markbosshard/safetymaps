@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cuernavaca scores Caution. Known as the \"City of Eternal Spring\" and a popular CDMX weekend getaway, Cuernavaca has been affected by significant cartel activity in Morelos state in recent years. The US advisory rates Morelos at Level 3 (Reconsider Travel); Canada issues similar guidance."
+  },
+  "reconciliation": [
+    {
+      "text": "Extortion, kidnapping, and roadside crime on the CDMX-Cuernavaca federal highway have been documented. The city's affluent residential areas and tourist zona (Jardín Borda, Las Mañanitas area) function with some normalcy, but organised crime has penetrated further than in previous years."
+    },
+    {
+      "text": "Day trips from CDMX are riskier than they used to be; use the toll autopista, not federal libre routes. Arrive before dark. The main tourist and restaurant zone is manageable for day visits, but extended stays in Cuernavaca have a higher risk profile than advisories from five years ago suggest."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "San Salvador scores Caution. El Salvador has undergone a dramatic transformation under President Bukele's mass incarceration campaign since 2022: gang homicides plummeted and the country went from one of the world's most dangerous to a regional outlier in safety improvement. However, all three advisories still recommend elevated caution, citing concerns about the human rights context of the crackdown and residual crime."
+  },
+  "reconciliation": [
+    {
+      "text": "The tourist experience in the capital has meaningfully improved — the historic centre and the Zona Rosa are more accessible than at any point in the last two decades. Petty theft and some robbery persist, but the street-level MS-13/Barrio 18 extortion model that paralysed movement has been dismantled. The main caveat: the sustainability of this security model and remaining peripheral gang activity in some colonias."
+    },
+    {
+      "text": "The Zona Rosa, San Benito, and Colonia Escalón are appropriate for standard tourist activity. The historic centre is accessible by day. Exercise normal urban precautions — apps for transport, secure valuables. The dramatic improvement since 2021 may not yet be reflected in older travel guides; current government advisories (2024-25) are the right reference."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_sv",
+    "fcdo_sv",
+    "canada_dfatd_sv"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

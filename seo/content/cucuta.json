@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Cúcuta scores Caution-to-Avoid. The Norte de Santander capital sits on the Venezuelan border and is a major crossing point for contraband, migrants, and narco-trafficking. The proximity to Venezuela's instability and the active ELN guerrilla presence in the department elevates risk significantly. US and Canada advisories warn specifically about this border region."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery, kidnapping, and ELN activity are documented in the broader Norte de Santander department. The city itself has high crime relative to Colombian norms. The Venezuela border crossing zone is particularly dangerous for robberies and scams targeting migrants and travellers."
+    },
+    {
+      "text": "If crossing through Cúcuta to or from Venezuela, plan arrivals by day, use vetted transport, do not display valuables, and do not linger at the border. The city is not a standard tourist destination; transit visitors should minimise time here and use pre-arranged transport."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

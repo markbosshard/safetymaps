@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Bucaramanga scores Caution. The Santander department capital (\"The City of Parks\") is considered one of Colombia's more manageable cities, less dominated by cartel warfare than Cali or some coastal cities. All three advisories cover it under Colombia's general elevated-risk framework."
+  },
+  "reconciliation": [
+    {
+      "text": "Robbery and some organised crime activity occur. The city has a relatively stable security environment by Colombian standards. The Cabecera del Llano and Sotomayor neighbourhoods are safer."
+    },
+    {
+      "text": "Bucaramanga is typically a transit point for visitors heading to Barichara or the Chicamocha canyon. Exercise standard Colombian urban precautions: apps for transport, avoid night walking in unfamiliar areas, keep phones out of sight."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_co",
+    "fcdo_co",
+    "canada_dfatd_co"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}

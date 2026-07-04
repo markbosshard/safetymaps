@@ -1,0 +1,21 @@
+{
+  "verdict": {
+    "text": "Oaxaca City scores Moderate. The cultural capital of southern Mexico is popular with international tourists and generally safe within the city, though Oaxaca state has elevated advisories. US and Canada rate the state at Level 2. The historic centre (also UNESCO listed) and the mezcal tourist trail are accessible."
+  },
+  "reconciliation": [
+    {
+      "text": "Political protests (teacher union blockades are common; teachers in Oaxaca are politically very active) can disrupt movement and occasionally turn tense. Petty theft in markets and tourist areas is reported. The city itself has a relatively low violent crime profile; it's the state's rural areas that carry higher risk."
+    },
+    {
+      "text": "Visit freely during the day, including the Zócalo, Monte Albán, and the markets of Etla and Tlacolula. Protests: observe from a distance; do not try to cross blockades. At night, the tourist dining/bar zone around the Centro is safe with normal precautions. Day trips require checking road conditions."
+    }
+  ],
+  "confidence": "medium",
+  "sources_used": [
+    "state_dept_mx",
+    "fcdo_mx",
+    "canada_dfatd_mx"
+  ],
+  "generated_at": "2026-07-04",
+  "generated_by": "claude-sonnet-4-6 (inline synthesis)"
+}
