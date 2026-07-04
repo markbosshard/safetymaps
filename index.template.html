@@ -519,6 +519,7 @@ let OWNER=(lsGet('sm_owner')==='1'); let _ownerToast='';
   // skipgc is GoatCounter's own opt-out flag, so ?owner=1 silences BOTH our stream and GoatCounter.
   if(_o==='1'){ persist('sm_owner','1'); try{localStorage.setItem('skipgc','t');}catch(e){} OWNER=true; _ownerToast='Owner mode on — analytics (incl. GoatCounter) off for this browser.'; }
   else if(_o==='0'){ try{localStorage.removeItem('sm_owner');localStorage.removeItem('skipgc');}catch(e){} OWNER=false; _ownerToast='Analytics re-enabled for this browser.'; }
+  else if(_o!==null){ _ownerToast = OWNER ? 'Owner mode is ON: this browser is NOT counted in analytics.' : 'Owner mode is OFF: this browser IS counted. Open ?owner=1 to opt out.'; }
   if(_o!==null){ try{history.replaceState(null,'',location.pathname+location.hash);}catch(e){} } }
 const SESSION=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('s'+Date.now()+Math.random().toString(36).slice(2));
 function track(kind,extra){ if(DNT||OWNER)return;
