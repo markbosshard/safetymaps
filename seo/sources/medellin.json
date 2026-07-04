@@ -45,5 +45,14 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  },
+  {
+    "id": "mindefensa_co_medellin",
+    "source_name": "Colombia MinDefensa — Homicidios (Medellín)",
+    "source_class": "crime_data",
+    "url": "https://www.datos.gov.co/resource/m8fd-ahd9",
+    "published_date": "2026-07",
+    "license": "Datos abiertos — Gobierno de Colombia",
+    "excerpt": "MinDefensa Colombia — homicidios en Medellín: 2026: 110; 2025: 333; 2024: 309; 2023: 359; 2022: 358. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
   }
 ]

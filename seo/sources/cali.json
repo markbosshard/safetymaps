@@ -35,5 +35,14 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Colombia travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Safety and security section – removed information on elections Last updated: June 30, 2026 10:15 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Colombia - Exercise a high degree of caution Exercise a high degree of caution in Colombia due to high levels of crime."
+  },
+  {
+    "id": "mindefensa_co_cali",
+    "source_name": "Colombia MinDefensa — Homicidios (Cali)",
+    "source_class": "crime_data",
+    "url": "https://www.datos.gov.co/resource/m8fd-ahd9",
+    "published_date": "2026-07",
+    "license": "Datos abiertos — Gobierno de Colombia",
+    "excerpt": "MinDefensa Colombia — homicidios en Cali: 2026: 460; 2025: 1068; 2024: 950; 2023: 1005; 2022: 986. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
   }
 ]

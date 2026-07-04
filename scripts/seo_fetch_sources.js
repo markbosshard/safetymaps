@@ -392,6 +392,53 @@ async function fetchIspRj(cityKey) {
   }
 }
 
+// ── Colombia MinDefensa homicide API ─────────────────────────────────────────
+// Socrata dataset m8fd-ahd9 at datos.gov.co — city-level annual homicides.
+// Published by Ministerio de Defensa Nacional / Policía Nacional.
+
+const COLOMBIA_CITIES = {
+  'bogota':       'BOGOTA D.C.',
+  'medellin':     'MEDELLIN',
+  'cali':         'CALI',
+  'barranquilla': 'BARRANQUILLA',
+  'bucaramanga':  'BUCARAMANGA',
+  'cartagena':    'CARTAGENA DE INDIAS',
+  'cucuta':       'CUCUTA',
+};
+
+async function fetchColombiaHomicidios(cityKey) {
+  const muni = COLOMBIA_CITIES[cityKey];
+  if (!muni) return null;
+  const city = CITIES[cityKey];
+  const params = [
+    `$select=date_trunc_y(fecha_hecho) as year,sum(cantidad) as total`,
+    `$where=municipio='${muni}'`,
+    `$group=year`,
+    `$order=year DESC`,
+    `$limit=8`,
+  ].join('&');
+  const url = `https://www.datos.gov.co/resource/m8fd-ahd9.json?${params}`;
+  try {
+    const raw = await get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; LatamCrimeMap)' } });
+    const rows = JSON.parse(raw).filter(r => r.total != null);
+    if (!rows.length) return null;
+    const lines = rows.slice(0,5).map(r => `${r.year.slice(0,4)}: ${r.total}`);
+    const excerpt = `MinDefensa Colombia — homicidios en ${city.name}: ${lines.join('; ')}. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional.`;
+    return {
+      id: `mindefensa_co_${cityKey.replace(/-/g,'_')}`,
+      source_name: `Colombia MinDefensa — Homicidios (${city.name})`,
+      source_class: 'crime_data',
+      url: 'https://www.datos.gov.co/resource/m8fd-ahd9',
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Datos abiertos — Gobierno de Colombia',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    co_hom_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -504,6 +551,10 @@ async function fetchForCity(key) {
   const isprj = await fetchIspRj(key);
   if (isprj) sources.push(isprj);
 
+  // City-specific: Colombia MinDefensa homicidios (Colombian cities only)
+  const coHom = await fetchColombiaHomicidios(key);
+  if (coHom) sources.push(coHom);
+
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);
   if (numbeo) sources.push(numbeo);
@@ -585,6 +636,7 @@ async function main() {
     const ids = new Set(src.map(s => s.id));
     if (SNIC_CITIES[k] && !ids.has(`snic_ar_${SNIC_CITIES[k].code}`)) return true;
     if (ISPRJ_CITIES[k] && !ids.has(`isprj_${k.replace(/-/g,'_')}`)) return true;
+    if (COLOMBIA_CITIES[k] && !ids.has(`mindefensa_co_${k.replace(/-/g,'_')}`)) return true;
     return false;
   });
 
