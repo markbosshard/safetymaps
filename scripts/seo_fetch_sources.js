@@ -202,6 +202,62 @@ async function fetchCanada(country) {
   }
 }
 
+// ── SSP-SP REST API (São Paulo state crime stats — no auth needed) ────────────
+// API discovered by intercepting network calls on ssp.sp.gov.br/estatistica/dados-mensais
+// Capital region = idGrupo=1; grupoDelito=6 covers homicídio group
+
+// Map city keys that fall within São Paulo state to their SSP region id
+const SSPSP_CITY_REGIONS = {
+  'sao-paulo':      { idGrupo: 1, regionName: 'Capital' },
+  'campinas':       { idGrupo: 4, regionName: 'Campinas' },
+  'sorocaba':       { idGrupo: 12, regionName: 'Sorocaba' },
+  'ribeirao-preto': { idGrupo: 8, regionName: 'Ribeirão Preto' },
+  'santos':         { idGrupo: 9, regionName: 'Santos' },
+};
+
+// grupoDelito codes discovered from the API
+const DELITO_GROUPS = [
+  { id: 6, name: 'Homicídios' },
+  { id: 1, name: 'Furtos e Roubos' },
+];
+
+async function fetchSspSp(cityKey) {
+  const cfg = SSPSP_CITY_REGIONS[cityKey];
+  if (!cfg) return null;
+  const year = new Date().getFullYear();
+  try {
+    let allRows = [];
+    for (const grp of DELITO_GROUPS) {
+      const url = `https://www.ssp.sp.gov.br/v1/OcorrenciasMensais/RecuperaDadosMensaisAgrupados?ano=${year}&grupoDelito=${grp.id}&tipoGrupo=REGIAO&idGrupo=${cfg.idGrupo}`;
+      const raw = await get(url);
+      const json = JSON.parse(raw);
+      const rows = (json.data?.[0]?.listaDados || []).map(r => ({
+        crime: r.delito?.delito || '',
+        total: r.total,
+      }));
+      allRows = allRows.concat(rows);
+    }
+    if (!allRows.length) return null;
+    // Format as a concise excerpt
+    const lines = allRows
+      .filter(r => r.total > 0 && !/VÍTIMAS|CULPOSO|TRÂNSITO/i.test(r.crime))
+      .map(r => `${r.crime}: ${r.total.toLocaleString()} (${year})`);
+    const excerpt = `SSP-SP official crime statistics for ${cfg.regionName} region — ${year}:\n${lines.join('; ')}.`;
+    return {
+      id: `sspsp_${cityKey.replace(/-/g,'_')}`,
+      source_name: `SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (${cfg.regionName})`,
+      source_class: 'crime_data',
+      url: 'https://www.ssp.sp.gov.br/estatistica/dados-mensais',
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Dados abertos — Governo do Estado de São Paulo',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    ssp-sp_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -301,6 +357,10 @@ async function fetchForCity(key) {
   // City-specific: Reddit (if key available)
   const reddit = await fetchReddit(city.name, country);
   if (reddit) sources.push(reddit);
+
+  // City-specific: SSP-SP crime stats (São Paulo state cities only)
+  const sspsp = await fetchSspSp(key);
+  if (sspsp) sources.push(sspsp);
 
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);

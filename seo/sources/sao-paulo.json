@@ -28,6 +28,15 @@
     "excerpt": "--> --> Brazil travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 11:35 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Brazil - Exercise a high degree of caution Exercise a high degree of caution in Brazil due to high crime rates and regular incidents of gang-related and other violence in urban areas. Gang-related violence and organized crime is prevalent in these neighbourhoods."
   },
   {
+    "id": "sspsp_sao_paulo",
+    "source_name": "SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo (Capital)",
+    "source_class": "crime_data",
+    "url": "https://www.ssp.sp.gov.br/estatistica/dados-mensais",
+    "published_date": "2026-07",
+    "license": "Dados abertos — Governo do Estado de São Paulo",
+    "excerpt": "SSP-SP official crime statistics for Capital region — 2026:\nHOMICÍDIO DOLOSO (2): 970 (2026); TENTATIVA DE HOMICÍDIO: 1,631 (2026); LESÃO CORPORAL SEGUIDA DE MORTE: 40 (2026); LESÃO CORPORAL DOLOSA: 73,747 (2026); LESÃO CORPORAL CULPOSA - OUTRAS: 1,426 (2026); LATROCÍNIO: 38 (2026); TOTAL DE ESTUPRO (4): 6,500 (2026); ESTUPRO: 1,514 (2026); ESTUPRO DE VULNERÁVEL: 4,986 (2026); TOTAL DE ROUBO - OUTROS (1): 60,374 (2026); ROUBO - OUTROS: 59,314 (2026); ROUBO DE VEÍCULO: 7,310 (2026); ROUBO DE CARGA: 1,060 (2026); FURTO - OUTROS: 221,268 (2026); FURTO DE VEÍCULO: 33,257 (2026)."
+  },
+  {
     "id": "editorial_vanguard_attach____s_o_paulo__",
     "source_name": "Vanguard Attaché — São Paulo (risk model)",
     "source_class": "editorial",
@@ -66,5 +75,14 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  },
+  {
+    "id": "australia_dfat_br",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
   }
 ]

@@ -1,15 +1,20 @@
 #!/usr/bin/env node
-// scripts/seo_fetch_playwright.js — fetch JS-rendered safety sources via Playwright.
+// scripts/seo_fetch_playwright.js — fetch JS-rendered safety sources via Playwright + stealth.
 //
 //   node scripts/seo_fetch_playwright.js             fetch all cities (skips existing playwright excerpts)
 //   node scripts/seo_fetch_playwright.js sao-paulo   fetch one city
 //   node scripts/seo_fetch_playwright.js --audit      print coverage
 //   node scripts/seo_fetch_playwright.js --force     overwrite existing
 //
-// Sources fetched (require browser rendering):
-//   [advisory]    OSAC (Overseas Security Advisory Council) — US State Dept classified-open reports
-//   [index]       Numbeo crime index — if NUMBEO_API_KEY not set, scrapes the public page
-//   [crime_data]  LatAm government stats portals (SSP-SP, ISP-RJ, SESNSP, etc.) — selected cities only
+// Uses playwright-extra + puppeteer-extra-plugin-stealth to bypass bot detection.
+//
+// Sources fetched:
+//   [advisory]    Australia Smartraveller (stealth required — blocked curl)
+//   [advisory]    OSAC — still returns 500 even with stealth; keep for future
+//   [index]       Numbeo web — blocked even with stealth; use NUMBEO_API_KEY instead
+//
+// NOTE: SSP-SP (São Paulo state crime stats) turned out to have a direct REST API —
+//       it is handled in seo_fetch_sources.js instead (no browser needed).
 
 'use strict';
 
@@ -35,6 +40,59 @@ function extractSafety(text, maxChars = 1200) {
     out += (out ? ' ' : '') + s.trim();
   }
   return out;
+}
+
+// ── Australia Smartraveller ───────────────────────────────────────────────────
+// Blocked by curl (HTTP/2 protocol error) but works with stealth Playwright.
+// URL pattern: /destinations/americas/{slug}
+// Content is in .layout-content; safety section between "Safety" and "Health" headings.
+
+const AUSTRALIA_SLUGS = {
+  br:'brazil',mx:'mexico',ar:'argentina',co:'colombia',pe:'peru',cl:'chile',
+  ec:'ecuador',bo:'bolivia',ve:'venezuela',hn:'honduras',gt:'guatemala',
+  sv:'el-salvador',ni:'nicaragua',cr:'costa-rica',pa:'panama',cu:'cuba',
+  do:'dominican-republic',pr:'puerto-rico',ht:'haiti',uy:'uruguay',py:'paraguay',
+};
+
+async function fetchAustralia(browser, country) {
+  const slug = AUSTRALIA_SLUGS[country];
+  if (!slug) return null;
+  const url = `https://www.smartraveller.gov.au/destinations/americas/${slug}`;
+  const page = await browser.newPage();
+  try {
+    const resp = await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+    if (!resp || resp.status() !== 200) return null;
+
+    const text = await page.evaluate(() => {
+      const main = document.querySelector('.layout-content');
+      return main ? main.innerText : document.body.innerText;
+    });
+
+    // Extract the safety section (between "Safety" heading and "Health" heading)
+    const safetyIdx = text.search(/\nSafety\n/);
+    const healthIdx = text.search(/\nHealth\n/);
+    const section = safetyIdx >= 0
+      ? text.slice(safetyIdx, healthIdx > safetyIdx ? healthIdx : safetyIdx + 3000)
+      : text;
+
+    const excerpt = extractSafety(section);
+    if (!excerpt) return null;
+
+    return {
+      id: `australia_dfat_${country}`,
+      source_name: 'Australia DFAT Smartraveller — Safety',
+      source_class: 'advisory',
+      url,
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Creative Commons Attribution 3.0 Australia',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`      australia_${country}: ${e.message.slice(0,80)}`);
+    return null;
+  } finally {
+    await page.close();
+  }
 }
 
 // ── OSAC ─────────────────────────────────────────────────────────────────────
@@ -197,13 +255,17 @@ async function fetchForCity(browser, key) {
 
   if (!countryCache[country]) {
     countryCache[country] = {};
-    const osac = await fetchOsac(browser, country);
+    const [osac, au] = await Promise.all([
+      fetchOsac(browser, country),
+      fetchAustralia(browser, country),
+    ]);
     if (osac) countryCache[country].osac = osac;
+    if (au)   countryCache[country].australia = au;
   }
 
   const newSources = Object.values(countryCache[country]).filter(Boolean);
 
-  // City-specific: Numbeo web
+  // City-specific: Numbeo web (blocked even with stealth — kept for future)
   const numbeo = await fetchNumbeoWeb(browser, city.name, country);
   if (numbeo) newSources.push(numbeo);
 
@@ -241,7 +303,9 @@ async function fetchForCity(browser, key) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  const { chromium } = require('playwright');
+  const { chromium } = require('playwright-extra');
+  const stealth = require('puppeteer-extra-plugin-stealth');
+  chromium.use(stealth());
 
   if (AUDIT) {
     console.log('\n▸ Playwright source coverage audit\n');
@@ -250,8 +314,8 @@ async function main() {
       const p = path.join(OUT_DIR, `${k}.json`);
       if (!fs.existsSync(p)) continue;
       const src = JSON.parse(fs.readFileSync(p,'utf8'));
-      const playwright_src = src.filter(s => s.id.startsWith('osac_') || s.id.startsWith('numbeo_web_') || s.id.startsWith('gov_'));
-      if (playwright_src.length) console.log(`  ${k.padEnd(28)} ${playwright_src.map(s=>s.source_class).join(', ')}`);
+      const pw_src = src.filter(s => ['australia_dfat','osac_','numbeo_web_','gov_'].some(pfx => s.id.startsWith(pfx)));
+      if (pw_src.length) console.log(`  ${k.padEnd(28)} ${pw_src.map(s=>s.id).join(', ')}`);
     }
     return;
   }
@@ -261,7 +325,7 @@ async function main() {
     const p = path.join(OUT_DIR, `${k}.json`);
     if (!fs.existsSync(p)) return true;
     const src = JSON.parse(fs.readFileSync(p,'utf8'));
-    return !src.find(s => s.id.startsWith('osac_'));
+    return !src.find(s => s.id.startsWith('australia_dfat'));
   });
 
   if (!keys.length) {
@@ -269,7 +333,7 @@ async function main() {
     return;
   }
 
-  console.log(`\nLaunching Playwright (Chromium headless)…`);
+  console.log(`\nLaunching Playwright (Chromium headless + stealth)…`);
   const browser = await chromium.launch({ headless: true });
 
   let total = 0;
