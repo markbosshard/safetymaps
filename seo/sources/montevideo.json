@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_uy",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/uruguay",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Violent crime, such as assaults, armed robberies and thefts occur throughout the country. Petty crime, such as pickpocketing and bag snatching, occurs in Uruguay, especially in Montevideo. Crime throughout the country increases in summer (December to March)."
+  },
+  {
     "id": "state_dept_uy",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Uruguay travel advice Take normal security precautions (with regional advisories) Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 14:08 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Uruguay - Take normal security precautions Take normal security precautions in Uruguay. Montevideo - Exercise a high degree of caution Exercise a high degree of caution in Montevideo due to crime."
-  },
-  {
-    "id": "australia_dfat_uy",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/uruguay",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Violent crime, such as assaults, armed robberies and thefts occur throughout the country. Petty crime, such as pickpocketing and bag snatching, occurs in Uruguay, especially in Montevideo. Crime throughout the country increases in summer (December to March)."
   }
 ]

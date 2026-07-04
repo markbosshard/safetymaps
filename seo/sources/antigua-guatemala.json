@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_gt",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/guatemala",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety The Guatemalan Government has declared a state of prevention due to the threat of organised crime and gang activity. Violent crime, including murder, carjacking and kidnapping, is common."
+  },
+  {
     "id": "state_dept_gt",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Guatemala travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 16:26 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Guatemala - Exercise a high degree of caution Exercise a high degree of caution in Guatemala due to high levels of crime roadblocks and demonstrations that occur throughout the country. Crime rates are high near all border crossings in Guatemala but are worse near unofficial ones."
-  },
-  {
-    "id": "australia_dfat_gt",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/guatemala",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety The Guatemalan Government has declared a state of prevention due to the threat of organised crime and gang activity. Violent crime, including murder, carjacking and kidnapping, is common."
   }
 ]

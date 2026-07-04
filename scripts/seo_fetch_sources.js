@@ -32,7 +32,7 @@ const FORCE  = process.argv.includes('--force');
 const AUDIT  = process.argv.includes('--audit');
 const TARGET = process.argv.find(a => !a.startsWith('-') && a !== __filename.split('/').pop() && CITIES[a]);
 
-// ── HTTP helper ───────────────────────────────────────────────────────────────
+// ── HTTP helpers ──────────────────────────────────────────────────────────────
 
 function get(url, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -53,6 +53,27 @@ function get(url, opts = {}) {
       res.setEncoding('utf8');
       res.on('data', c => { if (body.length < 500000) body += c; });
       res.on('end', () => resolve(body));
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
+  });
+}
+
+// getBinary: returns a Buffer (needed for latin-1 encoded files like ISP-RJ CSV)
+function getBinary(url, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const mod = url.startsWith('https') ? https : http;
+    const req = mod.get(url, {
+      timeout: 35000,
+      headers: { 'User-Agent': 'LatamCrimeMap research bot (latamcrimemap.com)', ...opts.headers },
+    }, res => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        return getBinary(res.headers.location, opts).then(resolve).catch(reject);
+      }
+      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode} ${url}`));
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => resolve(Buffer.concat(chunks)));
     });
     req.on('error', reject);
     req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
@@ -258,6 +279,119 @@ async function fetchSspSp(cityKey) {
   }
 }
 
+// ── Argentina SNIC API ────────────────────────────────────────────────────────
+// Homicides (dolosos) by province — annual time series via datos.gob.ar
+// Series ID pattern: snic_1_hechos_{2-digit INDEC province code}
+// Note: province-level data; for CABA (02) it is city-level.
+
+const SNIC_CITIES = {
+  'buenos-aires': { code: '02', province: 'CABA' },
+  'cordoba':      { code: '14', province: 'Córdoba' },
+  'mendoza':      { code: '50', province: 'Mendoza' },
+  'rosario':      { code: '82', province: 'Santa Fe' },
+  'bariloche':    { code: '62', province: 'Río Negro' },
+};
+
+async function fetchSnicArgentina(cityKey) {
+  const cfg = SNIC_CITIES[cityKey];
+  if (!cfg) return null;
+  const url = `https://apis.datos.gob.ar/series/api/series/?ids=snic_1_hechos_${cfg.code}&limit=8&sort=desc&format=json`;
+  try {
+    const raw = await get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; LatamCrimeMap)' } });
+    const json = JSON.parse(raw);
+    const series = (json.data || []).filter(d => d[1] != null);
+    if (!series.length) return null;
+    const lines = series.slice(0, 6).map(([date, val]) => `${date.slice(0,4)}: ${val}`);
+    const scope = cfg.code === '02' ? 'ciudad-nivel' : 'nivel provincial';
+    const excerpt = `SNIC Argentina — homicidios dolosos en ${cfg.province} (${scope}): ${lines.join('; ')}. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina.`;
+    return {
+      id: `snic_ar_${cfg.code}`,
+      source_name: `SNIC — Sistema Nacional de Información Criminal (${cfg.province})`,
+      source_class: 'crime_data',
+      url: 'https://www.argentina.gob.ar/seguridad/snic/datos',
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Creative Commons Attribution 2.5 Argentina',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    snic_ar_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
+// ── ISP-RJ CSV (Rio de Janeiro state crime stats) ─────────────────────────────
+// CSV at ispdados.rj.gov.br uses latin-1 encoding + semicolon delimiters.
+// Fields: fmun (municipality), ano, mes, hom_doloso, cvli, total_roubos, latrocinio, ...
+
+const ISPRJ_CITIES = {
+  'rio-de-janeiro': 'Rio de Janeiro',
+};
+
+let isprjCache = null; // download once per run
+
+async function fetchIspRj(cityKey) {
+  const fmun = ISPRJ_CITIES[cityKey];
+  if (!fmun) return null;
+  try {
+    if (!isprjCache) {
+      console.log('\n    Downloading ISP-RJ CSV (2.3 MB)…');
+      const buf = await getBinary('http://www.ispdados.rj.gov.br/Arquivos/BaseMunicipioMensal.csv');
+      const text = buf.toString('latin1');
+      const lines = text.split('\n').filter(l => l.trim());
+      const headers = lines[0].split(';').map(h => h.trim());
+      isprjCache = lines.slice(1).map(line => {
+        const vals = line.split(';');
+        const row = {};
+        headers.forEach((h, i) => { row[h] = (vals[i] || '').trim(); });
+        return row;
+      });
+    }
+    const rows = isprjCache
+      .filter(r => r.fmun === fmun)
+      .sort((a, b) => {
+        const ka = a.ano + a.mes.padStart(2,'0');
+        const kb = b.ano + b.mes.padStart(2,'0');
+        return kb.localeCompare(ka);
+      });
+    if (!rows.length) return null;
+
+    const sumYear = (yr) => {
+      const yr_rows = rows.filter(r => r.ano === yr);
+      if (!yr_rows.length) return null;
+      const tot = {};
+      for (const k of ['hom_doloso','cvli','total_roubos','latrocinio']) {
+        tot[k] = yr_rows.reduce((s, r) => s + (parseFloat(r[k]) || 0), 0);
+      }
+      return { year: yr, months: yr_rows.length, ...tot };
+    };
+
+    const latestYear = rows[0].ano;
+    const curr = sumYear(latestYear);
+    const prev = sumYear(String(Number(latestYear) - 1));
+
+    let excerpt = `ISP-RJ dados para ${fmun}`;
+    if (curr) {
+      const mo = curr.months < 12 ? ` (${curr.months} meses YTD)` : '';
+      excerpt += ` — ${curr.year}${mo}: ${curr.hom_doloso} homicídios dolosos, ${curr.cvli} CVLI, ${curr.total_roubos.toLocaleString()} roubos totais, ${curr.latrocinio} latrocínios.`;
+    }
+    if (prev) {
+      excerpt += ` ${prev.year}: ${prev.hom_doloso} homicídios, ${prev.total_roubos.toLocaleString()} roubos.`;
+    }
+    return {
+      id: `isprj_${cityKey.replace(/-/g,'_')}`,
+      source_name: `ISP-RJ — Instituto de Segurança Pública do Rio de Janeiro (${fmun})`,
+      source_class: 'crime_data',
+      url: 'https://www.ispdados.rj.gov.br/',
+      published_date: new Date().toISOString().slice(0,7),
+      license: 'Dados abertos — Governo do Estado do Rio de Janeiro',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    isprj_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -362,6 +496,14 @@ async function fetchForCity(key) {
   const sspsp = await fetchSspSp(key);
   if (sspsp) sources.push(sspsp);
 
+  // City-specific: Argentina SNIC (Argentine cities only)
+  const snic = await fetchSnicArgentina(key);
+  if (snic) sources.push(snic);
+
+  // City-specific: ISP-RJ CSV (Rio de Janeiro state cities only)
+  const isprj = await fetchIspRj(key);
+  if (isprj) sources.push(isprj);
+
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);
   if (numbeo) sources.push(numbeo);
@@ -377,18 +519,31 @@ async function fetchForCity(key) {
         url: b.url,
         published_date: null,
         license: 'see source',
-        excerpt: '', // FILL IN: paste key paragraph from this source
+        excerpt: '',
         _note: 'Excerpt needed — paste a key safety paragraph from this URL',
       });
     }
   }
 
+  // Merge with existing source file (preserve Playwright-fetched sources like australia_dfat, osac)
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUT_DIR, `${key}.json`), JSON.stringify(sources, null, 2));
+  const existingPath = path.join(OUT_DIR, `${key}.json`);
+  let existing = [];
+  if (fs.existsSync(existingPath)) {
+    try { existing = JSON.parse(fs.readFileSync(existingPath, 'utf8')); } catch {}
+  }
+  const existingIds = new Set(existing.map(s => s.id));
+  for (const s of sources) {
+    if (!existingIds.has(s.id) || FORCE) {
+      existing = existing.filter(e => e.id !== s.id);
+      existing.push(s);
+    }
+  }
+  fs.writeFileSync(existingPath, JSON.stringify(existing, null, 2));
 
-  const filled   = sources.filter(s => s.excerpt).length;
-  const unfilled = sources.filter(s => !s.excerpt).length;
-  console.log(` ${filled} excerpts, ${unfilled} stubs (need manual excerpt)`);
+  const filled   = existing.filter(s => s.excerpt).length;
+  const unfilled = existing.filter(s => !s.excerpt).length;
+  console.log(` ${filled} excerpts, ${unfilled} stubs (total ${existing.length} sources)`);
 
   return { filled, unfilled };
 }
@@ -419,9 +574,18 @@ async function main() {
     return;
   }
 
+  // Without --force: only process cities that are missing SNIC/ISP-RJ where applicable,
+  // or that have no source file yet. With --force: re-fetch everything.
   const keys = TARGET ? [TARGET] : Object.keys(CITIES).filter(k => {
-    if (!FORCE && fs.existsSync(path.join(OUT_DIR, `${k}.json`))) return false;
-    return true;
+    if (FORCE) return true;
+    const p = path.join(OUT_DIR, `${k}.json`);
+    if (!fs.existsSync(p)) return true;
+    // Also re-process if we have new crime data sources for this city
+    const src = JSON.parse(fs.readFileSync(p, 'utf8'));
+    const ids = new Set(src.map(s => s.id));
+    if (SNIC_CITIES[k] && !ids.has(`snic_ar_${SNIC_CITIES[k].code}`)) return true;
+    if (ISPRJ_CITIES[k] && !ids.has(`isprj_${k.replace(/-/g,'_')}`)) return true;
+    return false;
   });
 
   if (!keys.length) {

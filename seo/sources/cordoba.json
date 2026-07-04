@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_ar",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/argentina",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Argentina has raised its national security level following events in the Middle East. Popular tourist areas in Buenos Aires, such as La Boca, San Telmo and Palermo, and the Obelisk and Plaza de Mayo areas, are hotspots for robberies and theft. Always keep personal belongings, including mobile phones, secure or out of sight. Violent crimes occur in Buenos Aires, Rosario and Mendoza tourist areas."
+  },
+  {
     "id": "state_dept_ar",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -28,12 +37,12 @@
     "excerpt": "--> --> Argentina travel advice Take normal security precautions (with regional advisories) Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 16:13 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Argentina - Take normal security precautions Take normal security precautions in Argentina."
   },
   {
-    "id": "australia_dfat_ar",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/argentina",
+    "id": "snic_ar_14",
+    "source_name": "SNIC — Sistema Nacional de Información Criminal (Córdoba)",
+    "source_class": "crime_data",
+    "url": "https://www.argentina.gob.ar/seguridad/snic/datos",
     "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Argentina has raised its national security level following events in the Middle East. Popular tourist areas in Buenos Aires, such as La Boca, San Telmo and Palermo, and the Obelisk and Plaza de Mayo areas, are hotspots for robberies and theft. Always keep personal belongings, including mobile phones, secure or out of sight. Violent crimes occur in Buenos Aires, Rosario and Mendoza tourist areas."
+    "license": "Creative Commons Attribution 2.5 Argentina",
+    "excerpt": "SNIC Argentina — homicidios dolosos en Córdoba (nivel provincial): 2025: 94; 2024: 114; 2023: 115; 2022: 94; 2021: 87; 2020: 120. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
   }
 ]

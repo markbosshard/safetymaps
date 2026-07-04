@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_ni",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/nicaragua",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Nicaragua has a high crime rate, including armed robbery, assault and express kidnapping. Borders and remote areas have higher risks of violent crime due to organised crime activity."
+  },
+  {
     "id": "state_dept_ni",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Nicaragua travel advice Exercise a high degree of caution Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 13:37 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Nicaragua - Exercise a high degree of caution Exercise a high degree of caution in Nicaragua due to the political situation, the potential for civil unrest and crime. Back to top Safety and security Political situation The political situation is volatile in Nicaragua."
-  },
-  {
-    "id": "australia_dfat_ni",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/nicaragua",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Nicaragua has a high crime rate, including armed robbery, assault and express kidnapping. Borders and remote areas have higher risks of violent crime due to organised crime activity."
   }
 ]

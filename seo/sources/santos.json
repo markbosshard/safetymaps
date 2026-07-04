@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_br",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
+  },
+  {
     "id": "state_dept_br",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -35,14 +44,5 @@
     "published_date": "2026-07",
     "license": "Dados abertos — Governo do Estado de São Paulo",
     "excerpt": "SSP-SP official crime statistics for Santos region — 2026:\nHOMICÍDIO DOLOSO (2): 970 (2026); TENTATIVA DE HOMICÍDIO: 1,631 (2026); LESÃO CORPORAL SEGUIDA DE MORTE: 40 (2026); LESÃO CORPORAL DOLOSA: 73,747 (2026); LESÃO CORPORAL CULPOSA - OUTRAS: 1,426 (2026); LATROCÍNIO: 38 (2026); TOTAL DE ESTUPRO (4): 6,500 (2026); ESTUPRO: 1,514 (2026); ESTUPRO DE VULNERÁVEL: 4,986 (2026); TOTAL DE ROUBO - OUTROS (1): 60,374 (2026); ROUBO - OUTROS: 59,314 (2026); ROUBO DE VEÍCULO: 7,310 (2026); ROUBO DE CARGA: 1,060 (2026); FURTO - OUTROS: 221,268 (2026); FURTO DE VEÍCULO: 33,257 (2026)."
-  },
-  {
-    "id": "australia_dfat_br",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
   }
 ]

@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_ec",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/ecuador",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Ecuador has declared a nation-wide state of 'internal armed conflict'. While tourists are not typically the main targets, organised criminal groups have employed tactics such as targeted killings, express kidnappings, armed robberies, extortion and bomb attacks in public places. It is essential to stay aware of your surroundings and prioritise your safety and security. Be prepared to leave an area quickly if a dangerous situation arises. There's a high risk of kidnapping and violent crime in the northern and coastal regions and Guayaquil City. Areas bordering Colombia and Peru are particularly dangerous. The risk of violent crime increases when you travel alone or after dark."
+  },
+  {
     "id": "state_dept_ec",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Ecuador travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 16:21 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Ecuador - Exercise a high degree of caution Exercise a high degree of caution in Ecuador due to high levels of crime. Criminal activities include: drug trafficking extortion armed assault kidnapping Peru Work to clear landmines in certain areas near the border with Peru is still ongoing."
-  },
-  {
-    "id": "australia_dfat_ec",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/ecuador",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Ecuador has declared a nation-wide state of 'internal armed conflict'. While tourists are not typically the main targets, organised criminal groups have employed tactics such as targeted killings, express kidnappings, armed robberies, extortion and bomb attacks in public places. It is essential to stay aware of your surroundings and prioritise your safety and security. Be prepared to leave an area quickly if a dangerous situation arises. There's a high risk of kidnapping and violent crime in the northern and coastal regions and Guayaquil City. Areas bordering Colombia and Peru are particularly dangerous. The risk of violent crime increases when you travel alone or after dark."
   }
 ]

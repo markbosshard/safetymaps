@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_ve",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/venezuela",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Venezuela declared a state of emergency after two major earthquakes and several aftershocks occurred across the country on 24 June. Consider options to depart Venezuela if you can secure one and it's safe to travel to the departure point. Street crime is common, particularly in major cities, and often results in violence. There's an increased risk of demonstrations and civil unrest. Stay away from large crowds as they can turn violent; local authorities may use force to disrupt them. The risk is higher along airport routes and in border regions. Foreigners in Venezuela, including dual nationals, are at a high risk of arbitrary detention or arrest."
+  },
+  {
     "id": "state_dept_ve",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Venezuela travel advice Avoid all travel Latest updates: Natural disasters and climate section – updated information on earthquakes near Caracas Last updated: July 2, 2026 15:47 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. VENEZUELA - AVOID ALL TRAVEL Avoid all travel to Venezuela due to the heightened security situation, unstable political and economic situations, significant level of violent crime, the risk of arbitrary detention, and the decline in basic living conditions, including shortages of medication, gasoline and water."
-  },
-  {
-    "id": "australia_dfat_ve",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/venezuela",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Venezuela declared a state of emergency after two major earthquakes and several aftershocks occurred across the country on 24 June. Consider options to depart Venezuela if you can secure one and it's safe to travel to the departure point. Street crime is common, particularly in major cities, and often results in violence. There's an increased risk of demonstrations and civil unrest. Stay away from large crowds as they can turn violent; local authorities may use force to disrupt them. The risk is higher along airport routes and in border regions. Foreigners in Venezuela, including dual nationals, are at a high risk of arbitrary detention or arrest."
   }
 ]

@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_mx",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/mexico",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety We continue to advise exercise a high degree of caution for the cities of Guadalajara and Puerto Vallarta and we advise exercise a high degree of caution for the other areas in the state of Jalisco. Mexico has a high risk of violent crime, including murder, armed robbery, sexual assault, and kidnapping. Other travel options and routes may have higher security risks. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime."
+  },
+  {
     "id": "state_dept_mx",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -46,14 +55,5 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
-  },
-  {
-    "id": "australia_dfat_mx",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/mexico",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety We continue to advise exercise a high degree of caution for the cities of Guadalajara and Puerto Vallarta and we advise exercise a high degree of caution for the other areas in the state of Jalisco. Mexico has a high risk of violent crime, including murder, armed robbery, sexual assault, and kidnapping. Other travel options and routes may have higher security risks. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime."
   }
 ]

@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_br",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
+  },
+  {
     "id": "state_dept_br",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Brazil travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 11:35 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Brazil - Exercise a high degree of caution Exercise a high degree of caution in Brazil due to high crime rates and regular incidents of gang-related and other violence in urban areas. Gang-related violence and organized crime is prevalent in these neighbourhoods."
-  },
-  {
-    "id": "australia_dfat_br",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
   }
 ]

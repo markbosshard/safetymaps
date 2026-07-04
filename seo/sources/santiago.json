@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_cl",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/chile",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Mugging, armed robbery, pickpocketing and bag snatching are common. Cases of drink spiking and express kidnapping have been reported (see Partying safely hub for practical tips to stay safe in bars/clubs). There's been an increase in scams targeting tourists (see 'Safety'). There are political tensions and violent incidents in the Araucanía region and some provinces in the Biobio Region."
+  },
+  {
     "id": "state_dept_cl",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -46,14 +55,5 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
-  },
-  {
-    "id": "australia_dfat_cl",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/chile",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Mugging, armed robbery, pickpocketing and bag snatching are common. Cases of drink spiking and express kidnapping have been reported (see Partying safely hub for practical tips to stay safe in bars/clubs). There's been an increase in scams targeting tourists (see 'Safety'). There are political tensions and violent incidents in the Araucanía region and some provinces in the Biobio Region."
   }
 ]

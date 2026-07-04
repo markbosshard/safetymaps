@@ -1,5 +1,23 @@
 [
   {
+    "id": "osac_do",
+    "source_name": "OSAC — Overseas Security Advisory Council",
+    "source_class": "advisory",
+    "url": "https://www.osac.gov/Country/Dominican-Republic/Content",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "excerpt": "07/02/2026 | Arab News Iran warns US, Israel against attacks ahead of funeral processions for Khamenei An ‌Iranian military commander warned the United States and Israel on Thursday against any attack on Iran as it prepares for ..."
+  },
+  {
+    "id": "australia_dfat_do",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/dominican-republic",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Know the tsunami warning signs and move immediately to high ground."
+  },
+  {
     "id": "state_dept_do",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,23 +44,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Dominican Republic travel advice Exercise a high degree of caution Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 12:24 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Dominican Republic - Exercise a high degree of caution Exercise a high degree of caution in the Dominican Republic due to crime. Back to top Safety and security Border with Haiti Land and sea borders with Haiti are closed to travellers."
-  },
-  {
-    "id": "osac_do",
-    "source_name": "OSAC — Overseas Security Advisory Council",
-    "source_class": "advisory",
-    "url": "https://www.osac.gov/Country/Dominican-Republic/Content",
-    "published_date": "2026-07",
-    "license": "US Government public domain",
-    "excerpt": "07/02/2026 | Arab News Iran warns US, Israel against attacks ahead of funeral processions for Khamenei An ‌Iranian military commander warned the United States and Israel on Thursday against any attack on Iran as it prepares for ..."
-  },
-  {
-    "id": "australia_dfat_do",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/dominican-republic",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Know the tsunami warning signs and move immediately to high ground."
   }
 ]

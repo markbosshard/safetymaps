@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_hn",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/honduras",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety A State of Exception is periodically declared in some municipalities in Honduras. Borders and remote areas have higher risks of violent crime due to drug smuggling. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime. Express kidnappings and robberies can occur in the urban areas of Honduras. The kidnappers usually take their victims to an ATM and force them to make a cash withdrawal."
+  },
+  {
     "id": "state_dept_hn",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -26,14 +35,5 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Honduras travel advice Exercise a high degree of caution (with regional advisories) Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 13:27 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Honduras - Exercise a high degree of caution Exercise a high degree of caution in Honduras due to crime."
-  },
-  {
-    "id": "australia_dfat_hn",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/honduras",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety A State of Exception is periodically declared in some municipalities in Honduras. Borders and remote areas have higher risks of violent crime due to drug smuggling. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime. Express kidnappings and robberies can occur in the urban areas of Honduras. The kidnappers usually take their victims to an ATM and force them to make a cash withdrawal."
   }
 ]

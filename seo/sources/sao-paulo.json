@@ -1,5 +1,14 @@
 [
   {
+    "id": "australia_dfat_br",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
+  },
+  {
     "id": "state_dept_br",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -75,14 +84,5 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
-  },
-  {
-    "id": "australia_dfat_br",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/brazil",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
   }
 ]
