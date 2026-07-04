@@ -23,6 +23,7 @@ const https  = require('https');
 const http   = require('http');
 const fs     = require('fs');
 const path   = require('path');
+const { exec } = require('child_process');
 
 const ROOT    = path.join(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'seo', 'sources');
@@ -31,6 +32,15 @@ const CITIES  = JSON.parse(fs.readFileSync(path.join(ROOT, 'cities.json'), 'utf8
 const FORCE  = process.argv.includes('--force');
 const AUDIT  = process.argv.includes('--audit');
 const TARGET = process.argv.find(a => !a.startsWith('-') && a !== __filename.split('/').pop() && CITIES[a]);
+
+function execAsync(cmd, opts = {}) {
+  return new Promise((resolve, reject) => {
+    exec(cmd, { timeout: 30000, ...opts }, (err, stdout, stderr) => {
+      if (err) return reject(new Error((stderr || err.message).slice(0, 200)));
+      resolve(stdout);
+    });
+  });
+}
 
 // ── HTTP helpers ──────────────────────────────────────────────────────────────
 
@@ -439,6 +449,97 @@ async function fetchColombiaHomicidios(cityKey) {
   }
 }
 
+// ── Chile PDI estadísticas Art. 18 (XLS — old OLE2 format, requires xlrd) ────
+// Dataset: datos.gob.cl/dataset/5373dac4-a77a-48b2-9a8b-9cef7311f941
+// Published annually by Policía de Investigaciones de Chile.
+// Column indices in the XLS (0-based): 12=Valparaíso, 13=Biobío, 16=Reg.Metropolitana
+
+const CHILE_CITIES = {
+  'santiago':   { col: 16, region: 'Región Metropolitana de Santiago', name: 'Santiago' },
+  'valparaiso': { col: 12, region: 'Región de Valparaíso',             name: 'Valparaíso' },
+  'concepcion': { col: 13, region: 'Región del Biobío',                name: 'Concepción' },
+};
+
+const PDI_BASE     = 'https://datos.gob.cl/dataset/5373dac4-a77a-48b2-9a8b-9cef7311f941/resource';
+const PDI_URL_2025 = `${PDI_BASE}/74688cb0-4622-438f-8d53-dd5cff398557/download/cantidad-de-denuncias-art-18-2025.xls`;
+const PDI_URL_2026 = `${PDI_BASE}/c4675051-558b-42d7-ad15-87f4bb6ee458/download/cantidad-de-denuncias-art-18-2026.xls`;
+
+let chileCache = null;
+
+async function fetchChilePdi(cityKey) {
+  const cfg = CHILE_CITIES[cityKey];
+  if (!cfg) return null;
+
+  try {
+    await execAsync('python3 -c "import xlrd"');
+
+    if (!chileCache) {
+      console.log('\n    Downloading Chile PDI XLS files (2025 + 2026 Q1)…');
+      const [buf2025, buf2026] = await Promise.all([
+        getBinary(PDI_URL_2025),
+        getBinary(PDI_URL_2026),
+      ]);
+      fs.writeFileSync('/tmp/pdi_cl_2025.xls', buf2025);
+      fs.writeFileSync('/tmp/pdi_cl_2026.xls', buf2026);
+
+      const pyScript = `
+import xlrd, json
+def parse(path):
+    wb = xlrd.open_workbook(path)
+    ws = wb.sheets()[0]
+    hdr = ws.row_values(0)
+    src = str(ws.row_values(ws.nrows - 1)[0] or '')
+    crimes = {}
+    for i in range(1, ws.nrows - 1):
+        row = ws.row_values(i)
+        label = str(row[0]).strip()
+        if not label:
+            continue
+        crimes[label] = {j: (row[j] or 0) for j in range(1, len(hdr))}
+    return {'crimes': crimes, 'source': src[:100]}
+d25 = parse('/tmp/pdi_cl_2025.xls')
+d26 = parse('/tmp/pdi_cl_2026.xls')
+print(json.dumps({'y2025': d25, 'y2026q1': d26}))
+`;
+      fs.writeFileSync('/tmp/parse_pdi_cl.py', pyScript);
+      const raw = await execAsync('python3 /tmp/parse_pdi_cl.py');
+      chileCache = JSON.parse(raw);
+    }
+
+    const col = cfg.col;
+    const crimes25 = chileCache.y2025.crimes;
+    const crimes26 = chileCache.y2026q1.crimes;
+
+    const getVal = (crimes, prefix) => {
+      const key = Object.keys(crimes).find(k => k.startsWith(prefix));
+      return key ? Math.round(crimes[key][col] || 0) : 0;
+    };
+
+    const hom25 = getVal(crimes25, 'Homicidio');
+    const rob25 = getVal(crimes25, 'Robo');
+    const hur25 = getVal(crimes25, 'Hurto');
+    const hom26 = getVal(crimes26, 'Homicidio');
+
+    if (hom25 === 0 && rob25 === 0) return null;
+
+    const hom26str = hom26 === 1 ? '1 homicidio' : `${hom26} homicidios`;
+    const excerpt = `PDI Chile — ${cfg.name} (${cfg.region}): 2025 año completo: ${hom25} homicidios y femicidios, ${rob25.toLocaleString()} robos con violencia e intimidación, ${hur25.toLocaleString()} hurtos. 2026 Q1 (ene-mar): ${hom26str}. Fuente: Policía de Investigaciones de Chile, datos.gob.cl.`;
+
+    return {
+      id: `pdi_cl_${cityKey.replace(/-/g,'_')}`,
+      source_name: `PDI Chile — Estadísticas Policiales (${cfg.name})`,
+      source_class: 'crime_data',
+      url: 'https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18',
+      published_date: new Date().toISOString().slice(0, 7),
+      license: 'Datos Abiertos — Gobierno de Chile',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    pdi_cl_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Reddit (needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET) ───────────────────
 
 async function fetchReddit(cityName, country) {
@@ -555,6 +656,10 @@ async function fetchForCity(key) {
   const coHom = await fetchColombiaHomicidios(key);
   if (coHom) sources.push(coHom);
 
+  // City-specific: Chile PDI estadísticas (Chilean cities only)
+  const chilePdi = await fetchChilePdi(key);
+  if (chilePdi) sources.push(chilePdi);
+
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);
   if (numbeo) sources.push(numbeo);
@@ -637,6 +742,7 @@ async function main() {
     if (SNIC_CITIES[k] && !ids.has(`snic_ar_${SNIC_CITIES[k].code}`)) return true;
     if (ISPRJ_CITIES[k] && !ids.has(`isprj_${k.replace(/-/g,'_')}`)) return true;
     if (COLOMBIA_CITIES[k] && !ids.has(`mindefensa_co_${k.replace(/-/g,'_')}`)) return true;
+    if (CHILE_CITIES[k]    && !ids.has(`pdi_cl_${k.replace(/-/g,'_')}`))        return true;
     return false;
   });
 

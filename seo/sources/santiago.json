@@ -55,5 +55,14 @@
     "license": "see source",
     "excerpt": "",
     "_note": "Excerpt needed — paste a key safety paragraph from this URL"
+  },
+  {
+    "id": "pdi_cl_santiago",
+    "source_name": "PDI Chile — Estadísticas Policiales (Santiago)",
+    "source_class": "crime_data",
+    "url": "https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18",
+    "published_date": "2026-07",
+    "license": "Datos Abiertos — Gobierno de Chile",
+    "excerpt": "PDI Chile — Santiago (Región Metropolitana de Santiago): 2025 año completo: 13 homicidios y femicidios, 1,264 robos con violencia e intimidación, 2,161 hurtos. 2026 Q1 (ene-mar): 4 homicidios. Fuente: Policía de Investigaciones de Chile, datos.gob.cl."
   }
 ]

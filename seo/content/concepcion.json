@@ -8,13 +8,17 @@
     },
     {
       "text": "Standard urban precautions apply. For visitors en route to the Lake District or Los Ángeles, Concepción is a reasonable overnight stop with normal vigilance. The city centre is walkable by day."
+    },
+    {
+      "text": "Official statistics: PDI Chile — Concepción (Región del Biobío): 2025 año completo: 4 homicidios y femicidios, 111 robos con violencia e intimidación, 740 hurtos. 2026 Q1 (ene-mar): 1 homicidio. Fuente: Policía de Investigaciones de Chile, datos.gob.cl."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_cl",
     "fcdo_cl",
-    "canada_dfatd_cl"
+    "canada_dfatd_cl",
+    "pdi_cl_concepcion"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

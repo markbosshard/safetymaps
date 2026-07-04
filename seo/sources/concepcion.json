@@ -35,5 +35,14 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Chile travel advice Exercise a high degree of caution Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 16:19 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Chile - Exercise a high degree of caution Exercise a high degree of caution in Chile due to ongoing demonstrations, civil unrest and crime. Back to top Safety and security Crime Petty crime Petty crime, such as pickpocketing, bag snatching and theft from vehicles, can occur in any part of the country."
+  },
+  {
+    "id": "pdi_cl_concepcion",
+    "source_name": "PDI Chile — Estadísticas Policiales (Concepción)",
+    "source_class": "crime_data",
+    "url": "https://datos.gob.cl/dataset/cantidad-de-delitos-y-faltas-investigadas-art-18",
+    "published_date": "2026-07",
+    "license": "Datos Abiertos — Gobierno de Chile",
+    "excerpt": "PDI Chile — Concepción (Región del Biobío): 2025 año completo: 4 homicidios y femicidios, 111 robos con violencia e intimidación, 740 hurtos. 2026 Q1 (ene-mar): 1 homicidio. Fuente: Policía de Investigaciones de Chile, datos.gob.cl."
   }
 ]
