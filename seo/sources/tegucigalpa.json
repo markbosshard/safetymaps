@@ -1,14 +1,5 @@
 [
   {
-    "id": "australia_dfat_hn",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/honduras",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety A State of Exception is periodically declared in some municipalities in Honduras. Borders and remote areas have higher risks of violent crime due to drug smuggling. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime. Express kidnappings and robberies can occur in the urban areas of Honduras. The kidnappers usually take their victims to an ATM and force them to make a cash withdrawal."
-  },
-  {
     "id": "state_dept_hn",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -44,5 +35,14 @@
     "published_date": "2026-07",
     "license": "CC BY 4.0 — World Bank Open Data",
     "excerpt": "World Bank / UNODC — national intentional homicide rate for Honduras: 2023: 31.4/100k; 2022: 35.0/100k; 2021: 38.2/100k; 2020: 35.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+  },
+  {
+    "id": "australia_dfat_hn",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/honduras",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety A State of Exception is periodically declared in some municipalities in Honduras. Borders and remote areas have higher risks of violent crime due to drug smuggling. Only use ATMs in secure areas, such as hotels, banks and shopping centres during daytime. Express kidnappings and robberies can occur in the urban areas of Honduras. The kidnappers usually take their victims to an ATM and force them to make a cash withdrawal."
   }
 ]

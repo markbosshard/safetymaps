@@ -180,39 +180,140 @@ async function fetchNumbeoWeb(browser, cityName, country) {
 }
 
 // ── Government crime stats (selected cities) ──────────────────────────────────
-// Each entry: { city_key, url, waitFor, extract }
+// SSP-SP, ISP-RJ, MinDefensa, PDI-Chile, Uruguay OSP → seo_fetch_sources.js (REST/CSV).
+// Everything below needs JS rendering or was blocked by curl.
 
-// GOV_SOURCES: JS-rendered government stats pages.
-// SSP-SP and ISP-RJ are now handled via REST API / CSV download in seo_fetch_sources.js.
-// Colombia MinDefensa is handled via Socrata API in seo_fetch_sources.js.
-// This list is kept for sites that genuinely need JS rendering.
-const GOV_SOURCES = {};
+// Shared page-text cache — avoids scraping the same country portal N times.
+const _pageCache = {};
+async function cachedText(browser, url, waitMs = 3000) {
+  if (_pageCache[url]) return _pageCache[url];
+  const page = await browser.newPage();
+  try {
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.waitForTimeout(waitMs);
+    const text = await page.evaluate(() => document.body.innerText.replace(/\s+/g,' '));
+    _pageCache[url] = text || '';
+    return _pageCache[url];
+  } catch { return ''; } finally { await page.close(); }
+}
+
+// Pull the most crime-relevant sentences (up to maxChars) from raw text.
+function pickLines(text, keywords, maxChars = 900) {
+  const re = new RegExp(keywords.join('|'), 'i');
+  const sentences = text.split(/(?<=[.!?])\s+|;\s+|\n/);
+  let out = '';
+  for (const s of sentences) {
+    const t = s.trim();
+    if (t.length > 30 && t.length < 500 && re.test(t)) {
+      if (out.length + t.length > maxChars) break;
+      out += (out ? ' ' : '') + t;
+    }
+  }
+  return out;
+}
+
+const CRIME_KW = ['homicid','femicid','robo','hurto','delito','criminalidad','secuestro','extorsión',
+  'murder','theft','robbery','crime','safety','homicide','kidnap','assault'];
+
+// ── Peru ──────────────────────────────────────────────────────────────────────
+// INEI crime-stats index page — lists all crime categories tracked nationally.
+const INEI_URL = 'https://www.inei.gob.pe/estadisticas/indice-tematico/crimes/';
+
+// ── Central America ───────────────────────────────────────────────────────────
+// sitiooij.poder-judicial.go.cr/estadisticas/ → 404; use the main OIJ portal instead.
+const OIJ_URL    = 'https://www.poder-judicial.go.cr/oij/';
+const PNC_GT_URL = 'https://www.pnc.gob.gt/';
+const IUDPAS_URL = 'https://iudpas.unah.edu.hn/';
+
+// Extract INEI category titles as a structured excerpt (page is an index, not raw data).
+function ineiExtract(cityKw) {
+  return async (browser, page) => {
+    const rawText = page
+      ? await page.evaluate(() => document.body.innerText).catch(() => '')
+      : '';
+    const text = rawText.length > 50 ? rawText : await cachedText(browser, INEI_URL);
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 15 && l.length < 200);
+    const crimeLines = lines.filter(l => /delito|denuncia|homicid|robo|crimen|víctima|violencia|femicid|secuestro/i.test(l));
+    if (!crimeLines.length) return null;
+    return 'INEI Perú — Estadísticas de Seguridad: ' + crimeLines.slice(0, 8).join('; ');
+  };
+}
+
+const GOV_SOURCES = {
+
+  // ── Peru: INEI national crime-statistics index ────────────────────────────────
+  'lima':      { url: INEI_URL, source_name: 'INEI — Instituto Nacional de Estadística e Informática (Seguridad)', extract: ineiExtract('Lima') },
+  'arequipa':  { url: INEI_URL, source_name: 'INEI — Instituto Nacional de Estadística e Informática (Seguridad)', extract: ineiExtract('Arequipa') },
+  'cusco':     { url: INEI_URL, source_name: 'INEI — Instituto Nacional de Estadística e Informática (Seguridad)', extract: ineiExtract('Cusco') },
+  'trujillo':  { url: INEI_URL, source_name: 'INEI — Instituto Nacional de Estadística e Informática (Seguridad)', extract: ineiExtract('Trujillo') },
+
+  // ── Costa Rica: OIJ portal ────────────────────────────────────────────────────
+  'sanjose': {
+    url: OIJ_URL,
+    source_name: 'OIJ — Organismo de Investigación Judicial (Costa Rica)',
+    extract: async (browser, page) => {
+      let text = await page.evaluate(() => document.body.innerText.replace(/\s+/g,' ')).catch(() => '');
+      if (!text || text.length < 100) text = await cachedText(browser, OIJ_URL);
+      return pickLines(text, ['homicid','San Jos','delito','robo','denuncia','violencia'], 900);
+    },
+  },
+
+  // ── Guatemala: PNC national police portal ─────────────────────────────────────
+  'guatemalacity': {
+    url: PNC_GT_URL,
+    source_name: 'PNC — Policía Nacional Civil de Guatemala',
+    extract: async (browser, page) => {
+      const text = await page.evaluate(() => document.body.innerText.replace(/\s+/g,' ')).catch(() => '');
+      return pickLines(text, ['homicid','Guatemala','delito','denuncia','robo','crimen','violencia'], 900);
+    },
+  },
+  'antigua-guatemala': {
+    url: PNC_GT_URL,
+    source_name: 'PNC — Policía Nacional Civil de Guatemala',
+    extract: async (browser) => {
+      const text = await cachedText(browser, PNC_GT_URL);
+      return pickLines(text, ['Antigua','Sacatep','homicid','delito','violencia'], 900);
+    },
+  },
+
+  // ── Honduras: IUDPAS violence observatory ─────────────────────────────────────
+  'tegucigalpa': {
+    url: IUDPAS_URL,
+    source_name: 'IUDPAS-UNAH — Observatorio de la Violencia (Honduras)',
+    extract: async (browser, page) => {
+      const text = await page.evaluate(() => document.body.innerText.replace(/\s+/g,' ')).catch(() => '');
+      return pickLines(text, ['homicid','Tegucigalpa','Francisco Moraz','violencia','muertes','delito'], 900);
+    },
+  },
+};
 
 async function fetchGovStat(browser, cityKey) {
   const cfg = GOV_SOURCES[cityKey];
   if (!cfg) return null;
-  console.log(`    Gov stats ${cityKey}…`);
+  process.stdout.write(`    gov:${cityKey}…`);
   const page = await browser.newPage();
+  let excerpt = null;
   try {
-    await page.goto(cfg.url, { waitUntil: 'networkidle', timeout: 25000 });
-    await page.waitForTimeout(2000);
-    const excerpt = await cfg.extract(page);
-    if (!excerpt) return null;
-    return {
-      id: `gov_${cityKey.replace(/-/g,'_')}`,
-      source_name: cfg.source_name,
-      source_class: 'crime_data',
-      url: cfg.url,
-      published_date: new Date().toISOString().slice(0,7),
-      license: 'Official government data — public domain',
-      excerpt: excerpt.slice(0, 1200),
-    };
+    await page.goto(cfg.url, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.waitForTimeout(2500);
+    // extract(browser, page) — browser for cachedText calls, page for direct eval
+    excerpt = await cfg.extract(browser, page);
   } catch (e) {
-    console.warn(`      Gov ${cityKey}: ${e.message.slice(0,80)}`);
-    return null;
+    console.warn(` FAIL: ${e.message.slice(0,80)}`);
   } finally {
-    await page.close();
+    await page.close().catch(() => {});
   }
+  if (!excerpt || excerpt.trim().length < 40) { console.log(' no data'); return null; }
+  console.log(` OK (${excerpt.length} chars)`);
+  return {
+    id: `gov_${cityKey.replace(/-/g,'_')}`,
+    source_name: cfg.source_name,
+    source_class: 'crime_data',
+    url: cfg.url,
+    published_date: new Date().toISOString().slice(0,7),
+    license: 'Official government data — public domain',
+    excerpt: excerpt.slice(0, 1100),
+  };
 }
 
 // ── Per-city assembly ─────────────────────────────────────────────────────────

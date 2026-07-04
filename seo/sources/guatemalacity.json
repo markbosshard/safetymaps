@@ -1,14 +1,5 @@
 [
   {
-    "id": "australia_dfat_gt",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/guatemala",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety The Guatemalan Government has declared a state of prevention due to the threat of organised crime and gang activity. Violent crime, including murder, carjacking and kidnapping, is common."
-  },
-  {
     "id": "state_dept_gt",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -44,5 +35,23 @@
     "published_date": "2026-07",
     "license": "CC BY 4.0 — World Bank Open Data",
     "excerpt": "World Bank / UNODC — national intentional homicide rate for Guatemala: 2023: 23.4/100k; 2022: 22.0/100k; 2021: 20.2/100k; 2020: 18.2/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+  },
+  {
+    "id": "australia_dfat_gt",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/guatemala",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety The Guatemalan Government has declared a state of prevention due to the threat of organised crime and gang activity. Violent crime, including murder, carjacking and kidnapping, is common."
+  },
+  {
+    "id": "gov_guatemalacity",
+    "source_name": "PNC — Policía Nacional Civil de Guatemala",
+    "source_class": "crime_data",
+    "url": "https://www.pnc.gob.gt/",
+    "published_date": "2026-07",
+    "license": "Official government data — public domain",
+    "excerpt": "Sigue viendo COMISARÍAS DISTRITO CENTRAL Capturado por quinta vez.Ahora llevaba pistola robada 3 DE JULIO DE 2026 COMISARÍAS DISTRITO CENTRAL PNC neutraliza y captura a tres presuntos asaltabuses en la calzada Roosevelt 3 DE JULIO DE 2026 UNCATEGORIZED Reos notificados de nuevos delitos y procesos por extorsión 2 DE JULIO DE 2026 UNCATEGORIZED Ampliación 2 DE JULIO DE 2026 Dirección General de la Policía Nacional Civil"
   }
 ]

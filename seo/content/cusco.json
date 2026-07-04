@@ -14,6 +14,12 @@
       "source_name": "World Bank — Intentional Homicides per 100k (Peru)",
       "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=PER",
       "source_class": "crime_data"
+    },
+    {
+      "text": "INEI Perú — Estadísticas de Seguridad: Inicio > Estadísticas > Indice Temático > Delitos; Denuncias por comisión de delitos, según delito genérico; Denuncias por comisión de delitos, según departamento; Tasa de denuncias por comisión de delitos, según departamento; Personas detenidas por comisión de delitos (flagrancia), según tipo de delito; Personas detenidas por comisión de delitos (flagrancia), según departamento; Denuncias registradas de personas desaparecidas, según departamento; Denuncias por violencia sexual a personas menores de 18 años de edad, según sexo de la víctima y departamento",
+      "source_name": "INEI — Instituto Nacional de Estadística e Informática (Seguridad)",
+      "source_url": "https://www.inei.gob.pe/estadisticas/indice-tematico/crimes/",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",
@@ -21,7 +27,8 @@
     "state_dept_pe",
     "fcdo_pe",
     "canada_dfatd_pe",
-    "wb_homicide_pe"
+    "wb_homicide_pe",
+    "gov_cusco"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

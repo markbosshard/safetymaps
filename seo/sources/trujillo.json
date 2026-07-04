@@ -1,14 +1,5 @@
 [
   {
-    "id": "australia_dfat_pe",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/peru",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety A state of emergency is in effect for Lima and Callao. Past demonstrations have turned violent and disrupted public transport services, including transport to and from Machu Picchu. Violent crime is common, including in Lima, Cusco and Arequipa. Petty crime is common in public areas, hotels and restaurants. Travellers in Peru can be victims of ‘express kidnappings’ where victims are forced to withdraw money from ATMs. Criminal gangs have also targeted mining operations and tourist vessels on the Amazon River for kidnappings. Virtual kidnapping scams targeting family and friends of travellers also occur. Never place valuable personal belongings in overhead racks or under your seats, and ensure your possessions, including your passport and other travel documents, are secure at all times. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks. To protect yourself in a natural disaster, keep your passport in a secure, waterproof location, monitor local media and follow the advice of local authorities. Travellers using unlicensed taxis have been victims of robbery, assault and rape."
-  },
-  {
     "id": "state_dept_pe",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -44,5 +35,23 @@
     "published_date": "2026-07",
     "license": "CC BY 4.0 — World Bank Open Data",
     "excerpt": "World Bank / UNODC — national intentional homicide rate for Peru: 2021: 8.6/100k; 2020: 5.8/100k; 2019: 7.3/100k; 2018: 7.7/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+  },
+  {
+    "id": "australia_dfat_pe",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/peru",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety A state of emergency is in effect for Lima and Callao. Past demonstrations have turned violent and disrupted public transport services, including transport to and from Machu Picchu. Violent crime is common, including in Lima, Cusco and Arequipa. Petty crime is common in public areas, hotels and restaurants. Travellers in Peru can be victims of ‘express kidnappings’ where victims are forced to withdraw money from ATMs. Criminal gangs have also targeted mining operations and tourist vessels on the Amazon River for kidnappings. Virtual kidnapping scams targeting family and friends of travellers also occur. Never place valuable personal belongings in overhead racks or under your seats, and ensure your possessions, including your passport and other travel documents, are secure at all times. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks. To protect yourself in a natural disaster, keep your passport in a secure, waterproof location, monitor local media and follow the advice of local authorities. Travellers using unlicensed taxis have been victims of robbery, assault and rape."
+  },
+  {
+    "id": "gov_trujillo",
+    "source_name": "INEI — Instituto Nacional de Estadística e Informática (Seguridad)",
+    "source_class": "crime_data",
+    "url": "https://www.inei.gob.pe/estadisticas/indice-tematico/crimes/",
+    "published_date": "2026-07",
+    "license": "Official government data — public domain",
+    "excerpt": "INEI Perú — Estadísticas de Seguridad: Inicio > Estadísticas > Indice Temático > Delitos; Denuncias por comisión de delitos, según delito genérico; Denuncias por comisión de delitos, según departamento; Tasa de denuncias por comisión de delitos, según departamento; Personas detenidas por comisión de delitos (flagrancia), según tipo de delito; Personas detenidas por comisión de delitos (flagrancia), según departamento; Denuncias registradas de personas desaparecidas, según departamento; Denuncias por violencia sexual a personas menores de 18 años de edad, según sexo de la víctima y departamento"
   }
 ]

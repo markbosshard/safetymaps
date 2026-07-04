@@ -1,23 +1,5 @@
 [
   {
-    "id": "osac_cr",
-    "source_name": "OSAC — Overseas Security Advisory Council",
-    "source_class": "advisory",
-    "url": "https://www.osac.gov/Country/Costa-Rica/Content",
-    "published_date": "2026-07",
-    "license": "US Government public domain",
-    "excerpt": "07/02/2026 | Arab News Iran warns US, Israel against attacks ahead of funeral processions for Khamenei An ‌Iranian military commander warned the United States and Israel on Thursday against any attack on Iran as it prepares for ..."
-  },
-  {
-    "id": "australia_dfat_cr",
-    "source_name": "Australia DFAT Smartraveller — Safety",
-    "source_class": "advisory",
-    "url": "https://www.smartraveller.gov.au/destinations/americas/costa-rica",
-    "published_date": "2026-07",
-    "license": "Creative Commons Attribution 3.0 Australia",
-    "excerpt": "Safety Violent crime, including carjackings and 'express kidnappings', is increasingly common. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks."
-  },
-  {
     "id": "state_dept_cr",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",
@@ -53,5 +35,23 @@
     "published_date": "2026-07",
     "license": "CC BY 4.0 — World Bank Open Data",
     "excerpt": "World Bank / UNODC — national intentional homicide rate for Costa Rica: 2023: 17.7/100k; 2022: 12.9/100k; 2021: 11.6/100k; 2020: 11.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey."
+  },
+  {
+    "id": "osac_cr",
+    "source_name": "OSAC — Overseas Security Advisory Council",
+    "source_class": "advisory",
+    "url": "https://www.osac.gov/Country/Costa-Rica/Content",
+    "published_date": "2026-07",
+    "license": "US Government public domain",
+    "excerpt": "07/02/2026 | Arab News Iran warns US, Israel against attacks ahead of funeral processions for Khamenei An ‌Iranian military commander warned the United States and Israel on Thursday against any attack on Iran as it prepares for ..."
+  },
+  {
+    "id": "australia_dfat_cr",
+    "source_name": "Australia DFAT Smartraveller — Safety",
+    "source_class": "advisory",
+    "url": "https://www.smartraveller.gov.au/destinations/americas/costa-rica",
+    "published_date": "2026-07",
+    "license": "Creative Commons Attribution 3.0 Australia",
+    "excerpt": "Safety Violent crime, including carjackings and 'express kidnappings', is increasingly common. Be alert to the potential risks around drink spiking and methanol poisoning through consuming alcoholic drinks."
   }
 ]

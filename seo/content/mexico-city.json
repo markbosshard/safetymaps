@@ -14,6 +14,12 @@
       "source_name": "World Bank — Intentional Homicides per 100k (Mexico)",
       "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX",
       "source_class": "crime_data"
+    },
+    {
+      "text": "SESNSP — Ciudad de México: Homicidios dolosos: 2025: 761 (2024: 813) ↓. Robos con violencia: 2025: 10515 (2024: 11305). Secuestros: 2025: 26 (2024: 23). Extorsiones: 2025: 1753 (2024: 473). Fuente: Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP), Registro Nacional de Incidencia Delictiva.",
+      "source_name": "SESNSP — Incidencia Delictiva Fuero Común (Ciudad de México)",
+      "source_url": "https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",
@@ -21,7 +27,8 @@
     "state_dept_mx",
     "fcdo_mx",
     "canada_dfatd_mx",
-    "wb_homicide_mx"
+    "wb_homicide_mx",
+    "sesnsp_mx_ciudad_de_m_xico"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

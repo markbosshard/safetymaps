@@ -14,6 +14,12 @@
       "source_name": "World Bank — Intentional Homicides per 100k (Mexico)",
       "source_url": "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=MEX",
       "source_class": "crime_data"
+    },
+    {
+      "text": "SESNSP — Oaxaca: Homicidios dolosos: 2025: 781 (2024: 877) ↓. Robos con violencia: 2025: 286 (2024: 654). Secuestros: 2025: 22 (2024: 19). Extorsiones: 2025: 74 (2024: 132). Fuente: Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP), Registro Nacional de Incidencia Delictiva.",
+      "source_name": "SESNSP — Incidencia Delictiva Fuero Común (Oaxaca)",
+      "source_url": "https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva",
+      "source_class": "crime_data"
     }
   ],
   "confidence": "medium",
@@ -21,7 +27,8 @@
     "state_dept_mx",
     "fcdo_mx",
     "canada_dfatd_mx",
-    "wb_homicide_mx"
+    "wb_homicide_mx",
+    "sesnsp_mx_oaxaca"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"
