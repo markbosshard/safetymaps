@@ -511,8 +511,16 @@ function smToken(){let t;try{t=localStorage.getItem('sm_token');if(!t){t=(window
 // Anonymous only: the sm_token (a random UUID, no identity) links one browser’s journey — which cities it
 // opens and roughly how long it stays — WITHOUT any PII. Respects Do-Not-Track (then it sends nothing).
 const DNT=(navigator.doNotTrack==='1'||navigator.doNotTrack==='yes'||window.doNotTrack==='1');
+// Owner opt-out: visiting ?owner=1 permanently silences analytics in THIS browser (?owner=0 re-enables),
+// so the site owner's own testing never enters the stats. Same lifetime as sm_token (localStorage), and
+// kept across the in-app settings reset (see RESET_KEEP).
+let OWNER=(lsGet('sm_owner')==='1'); let _ownerToast='';
+{ const _o=new URLSearchParams(location.search).get('owner');
+  if(_o==='1'){ persist('sm_owner','1'); OWNER=true; _ownerToast='Owner mode on — analytics are off for this browser.'; }
+  else if(_o==='0'){ try{localStorage.removeItem('sm_owner');}catch(e){} OWNER=false; _ownerToast='Analytics re-enabled for this browser.'; }
+  if(_o!==null){ try{history.replaceState(null,'',location.pathname+location.hash);}catch(e){} } }
 const SESSION=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('s'+Date.now()+Math.random().toString(36).slice(2));
-function track(kind,extra){ if(DNT)return;
+function track(kind,extra){ if(DNT||OWNER)return;
   try{ const body=JSON.stringify(Object.assign({token:smToken(),session:SESSION,kind},extra||{}));
     if(navigator.sendBeacon){ navigator.sendBeacon(API+'/event',new Blob([body],{type:'text/plain'})); }
     else{ fetch(API+'/event',{method:'POST',headers:{'content-type':'text/plain'},body,keepalive:true}).catch(()=>{}); }
@@ -932,7 +940,7 @@ function updateLangUI(){ const cur=document.getElementById('langCur'); if(cur){c
   applyStatic(); updateLangUI(); })();
 // --- US-21: reset settings. Clears every sm_* key EXCEPT the reporter identity/queue (so you keep the
 // ability to see & withdraw your own reports); non-sm_ keys (GoatCounter) are left untouched. ---
-const RESET_KEEP={sm_token:1,sm_queue:1};
+const RESET_KEEP={sm_token:1,sm_queue:1,sm_owner:1};
 function resetSettings(){ try{ for(const k of Object.keys(localStorage)){ if(k.indexOf('sm_')===0 && !RESET_KEEP[k]) localStorage.removeItem(k); } }catch(e){} }
 document.getElementById('resetBtn').onclick=()=>{
   if(!window.confirm(t('reset_confirm','Reset all settings and preferences to default?\nYour rated spots will remain saved.')))return;
@@ -1231,6 +1239,7 @@ function init(tries){ tries=tries||0; try{map.invalidateSize();}catch(e){}
   // page load, we instead nudge with the rating CTA (updateContribUi, first 3 loads, only if never rated).
   if(!onCity && loads<=3) showWelcome();
   track('session',{city: onCity ? (explicitCity()||lsGet('sm_lastcity')||null) : null});
+  if(_ownerToast){ try{toast(_ownerToast);}catch(e){} }
 }
 if(document.readyState==='complete') init(); else window.addEventListener('load',init);
 window.addEventListener('popstate',()=>{const k=explicitCity(); if(!k){showOverviewHome();return;} if(k!==cityKey) focusCity(k,{fromPop:true});});
