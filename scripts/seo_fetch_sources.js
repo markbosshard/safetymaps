@@ -449,6 +449,81 @@ async function fetchColombiaHomicidios(cityKey) {
   }
 }
 
+// ── Uruguay OSP homicidios CSV ────────────────────────────────────────────────
+// catalogodatos.gub.uy has an expired/self-signed TLS cert — must bypass SSL.
+// Dataset: ministerio-del-interior-delitos_denunciados_en_el_uruguay
+// Individual-record CSV, one row per victim; DEPARTAMENTO = 'MONTEVIDEO' for the city.
+
+const URUGUAY_CITIES = { 'montevideo': 'MONTEVIDEO' };
+
+const UY_HOM_CSV = 'https://catalogodatos.gub.uy/dataset/999f2edc-5ef5-4d41-bed7-824a5635ea8d/resource/5ed98add-f127-4377-b529-aa8ad35b77e3/download/homicidios_dolosos_consumados.csv';
+
+// Download a URL using curl with SSL verification disabled (-sk).
+// Used only for hosts with cert issues (e.g. catalogodatos.gub.uy).
+function curlInsecure(url, dest) {
+  return execAsync(`curl -skL --max-time 60 "${url}" -o "${dest}"`, { timeout: 65000 });
+}
+
+let uruguayCache = null;
+
+async function fetchUruguayMinterior(cityKey) {
+  const dept = URUGUAY_CITIES[cityKey];
+  if (!dept) return null;
+
+  try {
+    if (!uruguayCache) {
+      console.log('\n    Downloading Uruguay OSP homicidios CSV (via curl -sk)…');
+      await curlInsecure(UY_HOM_CSV, '/tmp/uy_hom.csv');
+      const text = fs.readFileSync('/tmp/uy_hom.csv', 'utf8').replace(/^﻿/, ''); // strip BOM
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',');
+      const deptIdx = headers.indexOf('DEPARTAMENTO');
+      const yearIdx = headers.indexOf('AÑO');
+      const monthIdx = headers.indexOf('MES');
+      if (deptIdx < 0 || yearIdx < 0) throw new Error('CSV structure changed');
+
+      const byDeptYear = {};
+      for (const line of lines.slice(1)) {
+        const vals = line.split(',');
+        const d = (vals[deptIdx] || '').trim();
+        const y = (vals[yearIdx] || '').trim();
+        if (!d || !y) continue;
+        if (!byDeptYear[d]) byDeptYear[d] = {};
+        byDeptYear[d][y] = (byDeptYear[d][y] || 0) + 1;
+      }
+      uruguayCache = byDeptYear;
+    }
+
+    const deptData = uruguayCache[dept] || {};
+    const years = Object.keys(deptData).sort().reverse();
+    if (!years.length) return null;
+
+    const latestYear = years[0];
+    const latest = deptData[latestYear] || 0;
+    const prev = deptData[String(Number(latestYear) - 1)] || 0;
+    const prevPrev = deptData[String(Number(latestYear) - 2)] || 0;
+
+    // Detect YTD vs full year (2026 has only Q1)
+    const isYTD = Number(latestYear) >= new Date().getFullYear();
+    const latestLabel = isYTD ? `${latestYear} Q1` : latestYear;
+
+    const excerpt = `OSP Uruguay — homicidios dolosos en ${dept} (departamento): ${latestLabel}: ${latest}. ${Number(latestYear) - 1}: ${prev}. ${Number(latestYear) - 2}: ${prevPrev}. Fuente: Observatorio Nacional de Violencia, Ministerio del Interior — datos.gub.uy.`;
+
+    return {
+      id: `uy_osp_${cityKey.replace(/-/g,'_')}`,
+      source_name: `OSP Uruguay — Homicidios Dolosos (${dept})`,
+      source_class: 'crime_data',
+      url: 'https://www.gub.uy/ministerio-interior/datos-y-estadisticas/datos-abiertos',
+      published_date: new Date().toISOString().slice(0, 7),
+      license: 'Datos abiertos — Gobierno de Uruguay',
+      excerpt: excerpt.slice(0, 1200),
+    };
+  } catch (e) {
+    console.warn(`    uy_osp_${cityKey}: ${e.message}`);
+    return null;
+  }
+}
+
 // ── Chile PDI estadísticas Art. 18 (XLS — old OLE2 format, requires xlrd) ────
 // Dataset: datos.gob.cl/dataset/5373dac4-a77a-48b2-9a8b-9cef7311f941
 // Published annually by Policía de Investigaciones de Chile.
@@ -660,6 +735,10 @@ async function fetchForCity(key) {
   const chilePdi = await fetchChilePdi(key);
   if (chilePdi) sources.push(chilePdi);
 
+  // City-specific: Uruguay OSP homicidios (Montevideo only)
+  const uyOsp = await fetchUruguayMinterior(key);
+  if (uyOsp) sources.push(uyOsp);
+
   // City-specific: Numbeo (if key available)
   const numbeo = await fetchNumbeo(city.name, country);
   if (numbeo) sources.push(numbeo);
@@ -743,6 +822,7 @@ async function main() {
     if (ISPRJ_CITIES[k] && !ids.has(`isprj_${k.replace(/-/g,'_')}`)) return true;
     if (COLOMBIA_CITIES[k] && !ids.has(`mindefensa_co_${k.replace(/-/g,'_')}`)) return true;
     if (CHILE_CITIES[k]    && !ids.has(`pdi_cl_${k.replace(/-/g,'_')}`))        return true;
+    if (URUGUAY_CITIES[k]  && !ids.has(`uy_osp_${k.replace(/-/g,'_')}`))        return true;
     return false;
   });
 

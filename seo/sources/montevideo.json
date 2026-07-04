@@ -35,5 +35,14 @@
     "published_date": "2026-07",
     "license": "Government of Canada — Open Government Licence",
     "excerpt": "--> --> Uruguay travel advice Take normal security precautions (with regional advisories) Latest updates: Latest updates: Need help? section – updated information on consular assistance Last updated: June 23, 2026 14:08 ET On this page Risk level Safety and security Entry and exit requirements Health Laws and culture Natural disasters and climate Need help? Risk level Disclaimer The features in this map do not constitute an authoritative source of geographical information. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. This map is solely intended to assist Canadians by illustrating the risk levels contained in the Travel Advice and Advisories for this destination. The text under the Risk levels section takes precedence over this map. Uruguay - Take normal security precautions Take normal security precautions in Uruguay. Montevideo - Exercise a high degree of caution Exercise a high degree of caution in Montevideo due to crime."
+  },
+  {
+    "id": "uy_osp_montevideo",
+    "source_name": "OSP Uruguay — Homicidios Dolosos (MONTEVIDEO)",
+    "source_class": "crime_data",
+    "url": "https://www.gub.uy/ministerio-interior/datos-y-estadisticas/datos-abiertos",
+    "published_date": "2026-07",
+    "license": "Datos abiertos — Gobierno de Uruguay",
+    "excerpt": "OSP Uruguay — homicidios dolosos en MONTEVIDEO (departamento): 2026 Q1: 44. 2025: 211. 2024: 233. Fuente: Observatorio Nacional de Violencia, Ministerio del Interior — datos.gub.uy."
   }
 ]
