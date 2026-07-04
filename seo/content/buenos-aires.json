@@ -8,13 +8,17 @@
     },
     {
       "text": "San Telmo, Palermo, Recoleta, and the Puerto Madero waterfront are all appropriate for independent tourism. La Boca: visit only the Caminito tourist strip, not after dark. Avoid Constitución and the southernmost barrios at night. Subte (metro) is safe by day; use apps in the evening. Buenos Aires is one of the more relaxed capitals for independent visitors in this region."
+    },
+    {
+      "text": "Official statistics: SNIC Argentina — homicidios dolosos en CABA (ciudad-nivel): 2025: 74; 2024: 79; 2023: 89; 2022: 87; 2021: 99; 2020: 121. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ar",
     "fcdo_ar",
-    "canada_dfatd_ar"
+    "canada_dfatd_ar",
+    "snic_ar_02"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

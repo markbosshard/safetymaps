@@ -8,13 +8,17 @@
     },
     {
       "text": "The main plaza, wine region tour circuit (Maipú, Luján de Cuyo), and trekking agencies in the city centre are accessible for independent tourism. Normal precautions apply; this is one of the more relaxed destinations on this list."
+    },
+    {
+      "text": "Official statistics: SNIC Argentina — homicidios dolosos en Mendoza (nivel provincial): 2025: 63; 2024: 69; 2023: 63; 2022: 66; 2021: 80; 2020: 89. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ar",
     "fcdo_ar",
-    "canada_dfatd_ar"
+    "canada_dfatd_ar",
+    "snic_ar_50"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

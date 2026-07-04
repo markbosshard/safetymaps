@@ -182,40 +182,11 @@ async function fetchNumbeoWeb(browser, cityName, country) {
 // ── Government crime stats (selected cities) ──────────────────────────────────
 // Each entry: { city_key, url, waitFor, extract }
 
-const GOV_SOURCES = {
-  'sao-paulo': {
-    url: 'http://www.ssp.sp.gov.br/estatistica/dados-mensais.aspx',
-    source_name: 'SSP-SP — Secretaria da Segurança Pública do Estado de São Paulo',
-    extract: async (page) => {
-      const text = await page.evaluate(() => document.body.innerText);
-      return extractSafety(text, 800);
-    },
-  },
-  'rio-de-janeiro': {
-    url: 'http://www.ispdados.rj.gov.br/',
-    source_name: 'ISP-RJ — Instituto de Segurança Pública do Rio de Janeiro',
-    extract: async (page) => {
-      const text = await page.evaluate(() => document.body.innerText);
-      return extractSafety(text, 800);
-    },
-  },
-  'mexico-city': {
-    url: 'https://www.sspc.gob.mx/fuero-comun/',
-    source_name: 'SESNSP — Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública',
-    extract: async (page) => {
-      const text = await page.evaluate(() => document.body.innerText);
-      return extractSafety(text, 800);
-    },
-  },
-  'bogota': {
-    url: 'https://scrd.gov.co/inicio/noticias-estadisticas/criminalidad-bogota',
-    source_name: 'Secretaría de Seguridad de Bogotá',
-    extract: async (page) => {
-      const text = await page.evaluate(() => document.body.innerText);
-      return extractSafety(text, 800);
-    },
-  },
-};
+// GOV_SOURCES: JS-rendered government stats pages.
+// SSP-SP and ISP-RJ are now handled via REST API / CSV download in seo_fetch_sources.js.
+// Colombia MinDefensa is handled via Socrata API in seo_fetch_sources.js.
+// This list is kept for sites that genuinely need JS rendering.
+const GOV_SOURCES = {};
 
 async function fetchGovStat(browser, cityKey) {
   const cfg = GOV_SOURCES[cityKey];

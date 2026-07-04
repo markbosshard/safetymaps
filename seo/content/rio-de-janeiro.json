@@ -8,13 +8,17 @@
     },
     {
       "text": "Stick to Zona Sul and Santa Teresa by day. After dark, use apps for all movement; do not walk between Lapa, Centro, and hotel districts. Avoid any road that passes through or alongside favela complexes regardless of time. Never display phones or jewellery on the waterfront."
+    },
+    {
+      "text": "Official statistics: ISP-RJ dados para Rio de Janeiro — 2026 (5 meses YTD): 419 homicídios dolosos, 451 CVLI, 25,425 roubos totais, 21 latrocínios. 2025: 965 homicídios, 62,132 roubos."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_br",
     "fcdo_br",
-    "canada_dfatd_br"
+    "canada_dfatd_br",
+    "isprj_rio_de_janeiro"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

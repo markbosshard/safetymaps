@@ -8,13 +8,17 @@
     },
     {
       "text": "If crossing through Cúcuta to or from Venezuela, plan arrivals by day, use vetted transport, do not display valuables, and do not linger at the border. The city is not a standard tourist destination; transit visitors should minimise time here and use pre-arranged transport."
+    },
+    {
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Cúcuta: 2026: 120; 2025: 344; 2024: 291; 2023: 288; 2022: 245. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_co",
     "fcdo_co",
-    "canada_dfatd_co"
+    "canada_dfatd_co",
+    "mindefensa_co_cucuta"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

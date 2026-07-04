@@ -527,12 +527,29 @@ const CONTENT = {
 };
 
 // ── Write all content files ────────────────────────────────────────────────────
+// After writing hardcoded content, augment with official crime data sourced from
+// seo/sources/{city}.json (crime_data class entries with real excerpts).
 
-const OUT_DIR = path.join(ROOT, 'seo', 'content');
+const OUT_DIR    = path.join(ROOT, 'seo', 'content');
+const SRC_DIR    = path.join(ROOT, 'seo', 'sources');
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
 let written = 0;
 for (const [key, content] of Object.entries(CONTENT)) {
+  // Augment with crime_data excerpts from source files
+  const srcPath = path.join(SRC_DIR, `${key}.json`);
+  if (fs.existsSync(srcPath)) {
+    try {
+      const sources = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
+      const crimeData = sources.filter(s => s.source_class === 'crime_data' && s.excerpt);
+      if (crimeData.length > 0) {
+        const dataNote = crimeData.map(s => s.excerpt).join(' ');
+        content.reconciliation.push({ text: `Official statistics: ${dataNote}` });
+        content.sources_used = [...(content.sources_used || []), ...crimeData.map(s => s.id)];
+      }
+    } catch (e) { /* ignore malformed source files */ }
+  }
+
   fs.writeFileSync(path.join(OUT_DIR, `${key}.json`), JSON.stringify(content, null, 2));
   written++;
 }

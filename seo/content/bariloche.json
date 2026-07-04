@@ -8,13 +8,17 @@
     },
     {
       "text": "Bariloche is appropriate for fully independent travel. The lakeside centre, ski resorts (Cerro Catedral), and trekking in Nahuel Huapi national park are all accessible without elevated precautions. This is the most relaxed risk environment on this list after Punta Cana."
+    },
+    {
+      "text": "Official statistics: SNIC Argentina — homicidios dolosos en Río Negro (nivel provincial): 2025: 25; 2024: 33; 2023: 27; 2022: 20; 2021: 26; 2020: 37. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ar",
     "fcdo_ar",
-    "canada_dfatd_ar"
+    "canada_dfatd_ar",
+    "snic_ar_62"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

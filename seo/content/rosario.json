@@ -8,13 +8,17 @@
     },
     {
       "text": "Exercise serious caution if visiting Rosario. Avoid all peripheral barrios; the central city itself carries elevated risk for random violence. Verify current security conditions before travel. If connecting through Rosario for other destinations, use direct transport without extended city stops."
+    },
+    {
+      "text": "Official statistics: SNIC Argentina — homicidios dolosos en Santa Fe (nivel provincial): 2025: 194; 2024: 170; 2023: 384; 2022: 383; 2021: 336; 2020: 351. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ar",
     "fcdo_ar",
-    "canada_dfatd_ar"
+    "canada_dfatd_ar",
+    "snic_ar_82"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

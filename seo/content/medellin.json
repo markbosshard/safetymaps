@@ -8,13 +8,17 @@
     },
     {
       "text": "El Poblado, Parque Lleras, and Laureles are the visitor-safe zones with good restaurants and nightlife under standard urban precautions. Avoid Niquitao, El Hueco (flea market area), and the northern hillside comunas without a local guide. The famous cable car tours to the comunas (Santa Cruz, Arví) should be on organised day tours only, not independent exploration."
+    },
+    {
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Medellín: 2026: 110; 2025: 333; 2024: 309; 2023: 359; 2022: 358. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_co",
     "fcdo_co",
-    "canada_dfatd_co"
+    "canada_dfatd_co",
+    "mindefensa_co_medellin"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

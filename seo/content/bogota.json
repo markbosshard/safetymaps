@@ -8,13 +8,17 @@
     },
     {
       "text": "Use Cabify or InDriver (vetted apps) for all transport; do not use yellow taxis or enter vehicles with strangers. Keep phones out of sight entirely — phone theft is pandemic. Chapinero Alto and Usaquén are the safest areas for evening dining. Avoid walking east of Carrera 7 in La Candelaria at any hour."
+    },
+    {
+      "text": "Official statistics: MinDefensa Colombia — homicidios en Bogotá: 2026: 454; 2025: 1186; 2024: 1214; 2023: 1084; 2022: 1017. Fuente: datos.gov.co (m8fd-ahd9), Ministerio de Defensa Nacional / Policía Nacional."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_co",
     "fcdo_co",
-    "canada_dfatd_co"
+    "canada_dfatd_co",
+    "mindefensa_co_bogota"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"

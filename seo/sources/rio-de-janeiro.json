@@ -9,15 +9,6 @@
     "excerpt": "Safety There's an increase in methanol poisoning cases being reported. Be alert to the potential risks of drink spiking and methanol poisoning when consuming alcoholic drinks. Violent crime, including mugging, armed robbery and carjacking is common. Crime rates are particularly high in shanty towns or 'favelas'."
   },
   {
-    "id": "gov_rio_de_janeiro",
-    "source_name": "ISP-RJ — Instituto de Segurança Pública do Rio de Janeiro",
-    "source_class": "crime_data",
-    "url": "http://www.ispdados.rj.gov.br/",
-    "published_date": "2026-07",
-    "license": "Official government data — public domain",
-    "excerpt": "Divisão por Grupos Estatísticas de Segurança Pública Divisão Territorial da Base de Segurança Notas Metodológicas e Dicionários Informações Institucionais População Divisão por Temas Informações Gerais de Segurança Crimes contra a vida Operação Segurança Presente UPP Armas Divisão Territorial da Base de Segurança CCS SIM ISP DADOS ABERTOS - Instituto de Segurança Pública"
-  },
-  {
     "id": "state_dept_br",
     "source_name": "US State Department Travel Advisory",
     "source_class": "advisory",

@@ -8,13 +8,17 @@
     },
     {
       "text": "The historic centre (Cabildo, Manzana Jesuítica), Nueva Córdoba student district, and Güemes antique market area are accessible with normal urban precautions. Use apps at night. The city is a reasonable base for Quebrada de Humahuaca and the Córdoba sierras."
+    },
+    {
+      "text": "Official statistics: SNIC Argentina — homicidios dolosos en Córdoba (nivel provincial): 2025: 94; 2024: 114; 2023: 115; 2022: 94; 2021: 87; 2020: 120. Fuente: Sistema Nacional de Información Criminal, MJyDDHH Argentina."
     }
   ],
   "confidence": "medium",
   "sources_used": [
     "state_dept_ar",
     "fcdo_ar",
-    "canada_dfatd_ar"
+    "canada_dfatd_ar",
+    "snic_ar_14"
   ],
   "generated_at": "2026-07-04",
   "generated_by": "claude-sonnet-4-6 (inline synthesis)"
