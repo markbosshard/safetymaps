@@ -41,6 +41,22 @@
         },
         {
           "@type": "Question",
+          "name": "What are the safest neighbourhoods in Natal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Based on incident data consolidated across our sources, Ponta Negra, Capim Macio, Neópolis are among the areas rated safer in Natal. Always verify current conditions with the sources listed below, as conditions can change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which areas of Natal should travellers be cautious about?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Igapó, Pajuçara, Potengi are rated with elevated caution on our map. This reflects patterns from consolidated advisory and incident sources — conditions vary and can change, so check current guidance before travelling."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "What are the main safety risks for visitors to Natal?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -71,7 +87,7 @@
       "name": "Is Natal safe for travelers?",
       "url": "https://latamcrimemap.com/natal",
       "description": "Consolidated safety guidance for Natal — official advisories, crime indices, and traveler reports synthesized into one incident-based read.",
-      "dateModified": "2026-07-04",
+      "dateModified": "2026-07-07",
       "inLanguage": "en",
       "isPartOf": {
         "@type": "WebSite",
@@ -95,7 +111,28 @@
           }
         ]
       },
-      "isBasedOn": []
+      "isBasedOn": [
+        {
+          "@type": "WebPage",
+          "name": "Is Natal Brazil Safe — brazilsafetravel.com",
+          "url": "https://brazilsafetravel.com/blog/is-natal-brazil-safe"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Is Natal Safe — travelsafe-abroad.com",
+          "url": "https://www.travelsafe-abroad.com/brazil/natal/"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Dangerous Natal neighborhoods — sacavoyage.fr",
+          "url": "https://sacavoyage.fr/en/natal-dangereuse-quartiers-a-eviter-et-les-meilleurs-ou-loger/"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Natal safety tips — natalriograndedonorte.com",
+          "url": "https://www.natalriograndedonorte.com/natal-brazil-safety-tips-for-a-safe-visit/"
+        }
+      ]
     }
   ]
 }</script>
@@ -181,7 +218,19 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
   <ul class="sources-list stat-list">
     <li>World Bank / UNODC — national intentional homicide rate for Brazil: 2023: 19.3/100k; 2022: 20.1/100k; 2021: 20.5/100k; 2020: 21.8/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
   </ul>
-  
+  <div>
+    <p>The map covers <strong>43 districts</strong> with differentiated risk ratings:</p>
+    <div class="district-bands">
+      <div class="band safe-band">
+        <span class="band-label">Generally safer</span>
+        <span><strong>Ponta Negra</strong> (Moderate), <strong>Capim Macio</strong> (Moderate), <strong>Neópolis</strong> (Moderate)</span>
+      </div>
+      <div class="band risk-band">
+        <span class="band-label">Exercise extra caution</span>
+        <span><strong>Igapó</strong> (Avoid), <strong>Pajuçara</strong> (Avoid), <strong>Potengi</strong> (Avoid)</span>
+      </div>
+    </div>
+    <p class="district-note">Ratings are consolidated from the sources below, not real-time. Conditions can change — verify before travel.</p></div>
 
   <h2>Common questions</h2>
   
@@ -192,6 +241,14 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
     <div class="faq-item">
       <h3>Is Natal safe at night?</h3>
       <p>Night-time safety in Natal varies significantly by neighbourhood. Stick to established areas, use ride-hailing apps rather than hailing taxis on the street, and avoid unfamiliar areas after dark.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What are the safest neighbourhoods in Natal?</h3>
+      <p>Based on incident data consolidated across our sources, Ponta Negra, Capim Macio, Neópolis are among the areas rated safer in Natal. Always verify current conditions with the sources listed below, as conditions can change.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which areas of Natal should travellers be cautious about?</h3>
+      <p>Igapó, Pajuçara, Potengi are rated with elevated caution on our map. This reflects patterns from consolidated advisory and incident sources — conditions vary and can change, so check current guidance before travelling.</p>
     </div>
     <div class="faq-item">
       <h3>What are the main safety risks for visitors to Natal?</h3>
@@ -205,10 +262,14 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
     <li><a href="https://www.gov.uk/foreign-travel-advice/brazil/safety-and-security" rel="noopener noreferrer" target="_blank">UK FCDO Travel Advice — Safety and Security</a></li>
     <li><a href="https://travel.gc.ca/destinations/brazil" rel="noopener noreferrer" target="_blank">Canada DFATD Travel Advice</a></li>
     <li><a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5?locations=BRA" rel="noopener noreferrer" target="_blank">World Bank — Intentional Homicides per 100k (Brazil)</a></li>
-    <li>Editorial travel-safety synthesis (US State Dept advisories, OSAC, Numbeo)</li>
+    <li>Editorial travel-safety synthesis (US State Dept OSAC advisories, Numbeo, travel guides); per-district tiers applied by apply_safety_tiers.js</li>
+    <li><a href="https://brazilsafetravel.com/blog/is-natal-brazil-safe" rel="noopener noreferrer" target="_blank">Is Natal Brazil Safe — brazilsafetravel.com</a></li>
+    <li><a href="https://www.travelsafe-abroad.com/brazil/natal/" rel="noopener noreferrer" target="_blank">Is Natal Safe — travelsafe-abroad.com</a></li>
+    <li><a href="https://sacavoyage.fr/en/natal-dangereuse-quartiers-a-eviter-et-les-meilleurs-ou-loger/" rel="noopener noreferrer" target="_blank">Dangerous Natal neighborhoods — sacavoyage.fr</a></li>
+    <li><a href="https://www.natalriograndedonorte.com/natal-brazil-safety-tips-for-a-safe-visit/" rel="noopener noreferrer" target="_blank">Natal safety tips — natalriograndedonorte.com</a></li>
   </ul>
   <div class="meta-line">
-    Last updated 2026-07-04 &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities</a>
+    Last updated 2026-07-07 &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities</a>
   </div>
 </main>
 </body>

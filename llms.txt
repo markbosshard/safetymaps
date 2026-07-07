@@ -117,4 +117,4 @@ The map covers 96 Latin American cities across Brazil, Mexico, Argentina, Colomb
 - Sources: US State Dept advisories, OSAC, UK FCDO, Numbeo, official crime statistics (SSP-SP, ISP-RJ, SISC, Mapa del Delito, FGJ-CDMX), traveller communities.
 - Content is consolidated synthesis of cited sources — not AI-generated world knowledge. Every factual claim traces to a named source.
 - Events and conditions only — no demographic or people-characterising language anywhere.
-- Last built: 2026-07-04
+- Last built: 2026-07-07
