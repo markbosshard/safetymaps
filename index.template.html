@@ -2,6 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="darkreader-lock"/><meta name="color-scheme" content="dark"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://server.arcgisonline.com https://*.arcgisonline.com; connect-src 'self' https://api.latamcrimemap.com https://citysafety-proj.goatcounter.com; font-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';"/>
 <title>__PAGE_TITLE__</title>
 <meta name="description" content="__OG_DESC__"/>
 <link rel="canonical" href="__OG_URL__"/>
@@ -706,9 +707,9 @@ function drilldownLink(){
 }
 function popupContent(d){
   const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
-  if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
-  else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
-  else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`+(d.score!=null?` <small style="color:#8896ad">${Math.round(d.score)}&nbsp;/&nbsp;10</small>`:'');
+  if(C.model==='continuous') head=`<b>${esc(d.name)}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
+  else if(C.model==='city') head=`<b>${esc(d.name)}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
+  else head=`<b>${esc(d.name)}</b><br><span class="pill" style="background:${tc}">${tn}</span>`+(d.score!=null?` <small style="color:#8896ad">${Math.round(d.score)}&nbsp;/&nbsp;10</small>`:'');
   return head+RHERE()+actionRow()+drilldownLink();
 }
 function openDistrict(d,ll){
@@ -746,7 +747,7 @@ function buildCity(key,opts){
   C.districts.forEach(d=>{
     const lyr=L.geoJSON({type:'Feature',geometry:d.geom},{style:styleFor(d)}).addTo(map);
     lyr._d=d; d._lyr=lyr; layers.push(lyr);
-    const t=L.tooltip({permanent:true,direction:'center',className:'dlabel',opacity:1}).setContent(d.name).setLatLng([d.label[1],d.label[0]]);
+    const t=L.tooltip({permanent:true,direction:'center',className:'dlabel',opacity:1}).setContent(esc(d.name)).setLatLng([d.label[1],d.label[0]]);
     lyr._tip=t;
     lyr.on('mouseover',()=>{ if(hovered&&hovered!==lyr) hovered.setStyle(styleFor(hovered._d));
       hovered=lyr; lyr.setStyle({weight:2.2,color:'#fff',opacity:1}); lyr.bringToFront(); });
@@ -814,7 +815,8 @@ function updateView(){ const sz=map.getSize(); if(!sz.x||!sz.y) return; const z=
 map.on('zoomend',updateView); map.on('moveend',updateView);
 buildOverview();
 const GENERAL_LINKS='<a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener noreferrer">US State Dept</a> · <a href="https://www.osac.gov/" target="_blank" rel="noopener noreferrer">OSAC</a> · <a href="https://www.gov.uk/foreign-travel-advice" target="_blank" rel="noopener noreferrer">UK FCDO</a> · <a href="https://www.numbeo.com/crime/" target="_blank" rel="noopener noreferrer">Numbeo</a>';
-function srcList(items){return '<ul class="slist">'+items.map(s=>s.url?`<li><a href="${s.url}" target="_blank" rel="noopener noreferrer">${esc(s.text)}</a></li>`:`<li>${esc(s.text)}</li>`).join('')+'</ul>';}
+function safeUrl(u){return(typeof u==='string'&&/^https?:\/\//i.test(u))?u:null;}
+function srcList(items){return '<ul class="slist">'+items.map(s=>{const u=safeUrl(s.url);return u?`<li><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(s.text)}</a></li>`:`<li>${esc(s.text)}</li>`;}).join('')+'</ul>';}
 function renderSources(){
   const C=CITIES[cityKey];
   let h=`<div class="ltitle">${esc(C.name)}</div><div class="snote">${esc(C.note)}</div>`;
