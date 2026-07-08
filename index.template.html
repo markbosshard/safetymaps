@@ -125,7 +125,7 @@
  #cta button{background:rgba(255,255,255,.22);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:25px;line-height:1;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
  #cta button:hover{background:rgba(255,255,255,.4)}
  #cta.hidden,#locateBtn.hidden{display:none}
- .leaflet-container.rmode.leaflet-grab{cursor:crosshair}
+ .leaflet-container.rmode.leaflet-grab{cursor:pointer}
  #ctrlOpen{display:none}
  #search{margin-left:auto;display:flex;align-items:center;gap:6px;position:relative}
  #search input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:7px 10px;font-size:14px;width:200px;outline:none}
@@ -724,7 +724,8 @@ function openDistrict(d,ll){
 // Report a point ANYWHERE you tap — even outside a painted area (city peripheries, or cities with
 // just a single bubble). The backend buckets it from lat/lng (H3 for city-level, nearest district else).
 function pointPopupContent(){
-  return `<b>${esc(CITIES[cityKey].name)}</b>`+RHERE()+actionRow();
+  const [tn,tc]=tierName(overallScore(cityKey));
+  return `<b>${esc(CITIES[cityKey].name)}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · area not yet mapped</small>`+RHERE()+actionRow();
 }
 function openPointReport(ll){
   const p=Array.isArray(ll)?{lat:ll[0],lng:ll[1]}:{lat:ll.lat,lng:ll.lng};

@@ -41,10 +41,18 @@
         },
         {
           "@type": "Question",
-          "name": "What are the safest areas in San José?",
+          "name": "What are the safest neighbourhoods in San José?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "San José's 28 mapped districts share a similar overall risk profile on Latam Crime Map. For specific neighbourhood recommendations, consult the travel advisories and community sources listed below."
+            "text": "Based on incident data consolidated across our sources, Curridabat, Mata Redonda, San Pedro are among the areas rated safer in San José. Always verify current conditions with the sources listed below, as conditions can change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which areas of San José should travellers be cautious about?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alajuelita, Pavas, Uruca are rated with elevated caution on our map. This reflects patterns from consolidated advisory and incident sources — conditions vary and can change, so check current guidance before travelling."
           }
         },
         {
@@ -79,7 +87,7 @@
       "name": "Is San José safe for travelers?",
       "url": "https://latamcrimemap.com/sanjose",
       "description": "Consolidated safety guidance for San José — official advisories, crime indices, and traveler reports synthesized into one incident-based read.",
-      "dateModified": "2026-07-07",
+      "dateModified": "2026-07-08",
       "inLanguage": "en",
       "isPartOf": {
         "@type": "WebSite",
@@ -189,7 +197,19 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
   <ul class="sources-list stat-list">
     <li>World Bank / UNODC — national intentional homicide rate for Costa Rica: 2023: 17.7/100k; 2022: 12.9/100k; 2021: 11.6/100k; 2020: 11.3/100k. Note: this is a country-level rate, not city-specific. Source: World Bank Open Data (VC.IHR.PSRC.P5), compiled from UNODC Crime Trends Survey.</li>
   </ul>
-  <div><p>The live map shows <strong>28 mapped districts</strong> in San José, all carrying the same overall safety rating. Explore them on the interactive map to see the geographic spread.</p></div>
+  <div>
+    <p>The map covers <strong>28 districts</strong> with differentiated risk ratings:</p>
+    <div class="district-bands">
+      <div class="band safe-band">
+        <span class="band-label">Generally safer</span>
+        <span><strong>Curridabat</strong> (Moderate), <strong>Mata Redonda</strong> (Moderate), <strong>San Pedro</strong> (Moderate)</span>
+      </div>
+      <div class="band risk-band">
+        <span class="band-label">Exercise extra caution</span>
+        <span><strong>Alajuelita</strong> (Avoid), <strong>Pavas</strong> (Caution), <strong>Uruca</strong> (Caution)</span>
+      </div>
+    </div>
+    <p class="district-note">Ratings are consolidated from the sources below, not real-time. Conditions can change — verify before travel.</p></div>
 
   <h2>Common questions</h2>
   
@@ -202,8 +222,12 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
       <p>Night-time safety in San José varies significantly by neighbourhood. Stick to established areas, use ride-hailing apps rather than hailing taxis on the street, and avoid unfamiliar areas after dark.</p>
     </div>
     <div class="faq-item">
-      <h3>What are the safest areas in San José?</h3>
-      <p>San José's 28 mapped districts share a similar overall risk profile on Latam Crime Map. For specific neighbourhood recommendations, consult the travel advisories and community sources listed below.</p>
+      <h3>What are the safest neighbourhoods in San José?</h3>
+      <p>Based on incident data consolidated across our sources, Curridabat, Mata Redonda, San Pedro are among the areas rated safer in San José. Always verify current conditions with the sources listed below, as conditions can change.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which areas of San José should travellers be cautious about?</h3>
+      <p>Alajuelita, Pavas, Uruca are rated with elevated caution on our map. This reflects patterns from consolidated advisory and incident sources — conditions vary and can change, so check current guidance before travelling.</p>
     </div>
     <div class="faq-item">
       <h3>What are the main safety risks for visitors to San José?</h3>
@@ -221,7 +245,7 @@ p{margin-bottom:12px;color:#c8d6ea;font-size:15px}
     <li>Editorial travel-safety synthesis (US State Dept advisories, OSAC, Numbeo); districts inherit the city overall until crowd input or official data differentiates them</li>
   </ul>
   <div class="meta-line">
-    Last updated 2026-07-07 &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities</a>
+    Last updated 2026-07-08 &middot; <a href="/method/">Methodology</a> &middot; <a href="/">All cities</a>
   </div>
 </main>
 </body>
