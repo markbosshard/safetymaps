@@ -708,7 +708,7 @@ function popupContent(d){
   const C=CITIES[cityKey]; const [tn,tc]=tierName(d.score); let head;
   if(C.model==='continuous') head=`<b>${d.name}</b><br>Risk <b>${d.score==null?'n/a':d.score.toFixed(1)}</b> / 10 <span class="pill" style="background:${tc}">${tn}</span>`;
   else if(C.model==='city') head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span> <small style="color:#8896ad">overall · city-level</small>`;
-  else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`;
+  else head=`<b>${d.name}</b><br><span class="pill" style="background:${tc}">${tn}</span>`+(d.score!=null?` <small style="color:#8896ad">${d.score.toFixed(1)}&nbsp;/&nbsp;10</small>`:'');
   return head+RHERE()+actionRow()+drilldownLink();
 }
 function openDistrict(d,ll){
