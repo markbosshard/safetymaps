@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+<title>Portland in a Day — Route Map</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  :root {
+    --spruce:   #12332a;
+    --spruce-2: #1d4a3b;
+    --ink:      #14201b;
+    --paper:    #eef1ec;
+    --mist:     #d7ded8;
+    --amber:    #e0862f;
+    --amber-dk: #b8641c;
+    --muted:    #5d6b63;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--spruce);
+    color: var(--paper);
+    border-bottom: 3px solid var(--amber);
+  }
+  header .titles { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  header .sub {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9db6a9;
+  }
+  header .gmaps {
+    flex: 0 0 auto;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--spruce);
+    background: var(--amber);
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  header .gmaps:active { background: var(--amber-dk); }
+
+  .stage { flex: 1 1 auto; display: flex; min-height: 0; }
+
+  #map {
+    flex: 1 1 auto;
+    min-height: 0;
+    background: var(--mist);
+  }
+
+  aside {
+    flex: 0 0 320px;
+    overflow-y: auto;
+    background: var(--paper);
+    border-left: 1px solid var(--mist);
+    -webkit-overflow-scrolling: touch;
+  }
+  .stop {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--mist);
+    cursor: pointer;
+    background: none;
+    border-left: 3px solid transparent;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+  }
+  .stop:hover { background: #e6ebe5; }
+  .stop.active { background: #e6ebe5; border-left-color: var(--amber); }
+  .stop .num {
+    grid-row: 1 / span 2;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: #fff;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .stop .name { font-size: 14.5px; font-weight: 600; }
+  .stop .meta { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+  .stop .time {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--spruce-2);
+  }
+
+  .tile-note {
+    position: absolute;
+    z-index: 500;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    max-width: 82%;
+    background: var(--spruce);
+    color: var(--paper);
+    font-size: 12.5px;
+    line-height: 1.4;
+    padding: 10px 13px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  /* Floating re-frame button, always one tap away — the core fix */
+  .fit-btn {
+    position: absolute;
+    z-index: 500;
+    right: 12px; bottom: 22px;
+    background: var(--spruce);
+    color: var(--paper);
+    border: none;
+    border-radius: 22px;
+    padding: 10px 15px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+    cursor: pointer;
+  }
+  .fit-btn:active { background: var(--spruce-2); }
+
+  .loc-btn {
+    position: absolute;
+    z-index: 500;
+    right: 12px; bottom: 66px;
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 10px 15px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+    cursor: pointer;
+  }
+  .loc-btn:active { background: #1560c4; }
+
+  .me-dot {
+    position: relative;
+    width: 18px; height: 18px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: #1a73e8;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px rgba(26,115,232,0.35), 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .me-dot::before {
+    content: "";
+    position: absolute; left: 50%; top: 50%;
+    width: 100%; height: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(26,115,232,0.4);
+    animation: mePulse 2s ease-out infinite;
+  }
+  @keyframes mePulse {
+    0%   { width: 12px; height: 12px; opacity: 0.7; }
+    100% { width: 44px; height: 44px; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .me-dot::before { animation: none; }
+  }
+
+  /* Numbered map markers */
+  .pin {
+    width: 28px; height: 28px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    background: var(--amber);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pin span {
+    transform: rotate(45deg);
+    color: #fff; font-size: 13px; font-weight: 700;
+    font-family: "Inter", system-ui, sans-serif;
+  }
+
+  .leaflet-popup-content { margin: 10px 12px; font-family: inherit; }
+  .pop-name { font-size: 14.5px; font-weight: 700; color: var(--ink); }
+  .pop-time { font-size: 12px; font-weight: 600; color: var(--amber-dk); margin: 1px 0 5px; }
+  .pop-note { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+  .pop-dir {
+    display: inline-block; margin-top: 7px;
+    font-size: 12.5px; font-weight: 600; text-decoration: none;
+    color: var(--spruce);
+  }
+  .pop-dir::after { content: " ↗"; }
+
+  @media (max-width: 760px) {
+    .stage { flex-direction: column; }
+    #map { flex: 0 0 58vh; }
+    aside {
+      flex: 1 1 auto;
+      border-left: none;
+      border-top: 1px solid var(--mist);
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="titles">
+      <h1>Portland in a Day</h1>
+      <span class="sub">13 stops · one loop · west → east</span>
+    </div>
+    <a class="gmaps" id="gmapsRoute" target="_blank" rel="noopener">Open route ↗</a>
+  </header>
+
+  <div class="stage">
+    <div id="map">
+      <div class="tile-note" id="tileNote" hidden>Street tiles are blocked in the in-app preview. Open this file in a browser (or host it) and the map appears — the pins, route, and list are all correct.</div>
+      <div class="tile-note" id="geoNote" hidden></div>
+      <button class="loc-btn" id="locBtn" title="Center on my live location">◎ Locate me</button>
+      <button class="fit-btn" id="fitBtn" title="Zoom out to frame every stop">⤢ Fit all pins</button>
+    </div>
+    <aside id="list"></aside>
+  </div>
+
+  <script>
+  function initMap() {
+    const stops = [
+      { n:1, name:"International Rose Test Garden", time:"9:00 AM", lat:45.5189524, lng:-122.7052686,
+        note:"Free, and quiet this early. Peak bloom in June. First of three west-hills stops." },
+      { n:2, name:"Portland Japanese Garden", time:"10:00 AM", lat:45.5188634, lng:-122.7080354,
+        note:"Opens at 10, next to the rose garden. Closed Tuesdays — reshuffle if that's your day." },
+      { n:3, name:"Pittock Mansion", time:"11:15 AM", lat:45.5252061, lng:-122.7162689,
+        note:"Top of the hill, ~5 min from the gardens. Best panoramic view. Turnaround point." },
+      { n:4, name:"Powell's City of Books", time:"12:15 PM", lat:45.5232451, lng:-122.6814329,
+        note:"Largest indie bookstore in the world. Grab lunch in the Pearl nearby before browsing." },
+      { n:5, name:"Pearl District Galleries", time:"1:00 PM", lat:45.5241687, lng:-122.6782951,
+        note:"Contemporary by Powell's: Blue Sky (free photography, superb) + Elizabeth Leach (blue-chip contemporary, 2 blocks NW). Both closed Sun/Mon." },
+      { n:6, name:"Portland Art Museum", time:"1:45 PM", lat:45.5161500, lng:-122.6833570,
+        note:"Oregon's oldest museum + a major new modern/contemporary wing (Hockney, immersive rooms). Budget 1.5–2 hrs. Closed Mondays." },
+      { n:7, name:"Pioneer Courthouse Square", time:"3:45 PM", lat:45.5188944, lng:-122.6793265,
+        note:"'Portland's living room' — brick plaza at the city's heart. Quick 15-min stop; often food carts and events." },
+      { n:8, name:"Voodoo Doughnut", time:"4:15 PM", lat:45.5226507, lng:-122.6730445,
+        note:"Iconic (touristy) Old Town doughnuts, next door to Lan Su. Locals rate Blue Star higher if you'll detour SW." },
+      { n:9, name:"Lan Su Chinese Garden", time:"4:30 PM", lat:45.5256321, lng:-122.6729955,
+        note:"Walled Ming-style garden (open till 5:30). Do the teahouse tea ceremony. Last west-side stop before the bridge." },
+      { n:10, name:"Tom McCall Waterfront Park", time:"5:00 PM", lat:45.5227536, lng:-122.6699971,
+        note:"Riverfront stroll along the Willamette — bridges, public art, cherry trees. Cross here to the east side." },
+      { n:11, name:"PICA", time:"5:25 PM", lat:45.5367348, lng:-122.6660887,
+        note:"Portland's cutting-edge contemporary art institute. Fri 12–6 PM only (plus limited weekend hrs) — cross the river and come straight here before it closes at 6." },
+      { n:12, name:"Cartopia Food Carts", time:"6:15 PM", lat:45.5124351, lng:-122.6533959,
+        note:"Dinner at the cart pod: Thai, wood-fired pizza, poutine. Open late on Fridays." },
+      { n:13, name:"Wayfinder Beer", time:"7:30 PM", lat:45.5205803, lng:-122.6636369,
+        note:"Close out nearby. Great lagers and a full food menu if you didn't fill up at the carts." },
+    ];
+
+    const map = L.map("map", { minZoom: 3, maxZoom: 18, zoomControl: true, scrollWheelZoom: true });
+
+    const tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19,
+    });
+    tiles.on("tileerror", showTileNote);
+    tiles.addTo(map);
+
+    function showTileNote() {
+      const n = document.getElementById("tileNote");
+      if (n) n.hidden = false;
+    }
+
+    // Route line in order
+    L.polyline(stops.map(s => [s.lat, s.lng]), {
+      color: "#12332a", weight: 3, opacity: 0.55, dashArray: "1 7", lineCap: "round",
+    }).addTo(map);
+
+    const markers = [];
+    const listEl = document.getElementById("list");
+
+    stops.forEach((s, i) => {
+      const icon = L.divIcon({
+        className: "",
+        html: `<div class="pin"><span>${s.n}</span></div>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 28],
+        popupAnchor: [0, -28],
+      });
+      const dir = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
+      const m = L.marker([s.lat, s.lng], { icon }).addTo(map);
+      m.bindPopup(
+        `<div class="pop-name">${s.name}</div>
+         <div class="pop-time">${s.time}</div>
+         <div class="pop-note">${s.note}</div>
+         <a class="pop-dir" target="_blank" rel="noopener" href="${dir}">Directions</a>`
+      );
+      m.on("popupopen", () => setActive(i));
+      markers.push(m);
+
+      const row = document.createElement("button");
+      row.className = "stop";
+      row.innerHTML =
+        `<div class="num">${s.n}</div>
+         <div>
+           <div class="name">${s.name}</div>
+           <div class="meta"><span class="time">${s.time}</span> · ${s.note}</div>
+         </div>`;
+      row.addEventListener("click", () => {
+        map.flyTo([s.lat, s.lng], 15, { duration: 0.6 });
+        markers[i].openPopup();
+        setActive(i);
+      });
+      listEl.appendChild(row);
+    });
+
+    function setActive(i) {
+      [...listEl.children].forEach((el, j) =>
+        el.classList.toggle("active", j === i));
+    }
+
+    const bounds = L.latLngBounds(stops.map(s => [s.lat, s.lng]));
+    function fitAll() { map.fitBounds(bounds, { padding: [45, 45] }); }
+    fitAll();
+    setTimeout(() => { map.invalidateSize(); fitAll(); }, 200);
+    document.getElementById("fitBtn").addEventListener("click", fitAll);
+
+    // Full-route link: origin → waypoints → destination
+    const first = stops[0], last = stops[stops.length - 1];
+    const mid = stops.slice(1, -1).map(s => `${s.lat},${s.lng}`).join("|");
+    document.getElementById("gmapsRoute").href =
+      `https://www.google.com/maps/dir/?api=1&origin=${first.lat},${first.lng}` +
+      `&destination=${last.lat},${last.lng}&waypoints=${mid}&travelmode=driving`;
+
+    // ---- Live location (blue dot) ----
+    const meIcon = L.divIcon({ className: "", html: '<div class="me-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
+    let meMarker = null, meCircle = null;
+    const geoNote = document.getElementById("geoNote");
+    const locBtn = document.getElementById("locBtn");
+
+    function hideGeoNote() { if (geoNote) geoNote.hidden = true; }
+    function showGeoNote(err) {
+      if (!geoNote) return;
+      let msg = "Couldn't get your location.";
+      if (err && err.code === 1)
+        msg = "Location is blocked. Allow it via the address-bar icon — and note Chrome disables location on file:// pages, so serve this over localhost or https (see chat).";
+      else if (err && err.code === 2) msg = "No location fix available — check that location services are on.";
+      else if (err && err.code === 3) msg = "Location timed out. Tap “Locate me” to retry.";
+      else if (err && err.message === "unsupported") msg = "This browser doesn't support live location.";
+      geoNote.textContent = msg;
+      geoNote.hidden = false;
+    }
+
+    function onGeo(pos) {
+      const ll = [pos.coords.latitude, pos.coords.longitude];
+      const acc = pos.coords.accuracy || 30;
+      if (!meMarker) {
+        meMarker = L.marker(ll, { icon: meIcon, zIndexOffset: 1000, interactive: false, keyboard: false }).addTo(map);
+        meCircle = L.circle(ll, { radius: acc, color: "#1a73e8", weight: 1, opacity: 0.5, fillColor: "#1a73e8", fillOpacity: 0.12 }).addTo(map);
+      } else {
+        meMarker.setLatLng(ll);
+        meCircle.setLatLng(ll).setRadius(acc);
+      }
+      hideGeoNote();
+    }
+
+    function centerOnMe() {
+      if (meMarker) { map.setView(meMarker.getLatLng(), 15); return; }
+      if (!("geolocation" in navigator)) return showGeoNote({ message: "unsupported" });
+      navigator.geolocation.getCurrentPosition(
+        (p) => { onGeo(p); map.setView([p.coords.latitude, p.coords.longitude], 15); },
+        showGeoNote, { enableHighAccuracy: true, timeout: 15000 });
+    }
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.watchPosition(onGeo, showGeoNote,
+        { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+    } else {
+      showGeoNote({ message: "unsupported" });
+    }
+    if (locBtn) locBtn.addEventListener("click", centerOnMe);
+  }
+
+  (function () {
+    if (typeof L !== "undefined") return initMap();
+    var s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
+    s.onload = initMap;
+    s.onerror = function () {
+      var s2 = document.createElement("script");
+      s2.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      s2.onload = initMap;
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</body>
+</html>
