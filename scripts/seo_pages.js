@@ -306,6 +306,7 @@ function cityPageHtml({ key, city, score, tier, tierCol, prose, faq, ds, basis, 
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="canonical" href="${SITE}/${key}"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Latam Crime Map"/>
@@ -445,6 +446,7 @@ function methodPageHtml() {
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="canonical" href="${SITE}/method/"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Latam Crime Map"/>
@@ -680,6 +682,7 @@ function buildAboutPage() {
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="canonical" href="${SITE}/about"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Latam Crime Map"/>
