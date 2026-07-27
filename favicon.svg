@@ -5,31 +5,6 @@
     South America silhouette, clockwise from Colombia/Panama Pacific border.
     Coordinate mapping: x = 18 + (81 - lon°W) / 46 * 64
                         y =  5 + (12 - lat°N) / 67 * 90   (lat negative = south)
-    Key anchors:
-      Colombia/Panama (77°W,8°N)    → (24,10)
-      Venezuela N coast (67°W,11°N) → (37,6)
-      Venezuela NE (63°W,10°N)      → (43,8)
-      Guyana coast (58°W,8°N)       → (50,10)
-      Fr. Guiana (51°W,4°N)         → (60,16)
-      NE Brazil (42°W,4°S)          → (72,27)
-      Brazil tip (35°W,7°S)         → (82,31)
-      Salvador (38°W,13°S)          → (78,40)
-      Vitória (40°W,20°S)           → (75,48)
-      Rio (43°W,23°S)               → (71,52)
-      Florianópolis (48°W,28°S)     → (64,59)
-      Rio Grande (52°W,32°S)        → (58,64)
-      Río de la Plata (57°W,34°S)   → (50,68)
-      Bahía Blanca (62°W,38°S)      → (44,74)
-      Comodoro (67°W,46°S)          → (37,83)
-      Tierra del Fuego (69°W,54°S)  → (33,93)
-      Cape Horn (67°W,56°S)         → (37,95)
-      S Chile (73°W,50°S)           → (29,88)
-      Concepción (73°W,37°S)        → (29,71)
-      Central Chile (72°W,33°S)     → (31,65)
-      Atacama (70°W,23°S)           → (33,52)
-      Lima (77°W,12°S)              → (24,37)
-      Guayaquil (80°W,2°S)          → (19,24)
-      Colombia Pacific N (77°W,6°N) → (24,14)
   -->
   <path fill="#f1f5f9" d="
     M 24,10
@@ -43,16 +18,11 @@
     L 33,52 L 24,37 L 19,24
     L 24,14 Z
   "/>
-  <!-- Green dots — felt-safe reports -->
-  <circle cx="30" cy="13" r="5"   fill="#22c55e"/> <!-- Bogotá -->
-  <circle cx="25" cy="24" r="4"   fill="#22c55e"/> <!-- Quito -->
-  <circle cx="37" cy="64" r="4"   fill="#22c55e"/> <!-- Santiago -->
-  <circle cx="50" cy="67" r="5"   fill="#22c55e"/> <!-- Buenos Aires -->
-  <circle cx="64" cy="53" r="4.5" fill="#22c55e"/> <!-- São Paulo -->
-  <!-- Red dots — issue reports -->
-  <circle cx="43" cy="11" r="4"   fill="#ef4444"/> <!-- Caracas -->
-  <circle cx="57" cy="29" r="4"   fill="#ef4444"/> <!-- Fortaleza -->
-  <circle cx="70" cy="50" r="5"   fill="#ef4444"/> <!-- Rio de Janeiro -->
-  <circle cx="38" cy="38" r="4"   fill="#ef4444"/> <!-- Lima -->
-  <circle cx="37" cy="78" r="4"   fill="#ef4444"/> <!-- Comodoro/Patagonia -->
+  <!-- 6 larger dots spread top-to-bottom, alternating green/red -->
+  <circle cx="34" cy="20" r="7"  fill="#22c55e"/> <!-- Colombia/Bogotá -->
+  <circle cx="57" cy="30" r="9"  fill="#ef4444"/> <!-- NE Brazil/Fortaleza -->
+  <circle cx="64" cy="49" r="9"  fill="#ef4444"/> <!-- Rio de Janeiro -->
+  <circle cx="50" cy="55" r="8"  fill="#22c55e"/> <!-- São Paulo -->
+  <circle cx="50" cy="67" r="9"  fill="#22c55e"/> <!-- Buenos Aires -->
+  <circle cx="37" cy="78" r="7"  fill="#ef4444"/> <!-- Patagonia/south -->
 </svg>
